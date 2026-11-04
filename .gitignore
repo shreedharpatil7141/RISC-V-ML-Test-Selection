@@ -1,0 +1,33 @@
+# Vivado / XSim generated
+*.jou
+*.log
+*.str
+*.backup.jou
+*.backup.log
+.Xil/
+xsim.dir/
+*.wdb
+*.pb
+webtalk*
+*.xpr.bak
+RISC_V_ML_Verification.cache/
+RISC_V_ML_Verification.hw/
+RISC_V_ML_Verification.runs/
+RISC_V_ML_Verification.sim/
+RISC_V_ML_Verification.ip_user_files/
+RISC_V_ML_Verification.gen/
+# MATLAB
+*.asv
+*.mex*
+slprj/
+*.autosave
+# Large generated data (regenerate with scripts/)
+dataset/raw/*
+!dataset/raw/.gitkeep
+reports/*.tmp
+# OS / editor
+Thumbs.db
+.DS_Store
+*.swp
+tests/directed/rv32i/*.hex
+sim_out/

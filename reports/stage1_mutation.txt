@@ -1,0 +1,16 @@
+Stage 1 mutation check (2026-11-04) - run in two batches (0-6, 7-13); each mutant applied alone, regression must FAIL
+mutant  0 CAUGHT  SRA acts as SRL                SYSTEM TESTS: 99 passed, 2 failed, 101 total | UNIT TESTS:   FAIL  first_fail=['UNIT_RESULT:', 'imm_srai', 'TEST_RESULT:']
+mutant  1 CAUGHT  BLTU uses signed compare       SYSTEM TESTS: 100 passed, 1 failed, 101 total | UNIT TESTS:   FAIL  first_fail=['UNIT_RESULT:', 'branch_bltu', 'TEST_RESULT:']
+mutant  2 CAUGHT  B-imm bit 11/7 swapped         SYSTEM TESTS: 91 passed, 10 failed, 101 total | UNIT TESTS:   FAIL  first_fail=['UNIT_RESULT:', 'long_beq_n1024', 'TEST_RESULT:']
+mutant  3 CAUGHT  LB zero-extends                SYSTEM TESTS: 99 passed, 2 failed, 101 total | UNIT TESTS:   FAIL  first_fail=['UNIT_RESULT:', 'loadstore_directed', 'TEST_RESULT:']
+mutant  4 CAUGHT  JALR keeps bit0                SYSTEM TESTS: 100 passed, 1 failed, 101 total | UNIT TESTS:   PASS  first_fail=['jumps', 'TEST_RESULT:']
+mutant  5 CAUGHT  x0 writable (write+read guards removed) SYSTEM TESTS: 61 passed, 40 failed, 101 total | UNIT TESTS:   FAIL  first_fail=['UNIT_RESULT:', 'branch_beq', 'TEST_RESULT:']
+mutant  6 CAUGHT  faulting store still writes    SYSTEM TESTS: 97 passed, 4 failed, 101 total | UNIT TESTS:   PASS  first_fail=['misalign_sh_off1', 'misalign_sh_off3', 'misalign_sw_off1']
+mutant  7 CAUGHT  SLLI funct7 not checked        SYSTEM TESTS: 100 passed, 1 failed, 101 total | UNIT TESTS:   PASS  first_fail=['illegal_slli_funct7']
+mutant  8 CAUGHT  SLTU decoded as SLT            SYSTEM TESTS: 99 passed, 2 failed, 101 total | UNIT TESTS:   PASS  first_fail=['imm_sltiu', 'TEST_RESULT:', 'rr_sltu']
+mutant  9 CAUGHT  SH byte enable wrong           SYSTEM TESTS: 99 passed, 2 failed, 101 total | UNIT TESTS:   FAIL  first_fail=['UNIT_RESULT:', 'loadstore_directed', 'TEST_RESULT:']
+mutant 10 CAUGHT  AUIPC uses rs1 not PC          SYSTEM TESTS: 100 passed, 1 failed, 101 total | UNIT TESTS:   PASS  first_fail=['upper_auipc', 'TEST_RESULT:']
+mutant 11 CAUGHT  BGE treated as BGEU            SYSTEM TESTS: 99 passed, 2 failed, 101 total | UNIT TESTS:   FAIL  first_fail=['UNIT_RESULT:', 'branch_backward', 'TEST_RESULT:']
+mutant 12 CAUGHT  JAL link = pc+8                SYSTEM TESTS: 100 passed, 1 failed, 101 total | UNIT TESTS:   PASS  first_fail=['jumps', 'TEST_RESULT:']
+mutant 13 CAUGHT  misaligned load not caught     SYSTEM TESTS: 97 passed, 4 failed, 101 total | UNIT TESTS:   PASS  first_fail=['misalign_lh_off1', 'TEST_RESULT:', 'misalign_lhu_off3']
+MUTATION: 14/14 caught (mutant 5 was redefined after the first attempt proved equivalent: read-side x0 mask hid the write; mutant 2 initially escaped system tests -> long-offset tests added)
