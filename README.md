@@ -1,6 +1,6 @@
 # Machine Learning-Based Test Selection for Accelerated Functional Coverage Closure in RISC-V Processor Verification
 
-**Status:** Stage 1 complete pending approval - single-cycle RV32I core verified under Verilator (XSim not yet run). See `IMPLEMENTATION_LOG.md`.
+**Status:** Stage 1 complete (XSim + Verilator). Stage 2 (5-stage pipeline) complete: XSim regression PASS (user run) and Verilator regression PASS (separate record). Stage 3 (M extension) not started. See `STAGE_CHANGELOG.md`.
 
 ## Overview
 A simulation-based verification framework for a single-hart, in-order
@@ -38,8 +38,13 @@ No fabricated simulation or ML results. No post-execution data as model input.
 Offline replay is never presented as real simulation savings. No claim of full
 RISC-V compliance without architectural-test validation.
 
-## Quick start (Stage 1)
+## Quick start
 ```
-python scripts/simulation/run_stage1.py      # Verilator + Python; needs verilator, python3
-scripts\simulation\run_stage1_xsim.bat       # Vivado XSim (UNTESTED)
+# Stage 1 (single-cycle golden core)
+scripts\simulation\run_stage1_xsim.bat                 # Vivado XSim (validated)
+python scripts/simulation/run_stage1.py                 # Verilator (Linux)
+
+# Stage 2 (5-stage pipeline vs golden core vs ISS)
+scripts\simulation\run_stage2_xsim.bat                 # Vivado XSim
+python scripts/simulation/run_stage2.py                 # Verilator (Linux)
 ```

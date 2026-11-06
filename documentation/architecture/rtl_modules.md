@@ -39,4 +39,7 @@ valid, trap, pc_rdata, pc_wdata, insn, insn_len (2/4), rd, rd_wdata (gated by rd
 5. `rtl/core`
 
 ## Stage 1 status
-Implemented and verified under Verilator: `rv32_pkg`, `rv_decoder`, `rv_imm_gen`, `rv_regfile`, `rv_alu`, `rv_branch_cmp`, `rv_control`, `rv_lsu`, `rv_core_single`. `rv_pc` is not a separate module: the PC register and next-PC mux live in `rv_core_single` (to be split during the Stage 2 pipeline refactor). Compile list: `scripts/simulation/stage1_rtl.f`.
+Implemented and verified (Verilator and XSim): `rv32_pkg`, `rv_decoder`, `rv_imm_gen`, `rv_regfile`, `rv_alu`, `rv_branch_cmp`, `rv_control`, `rv_lsu`, `rv_core_single`. `rv_pc` is not a separate module (PC logic lives in `rv_core_single` and, for Stage 2, in `rv_if_stage`). Compile list: `scripts/simulation/stage1_rtl.f`.
+
+## Stage 2 status
+Implemented and verified (XSim regression PASS; Verilator regression PASS, separate records): `rv_pipe_pkg` (rtl/packages), `rv_if_stage`, `rv_id_stage`, `rv_ex_stage`, `rv_mem_stage`, `rv_wb_stage`, `rv_pipe_regs`, `rv_forward_unit`, `rv_hazard_unit` (rtl/pipeline), `rv_core_pipe` (rtl/core, top). Reuses Stage 1 leaf modules unchanged. Decision: the retirement port stays a flat port list (same names as Stage 1, no `ret_pc_next`); `rtl/interfaces` remains empty. Compile list: `scripts/simulation/stage2_rtl.f` (does not include `rv_core_single`; Stage 1 and Stage 2 compile independently). Details: `documentation/architecture/stage2_pipeline.md`.

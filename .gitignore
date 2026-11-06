@@ -31,3 +31,15 @@ Thumbs.db
 *.swp
 tests/directed/rv32i/*.hex
 sim_out/
+
+# Simulation outputs / generated test images
+sim_out/
+sim_out_s2/
+sim_out_xsim/
+sim_out_xsim_s2/
+tests/directed/rv32i/*.hex
+tests/directed/pipeline/*.hex
+
+# Python generated files
+__pycache__/
+*.pyc

@@ -1,0 +1,23 @@
+Stage 2 mutation check - Verilator 5.020 (assistant sandbox, NOT XSim) - 2026-11-05
+Method: one pipeline RTL bug applied at a time; Stage 2 unit TB + 164-test system regression (pipe trace vs ISS vs Stage 1 golden, performance model, coverage) must FAIL. Run in batches (0-6, 7-13, 12+14-19).
+mutant  0 CAUGHT  no EX/MEM forwarding (rs1)                     system: 78 passed, 86 failed
+mutant  1 CAUGHT  no MEM/WB forwarding (rs2)                     system: 133 passed, 31 failed
+mutant  2 CAUGHT  forward priority swapped (rs1)                 system: 114 passed, 50 failed
+mutant  3 CAUGHT  load-use stall disabled                        system: 132 passed, 32 failed
+mutant  4 CAUGHT  stall ignores rs2                              system: 150 passed, 14 failed
+mutant  5 CAUGHT  no WB->ID bypass (rs1)                         system: 95 passed, 69 failed
+mutant  6 CAUGHT  redirect does not flush ID/EX                  system: 39 passed, 125 failed
+mutant  7 CAUGHT  redirect does not flush IF/ID                  system: 39 passed, 125 failed
+mutant  8 CAUGHT  x0 can be forwarded from EX/MEM                system: 149 passed, 15 failed
+mutant  9 CAUGHT  store data not forwarded                       system: 130 passed, 34 failed
+mutant 10 CAUGHT  fault does not squash younger                  system: 162 passed, 2 failed (pipe_fault_squashes_younger_store, pipe_fault_older_stores_commit)
+mutant 11 CAUGHT  faulting store still writes memory             system: 159 passed, 5 failed
+mutant 12 CAUGHT  load forwarded from EX/MEM (data not ready)    unit-TB only; system 164/164 pass (masked: hazard unit always stalls first)
+mutant 13 CAUGHT  stall does not hold PC                         system: 137 passed, 27 failed
+mutant 14 CAUGHT  branch compare uses unforwarded operands       system: 86 passed, 78 failed
+mutant 15 CAUGHT  JAL/JALR link = pc+8                           system: 138 passed, 26 failed
+mutant 16 CAUGHT  stall inserts no bubble (duplicate execution)  system: 132 passed, 32 failed
+mutant 17 CAUGHT  JALR keeps target bit0                         system: 163 passed, 1 failed (jumps)
+mutant 18 CAUGHT  MEM/WB forward uses address not data           system: 130 passed, 34 failed
+mutant 19 CAUGHT  misaligned load not detected in MEM            system: 156 passed, 8 failed
+MUTATION_STAGE2: 20/20 caught
