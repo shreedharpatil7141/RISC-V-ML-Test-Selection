@@ -53,12 +53,12 @@ module rv_core_single
   reg_t       rd, rs1, rs2;
   logic [2:0] funct3;
   logic [6:0] funct7;
-  logic       dec_illegal, is_ecall, is_ebreak, is_fence;
+  logic       dec_illegal, is_ecall, is_ebreak, is_fence, is_m;
 
   rv_decoder u_dec (
     .insn(insn), .opcode(opcode), .rd(rd), .rs1(rs1), .rs2(rs2),
     .funct3(funct3), .funct7(funct7), .illegal(dec_illegal),
-    .is_ecall(is_ecall), .is_ebreak(is_ebreak), .is_fence(is_fence)
+    .is_ecall(is_ecall), .is_ebreak(is_ebreak), .is_fence(is_fence), .is_m(is_m)
   );
 
   word_t imm;
@@ -73,7 +73,7 @@ module rv_core_single
     .opcode(opcode), .funct3(funct3), .funct7(funct7), .illegal(dec_illegal),
     .reg_we(reg_we), .a_sel(a_sel), .b_imm(b_imm), .alu_op(alu_op),
     .mem_re(mem_re), .mem_we(mem_we), .wb_sel(wb_sel),
-    .is_branch(is_branch), .is_jal(is_jal), .is_jalr(is_jalr)
+    .is_branch(is_branch), .is_jal(is_jal), .is_jalr(is_jalr), .is_m(is_m)
   );
 
   // ---------------- Register file / ALU ----------------
@@ -95,6 +95,8 @@ module rv_core_single
   end
 
   rv_alu u_alu (.a(alu_a), .b(alu_b), .op(alu_op), .y(alu_y));
+  word_t md_y;
+  rv_md_comb u_md (.a(rs1_data), .b(rs2_data), .funct3(funct3), .y(md_y));
 
   // ---------------- Branch / jump ----------------
   logic  cmp_taken, redirect;
@@ -136,7 +138,7 @@ module rv_core_single
     case (wb_sel)
       WB_MEM:  wb_data = lsu_load_data;
       WB_PC4:  wb_data = pc_plus4;
-      default: wb_data = alu_y;
+      default: wb_data = is_m ? md_y : alu_y;
     endcase
   end
 

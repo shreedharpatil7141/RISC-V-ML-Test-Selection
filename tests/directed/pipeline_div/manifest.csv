@@ -1,0 +1,9 @@
+name,expect_cause,check_gp
+pipe_div_dependencies,1,1
+pipe_div_loaduse,1,1
+pipe_div_back_to_back,1,1
+pipe_div_forward_consumers,1,1
+pipe_div_wrongpath,1,1
+pipe_div_fault_illegal,3,0
+pipe_div_fault_load,4,0
+pipe_div_before_fault,3,0

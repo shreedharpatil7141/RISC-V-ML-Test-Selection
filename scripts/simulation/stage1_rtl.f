@@ -3,6 +3,7 @@ rtl/decoder/rv_decoder.sv
 rtl/decoder/rv_imm_gen.sv
 rtl/register_file/rv_regfile.sv
 rtl/alu/rv_alu.sv
+rtl/alu/rv_md_comb.sv
 rtl/alu/rv_branch_cmp.sv
 rtl/control_unit/rv_control.sv
 rtl/memory/rv_lsu.sv

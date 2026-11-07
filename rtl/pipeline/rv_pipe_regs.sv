@@ -3,6 +3,7 @@
 //   kill     : fault resolved in MEM, or already halted -> squash IF/ID, ID/EX, EX/MEM
 //   redirect : taken branch/jump in EX -> squash IF/ID and ID/EX
 //   stall    : load-use -> hold IF/ID, insert bubble into ID/EX
+//   md_hold  : hold IF/ID + ID/EX; insert EX/MEM bubble while MEM/WB drains
 // MEM/WB always loads mem_wb_next (its valid is already 0 for a faulting instruction).
 // Bubbles are all-zero structs (valid=0, cause=HALT_NONE).
 module rv_pipe_regs
@@ -12,6 +13,7 @@ module rv_pipe_regs
   input  logic    clk,
   input  logic    rst_n,
   input  logic    stall,
+  input  logic    md_hold,
   input  logic    redirect,
   input  logic    kill,
   input  if_id_t  if_id_next,
@@ -32,14 +34,15 @@ module rv_pipe_regs
     end else begin
       mem_wb <= mem_wb_next;
 
-      if (kill) ex_mem <= '0;
+      if (kill || md_hold) ex_mem <= '0;
       else      ex_mem <= ex_mem_next;
 
-      if (kill || redirect || stall) id_ex <= '0;
-      else                           id_ex <= id_ex_next;
+      if (md_hold && !kill && !redirect) id_ex <= id_ex;
+      else if (kill || redirect || stall) id_ex <= '0;
+      else                                id_ex <= id_ex_next;
 
       if (kill || redirect) if_id <= '0;
-      else if (!stall)      if_id <= if_id_next;
+      else if (!(stall || md_hold)) if_id <= if_id_next;
     end
   end
 endmodule

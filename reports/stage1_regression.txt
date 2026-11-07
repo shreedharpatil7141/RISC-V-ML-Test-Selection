@@ -1,7 +1,7 @@
-Stage 1 regression  2026-11-04 09:10:37  simulator=Verilator Verilator 5.020 2024-01-01 rev (Debian 5.020-1)
+Stage 1 regression  2026-11-07 13:37:26  simulator=Verilator Verilator 5.032 2025-01-01 rev (Debian 5.032-1)
 ASM_SELFTEST PASS
 Lint (verilator --lint-only -Wall, RTL): clean of errors
-UNIT_RESULT: PASS checks=114402 errors=0
+UNIT_RESULT: PASS checks=114339 errors=0
 test                               rtl   trace  cause instret
 branch_backward                    PASS  match      1 94
 branch_beq                         PASS  match      1 267
@@ -21,10 +21,15 @@ illegal_fencei_stage1              PASS  match      3 1
 illegal_jalr_f3_001                PASS  match      3 1
 illegal_load_f3_011                PASS  match      3 1
 illegal_load_f3_110                PASS  match      3 1
-illegal_m_ext_stage1               PASS  match      3 1
 illegal_mret_stage1                PASS  match      3 1
 illegal_ones                       PASS  match      3 1
 illegal_op_funct7                  PASS  match      3 1
+illegal_op_funct7_0000010          PASS  match      3 1
+illegal_op_funct7_0000011          PASS  match      3 1
+illegal_op_funct7_0000100          PASS  match      3 1
+illegal_op_funct7_0010000          PASS  match      3 1
+illegal_op_funct7_0100001          PASS  match      3 1
+illegal_op_funct7_1000000          PASS  match      3 1
 illegal_opcode_custom              PASS  match      3 1
 illegal_slli_funct7                PASS  match      3 1
 illegal_srli_funct7                PASS  match      3 1
@@ -104,6 +109,6 @@ rr_xor                             PASS  match      1 775
 upper_auipc                        PASS  match      1 43
 upper_lui                          PASS  match      1 29
 x0_behavior                        PASS  match      1 30
-SYSTEM TESTS: 101 passed, 0 failed, 101 total
+SYSTEM TESTS: 106 passed, 0 failed, 106 total
 UNIT TESTS:   PASS
 STAGE1_REGRESSION PASS

@@ -17,10 +17,15 @@ illegal_fencei_stage1,3,0
 illegal_jalr_f3_001,3,0
 illegal_load_f3_011,3,0
 illegal_load_f3_110,3,0
-illegal_m_ext_stage1,3,0
 illegal_mret_stage1,3,0
 illegal_ones,3,0
 illegal_op_funct7,3,0
+illegal_op_funct7_0000010,3,0
+illegal_op_funct7_0000011,3,0
+illegal_op_funct7_0000100,3,0
+illegal_op_funct7_0010000,3,0
+illegal_op_funct7_0100001,3,0
+illegal_op_funct7_1000000,3,0
 illegal_opcode_custom,3,0
 illegal_slli_funct7,3,0
 illegal_srli_funct7,3,0

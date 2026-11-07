@@ -6,7 +6,9 @@
 // Unified 64 KiB memory, combinational read, synchronous byte-enable write.
 // Prints exactly one "TEST_RESULT: PASS|FAIL ..." line. Trace format matches scripts/simulation/rv32i_iss.py.
 `timescale 1ns/1ps
-module tb_rv_pipe;
+module tb_rv_pipe #(
+  parameter bit USE_ITERATIVE_M = 1'b0
+);
   import rv32_pkg::*;
 
   localparam int MEM_WORDS = 16384;   // 64 KiB
@@ -31,7 +33,7 @@ module tb_rv_pipe;
   logic dbg_stall, dbg_redirect, dbg_assert_fail;
   logic [15:0] dbg_events;
 
-  rv_core_pipe dut (
+  rv_core_pipe #(.USE_ITERATIVE_M(USE_ITERATIVE_M)) dut (
     .clk(clk), .rst_n(rst_n),
     .imem_addr(imem_addr), .imem_rdata(imem_rdata),
     .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata), .dmem_rdata(dmem_rdata),

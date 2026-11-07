@@ -15,7 +15,8 @@ module rv_decoder
   output logic       illegal,
   output logic       is_ecall,
   output logic       is_ebreak,
-  output logic       is_fence
+  output logic       is_fence,
+  output logic       is_m
 );
   assign opcode = insn[6:0];
   assign rd     = insn[11:7];
@@ -29,6 +30,7 @@ module rv_decoder
     is_ecall  = 1'b0;
     is_ebreak = 1'b0;
     is_fence  = 1'b0;
+    is_m      = 1'b0;
 
     if (insn[1:0] != 2'b11) begin
       illegal = 1'b1;  // 16-bit (C) encodings unsupported until Stage 4
@@ -59,7 +61,10 @@ module rv_decoder
             illegal = 1'b0;
           else if (funct7 == 7'b0100000)
             illegal = !((funct3 == 3'b000) || (funct3 == 3'b101)); // SUB/SRA only
-          else
+          else if (funct7 == 7'b0000001) begin
+            illegal = 1'b0;
+            is_m = 1'b1;
+          end else
             illegal = 1'b1;                                         // M ext: Stage 3
         end
 
