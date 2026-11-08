@@ -5,9 +5,13 @@
 module rv_mem_stage
   import rv32_pkg::*;
   import rv_pipe_pkg::*;
+#(
+  parameter bit ENABLE_C = 1'b0
+)
 (
   input  ex_mem_t      ex_mem,
   input  word_t        dmem_rdata,
+  input  logic         dmem_valid,
   output word_t        dmem_addr,
   output logic         dmem_re,
   output logic [3:0]   dmem_we,
@@ -33,6 +37,8 @@ module rv_mem_stage
     if (cause == HALT_NONE) begin
       if (ex_mem.mem_re && lsu_misaligned)      cause = HALT_LOAD_MISALIGN;
       else if (ex_mem.mem_we && lsu_misaligned) cause = HALT_STORE_MISALIGN;
+      else if (ENABLE_C && ex_mem.mem_re && !dmem_valid) cause = HALT_LOAD_ACCESS;
+      else if (ENABLE_C && ex_mem.mem_we && !dmem_valid) cause = HALT_STORE_ACCESS;
     end
   end
 
@@ -43,14 +49,16 @@ module rv_mem_stage
   assign commit = ex_mem.valid && (cause == HALT_NONE);
 
   assign dmem_addr  = ex_mem.alu_y;
-  assign dmem_re    = ex_mem.valid && ex_mem.mem_re;
+  assign dmem_re    = ex_mem.valid && ex_mem.mem_re && (!ENABLE_C || dmem_valid);
   assign dmem_we    = (commit && ex_mem.mem_we) ? lsu_be : 4'b0000;
   assign dmem_wdata = lsu_wdata;
 
   always_comb begin
     mem_wb_next.valid    = commit;
     mem_wb_next.pc       = ex_mem.pc;
+    mem_wb_next.raw_insn = ex_mem.raw_insn;
     mem_wb_next.insn     = ex_mem.insn;
+    mem_wb_next.ilen_bytes = ex_mem.ilen_bytes;
     mem_wb_next.rd       = ex_mem.rd;
     mem_wb_next.reg_we   = ex_mem.reg_we;
     mem_wb_next.wb_data  = ex_mem.mem_re ? lsu_load_data : ex_mem.alu_y;

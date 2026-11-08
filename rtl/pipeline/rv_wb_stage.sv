@@ -12,6 +12,8 @@ module rv_wb_stage
   output logic        ret_valid,
   output word_t       ret_pc,
   output word_t       ret_insn,
+  output word_t       ret_expanded_insn,
+  output logic [4:0]  ret_ilen_bytes,
   output logic        ret_rd_we,
   output reg_t        ret_rd,
   output word_t       ret_rd_wdata,
@@ -28,7 +30,9 @@ module rv_wb_stage
 
   assign ret_valid     = mem_wb.valid;
   assign ret_pc        = mem_wb.pc;
-  assign ret_insn      = mem_wb.insn;
+  assign ret_insn      = mem_wb.raw_insn;
+  assign ret_expanded_insn = mem_wb.insn;
+  assign ret_ilen_bytes = mem_wb.ilen_bytes;
   assign ret_rd_we     = mem_wb.valid && mem_wb.reg_we && (mem_wb.rd != 5'd0);
   assign ret_rd        = mem_wb.rd;
   assign ret_rd_wdata  = mem_wb.wb_data;

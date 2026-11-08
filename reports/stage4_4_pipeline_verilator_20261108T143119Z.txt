@@ -1,0 +1,12 @@
+Simulator: verilator
+legacy_c_disabled=209
+rv32imc_existing=12
+rv32imc_pipeline_specific=8
+rtl_vs_iss_and_golden=458
+unit_suites=7
+unit_decompress_halfwords=65536
+divider_protocol_records=229
+pipeline_vs_golden_full_traces=229
+pipeline_event_hits=72,47,8871,7918,11818,2117,5111,268,545,3779,7302,467,215,317,7646,69
+divider_protocol_checked_cases=229 starts=2027 dones=2027 busy_cycles=66891 aborts=0
+STAGE4_4_PIPELINE_VERILATOR PASS legacy=209 rv32imc=20 full_trace_comparisons=458 units=7

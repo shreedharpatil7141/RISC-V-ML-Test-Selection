@@ -1,0 +1,4 @@
+--- rtl/pipeline/rv_pipe_regs.sv original
++++ rtl/pipeline/rv_pipe_regs.sv C09
+- if (kill || redirect) if_id <= '0;
++ if (kill) if_id <= '0;

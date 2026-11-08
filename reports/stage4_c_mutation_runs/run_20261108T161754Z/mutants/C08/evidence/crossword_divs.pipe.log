@@ -1,0 +1,8 @@
+MD_STATS starts=2 dones=1 busy_cycles=35 aborts_started=1
+STATS stalls=0 redirects=0 cycles=44 instret=5 assert_fail=0
+COV 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1
+TEST_RESULT: PASS hex=/tmp/stage4c_C08_m1uvpbn_/project/sim_out_stage4_4_verilator_20261108T162332Z/c_hex/crossword_divs.hex cause=1 expect=1 gp=0x0 instret=5 cycles=44 oob=0        
+- /tmp/stage4c_C08_m1uvpbn_/project/verification/environment/tb_rv_pipe_stage4.sv:272: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.032 2025-01-01
+- Verilator: $finish at 475ns; walltime 0.001 s; speed 521.816 us/s
+- Verilator: cpu 0.001 s on 1 threads; alloced 121 MB

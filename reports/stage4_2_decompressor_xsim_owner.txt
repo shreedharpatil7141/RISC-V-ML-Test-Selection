@@ -1,0 +1,6 @@
+Stage: 4.2 standalone RV32C decompressor
+Simulator: AMD Vivado XSim
+Evidence: owner-verified run, 2026-11-08
+RV32C_DECOMPRESS_UNIT PASS halfwords=65536 mismatches=0 anchors=16
+RV32C_SIM_LOG_CHECK PASS terminal_markers=1 pass_markers=1 halfwords=65536 mismatches=0 anchors=16
+STAGE4_2_DECOMPRESSOR_XSIM PASS halfwords=65536 anchors=16

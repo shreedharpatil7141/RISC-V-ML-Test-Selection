@@ -1,5 +1,6 @@
 rtl/packages/rv32_pkg.sv
 rtl/decoder/rv_decoder.sv
+rtl/decoder/rv32c_decompressor.sv
 rtl/decoder/rv_imm_gen.sv
 rtl/register_file/rv_regfile.sv
 rtl/alu/rv_alu.sv

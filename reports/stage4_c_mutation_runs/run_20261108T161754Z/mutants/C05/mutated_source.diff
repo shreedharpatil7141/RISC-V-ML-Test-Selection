@@ -1,0 +1,4 @@
+--- rtl/pipeline/rv_if_stage.sv original
++++ rtl/pipeline/rv_if_stage.sv C05
+- else if (!stall)   pc <= pc + instruction_bytes;
++ else if (!stall)   pc <= pc + (ENABLE_C ? 5'd4 : instruction_bytes);

@@ -1,0 +1,2 @@
+.org 0xfffe
+c.nop

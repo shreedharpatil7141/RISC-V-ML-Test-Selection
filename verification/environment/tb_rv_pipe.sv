@@ -19,8 +19,9 @@ module tb_rv_pipe #(
 
   word_t mem [0:MEM_WORDS-1];
 
-  word_t imem_addr, imem_rdata, dmem_addr, dmem_wdata, dmem_rdata;
-  logic dmem_re;
+  word_t imem_addr, imem_addr_next, imem_rdata, imem_rdata_next, dmem_addr, dmem_wdata, dmem_rdata;
+  logic imem_valid, imem_next_valid;
+  logic dmem_re, dmem_valid;
   logic [3:0] dmem_we;
   logic halted;
   halt_cause_e halt_cause;
@@ -35,8 +36,9 @@ module tb_rv_pipe #(
 
   rv_core_pipe #(.USE_ITERATIVE_M(USE_ITERATIVE_M)) dut (
     .clk(clk), .rst_n(rst_n),
-    .imem_addr(imem_addr), .imem_rdata(imem_rdata),
-    .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata), .dmem_rdata(dmem_rdata),
+    .imem_addr(imem_addr), .imem_addr_next(imem_addr_next), .imem_rdata(imem_rdata),
+    .imem_valid(imem_valid), .imem_rdata_next(imem_rdata_next), .imem_next_valid(imem_next_valid),
+    .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid),
     .halted(halted), .halt_cause(halt_cause), .halt_pc(halt_pc),
     .ret_valid(ret_valid), .ret_pc(ret_pc), .ret_insn(ret_insn),
     .ret_rd_we(ret_rd_we), .ret_rd(ret_rd), .ret_rd_wdata(ret_rd_wdata),
@@ -50,7 +52,11 @@ module tb_rv_pipe #(
   wire imem_oob = (imem_addr[31:16] != 16'h0);
   wire dmem_oob = (dmem_addr[31:16] != 16'h0);
   assign imem_rdata = imem_oob ? 32'h0 : mem[imem_addr[15:2]];
+  assign imem_valid = !imem_oob;
+  assign imem_rdata_next = (imem_addr_next[31:16] != 16'h0) ? 32'h0 : mem[imem_addr_next[15:2]];
+  assign imem_next_valid = (imem_addr_next[31:16] == 16'h0);
   assign dmem_rdata = dmem_oob ? 32'h0 : mem[dmem_addr[15:2]];
+  assign dmem_valid = !dmem_oob;
 
   always @(posedge clk) begin
     if (rst_n) begin

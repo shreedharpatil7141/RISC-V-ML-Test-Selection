@@ -1,4 +1,4 @@
-# Verification architecture and implemented Stage 3 flow
+# Verification architecture and implemented Stage 3/4 flows
 
 The project began with a planned modular SystemVerilog environment. The
 current Stage 3 evidence is produced by the directed self-checking testbenches
@@ -51,8 +51,35 @@ results and event hits are tabulated in the architecture status document.
 ## Future verification work
 
 The longer-term plan mentions generated constrained-random tests, class-based
-drivers, monitors, scoreboards, generic coverage crosses, CSR/A/C verification,
+drivers, monitors, scoreboards, generic coverage crosses, A/CSR verification,
 interrupt injection, and architectural compliance testing. Those components
 or results must not be inferred from the Stage 3 regression. The RISC-V
 architectural test suite has not been run, and no compliance claim is made.
 The MATLAB machine-learning pipeline has no reported Stage 3 results.
+
+## Stage 4 RV32IMC evidence path
+
+`prepare_stage4_4.py` assembles the fixed legacy and mixed-width C sources,
+generates independent ISS traces, and checks all expected halt causes before
+simulation. The full XSim/Verilator runners preserve the 209-case C-disabled
+suite, execute 21 C-enabled cases on golden and pipeline RTL, compare full
+architectural traces against the ISS and each other, and validate the timing
+model and divider protocol. Seven units include the independent 65,536-pattern
+decompressor check. The coverage checker derives architectural bins from ISS
+retirement/STOP records and microarchitectural events from DUT sidecars and
+RTL COV counters; these evidence classes are reported separately.
+
+The current separate simulator reports each show 230 cases, 460 ISS
+comparisons, 230 pipeline-to-golden traces, seven units, all 16 pipeline
+events, and zero coverage errors. Verilator-only mutation evidence combines
+eight detections from the original ten-mutant campaign with a focused run of
+C07/C09 after parser correction. The original two INVALID records and their
+trace reanalysis are retained; this is not one fresh ten-mutant run. No XSim
+mutation campaign is claimed. Exact commands and expected markers are in
+[`README.md`](README.md) and the
+[`stage4_coverage_manifest.md`](stage4_coverage_manifest.md).
+
+The reference model is software-only and independent of decompressor/pipeline
+RTL. C-disabled mode keeps released Stage 3 behavior. This is finite directed
+verification, not full architectural compliance; no synthesis/timing or ML
+result is claimed.

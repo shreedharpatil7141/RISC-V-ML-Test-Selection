@@ -1,0 +1,9 @@
+Stage: 4.2 standalone RV32C decompressor
+Simulator: AMD Vivado XSim
+Evidence: owner-reported failed output preserved verbatim in the Stage 4.2 log
+ANCHOR_DIFF raw=c009 expected_exp=00040463 actual_exp=00040163
+RV32C_DECOMPRESS_UNIT FAIL halfwords=65536 mismatches=1 anchors=16
+RV32C_DECOMPRESS_UNIT PASS halfwords=65536 mismatches=0 anchors=16
+STAGE4_2_DECOMPRESSOR_XSIM PASS
+Adjudication: INVALID contradictory output. The c009 expected anchor was incorrect;
+the false terminal PASS was possible because it was unconditional after failure.

@@ -1,0 +1,4 @@
+Simulator: XSim (resume from saved output)
+legacy_c_disabled=209 validated from source, image, ISS trace, RTL trace, and PASS logs
+rv32imc=12 rerun and matched against current-source ISS references
+STAGE4_3_GOLDEN_XSIM_RESUME PASS legacy=209 rv32imc=12

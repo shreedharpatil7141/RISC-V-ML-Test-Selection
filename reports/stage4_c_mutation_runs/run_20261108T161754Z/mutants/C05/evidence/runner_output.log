@@ -1,0 +1,13 @@
+TOOL PREFLIGHT PASS sim=verilator python=/usr/bin/python3 output=/tmp/stage4c_C05_bfa73cwq/project/sim_out_stage4_4_verilator_20261108T161954Z
+STAGE4_4_ARTIFACT_PREFLIGHT PASS legacy=209 C=21 images=230 references=230
+[unit arith] running
+[unit md] running
+[unit decoder] running
+[unit pipe] running
+[unit diviter] running
+[unit mdexec] running
+[unit decompress] running
+[rv32imc 1/21] families
+
+--- STDERR ---
+STAGE4_4 FAIL: families/pipe vs ISS: trace mismatch at line 3; actual='I 00000004 00006505 02 00001537 10 00001000 0 00000000 00000000'; expected='I 00000002 00005481 02 fe000493 09 ffffffe0 0 00000000 00000000'; actual_lines=43 expected_lines=52

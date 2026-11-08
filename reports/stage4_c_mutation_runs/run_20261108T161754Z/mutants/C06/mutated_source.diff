@@ -1,0 +1,4 @@
+--- rtl/pipeline/rv_ex_stage.sv original
++++ rtl/pipeline/rv_ex_stage.sv C06
+- id_ex.pc + (ENABLE_C ? id_ex.ilen_bytes : 5'd4)
++ id_ex.pc + 5'd4

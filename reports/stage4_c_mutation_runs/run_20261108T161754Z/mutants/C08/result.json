@@ -1,0 +1,20 @@
+{
+  "id": "C08",
+  "name": "ID/EX metadata does not hold during divider busy",
+  "target": "rtl/pipeline/rv_pipe_regs.sv",
+  "status": "CAUGHT",
+  "build_success": true,
+  "simulator_started": true,
+  "detector": "crossword_divs: independently detected full pipeline/ISS architectural trace mismatch",
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/stage4c_C08_m1uvpbn_/project/scripts/simulation/run_stage4_4.py",
+    "--sim",
+    "verilator",
+    "--only-c"
+  ],
+  "cwd": "/tmp/stage4c_C08_m1uvpbn_/project",
+  "exit_code": 1,
+  "timeout": false,
+  "elapsed_s": 67.77
+}

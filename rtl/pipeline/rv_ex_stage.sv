@@ -6,7 +6,8 @@ module rv_ex_stage
   import rv32_pkg::*;
   import rv_pipe_pkg::*;
 #(
-  parameter bit USE_ITERATIVE_M = 1'b1
+  parameter bit USE_ITERATIVE_M = 1'b1,
+  parameter bit ENABLE_C = 1'b0
 )
 (
   input  id_ex_t   id_ex,
@@ -94,12 +95,14 @@ module rv_ex_stage
   assign target       = id_ex.is_jalr ? {alu_y[31:1], 1'b0} : (id_ex.pc + id_ex.imm);
   assign md_result    = USE_ITERATIVE_M ? md_y : md_comb_y;
   // Preserve the Stage 2 link-value mutation target; M result selection is applied at EX/MEM below.
-  assign result       = (id_ex.wb_sel == WB_PC4) ? (id_ex.pc + 32'd4) : alu_y;
+  assign result       = (id_ex.wb_sel == WB_PC4) ?
+                        (id_ex.pc + (ENABLE_C ? id_ex.ilen_bytes : 5'd4)) : alu_y;
 
   halt_cause_e cause;
   always_comb begin
     cause = id_ex.cause;
-    if (cause == HALT_NONE && redirect_raw && target[1]) cause = HALT_FETCH_MISALIGN;
+    if (cause == HALT_NONE && redirect_raw && (ENABLE_C ? target[0] : target[1]))
+      cause = HALT_FETCH_MISALIGN;
   end
 
   assign redirect        = id_ex.valid && (cause == HALT_NONE) && redirect_raw;
@@ -108,7 +111,9 @@ module rv_ex_stage
   always_comb begin
     ex_mem_next.valid      = id_ex.valid;
     ex_mem_next.pc         = id_ex.pc;
+    ex_mem_next.raw_insn   = id_ex.raw_insn;
     ex_mem_next.insn       = id_ex.insn;
+    ex_mem_next.ilen_bytes = id_ex.ilen_bytes;
     ex_mem_next.rd         = id_ex.rd;
     ex_mem_next.rs2        = id_ex.rs2;
     ex_mem_next.reg_we     = id_ex.reg_we;

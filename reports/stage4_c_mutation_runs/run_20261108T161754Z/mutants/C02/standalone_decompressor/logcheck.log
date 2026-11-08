@@ -1,0 +1,3 @@
+RV32C_SIM_LOG_CHECK FAIL anchor_difference_present vector_difference_present pass_marker_count=0 terminal_fail_present fatal_diagnostic_present
+
+--- STDERR ---

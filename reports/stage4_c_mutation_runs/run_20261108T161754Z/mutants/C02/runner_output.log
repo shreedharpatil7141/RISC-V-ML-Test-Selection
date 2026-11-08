@@ -1,0 +1,19 @@
+VECTOR_DIFF n=0 raw=0000 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=1 exp_hint=0 exp_word=00000000 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=00000000
+VECTOR_DIFF n=4 raw=0004 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=1 exp_hint=0 exp_word=00000000 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=00000000
+VECTOR_DIFF n=8 raw=0008 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=1 exp_hint=0 exp_word=00000000 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=00000000
+VECTOR_DIFF n=12 raw=000c exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=1 exp_hint=0 exp_word=00000000 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=00000000
+VECTOR_DIFF n=16 raw=0010 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=1 exp_hint=0 exp_word=00000000 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=00000000
+VECTOR_DIFF n=20 raw=0014 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=1 exp_hint=0 exp_word=00000000 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=00000000
+VECTOR_DIFF n=24 raw=0018 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=1 exp_hint=0 exp_word=00000000 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=00000000
+VECTOR_DIFF n=28 raw=001c exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=1 exp_hint=0 exp_word=00000000 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=00000000
+ANCHOR_DIFF raw=0000 expected_exp=00000000 expected_ill=1 expected_hint=0 expected_c=1 expected_32=0 expected_unsup=0 expected_len=16 actual_exp=00000000 actual_ill=0 actual_hint=0 actual_c=1 actual_32=0 actual_unsup=0 actual_len=16
+RV32C_DECOMPRESS_UNIT FAIL halfwords=65536 mismatches=9 anchors=16 reason=vector or hand-anchor mismatch
+[65552000] %Fatal: tb_rv32c_decompressor.sv:26: Assertion failed in tb_rv32c_decompressor.fail_and_fatal: RV32C_DECOMPRESS_UNIT fatal: vector or hand-anchor mismatch
+%Error: /tmp/stage4c_C02_kmuaws_7/project/verification/environment/tb_rv32c_decompressor.sv:26: Verilog $stop
+Aborting...
+
+--- STDERR ---
+
+RV32C_SIM_LOG_CHECK FAIL anchor_difference_present vector_difference_present pass_marker_count=0 terminal_fail_present fatal_diagnostic_present
+
+--- STDERR ---

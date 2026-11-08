@@ -1,0 +1,4 @@
+--- rtl/decoder/rv32c_decompressor.sv original
++++ rtl/decoder/rv32c_decompressor.sv C04
+- if (raw_halfword[1:0] != 2'b11) begin
++ if (raw_halfword[1:0] == 2'b11) begin

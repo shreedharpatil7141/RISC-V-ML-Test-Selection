@@ -1,0 +1,21 @@
+{
+  "id": "C09",
+  "name": "Redirect does not flush younger IF/ID instruction",
+  "target": "rtl/pipeline/rv_pipe_regs.sv",
+  "status": "INVALID",
+  "build_success": true,
+  "simulator_started": true,
+  "detector": null,
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/stage4c_C09_3lshr8pg/project/scripts/simulation/run_stage4_4.py",
+    "--sim",
+    "verilator",
+    "--only-c"
+  ],
+  "cwd": "/tmp/stage4c_C09_3lshr8pg/project",
+  "exit_code": 1,
+  "timeout": false,
+  "elapsed_s": 69.56,
+  "reason": "no independent named detection or valid complete PASS"
+}

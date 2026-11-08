@@ -1,0 +1,29 @@
+VECTOR_DIFF n=24865 raw=6121 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=04010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=01010113
+VECTOR_DIFF n=24869 raw=6125 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=06010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=03010113
+VECTOR_DIFF n=24873 raw=6129 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=0c010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=09010113
+VECTOR_DIFF n=24877 raw=612d exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=0e010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=0b010113
+VECTOR_DIFF n=24881 raw=6131 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=14010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=11010113
+VECTOR_DIFF n=24885 raw=6135 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=16010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=13010113
+VECTOR_DIFF n=24889 raw=6139 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=1c010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=19010113
+VECTOR_DIFF n=24893 raw=613d exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=1e010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=1b010113
+VECTOR_DIFF n=24897 raw=6141 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=01010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=04010113
+VECTOR_DIFF n=24901 raw=6145 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=03010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=06010113
+VECTOR_DIFF n=24905 raw=6149 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=09010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=0c010113
+VECTOR_DIFF n=24909 raw=614d exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=0b010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=0e010113
+VECTOR_DIFF n=24913 raw=6151 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=11010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=14010113
+VECTOR_DIFF n=24917 raw=6155 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=13010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=16010113
+VECTOR_DIFF n=24921 raw=6159 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=19010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=1c010113
+VECTOR_DIFF n=24925 raw=615d exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=1b010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=1e010113
+VECTOR_DIFF n=28961 raw=7121 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=e4010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=e1010113
+VECTOR_DIFF n=28965 raw=7125 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=e6010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=e3010113
+VECTOR_DIFF n=28969 raw=7129 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=ec010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=e9010113
+VECTOR_DIFF n=28973 raw=712d exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=ee010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=eb010113
+VECTOR_DIFF n=28977 raw=7131 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=f4010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=f1010113
+VECTOR_DIFF n=28981 raw=7135 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=f6010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=f3010113
+VECTOR_DIFF n=28985 raw=7139 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=fc010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=f9010113
+VECTOR_DIFF n=28989 raw=713d exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=fe010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=fb010113
+VECTOR_DIFF n=28993 raw=7141 exp_len=16 exp_c=1 exp_32=0 exp_unsup=0 exp_illegal=0 exp_hint=0 exp_word=e1010113 got_len=16 got_c=1 got_32=0 got_unsup=0 got_illegal=0 got_hint=0 got_word=e4010113
+RV32C_DECOMPRESS_UNIT FAIL halfwords=65536 mismatches=32 anchors=16 reason=vector or hand-anchor mismatch
+[65552000] %Fatal: tb_rv32c_decompressor.sv:26: Assertion failed in tb_rv32c_decompressor.fail_and_fatal: RV32C_DECOMPRESS_UNIT fatal: vector or hand-anchor mismatch
+%Error: /tmp/stage4c_C01_vdwdcpy1/project/verification/environment/tb_rv32c_decompressor.sv:26: Verilog $stop
+Aborting...

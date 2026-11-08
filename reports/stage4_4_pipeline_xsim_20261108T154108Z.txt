@@ -1,0 +1,12 @@
+Simulator: xsim
+legacy_c_disabled=209
+rv32imc_existing=12
+rv32imc_pipeline_specific=9
+rtl_vs_iss_and_golden=460
+unit_suites=7
+unit_decompress_halfwords=65536
+divider_protocol_records=230
+pipeline_vs_golden_full_traces=230
+pipeline_event_hits=72,48,8873,7919,11820,2118,5112,270,546,3780,7302,467,215,319,7646,69
+divider_protocol_checked_cases=230 starts=2027 dones=2027 busy_cycles=66891 aborts=0
+STAGE4_4_PIPELINE_XSIM PASS legacy=209 rv32imc=21 full_trace_comparisons=460 units=7

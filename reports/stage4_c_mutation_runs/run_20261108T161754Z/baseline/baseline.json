@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/stage4c_baseline_uljoaivl/project/scripts/simulation/run_stage4_coverage.py",
+    "--sim",
+    "verilator"
+  ],
+  "cwd": "/tmp/stage4c_baseline_uljoaivl/project",
+  "exit_code": 0,
+  "timeout": false,
+  "elapsed_s": 69.89
+}

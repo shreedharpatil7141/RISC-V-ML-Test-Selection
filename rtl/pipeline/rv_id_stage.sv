@@ -64,16 +64,18 @@ module rv_id_stage
 
   halt_cause_e id_cause;
   always_comb begin
-    id_cause = HALT_NONE;
-    if (dec_illegal)    id_cause = HALT_ILLEGAL;
-    else if (is_ecall)  id_cause = HALT_ECALL;
-    else if (is_ebreak) id_cause = HALT_EBREAK;
+    id_cause = if_id.cause;
+    if (id_cause == HALT_NONE && dec_illegal)    id_cause = HALT_ILLEGAL;
+    else if (id_cause == HALT_NONE && is_ecall)  id_cause = HALT_ECALL;
+    else if (id_cause == HALT_NONE && is_ebreak) id_cause = HALT_EBREAK;
   end
 
   always_comb begin
     id_ex_next.valid     = if_id.valid;
     id_ex_next.pc        = if_id.pc;
+    id_ex_next.raw_insn  = if_id.raw_insn;
     id_ex_next.insn      = if_id.insn;
+    id_ex_next.ilen_bytes = if_id.ilen_bytes;
     id_ex_next.rd        = rd;
     id_ex_next.rs1       = rs1;
     id_ex_next.rs2       = rs2;

@@ -4,7 +4,7 @@
 // Unified 64 KiB memory, combinational read, synchronous byte-enable write.
 // Prints exactly one "TEST_RESULT: PASS|FAIL ..." line. Trace format matches scripts/simulation/rv32i_iss.py.
 `timescale 1ns/1ps
-module tb_rv_core;
+module tb_rv_core #(parameter bit ENABLE_C = 1'b0);
   import rv32_pkg::*;
 
   localparam int MEM_WORDS = 16384;   // 64 KiB
@@ -15,7 +15,8 @@ module tb_rv_core;
 
   word_t mem [0:MEM_WORDS-1];
 
-  word_t imem_addr, imem_rdata, dmem_addr, dmem_wdata, dmem_rdata;
+  word_t imem_addr, imem_addr_next, imem_rdata, imem_rdata_next, dmem_addr, dmem_wdata, dmem_rdata;
+  logic imem_valid, imem_next_valid, dmem_valid;
   logic dmem_re;
   logic [3:0] dmem_we;
   logic halted;
@@ -26,10 +27,11 @@ module tb_rv_core;
   reg_t ret_rd;
   logic [3:0] ret_mem_be;
 
-  rv_core_single dut (
+  rv_core_single #(.ENABLE_C(ENABLE_C)) dut (
     .clk(clk), .rst_n(rst_n),
-    .imem_addr(imem_addr), .imem_rdata(imem_rdata),
-    .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata), .dmem_rdata(dmem_rdata),
+    .imem_addr(imem_addr), .imem_addr_next(imem_addr_next), .imem_rdata(imem_rdata), .imem_valid(imem_valid),
+    .imem_rdata_next(imem_rdata_next), .imem_next_valid(imem_next_valid),
+    .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid),
     .halted(halted), .halt_cause(halt_cause), .halt_pc(halt_pc),
     .ret_valid(ret_valid), .ret_pc(ret_pc), .ret_insn(ret_insn), .ret_pc_next(ret_pc_next),
     .ret_rd_we(ret_rd_we), .ret_rd(ret_rd), .ret_rd_wdata(ret_rd_wdata),
@@ -41,8 +43,12 @@ module tb_rv_core;
   int oob_errors = 0;
   wire imem_oob = (imem_addr[31:16] != 16'h0);
   wire dmem_oob = (dmem_addr[31:16] != 16'h0);
+  assign imem_valid = !imem_oob;
+  assign imem_next_valid = (imem_addr_next[31:16] == 16'h0);
   assign imem_rdata = imem_oob ? 32'h0 : mem[imem_addr[15:2]];
+  assign imem_rdata_next = imem_next_valid ? mem[imem_addr_next[15:2]] : 32'h0;
   assign dmem_rdata = dmem_oob ? 32'h0 : mem[dmem_addr[15:2]];
+  assign dmem_valid = !dmem_oob;
 
   always @(posedge clk) begin
     if (rst_n) begin
@@ -91,8 +97,12 @@ module tb_rv_core;
         else if (st_n == 2) st_d = st_d & 32'hFFFF;
       end
       if (ret_rd_we) begin rdn = int'(ret_rd); rdv = ret_rd_wdata; end
-      if (trace_fd != 0)
-        $fdisplay(trace_fd, "%08x %08x %02d %08x %0d %08x %08x", ret_pc, ret_insn, rdn, rdv, st_n, st_a, st_d);
+      if (trace_fd != 0) begin
+        if (ENABLE_C)
+          $fdisplay(trace_fd, "I %08x %08x %02d %08x %02d %08x %0d %08x %08x", ret_pc, dut.ret_raw_insn, dut.ret_ilen_bytes, dut.ret_expanded_insn, rdn, rdv, st_n, st_a, st_d);
+        else
+          $fdisplay(trace_fd, "%08x %08x %02d %08x %0d %08x %08x", ret_pc, ret_insn, rdn, rdv, st_n, st_a, st_d);
+      end
     end
   end
 
@@ -114,6 +124,7 @@ module tb_rv_core;
     void'($value$plusargs("CHECK_GP=%d", check_gp));
     void'($value$plusargs("TIMEOUT=%d", timeout));
     if ($value$plusargs("TRACE=%s", trace_file)) trace_fd = $fopen(trace_file, "w");
+    if (trace_fd != 0 && ENABLE_C) $fdisplay(trace_fd, "TRACE_V2 RV32IMC pc raw_insn ilen_bytes expanded_insn rd rdval st_size st_addr st_data");
 
     for (int i = 0; i < MEM_WORDS; i++) mem[i] = 32'h0;
     $readmemh(hex_file, mem);
@@ -132,6 +143,7 @@ module tb_rv_core;
     if (check_gp != 0 && expect_cause == int'(HALT_ECALL)) pass = pass && (gp_val == 32'h1);
 
     if (trace_fd != 0) begin
+      if (ENABLE_C) $fdisplay(trace_fd, "STOP %08x %08x %02d %0d", halt_pc, dut.halt_raw_insn, dut.halt_ilen_bytes, int'(halt_cause));
       $fdisplay(trace_fd, "HALT %0d %08x", int'(halt_cause), halt_pc);
       for (int r = 1; r < 32; r++) $fdisplay(trace_fd, "REG %0d %08x", r, dut.u_rf.regs[r]);
       for (int a = 16'h4000; a < 16'h6000; a += 4)

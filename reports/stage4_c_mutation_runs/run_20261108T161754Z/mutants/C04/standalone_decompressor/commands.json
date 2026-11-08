@@ -1,0 +1,31 @@
+{
+  "vectors": [
+    "/usr/bin/python3",
+    "/tmp/stage4c_C04_nf4tjy3u/project/scripts/simulation/generate_stage4_2_vectors.py",
+    "/mnt/c/RISC-V-ML-Test-Selection/reports/stage4_c_mutation_runs/run_20261108T161754Z/mutants/C04/standalone_decompressor/vectors.txt"
+  ],
+  "build": [
+    "verilator",
+    "--binary",
+    "--timing",
+    "--top-module",
+    "tb_rv32c_decompressor",
+    "--Mdir",
+    "/mnt/c/RISC-V-ML-Test-Selection/reports/stage4_c_mutation_runs/run_20261108T161754Z/mutants/C04/standalone_decompressor/build",
+    "-Wall",
+    "-Wno-fatal",
+    "/tmp/stage4c_C04_nf4tjy3u/project/rtl/decoder/rv32c_decompressor.sv",
+    "/tmp/stage4c_C04_nf4tjy3u/project/verification/environment/tb_rv32c_decompressor.sv",
+    "-o",
+    "decompress"
+  ],
+  "simulate": [
+    "/mnt/c/RISC-V-ML-Test-Selection/reports/stage4_c_mutation_runs/run_20261108T161754Z/mutants/C04/standalone_decompressor/build/decompress",
+    "+VECTORS=/mnt/c/RISC-V-ML-Test-Selection/reports/stage4_c_mutation_runs/run_20261108T161754Z/mutants/C04/standalone_decompressor/vectors.txt"
+  ],
+  "strict_log_check": [
+    "/usr/bin/python3",
+    "/tmp/stage4c_C04_nf4tjy3u/project/scripts/simulation/check_stage4_2_sim_log.py",
+    "/mnt/c/RISC-V-ML-Test-Selection/reports/stage4_c_mutation_runs/run_20261108T161754Z/mutants/C04/standalone_decompressor/unit.log"
+  ]
+}

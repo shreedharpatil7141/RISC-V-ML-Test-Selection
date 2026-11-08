@@ -1,0 +1,13 @@
+name,cause,instret,start_pc
+mixed_cross,2,3,0
+jump_link,2,1,0
+jalr_link,2,3,0
+branches,2,4,0
+loads_stores,2,7,0
+hints_overlap,2,10,0
+reserved,3,0,0
+floating_illegal,3,0,0
+custom_shift_illegal,3,0,0
+load_boundary,7,1,0
+last_halfword,9,1,65534
+missing_second_parcel,9,0,65534

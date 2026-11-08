@@ -1,0 +1,38 @@
+Reanalysis: checker-only diagnosis from saved XSim artifacts
+Status: PENDING_CHECKER_EXECUTION (Python 3 is unavailable in this workspace)
+Original coverage report: reports/stage4_c_coverage_xsim_20261108T160146Z.txt
+Functional regression report: reports/stage4_4_pipeline_xsim_20261108T154108Z.txt
+Saved run: sim_out_stage4_4_xsim_20261108T154108Z
+
+Original error:
+  bin=A.C.FAMILY.EBREAK
+  expectation=at least 1 observed instruction
+  original checker actual=0
+  cause=checker counted compressed families only in ISS retired I records;
+        C.EBREAK is intentionally represented by the ISS STOP record.
+
+Independent saved-artifact evidence:
+  raw instruction=0x9002, length=2, cause=2 (C.EBREAK)
+  ISS STOP and matching DUT C FAULT sidecar records: 9
+  cases=families,control_flow,crossing,stack_jump,hint_x0,final_parcel,
+        jalr_link,compressed_links,branch_store_jalr
+  examples:
+    c_iss/families.trace: STOP 00000024 00009002 02 2
+    families.pipe.ccov: C FAULT 00000024 00009002 2 2
+    c_iss/final_parcel.trace: STOP 0000fffe 00009002 02 2
+    final_parcel.pipe.ccov: C FAULT 0000fffe 00009002 2 2
+
+Classification: checker defect. The bin is reachable and observed; it is a
+faulting/halting instruction, not a retired instruction. Do not count it as
+retired. The corrected checker counts this family from the independent ISS
+STOP only when length=2, cause=2, and raw halfword=0x9002. Existing sidecar
+versus STOP identity validation confirms the matching DUT fault evidence.
+
+Corrected expected bin result from saved evidence:
+  A.C.FAMILY.EBREAK expected>=1, actual=9
+  projected coverage_errors=0 (not yet confirmed by rerunning the checker)
+
+The checker now prints each ERROR with its bin/test and expected/actual
+values. Run the focused owner command documented in the project logs to
+produce a timestamped checker-generated reanalysis report and PASS marker.
+No simulator was rerun and no bin was waived.
