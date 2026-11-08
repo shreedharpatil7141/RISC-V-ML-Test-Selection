@@ -1,6 +1,6 @@
 # Stage 4 C-extension coverage and mutation plan
 
-**Gate: coverage and mutation evidence approved; final owner release review pending.** The dictionary IDs and hit rules were fixed before adding C-specific instrumentation. This is finite directed evidence for the implemented RV32IMC subset, not architectural compliance.
+**Gate: Stage 4 complete and released.** The dictionary IDs and hit rules were fixed before adding C-specific instrumentation. This is finite directed evidence for the implemented RV32IMC subset, not architectural compliance.
 
 ## Evidence classes and stable dictionary
 

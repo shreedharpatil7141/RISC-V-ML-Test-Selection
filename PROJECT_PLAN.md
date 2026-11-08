@@ -11,7 +11,7 @@
 | 1 | RV32I core (non-pipelined) | `rv32_pkg`, PC, decoder, imm-gen, regfile, ALU, control, memory IF, top, TBs | Every RV32I instruction passes directed self-checking tests; clean XSim compile |
 | 2 | 5-stage pipeline | Pipeline regs, forwarding, hazard unit, branch handling, stalls/flushes, retirement port | RV32I tests still pass; RAW/load-use/control-hazard tests pass; retirement trace matches Stage 1 |
 | 3 | M extension | MUL/DIV unit | All 8 ops; div-by-zero, signed overflow (MIN/-1) corner cases |
-| 4 | C extension | RV32C v2.0 integer encodings, independent compressed model/assembler, decompressor, mixed-length fetch and pipeline integration | Approved implementation, coverage, and mutation gates; exhaustive 16-bit decode, mixed 16/32-bit execution, precise retirement/fault, both simulators, independent ISS, finite coverage and bounded mutation evidence; final owner release review remains |
+| 4 | C extension | RV32C v2.0 integer encodings, independent compressed model/assembler, decompressor, mixed-length fetch and pipeline integration | Complete and released on `main` with annotated `stage4-complete`; exhaustive 16-bit decode, mixed 16/32-bit execution, precise retirement/fault, separate XSim/Verilator evidence, and bounded Verilator-only mutation evidence |
 | 5 | A extension | LR/SC, AMOs, reservation | Reservation set/clear/failure semantics; all 9 AMOs |
 | 6 | Zicsr + Zifencei | CSR unit, FENCE.I | CSR RW/RS/RC(+I) semantics incl. no-write cases, illegal CSR access |
 | 7 | M-mode privileged | Traps, MRET, interrupts, exceptions | Each exception cause and 3 interrupt sources verified |
@@ -49,7 +49,8 @@ operation with pipeline holds. RV32C adds the integer compressed subset only.
 Floating-point/Zc, A, Zicsr, Zifencei, and privileged trap/interrupt support
 remain outside implementation scope.
 
-Stage 4 is validated on `stage4-c-extension`, created from `stage3-complete`.
+Stage 4 is complete on `main`, released from `stage4-c-extension` created
+from `stage3-complete`.
 The Stage 4.0 review and plan are recorded in
 `documentation/architecture/stage4_0_rv32c_review.md`, pinned to the official
 Unprivileged ISA manual release v20260120 (RV32C v2.0). Stage 4.1 software
@@ -57,9 +58,10 @@ model/assembler/ISS validation passed all five software groups. Stages 4.2–4.4
 passed standalone decompressor, mixed-width golden-core fetch, and C-enabled
 pipeline gates. The subsequent coverage and mutation gate is approved on
 separate XSim/Verilator coverage reports and Verilator-only mutation evidence.
-This documentation package is prepared for final owner review; Stage 4 has
-not been merged or tagged complete. `stage2-complete`, `stage3-complete`, and
-historical reports remain unchanged.
+Stage 4 release preserves `stage2-complete`, `stage3-complete`, and the
+historical reports. XSim and Verilator results remain separate; mutation
+provenance remains split between the original campaign and focused C07/C09
+rerun, rather than represented as one fresh ten-mutant campaign.
 
 C-enabled fetch accepts 16-bit parcels, including offset-two 32-bit word
 crossings. Original PC, raw instruction bits, and byte length travel through
