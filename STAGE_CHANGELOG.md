@@ -457,3 +457,6 @@ Documentation/repository review only. No RTL or testbench changes. Items: verifi
 - Separate owner PASS reports: XSim `195247Z` and Verilator `194647Z`, each with 248 cases, 496 ISS comparisons, 248 pipeline/golden traces, eight unit suites, and atomic checks. Later Verilator PASS and fresh-baseline reports are preserved independently.
 - Mutation provenance is split across original A03–A05 detections, focused A01 detection, and A02 retained-evidence reanalysis. Original A01/A02 INVALID records remain unmodified; the original run plus focused run plus reanalysis provide five detections, not a fresh five-mutant campaign. Mutation is Verilator-only.
 - Corrected A02 diagnostic classification, but its implementation check could not be run because Python is unavailable. No new simulation/campaign was run. Limitations remain: finite directed tests; no full compliance, multi-hart/RVWMO, synthesis/timing, unsupported ISA, privileged/CSR, or ML evidence. Awaiting release approval.
+
+### Stage 5 release approval (2026-11-09)
+- Owner approved release. Preserve separate simulator results and mutation provenance (five detections across original/focused runs and A02 reanalysis; updated A02 classifier execution unverified). Main merge and new annotated completion tag are authorized and being finalized. Stage 6 remains unopened.

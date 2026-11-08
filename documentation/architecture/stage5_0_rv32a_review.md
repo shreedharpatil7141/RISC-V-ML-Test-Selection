@@ -1,6 +1,6 @@
 # Stage 5.0 — RV32A specification review and software/planning batch
 
-**Status:** Stage 5 implementation and validation passed on `stage5-a-extension`; final release approval is pending. No merge or `stage5-complete` tag has been made. The software/planning checkpoint is `603b1a07b05a9e8e55bae811634e1cdc16baa16d`; baseline is `stage4-complete` at `4a418f1eb94ae2ba6d59b03e0043c438844ed8f8`.
+**Status:** Stage 5 implementation and validation passed on `stage5-a-extension`; the owner approved release, and merge/tag finalization is in progress. The software/planning checkpoint is `603b1a07b05a9e8e55bae811634e1cdc16baa16d`; baseline is `stage4-complete` at `4a418f1eb94ae2ba6d59b03e0043c438844ed8f8`.
 
 ## Pinned specification and scope
 
@@ -94,7 +94,7 @@ Verilator-only mutation evidence is distributed across runs and reanalysis: the 
 
 ## Current implementation gate
 
-Implemented scope is RV32I/M/C plus the RV32A word subset: LR.W, SC.W, and nine word AMOs. The design assumes one hart, no wait states, and no concurrent external writer. Results do not establish full architectural compliance, multi-hart/RVWMO behavior, synthesis/timing, unsupported extensions, CSR/privileged behavior, or ML results. The validated Stage 5 checkpoint is awaiting final owner release approval; Stage 6 has not started.
+Implemented scope is RV32I/M/C plus the RV32A word subset: LR.W, SC.W, and nine word AMOs. The design assumes one hart, no wait states, and no concurrent external writer. Results do not establish full architectural compliance, multi-hart/RVWMO behavior, synthesis/timing, unsupported extensions, CSR/privileged behavior, or ML results. The owner approved Stage 5 release; Stage 6 has not started.
 
 ## Original gated follow-on plan
 
