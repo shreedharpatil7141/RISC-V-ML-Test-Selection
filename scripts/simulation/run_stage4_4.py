@@ -3,10 +3,11 @@
 import argparse, csv, datetime, os, shutil, subprocess, sys, traceback
 from pathlib import Path
 HERE=Path(__file__).resolve().parent; ROOT=HERE.parents[1]
-p=argparse.ArgumentParser(description=__doc__); p.add_argument('--sim',choices=('xsim','verilator'),required=True); a=p.parse_args(); SIM=a.sim
+p=argparse.ArgumentParser(description=__doc__); p.add_argument('--sim',choices=('xsim','verilator'),required=True); p.add_argument('--only-c',action='store_true',help='run all C cases after software preflight; reserved for isolated C mutation checks'); a=p.parse_args(); SIM=a.sim; ONLY_C=a.only_c
 STAMP=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
 OUT=ROOT/f'sim_out_stage4_4_{SIM}_{STAMP}'; REPORT=ROOT/'reports'/f'stage4_4_pipeline_{SIM}_{STAMP}.txt'
 TOOLS={}; COMSPEC=None
+EXPECTED_C_CASES=21
 
 def resolve(name): return TOOLS.get(name) or shutil.which(name) or name
 def command_for(argv):
@@ -137,11 +138,11 @@ def main():
     prep=run([sys.executable,HERE/'prepare_stage4_4.py',OUT],log=OUT/'software_preflight.log')
     if 'STAGE4_4_LEGACY_PREFLIGHT PASS tests=209 source_consistent=209 images=209 references=209' not in prep:
         raise RuntimeError('complete 209-case legacy software preflight marker missing')
-    if 'STAGE4_4_SOFTWARE_PREFLIGHT PASS legacy=209 c_cases=20 total=229 images=229 references=229 errors=0' not in prep:
+    if f'STAGE4_4_SOFTWARE_PREFLIGHT PASS legacy=209 c_cases={EXPECTED_C_CASES} total={209+EXPECTED_C_CASES} images={209+EXPECTED_C_CASES} references={209+EXPECTED_C_CASES} errors=0' not in prep:
         raise RuntimeError('complete Stage 4.4 software preflight marker missing')
     legacy=list(csv.DictReader((OUT/'manifest_all.csv').open(newline='')))
     crows=list(csv.DictReader((OUT/'c_manifest.csv').open(newline='')))
-    if len(legacy)!=209 or len(crows)!=20: raise RuntimeError(f'suite inventory mismatch legacy={len(legacy)} C={len(crows)}')
+    if len(legacy)!=209 or len(crows)!=EXPECTED_C_CASES: raise RuntimeError(f'suite inventory mismatch legacy={len(legacy)} C={len(crows)} expected_C={EXPECTED_C_CASES}')
     names=[r['name'] for r in legacy+crows]
     if len(set(names))!=len(names): raise RuntimeError('legacy and C manifests contain duplicate output basenames')
     missing_artifacts=[]
@@ -155,7 +156,8 @@ def main():
     if missing_artifacts:
         for f in missing_artifacts: print(f'PREFLIGHT_MISSING {f}',file=sys.stderr,flush=True)
         raise RuntimeError(f'artifact preflight failed; missing={len(missing_artifacts)} paths listed above')
-    print(f'STAGE4_4_ARTIFACT_PREFLIGHT PASS legacy=209 C={len(crows)} images=229 references=229',flush=True)
+    total_configs=len(legacy)+len(crows)
+    print(f'STAGE4_4_ARTIFACT_PREFLIGHT PASS legacy=209 C={len(crows)} images={total_configs} references={total_configs}',flush=True)
     rtl=ROOT/'scripts/simulation/stage4_4_rtl.f'
     tbdir=ROOT/'verification/environment'
     tops=[('arith','tb_rv_units','tb_rv_units.sv','UNIT_RESULT: PASS'),('md','tb_rv_md','tb_rv_md.sv','MD_UNIT_RESULT: PASS'),('decoder','tb_rv_decoder_m','tb_rv_decoder_m.sv','DECODER_M_RESULT: PASS checks=1024 errors=0'),('pipe','tb_rv_pipe_units','tb_rv_pipe_units.sv','PIPE_UNIT_RESULT: PASS'),('diviter','tb_rv_div_iter','tb_rv_div_iter.sv','DIV_ITER_RESULT: PASS'),('mdexec','tb_rv_md_exec','tb_rv_md_exec.sv','MD_EXEC_RESULT: PASS'),('decompress','tb_rv32c_decompressor','tb_rv32c_decompressor.sv','RV32C_DECOMPRESS_UNIT PASS halfwords=65536 mismatches=0 anchors=16')]
@@ -191,7 +193,8 @@ def main():
         if engine=='xsim' and not log.is_file(): raise RuntimeError(f'unit {key}: XSim did not create log {log}')
         terminal(log,marker)
     compare_count=0; pipeline_golden_count=0; case_counts={'legacy':0,'rv32imc':0}; event_totals=[0]*16; protocol=[]
-    modes=[('legacy',legacy,snaps['golden0'],snaps['pipe0'],OUT/'iss',False),('rv32imc',crows,snaps['golden1'],snaps['pipe1'],OUT/'c_iss',True)]
+    modes=[] if ONLY_C else [('legacy',legacy,snaps['golden0'],snaps['pipe0'],OUT/'iss',False)]
+    modes.append(('rv32imc',crows,snaps['golden1'],snaps['pipe1'],OUT/'c_iss',True))
     for mode,rows,golden,pipe,refdir,cmode in modes:
         for index,row in enumerate(rows,1):
             name=row['name']; case_counts[mode]+=1; print(f'[{mode} {index}/{len(rows)}] {name}',flush=True)
@@ -203,11 +206,16 @@ def main():
                 trace=OUT/f'{name}.{kind}.trace'; log=OUT/f'{name}.{kind}.log'
                 if trace.exists() or log.exists(): raise RuntimeError(f'fresh-run collision: {trace} / {log}')
                 args=[exe,plusarg('HEX',image),plusarg('TRACE',trace),f'+EXPECT_CAUSE={row["expect_cause"]}',f'+CHECK_GP={row["check_gp"]}']
+                ccov=OUT/f'{name}.{kind}.ccov'
+                if cmode and kind=='pipe':
+                    if ccov.exists(): raise RuntimeError(f'fresh-run collision: {ccov}')
+                    args.append(plusarg('MCOV',ccov))
                 if engine=='xsim': args=['xsim',exe,'--runall','--log',log,*sum((['--testplusarg',x[1:]] for x in args[1:]),[])]
                 out=run(args,cwd=(OUT/'xsim') if engine=='xsim' else ROOT,log=log if engine=='verilator' else None)
                 if engine=='xsim' and not log.is_file(): raise RuntimeError(f'{name}/{kind}: missing simulator log')
                 record=terminal(log,'TEST_RESULT: PASS')
                 if 'TIMEOUT' in record or not trace.is_file(): raise RuntimeError(f'{name}/{kind}: failed/timeout or missing trace')
+                if cmode and kind=='pipe' and not ccov.is_file(): raise RuntimeError(f'{name}/pipe: missing C coverage sidecar {ccov}')
                 actual=trace.read_text(encoding='ascii')
                 compare_trace(actual,ref,f'{name}/{kind} vs ISS')
                 traces[kind]=actual
@@ -216,16 +224,19 @@ def main():
             pipeline_golden_count+=1
             event,counts=check_pipeline_log(OUT/f'{name}.pipe.log',OUT/f'{name}.pipe.trace',image,cmode)
             event_totals=[a+b for a,b in zip(event_totals,event)]; protocol.append(counts)
-    if case_counts != {'legacy':209,'rv32imc':20}: raise RuntimeError(f'actual case totals unexpected {case_counts}')
-    if compare_count!=458 or pipeline_golden_count!=229: raise RuntimeError(f'full trace inventory mismatch rtl_vs_iss={compare_count} pipeline_vs_golden={pipeline_golden_count}')
-    if not all(event_totals): raise RuntimeError(f'pipeline event bins not all exercised: {event_totals}')
+    expected_cases={'legacy':0 if ONLY_C else 209,'rv32imc':EXPECTED_C_CASES}
+    expected_comparisons=2*EXPECTED_C_CASES if ONLY_C else 2*(209+EXPECTED_C_CASES); expected_pairs=EXPECTED_C_CASES if ONLY_C else 209+EXPECTED_C_CASES
+    if case_counts != expected_cases: raise RuntimeError(f'suite inventory mismatch actual={case_counts} expected={expected_cases}')
+    if compare_count!=expected_comparisons or pipeline_golden_count!=expected_pairs: raise RuntimeError(f'full trace inventory mismatch rtl_vs_iss={compare_count} pipeline_vs_golden={pipeline_golden_count}')
+    if not ONLY_C and not all(event_totals): raise RuntimeError(f'pipeline event bins not all exercised: {event_totals}')
     with REPORT.open('w',encoding='utf-8',newline='\n') as f:
-        f.write(f'Simulator: {SIM}\nlegacy_c_disabled=209\nrv32imc_existing=12\nrv32imc_pipeline_specific=8\nrtl_vs_iss_and_golden={compare_count}\nunit_suites={len(tops)}\nunit_decompress_halfwords=65536\ndivider_protocol_records={len(protocol)}\n')
+        f.write(f'Simulator: {SIM}\nlegacy_c_disabled={expected_cases["legacy"]}\nrv32imc_existing=12\nrv32imc_pipeline_specific=9\nrtl_vs_iss_and_golden={compare_count}\nunit_suites={len(tops)}\nunit_decompress_halfwords=65536\ndivider_protocol_records={len(protocol)}\n')
         f.write(f'pipeline_vs_golden_full_traces={pipeline_golden_count}\n')
         f.write('pipeline_event_hits='+','.join(map(str,event_totals))+'\n')
         f.write(f'divider_protocol_checked_cases={len(protocol)} starts={sum(x[4] for x in protocol)} dones={sum(x[5] for x in protocol)} busy_cycles={sum(x[6] for x in protocol)} aborts=0\n')
-        f.write(f'STAGE4_4_PIPELINE_{SIM.upper()} PASS legacy=209 rv32imc=20 full_trace_comparisons={compare_count} units={len(tops)}\n')
-    terminal(REPORT,f'STAGE4_4_PIPELINE_{SIM.upper()} PASS legacy=209 rv32imc=20 full_trace_comparisons=458 units=7')
+        if ONLY_C: f.write(f'STAGE4_4_PIPELINE_{SIM.upper()}_C_ONLY PASS rv32imc={EXPECTED_C_CASES} full_trace_comparisons={compare_count} units={len(tops)}\n')
+        else: f.write(f'STAGE4_4_PIPELINE_{SIM.upper()} PASS legacy=209 rv32imc={EXPECTED_C_CASES} full_trace_comparisons={compare_count} units={len(tops)}\n')
+    terminal(REPORT,(f'STAGE4_4_PIPELINE_{SIM.upper()}_C_ONLY PASS rv32imc={EXPECTED_C_CASES} full_trace_comparisons={2*EXPECTED_C_CASES} units=7' if ONLY_C else f'STAGE4_4_PIPELINE_{SIM.upper()} PASS legacy=209 rv32imc={EXPECTED_C_CASES} full_trace_comparisons={2*(209+EXPECTED_C_CASES)} units=7'))
     print(REPORT.read_text(),flush=True)
 if __name__=='__main__':
     try: main()

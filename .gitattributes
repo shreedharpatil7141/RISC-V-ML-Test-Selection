@@ -1,2 +1,3 @@
 reports/stage3_6_mutation_runs/** -whitespace
+reports/stage4_c_mutation_runs/** -whitespace
 *.sh text eol=lf

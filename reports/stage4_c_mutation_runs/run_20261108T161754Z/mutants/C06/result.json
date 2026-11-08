@@ -1,0 +1,20 @@
+{
+  "id": "C06",
+  "name": "Compressed jump link uses PC+4",
+  "target": "rtl/pipeline/rv_ex_stage.sv",
+  "status": "CAUGHT",
+  "build_success": true,
+  "simulator_started": true,
+  "detector": "jalr_link: independently detected full pipeline/ISS architectural trace mismatch",
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/stage4c_C06_a6mra4cm/project/scripts/simulation/run_stage4_4.py",
+    "--sim",
+    "verilator",
+    "--only-c"
+  ],
+  "cwd": "/tmp/stage4c_C06_a6mra4cm/project",
+  "exit_code": 1,
+  "timeout": false,
+  "elapsed_s": 68.77
+}

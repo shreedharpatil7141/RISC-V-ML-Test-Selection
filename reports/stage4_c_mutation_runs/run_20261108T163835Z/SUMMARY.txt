@@ -1,0 +1,12 @@
+Stage 4 RV32C mutation campaign (Verilator only)
+Generated UTC: 20261108T163835Z
+Baseline: full coverage regression PASS (230 cases)
+Mutants: 2
+CAUGHT: 2
+MISSED: 0
+INVALID: 0
+EQUIVALENT: 0
+
+C07 CAUGHT: control_flow: independent pipe/ISS architectural trace mismatch line=7 expected='I 00000012 006586e7 04 006586e7 13 00000016 0 00000000 00000000' actual='STOP 00000012 86e70065 04 3'
+C09 CAUGHT: control_flow: independent pipe/ISS architectural trace mismatch line=5 expected='I 00000008 0000a011 02 0040006f 00 00000000 0 00000000 00000000' actual='I 00000006 00000405 02 00140413 08 00000002 0 00000000 00000000'
+STAGE4_C_MUTATION_VERILATOR PASS caught=2 missed=0 invalid=0 equivalent=0

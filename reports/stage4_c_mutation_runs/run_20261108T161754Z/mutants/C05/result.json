@@ -1,0 +1,20 @@
+{
+  "id": "C05",
+  "name": "C-enabled sequential PC stride forced to four bytes",
+  "target": "rtl/pipeline/rv_if_stage.sv",
+  "status": "CAUGHT",
+  "build_success": true,
+  "simulator_started": true,
+  "detector": "families: independently detected full pipeline/ISS architectural trace mismatch",
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/stage4c_C05_bfa73cwq/project/scripts/simulation/run_stage4_4.py",
+    "--sim",
+    "verilator",
+    "--only-c"
+  ],
+  "cwd": "/tmp/stage4c_C05_bfa73cwq/project",
+  "exit_code": 1,
+  "timeout": false,
+  "elapsed_s": 69.09
+}

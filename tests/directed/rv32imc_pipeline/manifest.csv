@@ -7,3 +7,4 @@ compressed_link_forward,1,0
 wrong_path_fault,1,0
 older_fault,2,0
 wrong_path_fetch_fault,1,0
+coverage_boundaries,1,0

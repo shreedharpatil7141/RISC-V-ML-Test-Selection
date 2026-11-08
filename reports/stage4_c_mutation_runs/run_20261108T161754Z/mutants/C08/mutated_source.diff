@@ -1,0 +1,4 @@
+--- rtl/pipeline/rv_pipe_regs.sv original
++++ rtl/pipeline/rv_pipe_regs.sv C08
+- if (md_hold && !kill && !redirect) id_ex <= id_ex;
++ if (md_hold && !kill && !redirect) id_ex <= id_ex_next;

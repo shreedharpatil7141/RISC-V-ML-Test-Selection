@@ -1,0 +1,4 @@
+--- rtl/pipeline/rv_if_stage.sv original
++++ rtl/pipeline/rv_if_stage.sv C07
+- raw = {imem_rdata_next[15:0], parcel};
++ raw = {parcel, imem_rdata_next[15:0]};

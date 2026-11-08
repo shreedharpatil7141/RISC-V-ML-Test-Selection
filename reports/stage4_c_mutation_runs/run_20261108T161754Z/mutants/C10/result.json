@@ -1,0 +1,20 @@
+{
+  "id": "C10",
+  "name": "Faulting memory operation is allowed to commit",
+  "target": "rtl/pipeline/rv_mem_stage.sv",
+  "status": "CAUGHT",
+  "build_success": true,
+  "simulator_started": true,
+  "detector": "families: independently detected full pipeline/ISS architectural trace mismatch",
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/stage4c_C10_ggyeripv/project/scripts/simulation/run_stage4_4.py",
+    "--sim",
+    "verilator",
+    "--only-c"
+  ],
+  "cwd": "/tmp/stage4c_C10_ggyeripv/project",
+  "exit_code": 1,
+  "timeout": false,
+  "elapsed_s": 68.36
+}

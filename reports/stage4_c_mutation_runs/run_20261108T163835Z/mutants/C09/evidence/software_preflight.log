@@ -1,0 +1,23 @@
+STAGE4_4_LEGACY_PREFLIGHT PASS tests=209 source_consistent=209 images=209 references=209
+PREPARED rv32imc 1/21 families cause=2 instret=18
+PREPARED rv32imc 2/21 control_flow cause=2 instret=6
+PREPARED rv32imc 3/21 crossing cause=2 instret=2
+PREPARED rv32imc 4/21 illegal cause=3 instret=0
+PREPARED rv32imc 5/21 stack_jump cause=2 instret=8
+PREPARED rv32imc 6/21 hint_x0 cause=2 instret=6
+PREPARED rv32imc 7/21 final_parcel cause=2 instret=1
+PREPARED rv32imc 8/21 fetch_faults cause=9 instret=1
+PREPARED rv32imc 9/21 long_prefix cause=3 instret=0
+PREPARED rv32imc 10/21 data_boundary cause=7 instret=1
+PREPARED rv32imc 11/21 jalr_link cause=2 instret=3
+PREPARED rv32imc 12/21 compressed_links cause=2 instret=3
+PREPARED rv32imc_pipeline 13/21 mixed_forward cause=1 instret=4
+PREPARED rv32imc_pipeline 14/21 crossword_divs cause=1 instret=6
+PREPARED rv32imc_pipeline 15/21 load_use cause=1 instret=6
+PREPARED rv32imc_pipeline 16/21 branch_store_jalr cause=2 instret=8
+PREPARED rv32imc_pipeline 17/21 compressed_link_forward cause=1 instret=4
+PREPARED rv32imc_pipeline 18/21 wrong_path_fault cause=1 instret=3
+PREPARED rv32imc_pipeline 19/21 older_fault cause=2 instret=1
+PREPARED rv32imc_pipeline 20/21 wrong_path_fetch_fault cause=1 instret=5
+PREPARED rv32imc_pipeline 21/21 coverage_boundaries cause=1 instret=11
+STAGE4_4_SOFTWARE_PREFLIGHT PASS legacy=209 c_cases=21 total=230 images=230 references=230 errors=0

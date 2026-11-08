@@ -1,0 +1,20 @@
+Stage 4 RV32C mutation campaign (Verilator only)
+Generated UTC: 20261108T161754Z
+Baseline: full coverage regression PASS (230 cases)
+Mutants: 10
+CAUGHT: 8
+MISSED: 0
+INVALID: 2
+EQUIVALENT: 0
+
+C01 CAUGHT: independent exhaustive decompressor vector/log checker failure
+C02 CAUGHT: independent exhaustive decompressor vector/log checker failure
+C03 CAUGHT: independent exhaustive decompressor vector/log checker failure
+C04 CAUGHT: independent exhaustive decompressor vector/log checker failure
+C05 CAUGHT: families: independently detected full pipeline/ISS architectural trace mismatch
+C06 CAUGHT: jalr_link: independently detected full pipeline/ISS architectural trace mismatch
+C07 INVALID: no independent named detection or valid complete PASS
+C08 CAUGHT: crossword_divs: independently detected full pipeline/ISS architectural trace mismatch
+C09 INVALID: no independent named detection or valid complete PASS
+C10 CAUGHT: families: independently detected full pipeline/ISS architectural trace mismatch
+STAGE4_C_MUTATION_VERILATOR FAIL caught=8 missed=0 invalid=2 equivalent=0

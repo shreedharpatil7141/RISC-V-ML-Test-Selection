@@ -1,0 +1,4 @@
+--- rtl/pipeline/rv_mem_stage.sv original
++++ rtl/pipeline/rv_mem_stage.sv C10
+- assign commit = ex_mem.valid && (cause == HALT_NONE);
++ assign commit = ex_mem.valid;

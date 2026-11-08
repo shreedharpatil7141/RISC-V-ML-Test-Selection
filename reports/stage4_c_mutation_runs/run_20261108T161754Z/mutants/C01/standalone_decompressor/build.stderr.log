@@ -1,0 +1,18 @@
+%Warning-UNUSEDSIGNAL: /tmp/stage4c_C01_vdwdcpy1/project/rtl/decoder/rv32c_decompressor.sv:15:24: Bits of signal are not used: 'imm'[31:12]
+                                                                                                : ... note: In instance 'tb_rv32c_decompressor.dut'
+   15 |     input logic [31:0] imm,
+      |                        ^~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.032
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+%Warning-UNUSEDSIGNAL: /tmp/stage4c_C01_vdwdcpy1/project/rtl/decoder/rv32c_decompressor.sv:34:60: Bits of signal are not used: 'imm'[31:12]
+                                                                                                : ... note: In instance 'tb_rv32c_decompressor.dut'
+   34 |   function automatic logic [31:0] enc_s(input logic [31:0] imm,
+      |                                                            ^~~
+%Warning-UNUSEDSIGNAL: /tmp/stage4c_C01_vdwdcpy1/project/rtl/decoder/rv32c_decompressor.sv:39:60: Bits of signal are not used: 'imm'[31:13,0]
+                                                                                                : ... note: In instance 'tb_rv32c_decompressor.dut'
+   39 |   function automatic logic [31:0] enc_b(input logic [31:0] imm,
+      |                                                            ^~~
+%Warning-UNUSEDSIGNAL: /tmp/stage4c_C01_vdwdcpy1/project/rtl/decoder/rv32c_decompressor.sv:45:60: Bits of signal are not used: 'imm'[31:21,0]
+                                                                                                : ... note: In instance 'tb_rv32c_decompressor.dut'
+   45 |   function automatic logic [31:0] enc_j(input logic [31:0] imm,
+      |                                                            ^~~

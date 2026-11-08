@@ -1,0 +1,52 @@
+Stage 4 RV32C mutation saved-artifact reanalysis (Verilator)
+Original campaign report: reports/stage4_c_mutation_verilator_20261108T161754Z.txt
+Raw run directory: reports/stage4_c_mutation_runs/run_20261108T161754Z
+Independent ISS reference: sim_out_stage4_4_xsim_20261108T154108Z/c_iss/control_flow.trace
+Independent golden trace: sim_out_stage4_4_xsim_20261108T154108Z/control_flow.golden.trace
+Golden trace matches ISS after newline normalization: yes
+
+The original C07/C09 INVALID classifications came from a detector-parser gap,
+not build/startup failure, timeout, or simulator crash. Their result.json files
+record build_success=true, simulator_started=true, timeout=false. Outer exit 1
+is the run_stage4_4.py regression failure. Each Verilator test log has one
+TEST_RESULT: FAIL followed by normal `$finish`; the simulator process completed,
+then its wrapper stopped before the normal trace comparator. The original
+campaign did not retain build logs, ISS references, or golden traces; evidence
+retention was expanded for future runs.
+
+C07 — Offset-two instruction parcels concatenated in wrong order
+  Patch: reports/stage4_c_mutation_runs/run_20261108T161754Z/mutants/C07/mutated_source.diff
+  First runner diagnostic in C07/stderr.log: invalid terminal record;
+    first_error TEST_RESULT: FAIL, cause=3, expect=2, instret=5, cycles=16.
+  Test: control_flow. Expected cause=2; actual cause=3.
+  First full-trace difference: line 7.
+    ISS:   I 00000012 006586e7 04 006586e7 13 00000016 0 00000000 00000000
+    DUT: STOP 00000012 86e70065 04 3
+  Sidecar: C FAULT 00000012 86e70065 4 3. The reversed parcels form illegal
+  raw instruction 0x86e70065 at PC 0x12 instead of the ISS JALR 0x006586e7.
+  Trace ends in STOP/HALT and 31 register records: complete failure execution.
+
+C09 — Redirect does not flush younger IF/ID instruction
+  Patch: reports/stage4_c_mutation_runs/run_20261108T161754Z/mutants/C09/mutated_source.diff
+  First runner diagnostic in C09/stderr.log: invalid terminal record;
+    first_error TEST_RESULT: FAIL, cause=3, expect=2, instret=8, cycles=17.
+  Test: control_flow. Expected cause=2; actual cause=3.
+  First full-trace difference: line 5.
+    ISS: I 00000008 0000a011 02 0040006f 00 00000000 0 00000000 00000000
+    DUT: I 00000006 00000405 02 00140413 08 00000002 0 00000000 00000000
+  Sidecar records PC 0x06 attempt/retirement twice: the younger instruction
+  survives redirect. Trace ends in STOP/HALT and 31 register records.
+
+Independent named trace evidence supports C07 CAUGHT and C09 CAUGHT. This is
+based on complete DUT-to-ISS mismatches, not nonzero exit alone. Raw campaign
+summary and original result.json INVALID records remain unchanged. The runner
+now compares complete DUT golden/pipeline traces directly with the separate
+ISS even when TEST_RESULT: FAIL short-circuits its normal comparison. It
+requires one terminal result, Verilator `$finish`, complete trace structure,
+and an actual trace difference. New evidence capture retains build logs, ISS
+references/images, and unmutated golden traces.
+
+Focused Windows CMD -> WSL command (fresh full baseline, then only C07/C09):
+  wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec python3 scripts/simulation/run_stage4_mutation.py --mutants C07,C09
+Expected final marker: STAGE4_C_MUTATION_VERILATOR PASS caught=2 missed=0
+invalid=0 equivalent=0. Not run in this environment.

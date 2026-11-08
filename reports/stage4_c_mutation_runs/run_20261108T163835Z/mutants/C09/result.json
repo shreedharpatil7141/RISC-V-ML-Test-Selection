@@ -1,0 +1,20 @@
+{
+  "id": "C09",
+  "name": "Redirect does not flush younger IF/ID instruction",
+  "target": "rtl/pipeline/rv_pipe_regs.sv",
+  "status": "CAUGHT",
+  "build_success": true,
+  "simulator_started": true,
+  "detector": "control_flow: independent pipe/ISS architectural trace mismatch line=5 expected='I 00000008 0000a011 02 0040006f 00 00000000 0 00000000 00000000' actual='I 00000006 00000405 02 00140413 08 00000002 0 00000000 00000000'",
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/stage4c_C09_7h2pm_6k/project/scripts/simulation/run_stage4_4.py",
+    "--sim",
+    "verilator",
+    "--only-c"
+  ],
+  "cwd": "/tmp/stage4c_C09_7h2pm_6k/project",
+  "exit_code": 1,
+  "timeout": false,
+  "elapsed_s": 68.56
+}

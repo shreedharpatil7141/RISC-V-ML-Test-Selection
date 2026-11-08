@@ -1,0 +1,1 @@
+STAGE4_4 FAIL: invalid terminal record in /tmp/stage4c_C09_7h2pm_6k/project/sim_out_stage4_4_verilator_20261108T164107Z/control_flow.pipe.log; required exactly once: TEST_RESULT: PASS; first_error=TEST_RESULT: FAIL hex=/tmp/stage4c_C09_7h2pm_6k/project/sim_out_stage4_4_verilator_20261108T164107Z/c_hex/control_flow.hex cause=3 expect=2 gp=0x0 instret=8 cycles=17 oob=0        

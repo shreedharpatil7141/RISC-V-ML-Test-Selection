@@ -1,0 +1,1 @@
+STAGE4_4 FAIL: crossword_divs/pipe vs ISS: trace mismatch at line 6; actual='I 0000000e 0263c433 04 0263c433 08 00000010 0 00000000 00000000'; expected='I 0000000a 0262c3b3 04 0262c3b3 07 00000010 0 00000000 00000000'; actual_lines=39 expected_lines=40

@@ -1,6 +1,6 @@
 # Implemented microarchitecture and future target
 
-## Stage 4.4 pipeline C integration (implementation present; validation pending)
+## Stage 4 RV32IMC integer pipeline (coverage/mutation gate approved)
 
 `rv_core_pipe` now has a default-off `ENABLE_C` mode. In that mode IF asks
 for the aligned current and next instruction words, selects the addressed
@@ -13,12 +13,13 @@ original two- or four-byte length. C-disabled mode keeps the released Stage 3
 fixed four-byte fetch and trace behavior.
 
 The independent C assembler/ISS supplies images and architectural traces.
-Stage 4.4 adds cycle and divider protocol checks in addition to trace
-comparisons. Its eight new pipeline programs cover mixed-width dependencies,
-offset-two DIV fetch and consecutive divisions, load-use/stack/JALR forwarding,
-links, wrong-path faults, and older-fault suppression. Exact scope and
-commands are in [`stage4_4_pipeline.md`](stage4_4_pipeline.md). This is not an
-architectural compliance claim; simulator validation remains pending.
+The 230-case XSim and Verilator regressions add cycle and divider protocol
+checks to trace comparisons. They cover the 209 C-disabled baseline and 21
+C-enabled programs, seven unit suites, exhaustive decompressor vectors, and
+the 16 pipeline event counters. Finite coverage and Verilator-only mutation
+results are in [`stage4_4_pipeline.md`](stage4_4_pipeline.md) and
+[`stage4_c_coverage_mutation.md`](stage4_c_coverage_mutation.md). This is not
+an architectural compliance claim.
 
 ## Implemented at the Stage 3.8 gate
 
@@ -41,9 +42,9 @@ cycle model, and `stage3_rv32m_status.md` for current verification evidence.
 
 ## Future project target, not implemented claims
 
-RV32C integer golden-core support is owner-validated; its pipeline integration
-is implemented in Stage 4.4 and awaits the XSim/Verilator gate. Compressed
-floating-point and Zc extensions are not implemented. Atomics (A), CSR state
+RV32C integer golden-core and pipeline support are validated with finite
+directed evidence. Compressed floating-point and Zc extensions are not
+implemented. Atomics (A), CSR state
 and Zicsr, Zifencei, machine-mode trap vectors, MRET, WFI, and interrupts are
 also outside the implemented scope. The same applies to memory wait states,
 asynchronous external kills, multicore coherence, MMU, PMP, and physical

@@ -1,0 +1,11 @@
+TOOL PREFLIGHT PASS sim=verilator python=/usr/bin/python3 output=/tmp/stage4c_C07_4lk7p_hc/project/sim_out_stage4_4_verilator_20261108T163953Z
+STAGE4_4_ARTIFACT_PREFLIGHT PASS legacy=209 C=21 images=230 references=230
+[unit arith] running
+[unit md] running
+[unit decoder] running
+[unit pipe] running
+[unit diviter] running
+[unit mdexec] running
+[unit decompress] running
+[rv32imc 1/21] families
+[rv32imc 2/21] control_flow

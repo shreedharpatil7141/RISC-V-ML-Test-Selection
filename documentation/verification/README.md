@@ -12,24 +12,39 @@ preserve Stage 3 runners, execute the exhaustive Stage 4.2 decompressor vectors,
 replay the 209 C-disabled cases, and compare the explicit RV32IMC manifest
 against `rv32imc_iss.py`. See
 [`../architecture/stage4_3_golden_fetch.md`](../architecture/stage4_3_golden_fetch.md)
-for interface, commands, dependencies, outputs, expected markers, and pending
-validation status.
+for interface, commands, dependencies, outputs, and historical evidence.
 
 ## Stage 4.4: C-enabled pipeline regression
 
-Use `scripts/simulation/run_stage4_4_xsim.bat` from initialized Windows CMD or
-`wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec bash scripts/simulation/run_stage4_4_verilator.sh`.
-The runner requires fresh output, preflights all 209 legacy plus 20 C-enabled
-images and references before compilation, runs seven existing unit suites
-including 65,536 decompressor patterns/16 anchors, then compares each golden
-and pipeline trace against the independent ISS. It also compares the RTL
-traces to each other and checks the derived cycle equation, all 16 pipeline
-event counters, and divider starts/completions/33-cycle costs independently.
-Expected final markers are `STAGE4_4_PIPELINE_XSIM PASS legacy=209
-rv32imc=20 full_trace_comparisons=458 units=7` or the corresponding
-`STAGE4_4_PIPELINE_VERILATOR` marker. Reports are separate timestamped files
-under `reports/stage4_4_pipeline_<sim>_<UTC>.txt`; full logs and traces are in
-`sim_out_stage4_4_<sim>_<UTC>/`. Local validation is pending because Python,
-Vivado XSim, and Verilator are unavailable in this execution environment.
-Details and the fetch/metadata contract are in
+The canonical full coverage commands from Windows CMD are:
+
+```cmd
+scripts\simulation\run_stage4_coverage_xsim.bat
+wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec bash scripts/simulation/run_stage4_coverage_verilator.sh
+```
+
+Each runner uses fresh output, preflights all 209 legacy plus 21 C-enabled
+images/references, runs seven unit suites including 65,536 decompressor
+patterns/16 anchors, compares golden and pipeline traces against the
+independent ISS, compares pipeline to golden, and checks timing, divider
+protocol, coverage sidecars, and all 16 pipeline events. Expected terminal
+markers are `STAGE4_C_COVERAGE_XSIM PASS cases=230 c_cases=21 patterns=65536
+pipeline_events=16` and its Verilator equivalent. Separate reports are under
+`reports/stage4_c_coverage_<sim>_<UTC>.txt`; raw run data is under
+`sim_out_stage4_4_<sim>_<UTC>/`.
+
+The separate Verilator mutation command runs a full baseline followed by ten
+isolated mutants; use `--mutants C07,C09` for focused parser validation without
+rerunning the other eight:
+
+```cmd
+wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec python3 scripts/simulation/run_stage4_mutation.py
+wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec python3 scripts/simulation/run_stage4_mutation.py --mutants C07,C09
+```
+
+The approved evidence and exact dependencies are recorded in
 [`../architecture/stage4_4_pipeline.md`](../architecture/stage4_4_pipeline.md).
+The C coverage dictionary, independent evidence sources, mutation results and
+limitations are in
+[`../architecture/stage4_c_coverage_mutation.md`](../architecture/stage4_c_coverage_mutation.md).
+The new and modified file manifest is in `stage4_coverage_manifest.md`.

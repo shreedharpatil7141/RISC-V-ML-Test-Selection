@@ -1,0 +1,20 @@
+{
+  "id": "C07",
+  "name": "Offset-two instruction parcels concatenated in wrong order",
+  "target": "rtl/pipeline/rv_if_stage.sv",
+  "status": "CAUGHT",
+  "build_success": true,
+  "simulator_started": true,
+  "detector": "control_flow: independent pipe/ISS architectural trace mismatch line=7 expected='I 00000012 006586e7 04 006586e7 13 00000016 0 00000000 00000000' actual='STOP 00000012 86e70065 04 3'",
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/stage4c_C07_4lk7p_hc/project/scripts/simulation/run_stage4_4.py",
+    "--sim",
+    "verilator",
+    "--only-c"
+  ],
+  "cwd": "/tmp/stage4c_C07_4lk7p_hc/project",
+  "exit_code": 1,
+  "timeout": false,
+  "elapsed_s": 68.52
+}

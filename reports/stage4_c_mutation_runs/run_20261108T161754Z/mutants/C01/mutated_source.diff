@@ -1,0 +1,6 @@
+--- rtl/decoder/rv32c_decompressor.sv original
++++ rtl/decoder/rv32c_decompressor.sv C01
+- imm = {{22{raw_halfword[12]}}, raw_halfword[12], raw_halfword[4:3],
+                       raw_halfword[5], raw_halfword[2], raw_halfword[6], 4'b0000};
++ imm = {{22{raw_halfword[12]}}, raw_halfword[12], raw_halfword[4:3],
+                       raw_halfword[6], raw_halfword[2], raw_halfword[5], 4'b0000};

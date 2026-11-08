@@ -159,11 +159,28 @@ module tb_rv_pipe_stage4 #(
     end
   end
 
-  // Optional Stage 3.5 side channel. Architectural TRACE rows above remain
+  // Optional verification side channel. Architectural TRACE rows above remain
   // unchanged; these records distinguish EX issue/completion, WB retirement,
   // and instructions removed by redirect/fault before issue.
   always @(posedge clk) begin
     if (rst_n && mcov_fd != 0) begin
+      // Stage 4 coverage lifecycle records are DUT-side observations. The
+      // checker deduplicates retries caused by stalls using PC/raw/length.
+      if (ENABLE_C && dut.if_id.valid)
+        $fdisplay(mcov_fd, "C ATTEMPT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
+      if (ENABLE_C && ret_valid)
+        $fdisplay(mcov_fd, "C RETIRE %08x %08x %0d", ret_pc, ret_insn, ret_ilen_bytes);
+      if (ENABLE_C && dut.fault)
+        $fdisplay(mcov_fd, "C FAULT %08x %08x %0d %0d", dut.ex_mem.pc, dut.ex_mem.raw_insn,
+                  dut.ex_mem.ilen_bytes, int'(dut.fault_cause));
+      if (ENABLE_C && dut.redirect && dut.if_id.valid)
+        $fdisplay(mcov_fd, "C SQUASH_REDIRECT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
+      if (ENABLE_C && dut.fault && dut.id_ex.valid)
+        $fdisplay(mcov_fd, "C SQUASH_FAULT %08x %08x %0d", dut.id_ex.pc, dut.id_ex.raw_insn, dut.id_ex.ilen_bytes);
+      if (ENABLE_C && dut.fault && dut.if_id.valid)
+        $fdisplay(mcov_fd, "C SQUASH_FAULT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
+      if (ENABLE_C && dbg_md_busy)
+        $fdisplay(mcov_fd, "C DIV_HOLD %08x %08x %0d", dut.id_ex.pc, dut.id_ex.raw_insn, dut.id_ex.ilen_bytes);
       if (dbg_m_issue)
         $fdisplay(mcov_fd, "M %08x %08x %08x %08x %0d %0d", dbg_m_pc, dbg_m_insn,
                   dbg_m_operand_a, dbg_m_operand_b, dbg_m_fwd_a, dbg_m_fwd_b);

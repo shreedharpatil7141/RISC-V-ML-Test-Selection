@@ -1,0 +1,5 @@
+TEST_RESULT: PASS hex=/tmp/stage4c_C07_4lk7p_hc/project/sim_out_stage4_4_verilator_20261108T163953Z/c_hex/control_flow.hex cause=2 expect=2 gp=0x0 instret=6 cycles=8 oob=0        
+- /tmp/stage4c_C07_4lk7p_hc/project/verification/environment/tb_rv_core.sv:157: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.032 2025-01-01
+- Verilator: $finish at 115ns; walltime 0.001 s; speed 146.865 us/s
+- Verilator: cpu 0.001 s on 1 threads; alloced 121 MB

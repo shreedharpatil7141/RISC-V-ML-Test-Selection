@@ -1,0 +1,5 @@
+RV32C_DECOMPRESS_UNIT PASS halfwords=65536 mismatches=0 anchors=16 legal=28461 hint=362 illegal=20329 prefix32=14336 unsupported_length=2048
+- /tmp/stage4c_C10_ggyeripv/project/verification/environment/tb_rv32c_decompressor.sv:129: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.032 2025-01-01
+- Verilator: $finish at 66us; walltime 0.154 s; speed 424.704 us/s
+- Verilator: cpu 0.154 s on 1 threads; alloced 121 MB

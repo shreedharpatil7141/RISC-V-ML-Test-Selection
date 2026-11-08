@@ -1,0 +1,4 @@
+--- rtl/decoder/rv32c_decompressor.sv original
++++ rtl/decoder/rv32c_decompressor.sv C02
+- if (uimm == 0) illegal = 1'b1;
++ if (uimm == 0) illegal = 1'b0;
