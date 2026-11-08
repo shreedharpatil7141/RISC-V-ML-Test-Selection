@@ -1,0 +1,13 @@
+name,expect_cause,check_gp
+atomic_ops,1,0
+lrsc_sequences,1,0
+operand_overlap,1,0
+atomic_orders,1,0
+reserved_encoding,3,0
+lr_misaligned,4,0
+sc_misaligned,5,0
+amo_misaligned,5,0
+lr_access_fault,7,0
+sc_access_fault,8,0
+amo_access_fault,8,0
+amo_last_word,1,0

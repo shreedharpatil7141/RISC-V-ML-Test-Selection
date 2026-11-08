@@ -1,6 +1,6 @@
 # Machine Learning-Based Test Selection for Accelerated Functional Coverage Closure in RISC-V Processor Verification
 
-**Status:** Stage 3 RV32IM and Stage 4 RV32IMC integer are complete. Stage 4 passed separate XSim and Verilator coverage runs (230 cases each, 460 golden/pipeline-to-ISS comparisons, 230 pipeline-to-golden comparisons, seven unit suites, 65,536 decompressor patterns, all 16 pipeline events, zero coverage errors). Verilator-only mutation evidence is split across the original eight detections and a focused C07/C09 rerun (10/10 caught across the two executions); original INVALID records and separate reanalysis are preserved. These finite directed results do not establish architectural compliance. Stage 4 release is recorded by the annotated `stage4-complete` tag on `main`.
+**Status:** Stage 3 RV32IM and Stage 4 RV32IMC integer are complete and released. Stage 4 passed separate XSim and Verilator coverage runs (230 cases each, 460 golden/pipeline-to-ISS comparisons, 230 pipeline-to-golden comparisons, seven unit suites, 65,536 decompressor patterns, all 16 pipeline events, zero coverage errors). Verilator-only mutation evidence is split across the original eight detections and a focused C07/C09 rerun (10/10 caught across the two executions); original INVALID records and separate reanalysis are preserved. Stage 5 A-extension software/planning work is active on `stage5-a-extension`; no A RTL is implemented. These finite directed results do not establish architectural compliance. Stage 4 release is recorded by the annotated `stage4-complete` tag on `main`.
 
 ## Overview
 A simulation-based verification project with an independently modeled and
@@ -82,6 +82,11 @@ and [`documentation/architecture/stage4_c_coverage_mutation.md`](documentation/a
 for the fetch/retirement contract, coverage and mutation scope, dependencies,
 commands, reports, and expected markers. The Stage 4 file manifest is in
 [`documentation/verification/stage4_coverage_manifest.md`](documentation/verification/stage4_coverage_manifest.md).
+
+The current Stage 5 software/planning gate is described in
+[`documentation/architecture/stage5_0_rv32a_review.md`](documentation/architecture/stage5_0_rv32a_review.md).
+Its Windows software-validation command compares all 230 preserved Stage 4
+images and traces in A-disabled mode; it does not run RTL or claim A compliance.
 
 The consolidated Stage 3 regression runs all 209 current system tests on the
 single-cycle golden core and the M-enabled pipeline, compares architectural

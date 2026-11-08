@@ -1,27 +1,30 @@
 # Project ISA target: RV32IMAC + Zicsr + Zifencei + M-mode
 
 > **Implementation status:** this file preserves the broader project target;
-> it is not a description of the current RTL. At the Stage 3.8 gate, the
-> implemented and regression-verified instruction scope is RV32I plus RV32M
-> in the single-cycle reference and five-stage pipeline. The documented A, C,
-> Zicsr, Zifencei, and privileged architecture below are planned target scope
-> only. They must not be reported as implemented. No architectural compliance
-> suite has been run. See [`stage3_rv32m_status.md`](stage3_rv32m_status.md).
+> it is not a description of the current RTL. Stage 4 released RV32I+M plus
+> the RV32C integer subset in the single-cycle reference and five-stage
+> pipeline. Stage 5 A software/planning work is active, but no A RTL is
+> implemented. Zicsr, Zifencei, and privileged architecture remain planned.
+> No architectural compliance suite has been run. See
+> [`stage5_0_rv32a_review.md`](stage5_0_rv32a_review.md) for the pinned A
+> specification and project policy.
 
 ## Specification baseline
-These are the baseline versions to pin. **They were not verified against docs.riscv.org in Stage 0 (no web access used); confirm and record exact versions at the start of Stage 1.**
+The project pins the ratified RISC-V International specifications below.
 
 | Item | Baseline version |
 |---|---|
+| Official manual release | v20260120 |
 | RV32I | 2.1 |
 | M | 2.0 |
-| A | 2.1 |
+| A | 2.1 (Stage 5 software/planning scope) |
 | C | 2.0 |
+| RVWMO | 2.0 |
 | Zicsr | 2.0 |
 | Zifencei | 2.0 |
 | Privileged architecture | 1.12 (M-mode only) |
 
-Source: https://docs.riscv.org/
+Official source: [RISC-V Unprivileged ISA v20260120](https://docs.riscv.org/reference/isa/v20260120/index.html).
 
 ## Planned target configuration (not the current implementation)
 - XLEN = 32, single hart (mhartid = 0), in-order.
@@ -33,7 +36,7 @@ Source: https://docs.riscv.org/
 ## Planned target instruction set scope
 - **RV32I (37 user insts + FENCE):** LUI, AUIPC, JAL, JALR, BEQ/BNE/BLT/BGE/BLTU/BGEU, LB/LH/LW/LBU/LHU, SB/SH/SW, ADDI/SLTI/SLTIU/XORI/ORI/ANDI/SLLI/SRLI/SRAI, ADD/SUB/SLL/SLT/SLTU/XOR/SRL/SRA/OR/AND, FENCE, ECALL, EBREAK. Formats R, I, S, B, U, J.
 - **M:** MUL, MULH, MULHSU, MULHU, DIV, DIVU, REM, REMU. Division by zero returns all-ones (DIV/DIVU) or the dividend (REM/REMU), no trap; MIN_INT / -1 gives MIN_INT (DIV) and 0 (REM).
-- **A (word):** LR.W, SC.W, AMOSWAP/ADD/XOR/AND/OR/MIN/MAX/MINU/MAXU.W. aq/rl bits decoded; single hart makes them ordering no-ops.
+- **A (word, planned RTL):** LR.W, SC.W, AMOSWAP/ADD/XOR/AND/OR/MIN/MAX/MINU/MAXU.W. Stage 5 adds software support first; no A RTL is yet implemented. aq/rl behavior, encoding legality, and the exact single-hart reservation policy are pinned in `stage5_0_rv32a_review.md`.
 - **C (RV32C):** quadrants 0/1/2 incl. C.ADDI4SPN, C.LW/SW, C.LWSP/SWSP, C.J/JAL/JR/JALR, C.BEQZ/BNEZ, C.LI/LUI/ADDI/ADDI16SP/SLLI/SRLI/SRAI/ANDI, C.MV/ADD/AND/OR/XOR/SUB, C.NOP, C.EBREAK. No floating-point compressed forms (no F/D). Illegal and reserved encodings raise illegal-instruction.
 - **Zicsr:** CSRRW/RS/RC and immediate forms, with the spec rules for rs1=x0 / uimm=0 (no write) and rd=x0 (no read side effects for CSRRW).
 - **Zifencei:** FENCE.I flushes the pipeline and refetches (instruction-fetch synchronization).
@@ -47,7 +50,7 @@ Instruction address misaligned (cause 0; with C, only possible for 2-byte-misali
 
 ## Planned single-hart memory model and broader limitations
 - Sequentially consistent from the software view (in-order, single hart, blocking memory).
-- LR/SC: one reservation (address + valid); cleared by SC (success or fail), by any trap/MRET, and by a store to the reserved word from this hart. SC fails without valid matching reservation.
+- LR/SC: proposed one four-byte reservation (exact word address + valid); cleared by completed SC (success or fail), reset, any future trap/MRET path, and by a committed local store to an overlapping reserved word. Current single-hart policy and its limits are defined in `stage5_0_rv32a_review.md`; this is not implemented RTL behavior.
 - AMOs are executed atomically in the memory stage (read-modify-write, no bus interleaving).
 - **Not supported:** multi-hart coherence, misaligned atomics (trap), PMA/PMP, cache, virtual memory, Ztso, hypervisor, counters beyond mcycle/minstret, mcountinhibit (maybe Stage 7), debug trigger module.
 - Compliance claim: none until RISC-V architectural tests have been run and results recorded.

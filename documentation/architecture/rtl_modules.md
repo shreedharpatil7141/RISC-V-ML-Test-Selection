@@ -24,7 +24,7 @@ All RTL is SystemVerilog (synthesizable subset), compiled into one library `work
 | `rv_md_exec` | rtl/alu | Pipeline M wrapper: combinational multiply plus iterative divider | 3 |
 | `rv_rvc_decoder` | rtl/decoder | Planned: 16->32 expansion + illegal detect | 4 (not implemented) |
 | `rv_fetch_buffer` | rtl/pipeline | Planned: halfword-aligned fetch, 32-bit boundary crossing | 4 (not implemented) |
-| `rv_amo_unit` | rtl/atomic | Planned: AMO ALU + LR/SC reservation register | 5 (not implemented) |
+| `rv_amo_unit` | rtl/atomic | Planned atomic decode/result plus per-hart LR/SC reservation state; requires an atomic memory transaction interface | 5.2+ (not implemented; Stage 5.0/5.1 software gate only) |
 | `rv_csr_unit` | rtl/csr | Planned: CSR file, Zicsr ops, permissions | 6/7 (not implemented) |
 | `rv_trap_ctrl` | rtl/csr | Planned: trap/interrupt priority, CSRs, MRET | 7 (not implemented) |
 | retirement outputs | flat ports in the cores | Retirement observations are exposed as flat ports; no `rv_retire_if` interface module is present | 2 |

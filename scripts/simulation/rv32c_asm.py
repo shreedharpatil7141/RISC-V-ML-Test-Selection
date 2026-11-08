@@ -15,6 +15,9 @@ if HERE not in sys.path:
     sys.path.insert(0, HERE)
 import rv32_asm as base
 
+A_FUNCT5 = {'amoswap.w':1,'amoadd.w':0,'amoxor.w':4,'amoand.w':12,'amoor.w':8,
+            'amomin.w':16,'amomax.w':20,'amominu.w':24,'amomaxu.w':28}
+
 
 def _check(cond, msg):
     if not cond:
@@ -169,7 +172,33 @@ def _parse(source):
     return items
 
 
-def _size(mn, ops, c_enabled):
+def _is_a_mnemonic(mn):
+    return mn.startswith(('lr.w', 'sc.w', 'amo'))
+
+
+def encode_a(mn, ops):
+    """Encode an explicitly enabled RV32A word mnemonic in the software assembler."""
+    match = re.fullmatch(r'(lr\.w|sc\.w|amo(?:swap|add|xor|and|or|min|max|minu|maxu)\.w)(?:\.(aqrl|aq|rl))?', mn)
+    _check(match is not None, f"unsupported atomic mnemonic {mn!r}")
+    op, order = match.groups()
+    aq, rl = int(order in ('aq','aqrl')), int(order in ('rl','aqrl'))
+    if op == 'lr.w':
+        _check(len(ops) == 2, "expected rd, (rs1)")
+        rd = base.reg(ops[0]); address = re.fullmatch(r'\(\s*(\w+)\s*\)', ops[1])
+        _check(address is not None, "LR.W address syntax is (rs1); offsets are unsupported")
+        rs1, rs2, funct5 = base.reg(address.group(1)), 0, 2
+    else:
+        _check(len(ops) == 3, "expected rd, rs2, (rs1)")
+        rd, rs2 = base.reg(ops[0]), base.reg(ops[1])
+        address = re.fullmatch(r'\(\s*(\w+)\s*\)', ops[2])
+        _check(address is not None, "atomic address syntax is (rs1); offsets are unsupported")
+        rs1 = base.reg(address.group(1))
+        funct5 = 3 if op == 'sc.w' else A_FUNCT5[op]
+    return ((funct5 << 27) | (aq << 26) | (rl << 25) | (rs2 << 20) |
+            (rs1 << 15) | (2 << 12) | (rd << 7) | 0x2F)
+
+
+def _size(mn, ops, c_enabled, a_enabled=False):
     if mn in (".2byte", ".hword", ".half"):
         return 2 * len(ops)
     if mn in (".word",):
@@ -180,6 +209,8 @@ def _size(mn, ops, c_enabled):
         if not c_enabled:
             raise ValueError(f"{mn} requires explicit RV32IMC mode")
         return 2
+    if _is_a_mnemonic(mn) and not a_enabled:
+        raise ValueError(f"{mn} requires explicit RV32IMA or RV32IMAC mode")
     if mn == "la":
         return 8
     if mn == "li":
@@ -187,7 +218,7 @@ def _size(mn, ops, c_enabled):
     return 4
 
 
-def assemble_bytes(source, c_enabled=False):
+def assemble_bytes(source, c_enabled=False, a_enabled=False):
     """Return `{byte_address: byte}` for an explicitly selected ISA mode."""
     items = _parse(source)
     labels, pc = {}, 0
@@ -201,7 +232,7 @@ def assemble_bytes(source, c_enabled=False):
             pc = int(ops[0], 0)
             _check(pc >= 0, f"line {line_no}: negative .org")
         else:
-            pc += _size(mn, ops, c_enabled)
+            pc += _size(mn, ops, c_enabled, a_enabled)
     memory, pc = {}, 0
 
     def emit(value, width, line_no):
@@ -224,7 +255,7 @@ def assemble_bytes(source, c_enabled=False):
             encoded = base.assemble(mn + (" " + ", ".join(resolved) if resolved else ""))
         except Exception as exc:
             raise ValueError(f"line {line_no}: {mn} {ops}: {exc}") from exc
-        n = _size(mn, ops, c_enabled) // 4
+        n = _size(mn, ops, c_enabled, a_enabled) // 4
         return [encoded.get(4 * i, 0) for i in range(n)]
 
     for kind, mn, ops, line_no in items:
@@ -241,6 +272,8 @@ def assemble_bytes(source, c_enabled=False):
                     emit(int(op, 0) & 0xFFFFFFFF, 4, line_no)
             elif mn.startswith("c."):
                 emit(encode_c(mn, ops, pc, labels), 2, line_no)
+            elif _is_a_mnemonic(mn):
+                emit(encode_a(mn, ops), 4, line_no)
             elif mn == "la":
                 rd = base.reg(ops[0]); value = labels[ops[1]] & 0xFFFFFFFF
                 # Keep the legacy fixed two-instruction address expansion.
@@ -278,12 +311,13 @@ def to_hex(byte_memory):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mode", required=True, choices=("rv32im", "rv32imc"), help="ISA mode is always explicit")
+    parser.add_argument("--mode", required=True, choices=("rv32im", "rv32imc", "rv32ima", "rv32imac"), help="ISA mode is always explicit")
     parser.add_argument("source")
     parser.add_argument("output")
     args = parser.parse_args()
     with open(args.source, encoding="utf-8") as src:
-        image = assemble_bytes(src.read(), c_enabled=args.mode == "rv32imc")
+        image = assemble_bytes(src.read(), c_enabled=args.mode in ("rv32imc", "rv32imac"),
+                               a_enabled=args.mode in ("rv32ima", "rv32imac"))
     with open(args.output, "w", newline="\n", encoding="ascii") as dst:
         dst.write(to_hex(image))
     print(f"RV32C_ASM mode={args.mode} bytes={len(image)} words={len(to_words(image))}")
