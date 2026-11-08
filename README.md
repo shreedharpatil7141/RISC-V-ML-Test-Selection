@@ -1,6 +1,6 @@
 # Machine Learning-Based Test Selection for Accelerated Functional Coverage Closure in RISC-V Processor Verification
 
-**Status:** Stage 3 RV32IM is complete and approved through Stage 3.9. Separate Stage 3.7 XSim and Verilator reports each pass 209/209 system tests, all unit suites, 108/108 defined M bins, and 16/16 pipeline events. This is finite directed simulation evidence, not architectural compliance. See `PROJECT_PLAN.md`, `STAGE_CHANGELOG.md`, and `IMPLEMENTATION_LOG.md` for separate simulator results and limitations.
+**Status:** Stage 3 RV32IM is complete and approved through Stage 3.9. Stage 4.2's standalone decompressor was owner-verified in XSim and Verilator (65,536 patterns, zero mismatches, 16 anchors each). Stage 4.3 mixed-width golden-core integration is implemented and awaits separate simulator validation; no Stage 4 completion is claimed. Stage 3.7 XSim and Verilator evidence remains separate (209/209 tests, all units, 108/108 finite M bins, 16/16 pipeline events). These are finite directed results, not architectural compliance.
 
 ## Overview
 A simulation-based verification project whose currently implemented and

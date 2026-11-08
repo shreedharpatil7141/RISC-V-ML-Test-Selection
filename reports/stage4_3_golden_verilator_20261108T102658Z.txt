@@ -1,0 +1,5 @@
+Simulator: verilator
+legacy_c_disabled=209
+rv32imc=12
+rtl_vs_iss=221
+STAGE4_3_GOLDEN_VERILATOR PASS rtl_vs_iss=221
