@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_ex_stage.sv",
+    "before": "FWD_EXMEM: rs1_f = exmem_alu_y;",
+    "after": "FWD_EXMEM: rs1_f = id_ex.rs1_data;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

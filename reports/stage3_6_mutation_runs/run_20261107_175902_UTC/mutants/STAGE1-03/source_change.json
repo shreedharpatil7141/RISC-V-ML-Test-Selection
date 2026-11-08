@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/memory/rv_lsu.sv",
+    "before": "{{24{shifted[7]}},  shifted[7:0]}",
+    "after": "{24'b0, shifted[7:0]}",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

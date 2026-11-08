@@ -1,0 +1,27 @@
+{
+  "id": "STAGE1-06",
+  "name": "faulting store still writes",
+  "stage": "stage1",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "misalign_sh_off1: independently confirmed RTL/ISS trace difference at line 35",
+    "misalign_sh_off3: independently confirmed RTL/ISS trace difference at line 35",
+    "misalign_sw_off1: independently confirmed RTL/ISS trace difference at line 35",
+    "misalign_sw_off2: independently confirmed RTL/ISS trace difference at line 35"
+  ],
+  "changes": [
+    {
+      "file": "rtl/core/rv_core_single.sv",
+      "before": "(commit && mem_we) ? lsu_be",
+      "after": "(!halted && mem_we) ? lsu_be",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 10.09
+}

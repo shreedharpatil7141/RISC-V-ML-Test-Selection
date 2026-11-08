@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_forward_unit.sv",
+    "before": "(exmem_rd != 5'd0)",
+    "after": "(exmem_rd == 5'd0)",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

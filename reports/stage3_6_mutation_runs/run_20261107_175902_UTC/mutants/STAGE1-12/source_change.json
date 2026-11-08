@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/core/rv_core_single.sv",
+    "before": "WB_PC4:  wb_data = pc_plus4;",
+    "after": "WB_PC4:  wb_data = pc_plus4 + 32'd4;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

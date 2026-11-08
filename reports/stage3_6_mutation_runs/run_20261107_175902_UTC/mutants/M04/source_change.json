@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/alu/rv_div_iter.sv",
+    "before": "negate_quotient_q  <= !funct3[0] && (dividend[W-1] ^ divisor[W-1]);",
+    "after": "negate_quotient_q  <= 1'b0;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

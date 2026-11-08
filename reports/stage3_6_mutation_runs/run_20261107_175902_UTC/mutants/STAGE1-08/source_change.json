@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/control_unit/rv_control.sv",
+    "before": "3'b011:  return ALU_SLTU;",
+    "after": "3'b011:  return ALU_SLT;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

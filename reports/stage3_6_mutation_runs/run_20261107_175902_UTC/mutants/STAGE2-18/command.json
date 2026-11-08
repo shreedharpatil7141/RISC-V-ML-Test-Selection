@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/stage36_STAGE2-18_du3v52ia/project/scripts/simulation/run_stage2.py"
+  ],
+  "cwd": "/tmp/stage36_STAGE2-18_du3v52ia/project",
+  "exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 22.81
+}

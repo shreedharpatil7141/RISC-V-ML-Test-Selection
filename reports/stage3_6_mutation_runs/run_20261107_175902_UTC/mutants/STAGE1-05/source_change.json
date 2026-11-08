@@ -1,0 +1,16 @@
+[
+  {
+    "file": "rtl/register_file/rv_regfile.sv",
+    "before": "if (we && (waddr != 5'd0))",
+    "after": "if (we)",
+    "matches_before": 1,
+    "actual_change": true
+  },
+  {
+    "file": "rtl/register_file/rv_regfile.sv",
+    "before": "assign rs1_data = (rs1_addr == 5'd0) ? 32'h0 : regs[rs1_addr];",
+    "after": "assign rs1_data = regs[rs1_addr];",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

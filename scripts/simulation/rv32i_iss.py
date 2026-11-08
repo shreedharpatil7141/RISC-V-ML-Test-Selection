@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Independent RV32I instruction-set simulator (Stage 1 reference for trace comparison).
+"""Independent RV32I(+M from Stage 3) instruction-set simulator (Stage 1 reference for trace comparison).
 Written from the ISA spec; shares no code with the RTL. Mirrors Stage-1 halt behaviour.
 Halt causes (impl-defined, match rv32_pkg): 1 ECALL 2 EBREAK 3 ILLEGAL 4 LOAD_MIS 5 STORE_MIS 6 FETCH_MIS.
 Trace line: pc insn rd rdval st_size st_addr st_data  (rd=0/rdval=0 when no x1-x31 write; st_*=0 if no store)
@@ -10,7 +10,26 @@ MEM_BYTES = 65536
 def s32(x): x &= M; return x - (1 << 32) if x >> 31 else x
 def sx(v, bits): v &= (1 << bits) - 1; return v - (1 << bits) if v >> (bits - 1) else v
 
-def run(words, max_steps=2_000_000):
+def md_exec(f3, a, b):
+    """RV32M (spec v2.0, ISA library ch. "M" Extension): a=rs1, b=rs2 as raw 32-bit values -> 32-bit result.
+    f3: 0 MUL 1 MULH 2 MULHSU 3 MULHU 4 DIV 5 DIVU 6 REM 7 REMU. No exceptions.
+    Formulation: Python big-int arithmetic; signed division via magnitudes (truncate toward zero)."""
+    sa, sb = s32(a), s32(b)
+    if f3 == 0: return (a * b) & M
+    if f3 == 1: return ((sa * sb) >> 32) & M          # arithmetic shift of the exact product = upper word
+    if f3 == 2: return ((sa * b) >> 32) & M
+    if f3 == 3: return ((a * b) >> 32) & M
+    if f3 in (4, 6):                                    # signed DIV / REM
+        if b == 0: return M if f3 == 4 else a           # divide by zero: quotient all ones, remainder = dividend
+        if sa == -(1 << 31) and sb == -1: return a if f3 == 4 else 0   # signed overflow
+        q = abs(sa) // abs(sb)
+        if (sa < 0) != (sb < 0): q = -q
+        return (q if f3 == 4 else sa - q * sb) & M
+    if b == 0: return M if f3 == 5 else a              # DIVU / REMU by zero
+    return (a // b if f3 == 5 else a % b) & M
+
+
+def run(words, max_steps=2_000_000, m_events=None):
     mem = bytearray(MEM_BYTES)
     for i, w in enumerate(words):
         mem[4*i:4*i+4] = (w & M).to_bytes(4, 'little')
@@ -85,6 +104,12 @@ def run(words, max_steps=2_000_000):
             if f7 == 0:
                 wr = {0: (a + b) & M, 1: (a << (b & 31)) & M, 2: int(s32(a) < s32(b)), 3: int(a < b),
                       4: a ^ b, 5: a >> (b & 31), 6: a | b, 7: a & b}[f3]
+            elif f7 == 1:
+                wr = md_exec(f3, a, b)                     # RV32M (Stage 3)
+                # Optional side channel, deliberately separate from the stable
+                # architectural retirement trace. Capture source values before rd writeback.
+                if m_events is not None:
+                    m_events.append((pc, insn, f3, rd, rs1, rs2, a, b, wr & M))
             elif f7 == 0x20 and f3 == 0: wr = (a - b) & M
             elif f7 == 0x20 and f3 == 5: wr = (s32(a) >> (b & 31)) & M
             else: cause = 3; break

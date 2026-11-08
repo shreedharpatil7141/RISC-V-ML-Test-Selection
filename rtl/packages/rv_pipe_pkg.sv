@@ -26,6 +26,7 @@ package rv_pipe_pkg;
     word_t       imm;
     logic [2:0]  funct3;
     alu_op_e     alu_op;
+    logic        is_m;
     alu_a_sel_e  a_sel;
     logic        b_imm;
     logic        reg_we;

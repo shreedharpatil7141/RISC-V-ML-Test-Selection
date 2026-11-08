@@ -1,0 +1,27 @@
+{
+  "id": "M22",
+  "name": "DIV/REM rs2 uses EX/MEM data for a MEM/WB dependency",
+  "stage": "stage35",
+  "expected_check": "test:pipe_div_forward_sources",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "pipe_div_forward_sources: explicit pipe TEST_RESULT FAIL",
+    "pipe_div_forward_sources: independently confirmed full pipeline/ISS trace difference",
+    "pipe_div_forward_sources: independently confirmed full pipeline/golden trace difference",
+    "pipe_div_forward_sources: explicit timing checker failure with complete STATS record"
+  ],
+  "changes": [
+    {
+      "file": "rtl/pipeline/rv_ex_stage.sv",
+      "before": "FWD_MEMWB: rs2_f = memwb_data;",
+      "after": "FWD_MEMWB: rs2_f = exmem_alu_y;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 64.02
+}

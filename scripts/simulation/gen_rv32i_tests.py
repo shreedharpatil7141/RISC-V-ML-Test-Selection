@@ -207,7 +207,11 @@ def neg(name, body, cause): add(name, "# generated negative test\n" + body + "\n
 neg("halt_ebreak", "li t0, 7\nebreak", 2)
 neg("illegal_zero", "li t0, 1\n.word 0x00000000", 3)
 neg("illegal_ones", "li t0, 1\n.word 0xFFFFFFFF", 3)
-neg("illegal_m_ext_stage1", "li t0, 1\n.word 0x02208033", 3)          # MUL: legal from Stage 3
+# Reserved funct7 on the OP opcode. funct7=0000001 is the legal RV32M encoding from Stage 3 (this slot used to test
+# "M is illegal"). Six approved reserved values; funct3 varied so SUB/SRA/neighbouring funct3 slots are also hit.
+for _f7, _f3 in [("0000010", 0), ("0000011", 4), ("0000100", 5), ("0010000", 0), ("1000000", 7), ("0100001", 5)]:
+    _w = (int(_f7, 2) << 25) | (2 << 20) | (1 << 15) | (_f3 << 12) | (5 << 7) | 0x33     # rd=x5 rs1=x1 rs2=x2
+    neg(f"illegal_op_funct7_{_f7}", f"li t0, 1\n.word 0x{_w:08x}", 3)
 neg("illegal_slli_funct7", "li t0, 1\n.word 0x40109093", 3)           # SLLI with funct7=0100000
 neg("illegal_srli_funct7", "li t0, 1\n.word 0x20105093", 3)           # SRLI-pattern funct7=0010000
 neg("illegal_op_funct7", "li t0, 1\n.word 0x40107033", 3)             # AND with funct7=0100000

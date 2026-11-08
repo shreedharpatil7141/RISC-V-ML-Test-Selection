@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/core/rv_core_single.sv",
+    "before": "(commit && mem_we) ? lsu_be",
+    "after": "(!halted && mem_we) ? lsu_be",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

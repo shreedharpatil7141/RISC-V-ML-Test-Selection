@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_mem_stage.sv",
+    "before": "if (ex_mem.mem_re && lsu_misaligned)      cause = HALT_LOAD_MISALIGN;",
+    "after": "if (1'b0)      cause = HALT_LOAD_MISALIGN;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

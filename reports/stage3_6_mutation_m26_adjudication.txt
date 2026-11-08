@@ -1,0 +1,38 @@
+Stage 3.6 M26 adjudication — 2026-11-08
+Evidence source: saved Verilator run reports/stage3_6_mutation_runs/run_20261107_175902_UTC/
+
+Raw mutant and result
+---------------------
+ID/name: M26, “Pipeline divider is not aborted when kill is asserted”
+Exact source change in mutants/M26/source_change.json:
+  rtl/pipeline/rv_ex_stage.sv
+  .clk(clk), .rst_n(rst_n), .start(md_start_req), .abort(kill),
+  ->
+  .clk(clk), .rst_n(rst_n), .start(md_start_req), .abort(1'b0),
+Build: successful (all Stage 3.5 Verilator binaries present)
+Runner: Python run_stage5.py, Verilator 5.032, exit 0, timeout false, 66.58 seconds
+Mutated Stage 3.5 result: 209/209, 108/108 defined bins, zero data errors, PASS
+Raw campaign classification: MISSED. This record is retained and is not relabeled CAUGHT.
+
+Current pipeline schedule
+-------------------------
+`kill` is `halted || fault`; `fault` comes from the valid EX/MEM instruction in MEM.
+The iterative M start request is accepted only when `md_ready` and `!kill` are both true.
+
+1. Same-cycle older fault and younger DIV start candidate: older instruction is in EX/MEM/MEM, DIV is in ID/EX/EX. The MEM fault makes `kill=1` combinationally in this same cycle. The `!kill` term suppresses `md_start_req`; at the edge the faulting instruction is not committed, the pipeline is killed, and the divider remains IDLE. Thus acceptance suppression handles this case; abort is not cancelling accepted work.
+2. Older instruction is nonfaulting in MEM: it advances to MEM/WB at the edge. With the current combinational, no-wait-state memory interface, it cannot later raise a MEM fault. DIV may then be accepted. During its accepted/RUN interval, ID/EX holds DIV, EX/MEM receives bubbles, and younger instructions remain in IF/ID; no younger fault can reach MEM before DIV FIN transfers. The older instruction drains through WB. Therefore `kill` cannot newly assert during an already accepted unfinished DIV.
+3. Redirects do not create this overlap: an older redirect resolves in EX before a younger DIV reaches ID/EX, so the younger DIV is flushed before acceptance. Reset resets the divider independently of its abort input.
+
+Scope and classification
+------------------------
+Under the current in-order pipeline, faults resolved in MEM, no interrupts/traps that asynchronously kill execution, no external kill, and no memory wait states, the changed abort connection is unobservable for every reachable pipeline execution. M26 is classified EQUIVALENT at this pipeline integration boundary only. The standalone `rv_md_exec` abort capability is not equivalent or optional.
+
+Saved records show pipe_div_fault_illegal and pipe_div_fault_load have md starts/dones 0/0 in both baseline and mutant. `pipe_div_before_fault` has 1/1 starts/dones, 33 busy cycles, zero aborts, and 42 total cycles in both: its DIV finishes before the younger fault. The unit result `MD_EXEC_RESULT: PASS checks=49 errors=0 abort_positions=34` injects abort directly into the standalone wrapper at C0..C33; because M26 changes only the pipeline instance connection, that unit is not evidence for pipeline abort reachability.
+
+No test can meaningfully assert this pipeline abort scenario without forcing internal signals or changing the architecture. No directed test, RTL, or checker was changed. If traps/interrupts, external flush/kill, memory wait states, or delayed older exceptions are added, the invariant no longer follows and abort wiring needs a new reachable integration test.
+
+Adjudicated campaign accounting (Verilator-only)
+------------------------------------------------
+Stage 1: 14 CAUGHT; Stage 2: 20 CAUGHT; Stage 3 M: 25 CAUGHT, 1 EQUIVALENT.
+Total: 59 CAUGHT, 1 EQUIVALENT, 0 MISSED after adjudication, 0 INVALID.
+This is finite mutation evidence, not full RISC-V coverage. No Stage 3.7 work began.

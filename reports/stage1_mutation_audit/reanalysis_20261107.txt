@@ -1,0 +1,25 @@
+Stage-1 mutation audit reanalysis (saved evidence only; no mutants rerun)
+Source run: reports/stage1_mutation_audit/run_20261107_135001_UTC/
+Original audit.txt preserved unchanged.
+
+The original audit classified 12 CAUGHT, 0 MISSED, 2 INVALID. For mutants 06 and 07, the helper parser accepted only table rows `FAIL DIFF`; run_stage1.py can emit `PASS DIFF`. `PASS` is the core testbench halt-cause/check result and `DIFF` is the separate full RTL/ISS trace comparison. The tests passed their expected halt-cause check, while the independent architectural traces prove the mutations.
+
+Mutant 06 - faulting store still writes
+- Source mutation: `(commit && mem_we) ? lsu_be` -> `(!halted && mem_we) ? lsu_be`.
+- Mutation applied: true in the saved audit. Build success: true; saved Vunits and Vcore executables exist. Child exit code: 1. stderr length: 0 bytes. Unit result: PASS, 114339 checks, 0 errors. Regression: 102/106 system tests pass, 4 fail; final marker STAGE1_REGRESSION FAIL.
+- Four failing comparisons are `misalign_sh_off1`, `misalign_sh_off3`, `misalign_sw_off1`, and `misalign_sw_off2`. Each row is `PASS DIFF`; each associated TEST_RESULT is PASS. Thus these are not compile or runtime errors.
+- Independent expected trace from each saved source: the two setup instructions retire, the misaligned store faults at PC 0x8 with cause 5, registers reflect s0=0x5000 and t0=0xffffffff, and memory remains unchanged. Saved RTL traces match through line 34; line 35 has an extra store side effect:
+  - misalign_sh_off1: `MEM 00005000 0000ffff` (ISS expected EOF)
+  - misalign_sh_off3: `MEM 00005000 ffff0000` (ISS expected EOF)
+  - misalign_sw_off1: `MEM 00005000 ffffffff` (ISS expected EOF)
+  - misalign_sw_off2: `MEM 00005000 ffffffff` (ISS expected EOF)
+- Verified classification: CAUGHT by actual RTL/ISS trace mismatch, first differing line 35 for all four cases.
+
+Mutant 07 - SLLI funct7 not checked
+- Source mutation: `illegal = (funct7 != 7'b0000000);` -> `illegal = 1'b0;` in the SLLI decode branch.
+- Mutation applied: true in saved audit. Build success: true; saved Vunits and Vcore executables exist. Child exit code: 1. stderr length: 0 bytes. Unit result: PASS, 114339 checks, 0 errors. Regression: 105/106 system tests pass, 1 fails; final marker STAGE1_REGRESSION FAIL.
+- Failing case `illegal_slli_funct7` is reported `PASS DIFF`; its TEST_RESULT is PASS because the testbench checks only expected halt cause 3. The mutated SLLI executes at PC 0x4, then the zero word at PC 0x8 causes illegal-instruction halt, so the eventual cause still equals 3.
+- Independent expected trace from saved source `li t0, 1; .word 0x40109093`: after the first retired instruction, the ISS rejects the illegal SLLI and reports `HALT 3 00000004`. The saved RTL trace instead retires `00000004 40109093 01 00000000 0 00000000 00000000` on line 2 and halts at PC 0x8. First differing line: 2.
+- Verified classification: CAUGHT by actual RTL/ISS trace mismatch.
+
+Final saved-evidence reclassification: 14/14 CAUGHT, 0 MISSED, 0 INVALID. The 12 other mutants retain the original audit's CAUGHT records, including successful build/regression markers and explicit unit or testbench failure evidence. `run_stage1.py`, `mutation_check.py`, and RTL were not changed; only the separate audit helper's `PASS DIFF` recognition was corrected. No mutation rerun was performed.

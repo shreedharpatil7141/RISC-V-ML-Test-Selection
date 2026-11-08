@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/alu/rv_alu.sv",
+    "before": "word_t'($signed(a) >>> b[4:0])",
+    "after": "a >> b[4:0]",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

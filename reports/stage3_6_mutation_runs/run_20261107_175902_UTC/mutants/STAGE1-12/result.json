@@ -1,0 +1,24 @@
+{
+  "id": "STAGE1-12",
+  "name": "JAL link = pc+8",
+  "stage": "stage1",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "jumps: explicit Stage 1 TEST_RESULT FAIL"
+  ],
+  "changes": [
+    {
+      "file": "rtl/core/rv_core_single.sv",
+      "before": "WB_PC4:  wb_data = pc_plus4;",
+      "after": "WB_PC4:  wb_data = pc_plus4 + 32'd4;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 9.96
+}

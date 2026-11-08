@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/core/rv_core_pipe.sv",
+    "before": "assign kill = halted || fault;",
+    "after": "assign kill = halted;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

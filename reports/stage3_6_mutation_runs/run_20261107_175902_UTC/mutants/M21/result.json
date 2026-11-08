@@ -1,0 +1,27 @@
+{
+  "id": "M21",
+  "name": "DIV/REM rs1 ignores EX/MEM forwarding",
+  "stage": "stage35",
+  "expected_check": "test:pipe_div_forward_sources",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "pipe_div_forward_sources: explicit pipe TEST_RESULT FAIL",
+    "pipe_div_forward_sources: independently confirmed full pipeline/ISS trace difference",
+    "pipe_div_forward_sources: independently confirmed full pipeline/golden trace difference",
+    "pipe_div_forward_sources: explicit timing checker failure with complete STATS record"
+  ],
+  "changes": [
+    {
+      "file": "rtl/pipeline/rv_ex_stage.sv",
+      "before": "FWD_EXMEM: rs1_f = exmem_alu_y;",
+      "after": "FWD_EXMEM: rs1_f = id_ex.rs1_data;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 86.86
+}

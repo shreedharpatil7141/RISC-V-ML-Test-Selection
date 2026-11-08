@@ -1,0 +1,24 @@
+{
+  "id": "M02",
+  "name": "MULHSU treats rs2 as signed",
+  "stage": "stage35",
+  "expected_check": "unit:wrapper",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "M wrapper unit: FAIL 49 1 34"
+  ],
+  "changes": [
+    {
+      "file": "rtl/alu/rv_mul.sv",
+      "before": "3'b010: y = product_su[63:32];",
+      "after": "3'b010: y = product_ss[63:32];",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 60.14
+}

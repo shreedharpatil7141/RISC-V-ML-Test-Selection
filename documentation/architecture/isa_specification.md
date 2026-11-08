@@ -1,4 +1,12 @@
-# Target ISA: RV32IMAC + Zicsr + Zifencei + M-mode
+# Project ISA target: RV32IMAC + Zicsr + Zifencei + M-mode
+
+> **Implementation status:** this file preserves the broader project target;
+> it is not a description of the current RTL. At the Stage 3.8 gate, the
+> implemented and regression-verified instruction scope is RV32I plus RV32M
+> in the single-cycle reference and five-stage pipeline. The documented A, C,
+> Zicsr, Zifencei, and privileged architecture below are planned target scope
+> only. They must not be reported as implemented. No architectural compliance
+> suite has been run. See [`stage3_rv32m_status.md`](stage3_rv32m_status.md).
 
 ## Specification baseline
 These are the baseline versions to pin. **They were not verified against docs.riscv.org in Stage 0 (no web access used); confirm and record exact versions at the start of Stage 1.**
@@ -15,14 +23,14 @@ These are the baseline versions to pin. **They were not verified against docs.ri
 
 Source: https://docs.riscv.org/
 
-## Configuration
+## Planned target configuration (not the current implementation)
 - XLEN = 32, single hart (mhartid = 0), in-order.
 - `misa`: MXL=1 (32), extensions I, M, A, C. misa treated as read-only (writes ignored) - documented WARL choice.
 - Reset PC: parameter, default `0x0000_0000`.
 - Memory: unified byte-addressable, little-endian; separate instruction/data ports in the memory model.
 - Only machine mode. No S/U modes, no MMU, no PMP, no F/D, no debug mode.
 
-## Instruction set scope
+## Planned target instruction set scope
 - **RV32I (37 user insts + FENCE):** LUI, AUIPC, JAL, JALR, BEQ/BNE/BLT/BGE/BLTU/BGEU, LB/LH/LW/LBU/LHU, SB/SH/SW, ADDI/SLTI/SLTIU/XORI/ORI/ANDI/SLLI/SRLI/SRAI, ADD/SUB/SLL/SLT/SLTU/XOR/SRL/SRA/OR/AND, FENCE, ECALL, EBREAK. Formats R, I, S, B, U, J.
 - **M:** MUL, MULH, MULHSU, MULHU, DIV, DIVU, REM, REMU. Division by zero returns all-ones (DIV/DIVU) or the dividend (REM/REMU), no trap; MIN_INT / -1 gives MIN_INT (DIV) and 0 (REM).
 - **A (word):** LR.W, SC.W, AMOSWAP/ADD/XOR/AND/OR/MIN/MAX/MINU/MAXU.W. aq/rl bits decoded; single hart makes them ordering no-ops.
@@ -31,13 +39,13 @@ Source: https://docs.riscv.org/
 - **Zifencei:** FENCE.I flushes the pipeline and refetches (instruction-fetch synchronization).
 - **Privileged (M-mode):** ECALL, EBREAK, MRET, WFI (implemented as NOP, documented permitted behaviour).
 
-## CSRs
+## Planned CSR target
 mstatus (MIE, MPIE, MPP=11 fixed), misa, mie, mip, mtvec (direct mode, vectored optional - decide in Stage 7), mepc, mcause, mtval, mscratch, mcycle/mcycleh, minstret/minstreth, mhartid, mvendorid/marchid/mimpid (read-only 0). Unimplemented CSR access -> illegal-instruction; write to read-only CSR -> illegal-instruction.
 
-## Exceptions and interrupts
+## Planned exception and interrupt target
 Instruction address misaligned (cause 0; with C, only possible for 2-byte-misaligned targets from JALR clearing bit 0 rules - documented in Stage 4/7), illegal instruction (2), breakpoint (3), load misaligned (4), store/AMO misaligned (6), ECALL from M (11). Interrupts: MSI (3), MTI (7), MEI (11) via input pins (`mtimecmp` timer itself is outside the core; core receives `mtip`). Access faults are not generated unless the memory model signals them (decision deferred to Stage 7).
 
-## Single-hart memory model and limitations
+## Planned single-hart memory model and broader limitations
 - Sequentially consistent from the software view (in-order, single hart, blocking memory).
 - LR/SC: one reservation (address + valid); cleared by SC (success or fail), by any trap/MRET, and by a store to the reserved word from this hart. SC fails without valid matching reservation.
 - AMOs are executed atomically in the memory stage (read-modify-write, no bus interleaving).

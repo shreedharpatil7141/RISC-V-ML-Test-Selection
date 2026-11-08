@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/alu/rv_div_iter.sv",
+    "before": "assign busy     = ((state == S_RUN) || accepted) && !abort;",
+    "after": "assign busy     = (state == S_RUN) && !abort;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

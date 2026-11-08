@@ -1,0 +1,26 @@
+{
+  "id": "STAGE1-00",
+  "name": "SRA acts as SRL",
+  "stage": "stage1",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "imm_srai: explicit Stage 1 TEST_RESULT FAIL",
+    "rr_sra: explicit Stage 1 TEST_RESULT FAIL",
+    "Stage 1 unit: explicit UNIT_RESULT FAIL"
+  ],
+  "changes": [
+    {
+      "file": "rtl/alu/rv_alu.sv",
+      "before": "word_t'($signed(a) >>> b[4:0])",
+      "after": "a >> b[4:0]",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 10.11
+}

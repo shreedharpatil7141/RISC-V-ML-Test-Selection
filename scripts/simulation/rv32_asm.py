@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Minimal RV32I assembler (Stage 1). Output: one 32-bit hex word per line ($readmemh).
-Supports: RV32I mnemonics, labels, .org, .word, pseudos (nop li la mv j jal jr jalr ret beqz bnez fence).
+Supports: RV32I + RV32M mnemonics, labels, .org, .word, pseudos (nop li la mv j jal jr jalr ret beqz bnez fence).
 Numeric branch/jump operands are raw byte offsets; label operands are PC-relative."""
 import re, sys
 
@@ -16,7 +16,9 @@ def reg(s):
     raise ValueError(f"bad register '{s}'")
 
 R_OPS = {'add':(0,0),'sub':(0x20,0),'sll':(0,1),'slt':(0,2),'sltu':(0,3),'xor':(0,4),
-         'srl':(0,5),'sra':(0x20,5),'or':(0,6),'and':(0,7)}
+         'srl':(0,5),'sra':(0x20,5),'or':(0,6),'and':(0,7),
+         # RV32M (funct7=0000001): MUL MULH MULHSU MULHU DIV DIVU REM REMU = funct3 0..7
+         'mul':(1,0),'mulh':(1,1),'mulhsu':(1,2),'mulhu':(1,3),'div':(1,4),'divu':(1,5),'rem':(1,6),'remu':(1,7)}
 I_OPS = {'addi':0,'slti':2,'sltiu':3,'xori':4,'ori':6,'andi':7}
 SH_OPS = {'slli':(0,1),'srli':(0,5),'srai':(0x20,5)}
 LD_OPS = {'lb':0,'lh':1,'lw':2,'lbu':4,'lhu':5}

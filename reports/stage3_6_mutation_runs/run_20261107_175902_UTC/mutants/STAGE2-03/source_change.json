@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_hazard_unit.sv",
+    "before": "assign stall = id_valid && ex_valid",
+    "after": "assign stall = 1'b0 && id_valid && ex_valid",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

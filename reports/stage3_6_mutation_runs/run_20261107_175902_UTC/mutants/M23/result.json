@@ -1,0 +1,25 @@
+{
+  "id": "M23",
+  "name": "Pipeline retirement reports an architectural write to x0",
+  "stage": "stage35",
+  "expected_check": "test:pipe_m_back_to_back_x0",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "pipe_m_back_to_back_x0: independently confirmed full pipeline/ISS trace difference",
+    "pipe_m_back_to_back_x0: independently confirmed full pipeline/golden trace difference"
+  ],
+  "changes": [
+    {
+      "file": "rtl/pipeline/rv_wb_stage.sv",
+      "before": "assign ret_rd_we     = mem_wb.valid && mem_wb.reg_we && (mem_wb.rd != 5'd0);",
+      "after": "assign ret_rd_we     = mem_wb.valid && mem_wb.reg_we;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 59.5
+}

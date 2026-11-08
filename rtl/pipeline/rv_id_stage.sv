@@ -25,12 +25,12 @@ module rv_id_stage
   reg_t       rd, rs1, rs2;
   logic [2:0] funct3;
   logic [6:0] funct7;
-  logic       dec_illegal, is_ecall, is_ebreak, is_fence;
+  logic       dec_illegal, is_ecall, is_ebreak, is_fence, is_m;
 
   rv_decoder u_dec (
     .insn(if_id.insn), .opcode(opcode), .rd(rd), .rs1(rs1), .rs2(rs2),
     .funct3(funct3), .funct7(funct7), .illegal(dec_illegal),
-    .is_ecall(is_ecall), .is_ebreak(is_ebreak), .is_fence(is_fence)
+    .is_ecall(is_ecall), .is_ebreak(is_ebreak), .is_fence(is_fence), .is_m(is_m)
   );
 
   word_t imm;
@@ -45,7 +45,7 @@ module rv_id_stage
     .opcode(opcode), .funct3(funct3), .funct7(funct7), .illegal(dec_illegal),
     .reg_we(reg_we), .a_sel(a_sel), .b_imm(b_imm), .alu_op(alu_op),
     .mem_re(mem_re), .mem_we(mem_we), .wb_sel(wb_sel),
-    .is_branch(is_branch), .is_jal(is_jal), .is_jalr(is_jalr)
+    .is_branch(is_branch), .is_jal(is_jal), .is_jalr(is_jalr), .is_m(is_m)
   );
 
   assign rs1_addr = rs1;
@@ -84,6 +84,7 @@ module rv_id_stage
     id_ex_next.imm       = imm;
     id_ex_next.funct3    = funct3;
     id_ex_next.alu_op    = alu_op;
+    id_ex_next.is_m      = is_m;
     id_ex_next.a_sel     = a_sel;
     id_ex_next.b_imm     = b_imm;
     id_ex_next.reg_we    = reg_we;

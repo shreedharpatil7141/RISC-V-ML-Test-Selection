@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_ex_stage.sv",
+    "before": "(id_ex.pc + 32'd4) : alu_y;",
+    "after": "(id_ex.pc + 32'd8) : alu_y;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

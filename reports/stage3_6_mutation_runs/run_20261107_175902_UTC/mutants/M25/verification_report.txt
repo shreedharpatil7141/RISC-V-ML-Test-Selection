@@ -1,0 +1,376 @@
+Stage 3.5 M-extension coverage regression  2026-11-07 18:46:25  simulator=verilator
+
+Stage 1 unit: PASS 114339 0
+M arithmetic unit: PASS 1152 0
+M decoder unit: PASS 1024 0
+Pipeline unit: PASS 624576 0
+Divider unit: PASS 262144 0 1600 0
+M wrapper unit: PASS 49 0 34
+
+test                                   s1 pipe iss gold perf md starts/dones busy abort cycles
+branch_backward                        ok  ok   ok   ok   ok   ok     0/0       0     0     157
+branch_beq                             ok  ok   ok   ok   ok   ok     0/0       0     0     370
+branch_bge                             ok  ok   ok   ok   ok   ok     0/0       0     0     349
+branch_bgeu                            ok  ok   ok   ok   ok   ok     0/0       0     0     349
+branch_blt                             ok  ok   ok   ok   ok   ok     0/0       0     0     356
+branch_bltu                            ok  ok   ok   ok   ok   ok     0/0       0     0     356
+branch_bne                             ok  ok   ok   ok   ok   ok     0/0       0     0     335
+branch_notaken_misaligned_ok           ok  ok   ok   ok   ok   ok     0/0       0     0      14
+fence_nop                              ok  ok   ok   ok   ok   ok     0/0       0     0      16
+halt_ebreak                            ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_branch_f3_010                  ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_branch_f3_011                  ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_compressed_stage1              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_csrrw_stage1                   ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_fencei_stage1                  ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_jalr_f3_001                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_load_f3_011                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_load_f3_110                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_mret_stage1                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_ones                           ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7                      ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_0000010              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_0000011              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_0000100              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_0010000              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_0100001              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_1000000              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_opcode_custom                  ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_slli_funct7                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_srli_funct7                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_store_f3_011                   ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_zero                           ok  ok   ok   ok   ok   ok     0/0       0     0       6
+imm_addi                               ok  ok   ok   ok   ok   ok     0/0       0     0     705
+imm_andi                               ok  ok   ok   ok   ok   ok     0/0       0     0     670
+imm_ori                                ok  ok   ok   ok   ok   ok     0/0       0     0     686
+imm_slli                               ok  ok   ok   ok   ok   ok     0/0       0     0     452
+imm_slti                               ok  ok   ok   ok   ok   ok     0/0       0     0     663
+imm_sltiu                              ok  ok   ok   ok   ok   ok     0/0       0     0     663
+imm_srai                               ok  ok   ok   ok   ok   ok     0/0       0     0     459
+imm_srli                               ok  ok   ok   ok   ok   ok     0/0       0     0     467
+imm_xori                               ok  ok   ok   ok   ok   ok     0/0       0     0     697
+jumps                                  ok  ok   ok   ok   ok   ok     0/0       0     0     100
+loadstore_directed                     ok  ok   ok   ok   ok   ok     0/0       0     0     199
+loadstore_random                       ok  ok   ok   ok   ok   ok     0/0       0     0    2170
+long_beq_n1024                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n1364                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n2048                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n2732                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n3412                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n4092                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n4096                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_p1024                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_beq_p1364                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_beq_p2048                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_beq_p2732                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_beq_p3412                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_beq_p4092                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_n10920                        ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n2048                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n21844                        ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n32764                        ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n32768                        ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n4096                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n8192                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_p1024                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p10920                        ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p128                          ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p16                           ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p16384                        ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p2048                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p21844                        ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p256                          ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p32                           ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p32764                        ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p32768                        ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p4                            ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p4096                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p512                          ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p64                           ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p8                            ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p8192                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+misalign_branch_taken                  ok  ok   ok   ok   ok   ok     0/0       0     0       6
+misalign_jal_target                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+misalign_jalr_target                   ok  ok   ok   ok   ok   ok     0/0       0     0       9
+misalign_lh_off1                       ok  ok   ok   ok   ok   ok     0/0       0     0       6
+misalign_lhu_off3                      ok  ok   ok   ok   ok   ok     0/0       0     0       6
+misalign_lw_off1                       ok  ok   ok   ok   ok   ok     0/0       0     0       6
+misalign_lw_off2                       ok  ok   ok   ok   ok   ok     0/0       0     0       7
+misalign_sh_off1                       ok  ok   ok   ok   ok   ok     0/0       0     0       7
+misalign_sh_off3                       ok  ok   ok   ok   ok   ok     0/0       0     0       7
+misalign_sw_off1                       ok  ok   ok   ok   ok   ok     0/0       0     0       7
+misalign_sw_off2                       ok  ok   ok   ok   ok   ok     0/0       0     0       7
+regfile                                ok  ok   ok   ok   ok   ok     0/0       0     0     531
+rr_add                                 ok  ok   ok   ok   ok   ok     0/0       0     0    1001
+rr_and                                 ok  ok   ok   ok   ok   ok     0/0       0     0     964
+rr_or                                  ok  ok   ok   ok   ok   ok     0/0       0     0     986
+rr_sll                                 ok  ok   ok   ok   ok   ok     0/0       0     0     954
+rr_slt                                 ok  ok   ok   ok   ok   ok     0/0       0     0     940
+rr_sltu                                ok  ok   ok   ok   ok   ok     0/0       0     0     940
+rr_sra                                 ok  ok   ok   ok   ok   ok     0/0       0     0     957
+rr_srl                                 ok  ok   ok   ok   ok   ok     0/0       0     0     965
+rr_sub                                 ok  ok   ok   ok   ok   ok     0/0       0     0     998
+rr_xor                                 ok  ok   ok   ok   ok   ok     0/0       0     0     998
+upper_auipc                            ok  ok   ok   ok   ok   ok     0/0       0     0      60
+upper_lui                              ok  ok   ok   ok   ok   ok     0/0       0     0      48
+x0_behavior                            ok  ok   ok   ok   ok   ok     0/0       0     0      46
+pipe_array_sum_loop                    ok  ok   ok   ok   ok   ok     0/0       0     0     113
+pipe_basic_independent                 ok  ok   ok   ok   ok   ok     0/0       0     0      29
+pipe_branch_beq                        ok  ok   ok   ok   ok   ok     0/0       0     0      73
+pipe_branch_bge                        ok  ok   ok   ok   ok   ok     0/0       0     0      73
+pipe_branch_bgeu                       ok  ok   ok   ok   ok   ok     0/0       0     0      73
+pipe_branch_blt                        ok  ok   ok   ok   ok   ok     0/0       0     0      73
+pipe_branch_bltu                       ok  ok   ok   ok   ok   ok     0/0       0     0      73
+pipe_branch_bne                        ok  ok   ok   ok   ok   ok     0/0       0     0      73
+pipe_dep_random_11                     ok  ok   ok   ok   ok   ok     0/0       0     0     137
+pipe_dep_random_12                     ok  ok   ok   ok   ok   ok     0/0       0     0     142
+pipe_dep_random_13                     ok  ok   ok   ok   ok   ok     0/0       0     0     143
+pipe_ebreak_older_commit_younger_squash ok  ok   ok   ok   ok   ok     0/0       0     0       7
+pipe_ecall_after_loaduse               ok  ok   ok   ok   ok   ok     0/0       0     0      12
+pipe_fault_load_use_consumer           ok  ok   ok   ok   ok   ok     0/0       0     0      11
+pipe_fault_misalign_load_after_load    ok  ok   ok   ok   ok   ok     0/0       0     0       7
+pipe_fault_older_stores_commit         ok  ok   DIFF DIFF ok   ok     0/0       0     0      10 [n_div=0 expected md=0/0/0/0 stalls=0 redir=0 instret=5]
+pipe_fault_squashes_younger_store      ok  ok   DIFF DIFF ok   ok     0/0       0     0       7 [n_div=0 expected md=0/0/0/0 stalls=0 redir=0 instret=2]
+pipe_flush_sideeffects                 ok  ok   ok   ok   ok   ok     0/0       0     0      57
+pipe_flush_wrongpath_faults            ok  ok   ok   ok   ok   ok     0/0       0     0      29
+pipe_fwd_exex_chain                    ok  ok   ok   ok   ok   ok     0/0       0     0      82
+pipe_fwd_exmem                         ok  ok   ok   ok   ok   ok     0/0       0     0      34
+pipe_fwd_memwb                         ok  ok   ok   ok   ok   ok     0/0       0     0      30
+pipe_fwd_priority                      ok  ok   ok   ok   ok   ok     0/0       0     0      40
+pipe_fwd_wb_bypass                     ok  ok   ok   ok   ok   ok     0/0       0     0      34
+pipe_illegal_after_nottaken_branch     ok  ok   ok   ok   ok   ok     0/0       0     0       7
+pipe_jumps_link_fwd                    ok  ok   ok   ok   ok   ok     0/0       0     0      57
+pipe_loaduse_basic                     ok  ok   ok   ok   ok   ok     0/0       0     0     101
+pipe_loaduse_chain                     ok  ok   ok   ok   ok   ok     0/0       0     0      41
+pipe_loaduse_store                     ok  ok   ok   ok   ok   ok     0/0       0     0      66
+pipe_mem_copy_loop                     ok  ok   ok   ok   ok   ok     0/0       0     0     152
+pipe_mem_ops                           ok  ok   ok   ok   ok   ok     0/0       0     0      88
+pipe_misalign_branch_taken_squash      ok  ok   ok   ok   ok   ok     0/0       0     0       6
+pipe_misalign_jalr_after_load          ok  ok   ok   ok   ok   ok     0/0       0     0      12
+pipe_misalign_store_fwd_addr           ok  ok   ok   ok   ok   ok     0/0       0     0       8
+pipe_multi_dep_fib                     ok  ok   ok   ok   ok   ok     0/0       0     0      66
+pipe_rand_01                           ok  ok   ok   ok   ok   ok     0/0       0     0     354
+pipe_rand_02                           ok  ok   ok   ok   ok   ok     0/0       0     0     358
+pipe_rand_03                           ok  ok   ok   ok   ok   ok     0/0       0     0     426
+pipe_rand_04                           ok  ok   ok   ok   ok   ok     0/0       0     0     444
+pipe_rand_05                           ok  ok   ok   ok   ok   ok     0/0       0     0     460
+pipe_rand_06                           ok  ok   ok   ok   ok   ok     0/0       0     0     421
+pipe_rand_07                           ok  ok   ok   ok   ok   ok     0/0       0     0     494
+pipe_rand_08                           ok  ok   ok   ok   ok   ok     0/0       0     0     466
+pipe_rand_09                           ok  ok   ok   ok   ok   ok     0/0       0     0     446
+pipe_rand_10                           ok  ok   ok   ok   ok   ok     0/0       0     0     447
+pipe_rand_11                           ok  ok   ok   ok   ok   ok     0/0       0     0     494
+pipe_rand_12                           ok  ok   ok   ok   ok   ok     0/0       0     0     516
+pipe_rand_13                           ok  ok   ok   ok   ok   ok     0/0       0     0     567
+pipe_rand_14                           ok  ok   ok   ok   ok   ok     0/0       0     0     538
+pipe_rand_15                           ok  ok   ok   ok   ok   ok     0/0       0     0     585
+pipe_rand_16                           ok  ok   ok   ok   ok   ok     0/0       0     0     591
+pipe_rand_17                           ok  ok   ok   ok   ok   ok     0/0       0     0     618
+pipe_rand_18                           ok  ok   ok   ok   ok   ok     0/0       0     0     569
+pipe_rand_19                           ok  ok   ok   ok   ok   ok     0/0       0     0     621
+pipe_rand_20                           ok  ok   ok   ok   ok   ok     0/0       0     0     664
+pipe_rand_21                           ok  ok   ok   ok   ok   ok     0/0       0     0     640
+pipe_rand_22                           ok  ok   ok   ok   ok   ok     0/0       0     0     692
+pipe_rand_23                           ok  ok   ok   ok   ok   ok     0/0       0     0     718
+pipe_rand_24                           ok  ok   ok   ok   ok   ok     0/0       0     0     670
+pipe_stall_flush_branch                ok  ok   ok   ok   ok   ok     0/0       0     0      31
+pipe_stall_flush_jalr                  ok  ok   ok   ok   ok   ok     0/0       0     0      16
+pipe_writeback_all_regs                ok  ok   ok   ok   ok   ok     0/0       0     0     157
+pipe_x0_behavior                       ok  ok   ok   ok   ok   ok     0/0       0     0      74
+pipe_m_arithmetic                      ok  ok   ok   ok   ok   ok    17/17    561     0     654
+pipe_m_fwd_consumers                   ok  ok   ok   ok   ok   ok     0/0       0     0      22
+pipe_m_jalr                            ok  ok   ok   ok   ok   ok     0/0       0     0      13
+pipe_m_loaduse                         ok  ok   ok   ok   ok   ok     0/0       0     0      17
+pipe_m_back_to_back_x0                 ok  ok   ok   ok   ok   ok     2/2      66     0      88
+pipe_m_wrongpath                       ok  ok   ok   ok   ok   ok     0/0       0     0      15
+pipe_m_fault_illegal                   ok  ok   ok   ok   ok   ok     0/0       0     0       8
+pipe_m_fault_load                      ok  ok   ok   ok   ok   ok     0/0       0     0       6
+m_chain                                ok  ok   ok   ok   ok   ok    18/18    594     0     656
+m_div                                  ok  ok   ok   ok   ok   ok   280/280  9240     0   11694
+m_divu                                 ok  ok   ok   ok   ok   ok   280/280  9240     0   11687
+m_divzero                              ok  ok   ok   ok   ok   ok    56/56   1848     0    2310
+m_misc_use                             ok  ok   ok   ok   ok   ok    53/53   1749     0    2076
+m_mul                                  ok  ok   ok   ok   ok   ok     0/0       0     0    2495
+m_mulh                                 ok  ok   ok   ok   ok   ok     0/0       0     0    2432
+m_mulhsu                               ok  ok   ok   ok   ok   ok     0/0       0     0    2461
+m_mulhu                                ok  ok   ok   ok   ok   ok     0/0       0     0    2494
+m_overflow                             ok  ok   ok   ok   ok   ok    32/32   1056     0    1331
+m_rand_div                             ok  ok   ok   ok   ok   ok   150/150  4950     0    6377
+m_rand_divu                            ok  ok   ok   ok   ok   ok   150/150  4950     0    6382
+m_rand_mul                             ok  ok   ok   ok   ok   ok     0/0       0     0    1492
+m_rand_mulh                            ok  ok   ok   ok   ok   ok     0/0       0     0    1450
+m_rand_mulhsu                          ok  ok   ok   ok   ok   ok     0/0       0     0    1473
+m_rand_mulhu                           ok  ok   ok   ok   ok   ok     0/0       0     0    1471
+m_rand_rem                             ok  ok   ok   ok   ok   ok   150/150  4950     0    6417
+m_rand_remu                            ok  ok   ok   ok   ok   ok   150/150  4950     0    6433
+m_rem                                  ok  ok   ok   ok   ok   ok   280/280  9240     0   11673
+m_remu                                 ok  ok   ok   ok   ok   ok   280/280  9240     0   11716
+m_sign_matrix                          ok  ok   ok   ok   ok   ok    96/96   3168     0    4716
+m_x0                                   ok  ok   ok   ok   ok   ok    16/16    528     0     717
+pipe_div_dependencies                  ok  ok   ok   ok   ok   ok     1/1      33     0      46
+pipe_div_loaduse                       ok  ok   ok   ok   ok   ok     1/1      33     0      50
+pipe_div_back_to_back                  ok  ok   ok   ok   ok   ok     5/5     165     0     186
+pipe_div_forward_consumers             ok  ok   ok   ok   ok   ok     4/4     132     0     162
+pipe_div_wrongpath                     ok  ok   ok   ok   ok   ok     0/0       0     0      11
+pipe_div_fault_illegal                 ok  ok   ok   ok   ok   FAIL   1/0       1     1       7 [n_div=0 expected md=0/0/0/0 stalls=0 redir=0 instret=2]
+pipe_div_fault_load                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+pipe_div_before_fault                  ok  ok   ok   ok   ok   FAIL   2/1      34     1      42 [n_div=1 expected md=1/1/33/0 stalls=0 redir=0 instret=4]
+pipe_div_loaduse_rs1                   ok  ok   ok   ok   ok   ok     1/1      33     0      48
+pipe_div_forward_sources               ok  ok   ok   ok   ok   ok     2/2      66     0      81
+
+Pipeline event coverage (verilator):
+   0 stall_rs1            hits=      70 tests= 30 COVERED
+   1 stall_rs2            hits=      46 tests= 18 COVERED
+   2 fwd_a_exmem          hits=    8851 tests=123 COVERED
+   3 fwd_a_memwb          hits=    7908 tests=129 COVERED
+   4 fwd_b_exmem          hits=   11812 tests=131 COVERED
+   5 fwd_b_memwb          hits=    2116 tests= 63 COVERED
+   6 wb_bypass_rs1        hits=    5102 tests=116 COVERED
+   7 wb_bypass_rs2        hits=     263 tests= 52 COVERED
+   8 fwd_a_priority       hits=     540 tests= 64 COVERED
+   9 fwd_b_priority       hits=    3777 tests= 78 COVERED
+  10 redirect_branch      hits=    7298 tests=126 COVERED
+  11 redirect_jal         hits=     460 tests= 68 COVERED
+  12 redirect_jalr        hits=     210 tests= 32 COVERED
+  13 store_data_fwd       hits=     315 tests= 48 COVERED
+  14 branch_operand_fwd   hits=    7642 tests=119 COVERED
+  15 x0_not_forwarded     hits=      63 tests= 23 COVERED
+Coverage events hit: 16/16
+SUITE m_extension: 22 passed, 0 failed, 22 total
+SUITE pipeline: 61 passed, 2 failed, 63 total
+SUITE pipeline_div: 6 passed, 2 failed, 8 total
+SUITE pipeline_div_coverage: 2 passed, 0 failed, 2 total
+SUITE pipeline_m: 8 passed, 0 failed, 8 total
+SUITE rv32i: 106 passed, 0 failed, 106 total
+TOTAL: 205 passed, 4 failed, 209 total
+
+Stage 3.5 M-extension coverage dictionary
+Architectural operand bins show independent ISS/RTL counts; raw pre-writeback operand rows are compared in order.
+Pipeline and block-level protocol bins use RTL/unit evidence; the categories are not merged.
+ID                                          ISS/RTL or hits  tests status  contributors
+A.OP.MUL                                            477/477     12 HIT    m_chain,m_misc_use,m_mul,m_rand_mul,m_sign_matrix,m_x0,pipe_div_dependencies,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+P.ISSUE.MUL                                             478     13 HIT    m_chain,m_misc_use,m_mul,m_rand_mul,m_sign_matrix,m_x0,pipe_div_dependencies,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fault_illegal,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+P.COMPLETE.MUL                                          478     13 HIT    m_chain,m_misc_use,m_mul,m_rand_mul,m_sign_matrix,m_x0,pipe_div_dependencies,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fault_illegal,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+P.RETIRE.MUL                                            477     12 HIT    m_chain,m_misc_use,m_mul,m_rand_mul,m_sign_matrix,m_x0,pipe_div_dependencies,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+A.OP.MULH                                           468/468      7 HIT    m_chain,m_misc_use,m_mulh,m_rand_mulh,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.ISSUE.MULH                                            468      7 HIT    m_chain,m_misc_use,m_mulh,m_rand_mulh,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.COMPLETE.MULH                                         468      7 HIT    m_chain,m_misc_use,m_mulh,m_rand_mulh,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.RETIRE.MULH                                           468      7 HIT    m_chain,m_misc_use,m_mulh,m_rand_mulh,m_sign_matrix,m_x0,pipe_m_arithmetic
+A.OP.MULHSU                                         464/464      7 HIT    m_chain,m_misc_use,m_mulhsu,m_rand_mulhsu,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.ISSUE.MULHSU                                          464      7 HIT    m_chain,m_misc_use,m_mulhsu,m_rand_mulhsu,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.COMPLETE.MULHSU                                       464      7 HIT    m_chain,m_misc_use,m_mulhsu,m_rand_mulhsu,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.RETIRE.MULHSU                                         464      7 HIT    m_chain,m_misc_use,m_mulhsu,m_rand_mulhsu,m_sign_matrix,m_x0,pipe_m_arithmetic
+A.OP.MULHU                                          465/465      7 HIT    m_chain,m_misc_use,m_mulhu,m_rand_mulhu,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.ISSUE.MULHU                                           465      7 HIT    m_chain,m_misc_use,m_mulhu,m_rand_mulhu,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.COMPLETE.MULHU                                        465      7 HIT    m_chain,m_misc_use,m_mulhu,m_rand_mulhu,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.RETIRE.MULHU                                          465      7 HIT    m_chain,m_misc_use,m_mulhu,m_rand_mulhu,m_sign_matrix,m_x0,pipe_m_arithmetic
+A.OP.DIV                                            506/506     17 HIT    m_chain,m_div,m_divzero,m_misc_use,m_overflow,m_rand_div,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0
+P.ISSUE.DIV                                             508     18 HIT    m_chain,m_div,m_divzero,m_misc_use,m_overflow,m_rand_div,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_fault_illegal,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0
+P.COMPLETE.DIV                                          506     17 HIT    m_chain,m_div,m_divzero,m_misc_use,m_overflow,m_rand_div,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0
+P.RETIRE.DIV                                            506     17 HIT    m_chain,m_div,m_divzero,m_misc_use,m_overflow,m_rand_div,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0
+A.OP.DIVU                                           513/513     10 HIT    m_chain,m_divu,m_divzero,m_misc_use,m_overflow,m_rand_divu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic
+P.ISSUE.DIVU                                            513     10 HIT    m_chain,m_divu,m_divzero,m_misc_use,m_overflow,m_rand_divu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic
+P.COMPLETE.DIVU                                         513     10 HIT    m_chain,m_divu,m_divzero,m_misc_use,m_overflow,m_rand_divu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic
+P.RETIRE.DIVU                                           513     10 HIT    m_chain,m_divu,m_divzero,m_misc_use,m_overflow,m_rand_divu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic
+A.OP.REM                                            493/493     11 HIT    m_chain,m_divzero,m_misc_use,m_overflow,m_rand_rem,m_rem,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic,pipe_m_back_to_back_x0
+P.ISSUE.REM                                             493     11 HIT    m_chain,m_divzero,m_misc_use,m_overflow,m_rand_rem,m_rem,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic,pipe_m_back_to_back_x0
+P.COMPLETE.REM                                          493     11 HIT    m_chain,m_divzero,m_misc_use,m_overflow,m_rand_rem,m_rem,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic,pipe_m_back_to_back_x0
+P.RETIRE.REM                                            493     11 HIT    m_chain,m_divzero,m_misc_use,m_overflow,m_rand_rem,m_rem,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic,pipe_m_back_to_back_x0
+A.OP.REMU                                           513/513     10 HIT    m_chain,m_divzero,m_misc_use,m_overflow,m_rand_remu,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic
+P.ISSUE.REMU                                            513     10 HIT    m_chain,m_divzero,m_misc_use,m_overflow,m_rand_remu,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic
+P.COMPLETE.REMU                                         513     10 HIT    m_chain,m_divzero,m_misc_use,m_overflow,m_rand_remu,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic
+P.RETIRE.REMU                                           513     10 HIT    m_chain,m_divzero,m_misc_use,m_overflow,m_rand_remu,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic
+A.RS1.SIGN.NEG                                    1634/1634     22 HIT    m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,pipe_m_arithmetic
+A.RS1.SIGN.NONNEG                                 2265/2265     34 HIT    m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+A.RS1.CLASS.ZERO                                    258/258     21 HIT    m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_x0,pipe_m_arithmetic
+A.RS1.CLASS.POS_ONE                                 180/180     18 HIT    m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS1.CLASS.NEG_ONE                                 217/217     20 HIT    m_chain,m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS1.CLASS.SMIN                                    211/211     18 HIT    m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS1.CLASS.SMAX                                    169/169     19 HIT    m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS1.CLASS.OTHER                                 2864/2864     34 HIT    m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+A.RS1.CLASS.UMAX                                    217/217     20 HIT    m_chain,m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS2.SIGN.NEG                                    1537/1537     20 HIT    m_chain,m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,pipe_m_arithmetic
+A.RS2.SIGN.NONNEG                                 2362/2362     34 HIT    m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+A.RS2.CLASS.ZERO                                    315/315     20 HIT    m_chain,m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_x0,pipe_m_arithmetic
+A.RS2.CLASS.POS_ONE                                 181/181     21 HIT    m_div,m_divu,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_div_forward_consumers,pipe_m_arithmetic,pipe_m_jalr
+A.RS2.CLASS.NEG_ONE                                 232/232     19 HIT    m_chain,m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS2.CLASS.SMIN                                    170/170     17 HIT    m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS2.CLASS.SMAX                                    149/149     16 HIT    m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu
+A.RS2.CLASS.OTHER                                 2852/2852     32 HIT    m_chain,m_div,m_divu,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_loaduse
+A.RS2.CLASS.UMAX                                    232/232     19 HIT    m_chain,m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.ALIAS.RD_EQ_RS1                                     97/97      9 HIT    m_div,m_divu,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rem,m_remu
+A.ALIAS.RD_EQ_RS2                                     99/99      9 HIT    m_chain,m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rem,m_remu
+A.RD.X0                                               10/10      3 HIT    m_x0,pipe_div_back_to_back,pipe_m_back_to_back_x0
+A.CORNER.DIV_ZERO_QUOT                                90/90      8 HIT    m_chain,m_div,m_divu,m_divzero,m_rand_div,m_rand_divu,m_x0,pipe_m_arithmetic
+A.CORNER.DIV_ZERO_REM                                 98/98      8 HIT    m_chain,m_divzero,m_rand_rem,m_rand_remu,m_rem,m_remu,m_x0,pipe_m_arithmetic
+A.CORNER.SIGNED_OVERFLOW_QUOT                           5/5      3 HIT    m_div,m_overflow,pipe_m_arithmetic
+A.CORNER.SIGNED_OVERFLOW_REM                            6/6      4 HIT    m_overflow,m_rand_rem,m_rem,pipe_m_arithmetic
+A.CORNER.QUOT_ZERO                                  422/422     10 HIT    m_chain,m_div,m_divu,m_misc_use,m_overflow,m_rand_div,m_rand_divu,m_sign_matrix,m_x0,pipe_m_arithmetic
+A.CORNER.QUOT_ONE                                   132/132      8 HIT    m_div,m_divu,m_misc_use,m_overflow,m_rand_div,m_rand_divu,m_sign_matrix,m_x0
+A.CORNER.QUOT_NEGATIVE                              108/108      5 HIT    m_div,m_overflow,m_rand_div,m_sign_matrix,pipe_m_arithmetic
+A.CORNER.REM_ZERO                                   249/249     12 HIT    m_chain,m_misc_use,m_overflow,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic,pipe_m_back_to_back_x0
+A.CORNER.REM_NEGATIVE                               156/156      7 HIT    m_chain,m_divzero,m_overflow,m_rand_rem,m_rem,m_sign_matrix,pipe_m_arithmetic
+P.SQUASH.REDIRECT.M                                       2      2 HIT    pipe_div_wrongpath,pipe_m_wrongpath
+P.SQUASH.FAULT.M                                          4      4 HIT    pipe_div_before_fault,pipe_div_fault_illegal,pipe_m_fault_illegal,pipe_m_fault_load
+P.FAULT.DIV_START_SUPPRESSED                              2      2 HIT    pipe_div_before_fault,pipe_div_fault_illegal
+P.FWD.RS1.EXMEM                                         157     15 HIT    m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rem,m_remu,m_x0,pipe_div_forward_sources,pipe_m_arithmetic,pipe_m_back_to_back_x0
+P.FWD.RS1.MEMWB                                        2229     31 HIT    m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_jalr
+P.FWD.RS2.EXMEM                                        3761     30 HIT    m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_jalr
+P.FWD.RS2.MEMWB                                           9      7 HIT    m_chain,m_misc_use,m_x0,pipe_div_forward_sources,pipe_div_loaduse,pipe_m_back_to_back_x0,pipe_m_loaduse
+P.LOAD_USE.RS1                                            1      1 HIT    pipe_div_loaduse_rs1
+P.LOAD_USE.RS2                                            2      2 HIT    pipe_div_loaduse,pipe_m_loaduse
+P.DIV.CONSECUTIVE                                        38      5 HIT    m_chain,m_misc_use,m_x0,pipe_div_back_to_back,pipe_m_back_to_back_x0
+P.DIV.WRONG_PATH_SUPPRESSED                               1      1 HIT    pipe_div_wrongpath
+P.RD.X0                                                  20      3 HIT    m_x0,pipe_div_back_to_back,pipe_m_back_to_back_x0
+B.ABORT.START_CYCLE                                       1      1 HIT    tb_rv_md_exec
+B.ABORT.C01                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C02                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C03                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C04                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C05                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C06                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C07                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C08                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C09                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C10                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C11                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C12                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C13                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C14                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C15                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C16                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C17                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C18                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C19                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C20                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C21                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C22                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C23                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C24                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C25                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C26                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C27                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C28                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C29                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C30                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C31                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C32                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C33                                               1      1 HIT    tb_rv_md_exec
+Defined bins hit: 108/108
+Coverage data errors: 11
+ERROR: pipe_m_fault_illegal: RTL M side-channel count does not match M retirements in architectural trace
+ERROR: pipe_m_fault_illegal: ISS/RTL M side-channel count differs 0 vs 1
+ERROR: pipe_m_fault_illegal: RETIRE event stream does not match the ordered RTL M issue side channel
+ERROR: pipe_div_fault_illegal: RTL M side-channel count does not match M retirements in architectural trace
+ERROR: pipe_div_fault_illegal: ISS/RTL M side-channel count differs 0 vs 1
+ERROR: pipe_div_fault_illegal: COMPLETE event stream does not match the ordered RTL M issue side channel
+ERROR: pipe_div_fault_illegal: RETIRE event stream does not match the ordered RTL M issue side channel
+ERROR: pipe_div_before_fault: RTL M side-channel count does not match M retirements in architectural trace
+ERROR: pipe_div_before_fault: ISS/RTL M side-channel count differs 1 vs 2
+ERROR: pipe_div_before_fault: COMPLETE event stream does not match the ordered RTL M issue side channel
+ERROR: pipe_div_before_fault: RETIRE event stream does not match the ordered RTL M issue side channel
+
+SYSTEM_REGRESSION FAIL
+UNIT_REGRESSION PASS
+M_COVERAGE_DICTIONARY FAIL bins_hit=108/108 missing=0 data_errors=11
+STAGE3_5_REGRESSION_VERILATOR FAIL

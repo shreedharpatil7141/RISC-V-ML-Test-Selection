@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_forward_unit.sv",
+    "before": "assign fwd_a = a_exmem_match ? FWD_EXMEM : (a_memwb_match ? FWD_MEMWB : FWD_NONE);",
+    "after": "assign fwd_a = a_memwb_match ? FWD_MEMWB : FWD_NONE;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

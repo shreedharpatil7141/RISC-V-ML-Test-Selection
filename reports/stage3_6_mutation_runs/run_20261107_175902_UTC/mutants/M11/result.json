@@ -1,0 +1,24 @@
+{
+  "id": "M11",
+  "name": "Restoring divider terminates one iteration early",
+  "stage": "stage35",
+  "expected_check": "unit:divider",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "Divider unit: FAIL 262144 524288 1600 3200"
+  ],
+  "changes": [
+    {
+      "file": "rtl/alu/rv_div_iter.sv",
+      "before": "if (iteration == W-1) begin",
+      "after": "if (iteration == W-2) begin",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 59.13
+}

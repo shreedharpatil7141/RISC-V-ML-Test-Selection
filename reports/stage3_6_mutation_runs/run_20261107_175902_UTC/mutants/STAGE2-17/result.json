@@ -1,0 +1,27 @@
+{
+  "id": "STAGE2-17",
+  "name": "JALR keeps target bit0",
+  "stage": "stage2",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "jumps: explicit pipe TEST_RESULT FAIL",
+    "jumps: independently confirmed pipeline/ISS trace difference",
+    "jumps: independently confirmed pipeline/golden trace difference",
+    "jumps: independently checked Stage 2 timing mismatch actual=(0, 14, 80, 47) expected=(0, 18, 100, 59)"
+  ],
+  "changes": [
+    {
+      "file": "rtl/pipeline/rv_ex_stage.sv",
+      "before": "{alu_y[31:1], 1'b0}",
+      "after": "alu_y",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 22.3
+}

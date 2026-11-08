@@ -1,0 +1,24 @@
+{
+  "id": "M09",
+  "name": "Signed overflow quotient result is wrong",
+  "stage": "stage35",
+  "expected_check": "unit:divider",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "Divider unit: FAIL 262144 1 1600 1"
+  ],
+  "changes": [
+    {
+      "file": "rtl/alu/rv_div_iter.sv",
+      "before": "result = quotient_mode_q ? {1'b1, {(W-1){1'b0}}} : {W{1'b0}};",
+      "after": "result = quotient_mode_q ? {W{1'b1}} : {W{1'b0}};",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 58.78
+}

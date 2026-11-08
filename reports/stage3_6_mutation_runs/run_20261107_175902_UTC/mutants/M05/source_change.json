@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/alu/rv_div_iter.sv",
+    "before": "divisor_abs_q      <= (!funct3[0] && divisor[W-1]) ? -divisor : divisor;",
+    "after": "divisor_abs_q      <= (divisor[W-1]) ? -divisor : divisor;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

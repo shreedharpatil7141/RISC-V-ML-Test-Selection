@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/decoder/rv_decoder.sv",
+    "before": "illegal = (funct7 != 7'b0000000);                       // SLLI",
+    "after": "illegal = 1'b0;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

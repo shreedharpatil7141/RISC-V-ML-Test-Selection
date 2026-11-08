@@ -1,12 +1,28 @@
-# Microarchitecture Plan
+# Implemented microarchitecture and future target
 
-- Strategy: build a correct non-pipelined RV32I core first (Stage 1) as a functional baseline, then convert to a 5-stage pipeline (Stage 2) and compare retirement traces.
-- Pipeline: IF -> ID -> EX -> MEM -> WB, in-order, single issue.
-- Hazards: forwarding from EX/MEM and MEM/WB to EX; load-use 1-cycle stall; branches resolved in EX with 2-cycle flush (predict not-taken; no predictor initially).
-- Multiply/divide: multi-cycle unit stalls the pipeline until done (Stage 3).
-- Compressed: fetch buffer works on 16-bit units; instruction length determined from bits [1:0]; PC increments by 2 or 4; 32-bit instruction may straddle a word boundary (Stage 4).
-- Atomics: executed in MEM stage, with reservation register (Stage 5).
-- CSR/traps: CSR access and trap decision at a precise point (commit in MEM/WB) so that younger instructions are flushed and state is architecturally precise (Stage 6/7).
-- FENCE.I: flush pipeline and refetch from PC+4 (Stage 6).
-- Interrupts: taken at instruction boundary; mepc = PC of the next instruction to retire.
-- Design principle: retirement information is the contract between DUT and verification; no scoreboard dependence on internal signals.
+## Implemented at the Stage 3.8 gate
+
+- RV32I single-cycle core (`rv_core_single`) is the architectural RTL baseline.
+- RV32I five-stage pipeline (`rv_core_pipe`) is in-order and single issue:
+  IF, ID, EX, MEM, WB. It has EX/MEM and MEM/WB forwarding, a load-use
+  interlock, EX-stage redirects, and precise synchronous fault halting.
+- RV32M multiplication is combinational in EX. The pipeline uses
+  `rv_md_exec` with `rv_mul` and `rv_div_iter`; the golden core uses a
+  separate behavioral `rv_md_comb` path.
+- DIV/REM are accepted once, latch forwarded operands, iterate for 32 RUN
+  cycles, and transfer in FIN. C0-C32 hold PC/IF-ID/ID-EX while EX/MEM gets
+  bubbles; C33 transfers the result. This is 34 occupied EX cycles and 33
+  added hold cycles per completed operation.
+- A synchronous faulting instruction is not retired and younger work is
+  killed. This is the current halt behavior, not privileged trap entry.
+
+See `stage3_4_divider_schedule.md` for protocol priorities and the exact
+cycle model, and `stage3_rv32m_status.md` for current verification evidence.
+
+## Future project target, not implemented claims
+
+Compressed fetch/decode (C), atomics (A), CSR state and Zicsr, Zifencei,
+machine-mode trap vectors, MRET, WFI, and interrupts remain planned scope.
+They are not present as verified Stage 3 functionality. The same applies to
+memory wait states, asynchronous external kills, multicore coherence, MMU,
+PMP, and physical synthesis/timing behavior.

@@ -1,0 +1,27 @@
+{
+  "id": "M24",
+  "name": "Forwarding unit forwards an in-flight x0 result",
+  "stage": "stage35",
+  "expected_check": "test:pipe_m_back_to_back_x0",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "pipe_m_back_to_back_x0: explicit pipe TEST_RESULT FAIL",
+    "pipe_m_back_to_back_x0: independently confirmed full pipeline/ISS trace difference",
+    "pipe_m_back_to_back_x0: independently confirmed full pipeline/golden trace difference",
+    "pipe_m_back_to_back_x0: explicit timing checker failure with complete STATS record"
+  ],
+  "changes": [
+    {
+      "file": "rtl/pipeline/rv_forward_unit.sv",
+      "before": "(exmem_rd != 5'd0)",
+      "after": "(exmem_rd == 5'd0)",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 125.75
+}

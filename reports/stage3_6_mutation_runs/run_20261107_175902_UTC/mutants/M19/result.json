@@ -1,0 +1,27 @@
+{
+  "id": "M19",
+  "name": "Pipeline IF/ID advances during divider hold",
+  "stage": "stage35",
+  "expected_check": "test:pipe_div_dependencies",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "pipe_div_dependencies: explicit pipe TEST_RESULT FAIL",
+    "pipe_div_dependencies: independently confirmed full pipeline/ISS trace difference",
+    "pipe_div_dependencies: independently confirmed full pipeline/golden trace difference",
+    "pipe_div_dependencies: explicit timing checker failure with complete STATS record"
+  ],
+  "changes": [
+    {
+      "file": "rtl/pipeline/rv_pipe_regs.sv",
+      "before": "else if (!(stall || md_hold)) if_id <= if_id_next;",
+      "after": "else if (!stall) if_id <= if_id_next;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 58.37
+}

@@ -1,0 +1,24 @@
+{
+  "id": "M12",
+  "name": "Divider uses changing live divisor instead of latched magnitude",
+  "stage": "stage35",
+  "expected_check": "unit:divider",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "Divider unit: FAIL 262144 144712 1600 865"
+  ],
+  "changes": [
+    {
+      "file": "rtl/alu/rv_div_iter.sv",
+      "before": "divisor_ext       = {1'b0, divisor_abs_q};",
+      "after": "divisor_ext       = {1'b0, divisor};",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 61.2
+}

@@ -1,0 +1,24 @@
+{
+  "id": "STAGE1-10",
+  "name": "AUIPC uses rs1 not PC",
+  "stage": "stage1",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "upper_auipc: explicit Stage 1 TEST_RESULT FAIL"
+  ],
+  "changes": [
+    {
+      "file": "rtl/control_unit/rv_control.sv",
+      "before": "OPC_AUIPC: begin reg_we = 1'b1; a_sel = A_PC;",
+      "after": "OPC_AUIPC: begin reg_we = 1'b1; a_sel = A_RS1;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 10.21
+}

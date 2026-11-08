@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/alu/rv_div_iter.sv",
+    "before": "dividend_orig_q    <= dividend;",
+    "after": "dividend_orig_q    <= '0;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

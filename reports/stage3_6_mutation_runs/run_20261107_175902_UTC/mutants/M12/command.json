@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/stage36_M12_tfxs2xdo/project/scripts/simulation/run_stage5.py"
+  ],
+  "cwd": "/tmp/stage36_M12_tfxs2xdo/project",
+  "exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 61.2
+}

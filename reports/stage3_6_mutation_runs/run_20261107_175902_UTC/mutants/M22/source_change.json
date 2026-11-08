@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_ex_stage.sv",
+    "before": "FWD_MEMWB: rs2_f = memwb_data;",
+    "after": "FWD_MEMWB: rs2_f = exmem_alu_y;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

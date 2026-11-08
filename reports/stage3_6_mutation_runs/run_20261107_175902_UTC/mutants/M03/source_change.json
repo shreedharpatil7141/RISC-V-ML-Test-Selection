@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/alu/rv_mul.sv",
+    "before": "default: y = product_uu[63:32];",
+    "after": "default: y = product_ss[63:32];",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]
