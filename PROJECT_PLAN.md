@@ -27,10 +27,11 @@
 ## Current project status (2026-11-08)
 
 Stages 1 and 2 are the RV32I single-cycle reference and five-stage pipeline.
-Stage 3 adds and verifies the M extension in both cores. Stage 3.7 regression
-evidence and Stage 3.8 documentation are complete and pushed on
-`stage3-m-extension`; the final owner review is pending. This does not complete
-the wider project or imply architectural compliance.
+Stage 3 adds and verifies the M extension in both cores. Stages 3.7, 3.8, and
+3.9 are approved complete on `stage3-m-extension`, with separate owner XSim
+and Verilator evidence and a reviewed documentation package. This completes
+Stage 3 only; it does not complete the wider project or imply architectural
+compliance.
 
 | Stage 3 gate | Status | Evidence / deliverable |
 |---|---|---|
