@@ -1,0 +1,2 @@
+.org 0xfffe
+.2byte 0x0093

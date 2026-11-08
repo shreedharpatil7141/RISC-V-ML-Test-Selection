@@ -11,7 +11,7 @@
 | 1 | RV32I core (non-pipelined) | `rv32_pkg`, PC, decoder, imm-gen, regfile, ALU, control, memory IF, top, TBs | Every RV32I instruction passes directed self-checking tests; clean XSim compile |
 | 2 | 5-stage pipeline | Pipeline regs, forwarding, hazard unit, branch handling, stalls/flushes, retirement port | RV32I tests still pass; RAW/load-use/control-hazard tests pass; retirement trace matches Stage 1 |
 | 3 | M extension | MUL/DIV unit | All 8 ops; div-by-zero, signed overflow (MIN/-1) corner cases |
-| 4 | C extension | RVC expander/decoder, mixed-length fetch | 16/32-bit mixes, boundary-crossing 32-bit fetch, compressed branches/jumps |
+| 4 | C extension | RV32C v2.0 integer encodings, independent compressed model/assembler, decompressor, mixed-length fetch and pipeline integration | Gated 4.0 review through 4.8 release; independent exhaustive 16-bit decode checks, mixed 16/32-bit execution, boundary-crossing fetch, precise retirement/fault and pipeline validation |
 | 5 | A extension | LR/SC, AMOs, reservation | Reservation set/clear/failure semantics; all 9 AMOs |
 | 6 | Zicsr + Zifencei | CSR unit, FENCE.I | CSR RW/RS/RC(+I) semantics incl. no-write cases, illegal CSR access |
 | 7 | M-mode privileged | Traps, MRET, interrupts, exceptions | Each exception cause and 3 interrupt sources verified |
@@ -48,6 +48,18 @@ DIV/REM use a fixed 34-cycle accepted operation with pipeline holds. C, A,
 Zicsr, Zifencei, and privileged trap/interrupt support remain future scope,
 not implementation claims. The top-level README and architecture status doc
 give exact exclusions and results.
+
+Stage 4 is active on `stage4-c-extension`, created from `stage3-complete`.
+The Stage 4.0 review and plan are recorded in
+`documentation/architecture/stage4_0_rv32c_review.md`, pinned to the official
+Unprivileged ISA manual release v20260120 (RV32C v2.0). Stage 4.1 software
+model/assembler/ISS validation was accepted from the owner report
+(`STAGE4_1_SOFTWARE_VALIDATION PASS checks=5 failures=0`); this is software
+evidence, not RTL simulation or architectural compliance. Stage 4.2 is limited
+to standalone combinational decompressor RTL and unit verification; fetch and
+pipeline integration remain gated for later substeps.
+`stage2-complete`, `stage3-complete`, historical reports, and local outputs
+remain preserved.
 
 ## Cross-cutting rules
 1. UVM prohibited. Features must be XSim-verified before use (e.g. classes, randomize with constraints, covergroups, DPI).
