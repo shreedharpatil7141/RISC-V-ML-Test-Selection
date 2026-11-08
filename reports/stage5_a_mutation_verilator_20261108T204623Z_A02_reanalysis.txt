@@ -1,0 +1,19 @@
+Stage 5 A02 mutation reanalysis (saved artifacts only; no rerun)
+Original campaign record: reports/stage5_a_mutation_verilator_20261108T204623Z.txt remains unchanged and records A02 INVALID.
+Evidence directory: reports/stage5_a_mutation_artifacts_20261108T204623Z/A02/
+
+Finding: CAUGHT by the independent RV32A legality unit assertion; the -6 status is the expected Verilator abort after $fatal, not an unrelated crash.
+Mutation patch: rtl/decoder/rv_decoder.sv removed the LR.W rs2==0 condition.
+Build: all 14 retained build_*.log files have zero compiler-error matches; build_aunit.log ends with the Verilator 5.032 build summary and creates obj_aunit/aunit.
+Executed evidence: full stdout_stderr.log shows all eight unit launches, then FIRST_TOOL_ERROR exit=-6 for unit_aunit.log. No architectural system case ran after that unit failure.
+Exact unit assertions in unit_aunit.log:
+A_LEGALITY_DIFF raw=101120af expected_legal=0 actual_is_a=1 illegal=0
+A_LEGALITY_DIFF raw=141120af expected_legal=0 actual_is_a=1 illegal=0
+A_LEGALITY_DIFF raw=121120af expected_legal=0 actual_is_a=1 illegal=0
+A_LEGALITY_DIFF raw=161120af expected_legal=0 actual_is_a=1 illegal=0
+Terminal diagnostic: [2057000] %Fatal: tb_rv_a_unit.sv:58: Assertion failed in tb_rv_a_unit.unnamedblk1: RV32A_UNIT FAIL checks=9 legality_checks=2048 errors=4
+Follow-up: %Error at tb_rv_a_unit.sv:58 reports Verilog $stop; Aborting...; runner traceback records command failed exit=-6 from obj_aunit/aunit.
+
+Each asserted raw word has opcode 0x2f, funct3=010, funct5=00010 (LR.W), and rs2=1. The independent testbench expected these encodings illegal. The separate source anchor 0x102120af also decodes to LR.W with rs2=2 (tests/directed/rv32ima_software/illegal_lr_rs2.s; manifest expected cause 3). The retained A-only system image exists, but that case was not executed because the unit fatal correctly stopped the runner.
+
+Reanalysis status: A02 CAUGHT by a named independent legality-sweep failure. This is a checker-only reanalysis of preserved output; it does not overwrite the original INVALID record or claim a fresh campaign. No RTL change and no simulation rerun.

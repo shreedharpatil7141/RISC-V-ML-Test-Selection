@@ -1,0 +1,10 @@
+Stage 5 A-extension mutation campaign (Verilator only)
+Validated full-suite reports: XSim=/mnt/c/RISC-V-ML-Test-Selection/reports/stage5_a_pipeline_xsim_20261108T195247Z.txt Verilator=/mnt/c/RISC-V-ML-Test-Selection/reports/stage5_a_pipeline_verilator_20261108T194647Z.txt
+Fresh full baseline: STAGE5_A_PIPELINE_VERILATOR PASS legacy=209 c_cases=21 a_cases=18 full_trace_comparisons=496 units=8
+The mutant copies were isolated temporary workspaces. CAUGHT requires a complete trace differing from the independent A-enabled ISS.
+A01 INVALID: exit=1; TOOL PREFLIGHT PASS sim=verilator python=/usr/bin/python3 output=/tmp/stage5_a_mutation_xngagih9/A01/sim_out_stage5_a_verilator_20261108T203015Z
+A02 INVALID: exit=1; TOOL PREFLIGHT PASS sim=verilator python=/usr/bin/python3 output=/tmp/stage5_a_mutation_xngagih9/A02/sim_out_stage5_a_verilator_20261108T203148Z
+A03 CAUGHT: lrsc_sequences.pipe.trace:line=10:expected=I 00000020 1840a32f 04 1840a32f 06 00000001 0 00000000 00000000:actual=I 00000020 1840a32f 04 1840a32f 06 00000001 4 00005000 55667788
+A04 CAUGHT: lrsc_sequences.pipe.trace:line=16:expected=I 00000038 1820a5af 04 1820a5af 11 00000001 0 00000000 00000000:actual=I 00000038 1820a5af 04 1820a5af 11 00000000 4 00005000 11223344
+A05 CAUGHT: atomic_ops.pipe.trace:line=7:expected=I 00000014 0830a22f 04 0830a22f 04 80000000 4 00005000 7fffffff:actual=I 00000014 0830a22f 04 0830a22f 04 00005000 0 00000000 00000000
+STAGE5_A_MUTATION_VERILATOR FAIL caught=3 missed=0 invalid=2 total=5

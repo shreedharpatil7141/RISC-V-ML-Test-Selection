@@ -11,7 +11,8 @@ module rv_core_single
   import rv32_pkg::*;
 #(
   parameter word_t RESET_PC = 32'h0000_0000,
-  parameter logic ENABLE_C = 1'b0
+  parameter logic ENABLE_C = 1'b0,
+  parameter logic ENABLE_A = 1'b0
 ) (
   input  logic        clk,
   input  logic        rst_n,
@@ -27,6 +28,7 @@ module rv_core_single
   output logic        dmem_re,
   output logic [3:0]  dmem_we,
   output word_t       dmem_wdata,
+  output logic        dmem_atomic_commit,
   input  word_t       dmem_rdata,
   input  logic        dmem_valid,
   // status
@@ -125,12 +127,12 @@ module rv_core_single
   reg_t       rd, rs1, rs2;
   logic [2:0] funct3;
   logic [6:0] funct7;
-  logic       dec_illegal, is_ecall, is_ebreak, is_fence, is_m;
+  logic       dec_illegal, is_ecall, is_ebreak, is_fence, is_m, is_a;
 
-  rv_decoder u_dec (
+  rv_decoder #(.ENABLE_A(ENABLE_A)) u_dec (
     .insn(insn), .opcode(opcode), .rd(rd), .rs1(rs1), .rs2(rs2),
     .funct3(funct3), .funct7(funct7), .illegal(dec_illegal),
-    .is_ecall(is_ecall), .is_ebreak(is_ebreak), .is_fence(is_fence), .is_m(is_m)
+    .is_ecall(is_ecall), .is_ebreak(is_ebreak), .is_fence(is_fence), .is_m(is_m), .is_a(is_a)
   );
 
   word_t imm;
@@ -145,7 +147,7 @@ module rv_core_single
     .opcode(opcode), .funct3(funct3), .funct7(funct7), .illegal(dec_illegal),
     .reg_we(reg_we), .a_sel(a_sel), .b_imm(b_imm), .alu_op(alu_op),
     .mem_re(mem_re), .mem_we(mem_we), .wb_sel(wb_sel),
-    .is_branch(is_branch), .is_jal(is_jal), .is_jalr(is_jalr), .is_m(is_m)
+    .is_branch(is_branch), .is_jal(is_jal), .is_jalr(is_jalr), .is_m(is_m), .is_a(is_a)
   );
 
   // ---------------- Register file / ALU ----------------
@@ -169,6 +171,27 @@ module rv_core_single
   rv_alu u_alu (.a(alu_a), .b(alu_b), .op(alu_op), .y(alu_y));
   word_t md_y;
   rv_md_comb u_md (.a(rs1_data), .b(rs2_data), .funct3(funct3), .y(md_y));
+  logic commit;
+  logic reservation_valid, atomic_sc, atomic_lr, atomic_write;
+  word_t reservation_addr, atomic_new_word, atomic_wb, atomic_addr;
+  assign atomic_addr = is_a ? rs1_data : alu_y;
+  assign atomic_sc = is_a && funct7[6:2] == 5'b00011;
+  assign atomic_lr = is_a && funct7[6:2] == 5'b00010;
+  assign atomic_write = is_a && !atomic_lr && (!atomic_sc || (reservation_valid && reservation_addr == atomic_addr));
+  rv_a_unit u_a (.funct5(funct7[6:2]), .old_word(dmem_rdata), .source_word(rs2_data), .new_word(atomic_new_word));
+  assign atomic_wb = atomic_lr || (is_a && !atomic_sc) ? dmem_rdata :
+                     (reservation_valid && reservation_addr == atomic_addr ? 32'b0 : 32'd1);
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin reservation_valid <= 1'b0; reservation_addr <= 32'b0; end
+    else if (commit) begin
+      if (is_a && atomic_lr) begin reservation_valid <= 1'b1; reservation_addr <= atomic_addr; end
+      else if (is_a && atomic_sc) reservation_valid <= 1'b0;
+      else if ((mem_we || atomic_write) && reservation_valid &&
+               (is_a ? atomic_addr[31:2] : alu_y[31:2]) == reservation_addr[31:2])
+        reservation_valid <= 1'b0;
+    end
+  end
 
   // ---------------- Branch / jump ----------------
   logic  cmp_taken, redirect;
@@ -205,26 +228,30 @@ module rv_core_single
     else if (!ENABLE_C && redirect && target[1]) cause = HALT_FETCH_MISALIGN;
     else if (mem_re && lsu_misaligned)    cause = HALT_LOAD_MISALIGN;
     else if (mem_we && lsu_misaligned)    cause = HALT_STORE_MISALIGN;
+    else if (ENABLE_A && is_a && atomic_addr[1:0] != 0) cause = atomic_lr ? HALT_LOAD_MISALIGN : HALT_STORE_MISALIGN;
     else if (ENABLE_C && mem_re && !dmem_valid) cause = HALT_LOAD_ACCESS;
     else if (ENABLE_C && mem_we && !dmem_valid) cause = HALT_STORE_ACCESS;
+    else if (ENABLE_A && is_a && !dmem_valid) cause = atomic_lr ? HALT_LOAD_ACCESS : HALT_STORE_ACCESS;
   end
 
-  logic commit;
   assign commit = !halted && (cause == HALT_NONE);
 
   always_comb begin
     case (wb_sel)
       WB_MEM:  wb_data = lsu_load_data;
       WB_PC4:  wb_data = pc_after;
-      default: wb_data = is_m ? md_y : alu_y;
+      default: wb_data = is_a ? atomic_wb : (is_m ? md_y : alu_y);
     endcase
   end
 
   assign rf_we      = commit && reg_we;
-  assign dmem_addr  = alu_y;
-  assign dmem_re    = !halted && mem_re && (!ENABLE_C || dmem_valid);
-  assign dmem_we    = (commit && mem_we) ? lsu_be : 4'b0000;
-  assign dmem_wdata = lsu_wdata;
+  assign dmem_addr  = is_a ? atomic_addr : alu_y;
+  assign dmem_re    = !halted && (mem_re || is_a) &&
+                      (!ENABLE_A || cause == HALT_NONE) &&
+                      (!ENABLE_C && !ENABLE_A || dmem_valid);
+  assign dmem_we    = commit && (mem_we || atomic_write) ? (is_a ? 4'b1111 : lsu_be) : 4'b0000;
+  assign dmem_wdata = is_a ? (atomic_sc ? rs2_data : atomic_new_word) : lsu_wdata;
+  assign dmem_atomic_commit = commit && ENABLE_A && is_a;
 
   // ---------------- State ----------------
   always_ff @(posedge clk or negedge rst_n) begin
@@ -260,9 +287,9 @@ module rv_core_single
   assign ret_rd        = rd;
   assign ret_rd_wdata  = wb_data;
   assign ret_mem_re    = commit && mem_re;
-  assign ret_mem_we    = commit && mem_we;
-  assign ret_mem_addr  = alu_y;
-  assign ret_mem_be    = lsu_be;
-  assign ret_mem_wdata = lsu_wdata;
+  assign ret_mem_we    = commit && (mem_we || atomic_write);
+  assign ret_mem_addr  = is_a ? atomic_addr : alu_y;
+  assign ret_mem_be    = is_a ? 4'b1111 : lsu_be;
+  assign ret_mem_wdata = dmem_wdata;
   assign ret_mem_rdata = dmem_rdata;
 endmodule

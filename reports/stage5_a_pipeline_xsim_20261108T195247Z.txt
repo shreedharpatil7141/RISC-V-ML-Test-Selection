@@ -1,0 +1,20 @@
+Simulator: xsim
+output_dir=C:\RISC-V-ML-Test-Selection\sim_out_stage5_a_xsim_20261108T195247Z
+provenance_file=C:\RISC-V-ML-Test-Selection\sim_out_stage5_a_xsim_20261108T195247Z\provenance.txt
+legacy_c_disabled=209
+rv32imc_existing=12
+rv32imc_pipeline_specific=9
+rtl_vs_iss_and_golden=496
+unit_suites=8
+unit_decompress_halfwords=65536
+divider_protocol_records=248
+a_cases=18
+a_atomic_reference_events=41
+a_atomic_reference_writes=23
+a_operation_bins=11
+a_sc_status_bins=2
+a_aqrl_bins=4
+pipeline_vs_golden_full_traces=248
+pipeline_event_hits=72,48,8897,7927,11839,2125,5128,277,546,3791,7302,468,215,331,7646,71
+divider_protocol_checked_cases=248 starts=2029 dones=2029 busy_cycles=66957 aborts=0
+STAGE5_A_PIPELINE_XSIM PASS legacy=209 c_cases=21 a_cases=18 full_trace_comparisons=496 units=8

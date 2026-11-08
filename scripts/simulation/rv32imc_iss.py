@@ -14,6 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
 import rv32i_iss as legacy
+import rv32a_model as atomics
 from rv32c_model import MASK32, decode16, instruction_length, sx
 
 MEM_BYTES = legacy.MEM_BYTES
@@ -35,7 +36,7 @@ def _load_image(words):
     return mem, oob
 
 
-def _decode32(raw):
+def _decode32(raw, a_enabled=False):
     """Return (legal, canonical) for the existing RV32I+M software ISA."""
     if raw & 3 != 3:
         return False, 0
@@ -67,11 +68,14 @@ def _decode32(raw):
         return f3 == 0, raw
     if opcode == 0x73:
         return raw in (0x00000073, 0x00100073), raw
+    if opcode == atomics.OPCODE_AMO and a_enabled:
+        return atomics.decode_atomic(raw) is not None, raw
     return False, 0
 
 
-def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost_events=None, start_pc=0):
-    """Return legacy six-tuple; trace rows are V1 if disabled, V2 if C-enabled.
+def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost_events=None,
+        start_pc=0, a_enabled=False, a_events=None):
+    """Return legacy six-tuple; A and C are explicit independent mode flags.
 
     In V2 each retired row is:
     I pc raw_insn ilen_bytes expanded_insn rd rdval st_size st_addr st_data
@@ -81,7 +85,7 @@ def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost
     and known length of the stopping instruction/prefix, including illegal
     encodings and access faults.
     """
-    if not c_enabled:
+    if not c_enabled and not a_enabled:
         if start_pc != 0:
             raise ValueError("nonzero start_pc is available only in explicit RV32IMC mode")
         return legacy.run(words, max_steps=max_steps, m_events=m_events)
@@ -95,6 +99,8 @@ def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost
     stop_raw, stop_ilen = 0, 0
     m_events = m_events if m_events is not None else None
     divider_cost_events = divider_cost_events if divider_cost_events is not None else None
+    reservation_valid = False
+    reservation_addr = 0
 
     def data_read(addr, n):
         if addr + n > MEM_BYTES:
@@ -110,16 +116,16 @@ def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost
     while steps < max_steps:
         steps += 1
         stop_raw, stop_ilen = 0, 0
-        if pc & 1:
+        if pc & 1 or (not c_enabled and pc & 3):
             cause = CAUSE_FETCH_MIS
             break
         if pc + 2 > MEM_BYTES:
             cause = CAUSE_FETCH_ACCESS
             break
         prefix = int.from_bytes(mem[pc:pc + 2], "little")
-        ilen = instruction_length(prefix)
+        ilen = instruction_length(prefix) if c_enabled else 32
         stop_raw, stop_ilen = prefix, (ilen // 8 if ilen else 0)
-        if ilen == 16:
+        if c_enabled and ilen == 16:
             raw = prefix
             dec = decode16(prefix)
             if dec.status == "illegal" or dec.status == "long":
@@ -134,7 +140,7 @@ def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost
                 break
             raw = int.from_bytes(mem[pc:pc + 4], "little")
             stop_raw, stop_ilen = raw, 4
-            legal, insn = _decode32(raw)
+            legal, insn = _decode32(raw, a_enabled=a_enabled)
             if not legal:
                 cause = CAUSE_ILLEGAL
                 break
@@ -154,6 +160,7 @@ def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost
         wr = None
         next_pc = (pc + ilen // 8) & MASK32
         store_record = (0, 0, 0)
+        atom_record = None
 
         if hint:
             pass
@@ -202,6 +209,54 @@ def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost
                 cause = CAUSE_STORE_ACCESS
                 break
             store_record = (size, addr, b & ((1 << (size * 8)) - 1))
+            if reservation_valid and addr < reservation_addr + 4 and addr + size > reservation_addr:
+                reservation_valid = False
+        elif opcode == atomics.OPCODE_AMO:
+            fields = atomics.decode_atomic(raw)
+            if not a_enabled or fields is None:
+                cause = CAUSE_ILLEGAL
+                break
+            op = fields["op"]
+            addr = a & MASK32
+            reservation_before = reservation_addr if reservation_valid else None
+            old = None
+            new = None
+            sc_status = -1
+            if addr & 3:
+                cause = CAUSE_LOAD_MIS if op == "lr.w" else CAUSE_STORE_MIS
+                break
+            old = data_read(addr, 4)
+            if old is None:
+                cause = CAUSE_LOAD_ACCESS if op == "lr.w" else CAUSE_STORE_ACCESS
+                break
+            if op == "lr.w":
+                wr = old
+                reservation_addr, reservation_valid = addr, True
+            elif op == "sc.w":
+                success = reservation_valid and reservation_addr == addr
+                reservation_valid = False
+                sc_status = 0 if success else 1
+                wr = sc_status
+                if success:
+                    new = b
+                    if not data_write(addr, 4, new):
+                        cause = CAUSE_STORE_ACCESS
+                        break
+                    store_record = (4, addr, new)
+            else:
+                wr = old
+                new = atomics.amo_result(op, old, b)
+                if not data_write(addr, 4, new):
+                    cause = CAUSE_STORE_ACCESS
+                    break
+                store_record = (4, addr, new)
+                if reservation_valid and addr < reservation_addr + 4 and addr + 4 > reservation_addr:
+                    reservation_valid = False
+            if a_events is not None:
+                a_events.append((pc, raw, op, fields["aq"], fields["rl"], rd, rs1, rs2,
+                                 addr, old, b, new, sc_status,
+                                 -1 if reservation_before is None else reservation_before,
+                                 -1 if not reservation_valid else reservation_addr))
         elif opcode == 0x13:
             imm = sx(insn >> 20, 12)
             shamt = (insn >> 20) & 31
@@ -262,17 +317,30 @@ def load_hex(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mode", required=True, choices=("rv32im", "rv32imc"), help="never infer C enablement")
+    parser.add_argument("--mode", required=True, choices=("rv32im", "rv32imc", "rv32ima", "rv32imac"), help="never infer A or C enablement")
     parser.add_argument("image", help="little-endian 32-bit word hex image")
     parser.add_argument("trace")
+    parser.add_argument("--a-events", help="optional independent atomic retirement sidecar TSV")
     args = parser.parse_args()
     words = load_hex(args.image)
-    c_on = args.mode == "rv32imc"
-    cause, regs, rows, footer, oob, n = run(words, c_enabled=c_on)
+    c_on = args.mode in ("rv32imc", "rv32imac")
+    a_on = args.mode in ("rv32ima", "rv32imac")
+    atomic_events = [] if args.a_events else None
+    cause, regs, rows, footer, oob, n = run(words, c_enabled=c_on, a_enabled=a_on, a_events=atomic_events)
     with open(args.trace, "w", newline="\n", encoding="ascii") as dst:
-        if c_on:
+        if a_on:
+            dst.write(f"TRACE_V3 RV32IM{'AC' if c_on else 'A'} pc raw_insn ilen_bytes expanded_insn rd rdval st_size st_addr st_data atomic_sidecar\n")
+        elif c_on:
             dst.write("TRACE_V2 RV32IMC pc raw_insn ilen_bytes expanded_insn rd rdval st_size st_addr st_data\n")
         dst.write("\n".join(rows + footer) + "\n")
+    if args.a_events:
+        import csv
+        with open(args.a_events, "w", newline="", encoding="ascii") as dst:
+            writer = csv.writer(dst, delimiter="\t", lineterminator="\n")
+            writer.writerow(["pc", "raw", "op", "aq", "rl", "rd", "rs1", "rs2", "address", "old", "source", "new", "sc_status", "reservation_before", "reservation_after"])
+            writer.writerows((f"{row[0]:08x}", f"{row[1]:08x}", *row[2:8], f"{row[8]:08x}",
+                              "-" if row[9] is None else f"{row[9]:08x}", f"{row[10]:08x}",
+                              "-" if row[11] is None else f"{row[11]:08x}", *row[12:]) for row in atomic_events or [])
     print(f"RV32IMC_ISS mode={args.mode} cause={cause} gp={regs[3]:08x} instret={n} oob={oob} div_extra_cycles_per_op={DIV_EXTRA_CYCLES}")
 
 

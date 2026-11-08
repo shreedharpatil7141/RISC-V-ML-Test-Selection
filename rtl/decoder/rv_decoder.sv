@@ -4,6 +4,9 @@
 // are reported illegal until their stages are implemented.
 module rv_decoder
   import rv32_pkg::*;
+#(
+  parameter bit ENABLE_A = 1'b0
+)
 (
   input  word_t insn,
   output logic [6:0] opcode,
@@ -16,7 +19,8 @@ module rv_decoder
   output logic       is_ecall,
   output logic       is_ebreak,
   output logic       is_fence,
-  output logic       is_m
+  output logic       is_m,
+  output logic       is_a
 );
   assign opcode = insn[6:0];
   assign rd     = insn[11:7];
@@ -31,6 +35,7 @@ module rv_decoder
     is_ebreak = 1'b0;
     is_fence  = 1'b0;
     is_m      = 1'b0;
+    is_a      = 1'b0;
 
     if (insn[1:0] != 2'b11) begin
       illegal = 1'b1;  // 16-bit (C) encodings unsupported until Stage 4
@@ -66,6 +71,17 @@ module rv_decoder
             is_m = 1'b1;
           end else
             illegal = 1'b1;                                         // M ext: Stage 3
+        end
+
+        OPC_AMO: begin
+          is_a = ENABLE_A && (insn[14:12] == 3'b010) &&
+                 ((insn[31:27] == 5'b00010 && insn[24:20] == 5'b0) ||
+                  insn[31:27] == 5'b00011 || insn[31:27] == 5'b00001 ||
+                  insn[31:27] == 5'b00000 || insn[31:27] == 5'b00100 ||
+                  insn[31:27] == 5'b01100 || insn[31:27] == 5'b01000 ||
+                  insn[31:27] == 5'b10000 || insn[31:27] == 5'b10100 ||
+                  insn[31:27] == 5'b11000 || insn[31:27] == 5'b11100);
+          illegal = !is_a;
         end
 
         OPC_MISC_MEM: begin

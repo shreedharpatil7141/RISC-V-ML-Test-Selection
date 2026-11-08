@@ -1,18 +1,18 @@
 # Machine Learning-Based Test Selection for Accelerated Functional Coverage Closure in RISC-V Processor Verification
 
-**Status:** Stage 3 RV32IM and Stage 4 RV32IMC integer are complete. Stage 4 passed separate XSim and Verilator coverage runs (230 cases each, 460 golden/pipeline-to-ISS comparisons, 230 pipeline-to-golden comparisons, seven unit suites, 65,536 decompressor patterns, all 16 pipeline events, zero coverage errors). Verilator-only mutation evidence is split across the original eight detections and a focused C07/C09 rerun (10/10 caught across the two executions); original INVALID records and separate reanalysis are preserved. These finite directed results do not establish architectural compliance. Stage 4 release is recorded by the annotated `stage4-complete` tag on `main`.
+**Status:** Stages 3 and 4 are complete and released. Stage 5 implementation and validation passed on `stage5-a-extension`, and the owner approved release; the non-destructive merge and `stage5-complete` tag are being finalized. Separate XSim and Verilator runs each passed 248 cases, 496 ISS comparisons, 248 pipeline-to-golden traces, eight unit suites, and atomic checks. Verilator-only mutation evidence spans the original run, focused A01/A02 run, and A02 saved-evidence reanalysis; original INVALID records remain preserved, and the updated A02 classifier implementation check remains unexecuted. Results are finite directed verification, not full architectural compliance. No multi-hart/RVWMO, synthesis/timing, unsupported extension, or ML result is claimed. Stage 4 release is recorded by the annotated `stage4-complete` tag on `main`.
 
 ## Overview
-A simulation-based verification project with an independently modeled and
-validated **RV32IMC integer single-cycle golden core** and an **RV32IMC
-integer five-stage pipeline**. RV32C uses mixed 16/32-bit fetch and preserves
-original PC, raw instruction bits, and length through retirement and precise
-fault reporting. C-disabled mode preserves released Stage 3 behavior and
-trace format. The RV32IM multiplier is combinational; DIV/REM use a fixed
-34-cycle iterative protocol with pipeline holds. Compressed floating-point,
-Zc, A, CSR, privileged trap/interrupt machinery, and Zifencei are not
-implemented. Machine-learning test selection remains future work; no ML
-results are claimed.
+A simulation-based verification project with independently modeled RV32IMC
+golden and pipeline cores plus a validated RV32A word-integer subset: LR.W,
+SC.W, and nine AMOs. RV32C uses mixed 16/32-bit fetch and preserves original
+PC, raw instruction bits, and length through retirement and precise fault
+reporting. C- and A-disabled modes preserve prior-stage behavior. The RV32IM
+multiplier is combinational; DIV/REM use a fixed 34-cycle iterative protocol
+with pipeline holds. A verification is single-hart, no-wait-state, and has no
+concurrent writer. Floating-point/Zc, CSR, privileged trap/interrupt machinery,
+and Zifencei are not implemented. Results do not claim full compliance,
+multi-hart/RVWMO validation, synthesis/timing evidence, or ML results.
 
 ## Toolchain
 Stage 3 simulation uses Vivado 2026.1 XSim on Windows or Verilator 5.x,
@@ -68,6 +68,15 @@ wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec bash s
 
 # Explicit Verilator-only mutation campaign
 wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec python3 scripts/simulation/run_stage4_mutation.py
+
+# Stage 5 RV32A full XSim regression (Vivado CMD)
+scripts\simulation\run_stage5_a_xsim.bat
+
+# Stage 5 RV32A full Verilator regression (Windows CMD -> Ubuntu WSL)
+wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec bash scripts/simulation/run_stage5_a_verilator.sh
+
+# Stage 5 Verilator mutation campaign (separate explicit command)
+wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec python3 scripts/simulation/run_stage5_a_mutation.py
 ```
 
 The Stage 4 coverage batch preserves all 209 C-disabled legacy cases and runs
@@ -82,6 +91,16 @@ and [`documentation/architecture/stage4_c_coverage_mutation.md`](documentation/a
 for the fetch/retirement contract, coverage and mutation scope, dependencies,
 commands, reports, and expected markers. The Stage 4 file manifest is in
 [`documentation/verification/stage4_coverage_manifest.md`](documentation/verification/stage4_coverage_manifest.md).
+
+The Stage 5 A-extension specification, software, MEM transaction contract,
+commands, evidence, and limitations are described in
+[`documentation/architecture/stage5_0_rv32a_review.md`](documentation/architecture/stage5_0_rv32a_review.md).
+The software gate compared all 230 preserved Stage 4 images and traces in
+A-disabled mode. Stage 5 adds LR.W, SC.W, and nine word AMOs in the golden and
+pipeline cores while preserving C/M and A-disabled modes. See the architecture
+review for canonical Windows XSim and Windows CMD-to-WSL Verilator commands,
+report paths, mutation provenance, and limitations. No Stage 5 completion tag
+has been created.
 
 The consolidated Stage 3 regression runs all 209 current system tests on the
 single-cycle golden core and the M-enabled pipeline, compares architectural

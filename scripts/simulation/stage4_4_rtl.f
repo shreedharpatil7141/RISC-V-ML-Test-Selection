@@ -9,6 +9,7 @@ rtl/alu/rv_md_comb.sv
 rtl/alu/rv_mul.sv
 rtl/alu/rv_div_iter.sv
 rtl/alu/rv_md_exec.sv
+rtl/alu/rv_a_unit.sv
 rtl/alu/rv_branch_cmp.sv
 rtl/control_unit/rv_control.sv
 rtl/memory/rv_lsu.sv

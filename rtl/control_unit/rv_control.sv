@@ -18,7 +18,8 @@ module rv_control
   output logic       is_branch,
   output logic       is_jal,
   output logic       is_jalr,
-  input  logic       is_m
+  input  logic       is_m,
+  input  logic       is_a
 );
   // funct3 -> ALU op for OP/OP-IMM; alt = funct7[5] (SUB / SRA)
   function automatic alu_op_e f3_to_alu(input logic [2:0] f3, input logic alt);
@@ -64,6 +65,7 @@ module rv_control
           reg_we = 1'b1;
           if (!is_m) alu_op = f3_to_alu(funct3, funct7[5]);
         end
+        OPC_AMO: begin reg_we = is_a; end
         default: ; // FENCE, ECALL, EBREAK: no architectural side effects here
       endcase
     end
