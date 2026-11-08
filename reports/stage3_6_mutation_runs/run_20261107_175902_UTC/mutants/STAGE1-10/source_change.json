@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/control_unit/rv_control.sv",
+    "before": "OPC_AUIPC: begin reg_we = 1'b1; a_sel = A_PC;",
+    "after": "OPC_AUIPC: begin reg_we = 1'b1; a_sel = A_RS1;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

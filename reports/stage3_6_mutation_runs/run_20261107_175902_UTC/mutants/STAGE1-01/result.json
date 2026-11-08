@@ -1,0 +1,25 @@
+{
+  "id": "STAGE1-01",
+  "name": "BLTU uses signed compare",
+  "stage": "stage1",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "branch_bltu: explicit Stage 1 TEST_RESULT FAIL",
+    "Stage 1 unit: explicit UNIT_RESULT FAIL"
+  ],
+  "changes": [
+    {
+      "file": "rtl/alu/rv_branch_cmp.sv",
+      "before": "3'b110:  taken = (a <  b);",
+      "after": "3'b110:  taken = ($signed(a) < $signed(b));",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 10.24
+}

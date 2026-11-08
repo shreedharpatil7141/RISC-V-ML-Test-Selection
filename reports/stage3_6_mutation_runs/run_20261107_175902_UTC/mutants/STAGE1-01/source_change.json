@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/alu/rv_branch_cmp.sv",
+    "before": "3'b110:  taken = (a <  b);",
+    "after": "3'b110:  taken = ($signed(a) < $signed(b));",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

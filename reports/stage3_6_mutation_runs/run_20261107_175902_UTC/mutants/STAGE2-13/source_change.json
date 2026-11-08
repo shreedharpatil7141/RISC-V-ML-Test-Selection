@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_if_stage.sv",
+    "before": "else if (!stall)   pc <= pc + 32'd4;",
+    "after": "else pc <= pc + 32'd4;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_id_stage.sv",
+    "before": "assign bypass_rs1 = wb_we && (wb_rd != 5'd0) && (wb_rd == rs1);",
+    "after": "assign bypass_rs1 = 1'b0;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

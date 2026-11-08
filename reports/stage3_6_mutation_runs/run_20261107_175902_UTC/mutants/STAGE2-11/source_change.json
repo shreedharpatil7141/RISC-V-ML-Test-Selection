@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_mem_stage.sv",
+    "before": "assign dmem_we    = (commit && ex_mem.mem_we) ? lsu_be : 4'b0000;",
+    "after": "assign dmem_we    = (ex_mem.valid && ex_mem.mem_we) ? lsu_be : 4'b0000;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_hazard_unit.sv",
+    "before": "(id_uses_rs2 && (id_rs2 == ex_rd))",
+    "after": "1'b0",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_pipe_regs.sv",
+    "before": "else if (!(stall || md_hold)) if_id <= if_id_next;",
+    "after": "else if (!stall) if_id <= if_id_next;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

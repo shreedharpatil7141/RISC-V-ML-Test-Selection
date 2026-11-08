@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_ex_stage.sv",
+    "before": "ex_mem_next.store_data = rs2_f;",
+    "after": "ex_mem_next.store_data = id_ex.rs2_data;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "id": "STAGE2-11",
+  "name": "faulting store still writes memory",
+  "stage": "stage2",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "misalign_sh_off1: independently confirmed pipeline/ISS trace difference",
+    "misalign_sh_off1: independently confirmed pipeline/golden trace difference",
+    "misalign_sh_off3: independently confirmed pipeline/ISS trace difference",
+    "misalign_sh_off3: independently confirmed pipeline/golden trace difference",
+    "misalign_sw_off1: independently confirmed pipeline/ISS trace difference",
+    "misalign_sw_off1: independently confirmed pipeline/golden trace difference",
+    "misalign_sw_off2: independently confirmed pipeline/ISS trace difference",
+    "misalign_sw_off2: independently confirmed pipeline/golden trace difference",
+    "pipe_misalign_store_fwd_addr: independently confirmed pipeline/ISS trace difference",
+    "pipe_misalign_store_fwd_addr: independently confirmed pipeline/golden trace difference"
+  ],
+  "changes": [
+    {
+      "file": "rtl/pipeline/rv_mem_stage.sv",
+      "before": "assign dmem_we    = (commit && ex_mem.mem_we) ? lsu_be : 4'b0000;",
+      "after": "assign dmem_we    = (ex_mem.valid && ex_mem.mem_we) ? lsu_be : 4'b0000;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 22.15
+}

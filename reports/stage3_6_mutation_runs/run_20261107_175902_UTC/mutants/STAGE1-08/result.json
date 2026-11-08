@@ -1,0 +1,25 @@
+{
+  "id": "STAGE1-08",
+  "name": "SLTU decoded as SLT",
+  "stage": "stage1",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "imm_sltiu: explicit Stage 1 TEST_RESULT FAIL",
+    "rr_sltu: explicit Stage 1 TEST_RESULT FAIL"
+  ],
+  "changes": [
+    {
+      "file": "rtl/control_unit/rv_control.sv",
+      "before": "3'b011:  return ALU_SLTU;",
+      "after": "3'b011:  return ALU_SLT;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 10.28
+}

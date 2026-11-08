@@ -1,0 +1,24 @@
+{
+  "id": "STAGE1-04",
+  "name": "JALR keeps bit0",
+  "stage": "stage1",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "jumps: explicit Stage 1 TEST_RESULT FAIL"
+  ],
+  "changes": [
+    {
+      "file": "rtl/core/rv_core_single.sv",
+      "before": "{alu_y[31:1], 1'b0}",
+      "after": "alu_y",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 10.13
+}

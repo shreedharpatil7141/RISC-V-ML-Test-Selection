@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_wb_stage.sv",
+    "before": "assign ret_rd_we     = mem_wb.valid && mem_wb.reg_we && (mem_wb.rd != 5'd0);",
+    "after": "assign ret_rd_we     = mem_wb.valid && mem_wb.reg_we;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

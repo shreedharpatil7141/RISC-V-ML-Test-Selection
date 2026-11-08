@@ -1,0 +1,26 @@
+{
+  "id": "M18",
+  "name": "Pipeline writes EX/MEM while divider is busy, duplicating transfer",
+  "stage": "stage35",
+  "expected_check": "test:pipe_div_back_to_back",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "pipe_div_back_to_back: independently confirmed full pipeline/ISS trace difference",
+    "pipe_div_back_to_back: independently confirmed full pipeline/golden trace difference",
+    "pipe_div_back_to_back: explicit timing checker failure with complete STATS record"
+  ],
+  "changes": [
+    {
+      "file": "rtl/pipeline/rv_pipe_regs.sv",
+      "before": "if (kill || md_hold) ex_mem <= '0;",
+      "after": "if (kill) ex_mem <= '0;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 59.1
+}

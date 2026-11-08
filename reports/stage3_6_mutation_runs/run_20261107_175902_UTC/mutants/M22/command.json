@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/stage36_M22_ivbenzpy/project/scripts/simulation/run_stage5.py"
+  ],
+  "cwd": "/tmp/stage36_M22_ivbenzpy/project",
+  "exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 64.02
+}

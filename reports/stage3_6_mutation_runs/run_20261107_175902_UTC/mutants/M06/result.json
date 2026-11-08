@@ -1,0 +1,24 @@
+{
+  "id": "M06",
+  "name": "Signed remainder follows divisor sign instead of dividend",
+  "stage": "stage35",
+  "expected_check": "unit:divider",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "Divider unit: FAIL 262144 31231 1600 157"
+  ],
+  "changes": [
+    {
+      "file": "rtl/alu/rv_div_iter.sv",
+      "before": "negate_remainder_q <= !funct3[0] && dividend[W-1];",
+      "after": "negate_remainder_q <= !funct3[0] && divisor[W-1];",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 58.75
+}

@@ -1,0 +1,28 @@
+{
+  "id": "M20",
+  "name": "Pipeline ID/EX does not retain the active divider instruction",
+  "stage": "stage35",
+  "expected_check": "test:pipe_div_dependencies",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "pipe_div_dependencies: explicit pipe TEST_RESULT FAIL",
+    "pipe_div_dependencies: independently confirmed full pipeline/ISS trace difference",
+    "pipe_div_dependencies: independently confirmed full pipeline/golden trace difference",
+    "pipe_div_dependencies: explicit timing checker failure with complete STATS record",
+    "pipe_div_dependencies: explicit divider protocol checker failure with complete MD_STATS record"
+  ],
+  "changes": [
+    {
+      "file": "rtl/pipeline/rv_pipe_regs.sv",
+      "before": "if (md_hold && !kill && !redirect) id_ex <= id_ex;",
+      "after": "if (md_hold && !kill && !redirect) id_ex <= id_ex_next;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 57.94
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/core/rv_core_single.sv",
+    "before": "else if (mem_re && lsu_misaligned)",
+    "after": "else if (1'b0)",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

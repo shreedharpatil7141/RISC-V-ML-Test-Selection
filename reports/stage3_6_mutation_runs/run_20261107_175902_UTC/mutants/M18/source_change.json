@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_pipe_regs.sv",
+    "before": "if (kill || md_hold) ex_mem <= '0;",
+    "after": "if (kill) ex_mem <= '0;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

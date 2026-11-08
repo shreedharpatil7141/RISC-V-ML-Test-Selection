@@ -1,0 +1,26 @@
+{
+  "id": "STAGE2-12",
+  "name": "load forwarded from EX/MEM (data not ready)",
+  "stage": "stage2",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "units_pipe.log: explicit UNIT_RESULT: FAIL",
+    "units_pipe.log: explicit PIPE_UNIT_RESULT: FAIL",
+    "units_pipe.log: explicit nonzero unit error count"
+  ],
+  "changes": [
+    {
+      "file": "rtl/pipeline/rv_forward_unit.sv",
+      "before": "(exmem_rd != 5'd0) && !exmem_is_load;",
+      "after": "(exmem_rd != 5'd0);",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 22.26
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/memory/rv_lsu.sv",
+    "before": "be        = addr[1] ? 4'b1100 : 4'b0011;",
+    "after": "be        = 4'b0011;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

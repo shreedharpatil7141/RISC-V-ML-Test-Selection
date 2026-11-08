@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_pipe_regs.sv",
+    "before": "if (kill || redirect || stall) id_ex <= '0;",
+    "after": "if (kill || stall) id_ex <= '0;",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

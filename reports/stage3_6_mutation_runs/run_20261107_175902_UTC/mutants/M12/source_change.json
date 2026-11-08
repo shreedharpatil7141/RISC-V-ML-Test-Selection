@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/alu/rv_div_iter.sv",
+    "before": "divisor_ext       = {1'b0, divisor_abs_q};",
+    "after": "divisor_ext       = {1'b0, divisor};",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

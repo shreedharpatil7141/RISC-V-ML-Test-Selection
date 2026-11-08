@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/alu/rv_div_iter.sv",
+    "before": "quotient_mode_q    <= !funct3[1];",
+    "after": "quotient_mode_q    <= funct3[1];",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

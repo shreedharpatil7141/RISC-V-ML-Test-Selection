@@ -1,0 +1,24 @@
+{
+  "id": "STAGE1-07",
+  "name": "SLLI funct7 not checked",
+  "stage": "stage1",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "illegal_slli_funct7: independently confirmed RTL/ISS trace difference at line 2"
+  ],
+  "changes": [
+    {
+      "file": "rtl/decoder/rv_decoder.sv",
+      "before": "illegal = (funct7 != 7'b0000000);                       // SLLI",
+      "after": "illegal = 1'b0;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 10.23
+}

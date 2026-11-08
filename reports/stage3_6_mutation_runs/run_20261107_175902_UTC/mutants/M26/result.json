@@ -1,0 +1,24 @@
+{
+  "id": "M26",
+  "name": "Pipeline divider is not aborted when kill is asserted",
+  "stage": "stage35",
+  "expected_check": "test:pipe_div_fault_illegal",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "MISSED",
+  "build_success": true,
+  "detectors": [
+    "unmutated regression passed with mutant applied"
+  ],
+  "changes": [
+    {
+      "file": "rtl/pipeline/rv_ex_stage.sv",
+      "before": ".clk(clk), .rst_n(rst_n), .start(md_start_req), .abort(kill),",
+      "after": ".clk(clk), .rst_n(rst_n), .start(md_start_req), .abort(1'b0),",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 0,
+  "timeout": false,
+  "elapsed_seconds": 66.58
+}

@@ -1,0 +1,27 @@
+{
+  "id": "STAGE1-13",
+  "name": "misaligned load not caught",
+  "stage": "stage1",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "misalign_lh_off1: explicit Stage 1 TEST_RESULT FAIL",
+    "misalign_lhu_off3: explicit Stage 1 TEST_RESULT FAIL",
+    "misalign_lw_off1: explicit Stage 1 TEST_RESULT FAIL",
+    "misalign_lw_off2: explicit Stage 1 TEST_RESULT FAIL"
+  ],
+  "changes": [
+    {
+      "file": "rtl/core/rv_core_single.sv",
+      "before": "else if (mem_re && lsu_misaligned)",
+      "after": "else if (1'b0)",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 10.29
+}

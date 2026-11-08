@@ -1,0 +1,34 @@
+{
+  "id": "STAGE1-02",
+  "name": "B-imm bit 11/7 swapped",
+  "stage": "stage1",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "long_beq_n1024: explicit Stage 1 TEST_RESULT FAIL",
+    "long_beq_n1364: explicit Stage 1 TEST_RESULT FAIL",
+    "long_beq_n2048: explicit Stage 1 TEST_RESULT FAIL",
+    "long_beq_n2732: explicit Stage 1 TEST_RESULT FAIL",
+    "long_beq_n3412: explicit Stage 1 TEST_RESULT FAIL",
+    "long_beq_p1024: explicit Stage 1 TEST_RESULT FAIL",
+    "long_beq_p1364: explicit Stage 1 TEST_RESULT FAIL",
+    "long_beq_p2048: explicit Stage 1 TEST_RESULT FAIL",
+    "long_beq_p2732: explicit Stage 1 TEST_RESULT FAIL",
+    "long_beq_p3412: explicit Stage 1 TEST_RESULT FAIL",
+    "Stage 1 unit: explicit UNIT_RESULT FAIL"
+  ],
+  "changes": [
+    {
+      "file": "rtl/decoder/rv_imm_gen.sv",
+      "before": "insn[31], insn[7], insn[30:25]",
+      "after": "insn[31], insn[30], insn[29:25], insn[7]",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 10.23
+}

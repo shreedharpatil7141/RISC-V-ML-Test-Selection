@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/alu/rv_div_iter.sv",
+    "before": "if (iteration == W-1) begin",
+    "after": "if (iteration == W-2) begin",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

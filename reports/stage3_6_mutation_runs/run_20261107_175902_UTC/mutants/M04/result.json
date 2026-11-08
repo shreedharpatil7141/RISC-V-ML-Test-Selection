@@ -1,0 +1,24 @@
+{
+  "id": "M04",
+  "name": "Signed quotient fails to restore quotient sign",
+  "stage": "stage35",
+  "expected_check": "unit:divider",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "Divider unit: FAIL 262144 16382 1600 96"
+  ],
+  "changes": [
+    {
+      "file": "rtl/alu/rv_div_iter.sv",
+      "before": "negate_quotient_q  <= !funct3[0] && (dividend[W-1] ^ divisor[W-1]);",
+      "after": "negate_quotient_q  <= 1'b0;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 60.21
+}

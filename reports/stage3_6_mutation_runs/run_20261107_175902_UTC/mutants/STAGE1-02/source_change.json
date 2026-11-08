@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/decoder/rv_imm_gen.sv",
+    "before": "insn[31], insn[7], insn[30:25]",
+    "after": "insn[31], insn[30], insn[29:25], insn[7]",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

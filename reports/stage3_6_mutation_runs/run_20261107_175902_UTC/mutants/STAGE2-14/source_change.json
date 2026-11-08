@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_ex_stage.sv",
+    "before": ".a(rs1_f), .b(rs2_f), .funct3(id_ex.funct3)",
+    "after": ".a(id_ex.rs1_data), .b(id_ex.rs2_data), .funct3(id_ex.funct3)",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/alu/rv_div_iter.sv",
+    "before": "assign done     = (state == S_FIN) && !abort;",
+    "after": "assign done     = (state == S_FIN);",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

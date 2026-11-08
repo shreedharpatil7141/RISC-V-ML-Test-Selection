@@ -1,0 +1,27 @@
+{
+  "id": "STAGE2-10",
+  "name": "fault does not squash younger",
+  "stage": "stage2",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "pipe_fault_older_stores_commit: independently confirmed pipeline/ISS trace difference",
+    "pipe_fault_older_stores_commit: independently confirmed pipeline/golden trace difference",
+    "pipe_fault_squashes_younger_store: independently confirmed pipeline/ISS trace difference",
+    "pipe_fault_squashes_younger_store: independently confirmed pipeline/golden trace difference"
+  ],
+  "changes": [
+    {
+      "file": "rtl/core/rv_core_pipe.sv",
+      "before": "assign kill = halted || fault;",
+      "after": "assign kill = halted;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 22.61
+}

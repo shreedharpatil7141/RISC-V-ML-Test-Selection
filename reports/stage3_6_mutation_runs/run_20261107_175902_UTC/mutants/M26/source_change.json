@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/pipeline/rv_ex_stage.sv",
+    "before": ".clk(clk), .rst_n(rst_n), .start(md_start_req), .abort(kill),",
+    "after": ".clk(clk), .rst_n(rst_n), .start(md_start_req), .abort(1'b0),",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "id": "STAGE1-03",
+  "name": "LB zero-extends",
+  "stage": "stage1",
+  "expected_check": "legacy regression check",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "loadstore_directed: explicit Stage 1 TEST_RESULT FAIL",
+    "loadstore_random: explicit Stage 1 TEST_RESULT FAIL",
+    "Stage 1 unit: explicit UNIT_RESULT FAIL"
+  ],
+  "changes": [
+    {
+      "file": "rtl/memory/rv_lsu.sv",
+      "before": "{{24{shifted[7]}},  shifted[7:0]}",
+      "after": "{24'b0, shifted[7:0]}",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 10.9
+}

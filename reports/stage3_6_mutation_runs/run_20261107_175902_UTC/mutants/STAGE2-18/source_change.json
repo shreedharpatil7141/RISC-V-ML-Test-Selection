@@ -1,0 +1,9 @@
+[
+  {
+    "file": "rtl/core/rv_core_pipe.sv",
+    "before": ".memwb_data(mem_wb.wb_data)",
+    "after": ".memwb_data(mem_wb.mem_addr)",
+    "matches_before": 1,
+    "actual_change": true
+  }
+]

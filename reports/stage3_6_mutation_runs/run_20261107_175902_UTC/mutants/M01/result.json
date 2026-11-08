@@ -1,0 +1,24 @@
+{
+  "id": "M01",
+  "name": "MULH returns low product half",
+  "stage": "stage35",
+  "expected_check": "unit:wrapper",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "M wrapper unit: FAIL 49 1 34"
+  ],
+  "changes": [
+    {
+      "file": "rtl/alu/rv_mul.sv",
+      "before": "3'b001: y = product_ss[63:32];",
+      "after": "3'b001: y = product_ss[31:0];",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 57.41
+}

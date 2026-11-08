@@ -1,0 +1,24 @@
+{
+  "id": "M25",
+  "name": "Older MEM fault no longer kills younger pipeline work",
+  "stage": "stage35",
+  "expected_check": "test:pipe_div_fault_illegal",
+  "tool_version": "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+  "status": "CAUGHT",
+  "build_success": true,
+  "detectors": [
+    "pipe_div_fault_illegal: explicit divider protocol checker failure with complete MD_STATS record"
+  ],
+  "changes": [
+    {
+      "file": "rtl/core/rv_core_pipe.sv",
+      "before": "assign kill = halted || fault;",
+      "after": "assign kill = halted;",
+      "matches_before": 1,
+      "actual_change": true
+    }
+  ],
+  "runner_exit_code": 1,
+  "timeout": false,
+  "elapsed_seconds": 60.53
+}

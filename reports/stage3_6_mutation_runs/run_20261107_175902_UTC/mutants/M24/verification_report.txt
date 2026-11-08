@@ -1,0 +1,676 @@
+Stage 3.5 M-extension coverage regression  2026-11-07 18:45:18  simulator=verilator
+
+Stage 1 unit: PASS 114339 0
+M arithmetic unit: PASS 1152 0
+M decoder unit: PASS 1024 0
+Pipeline unit: FAIL 624576 7568
+Divider unit: PASS 262144 0 1600 0
+M wrapper unit: PASS 49 0 34
+
+test                                   s1 pipe iss gold perf md starts/dones busy abort cycles
+branch_backward                        ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      35 [n_div=0 expected md=0/0/0/0 stalls=0 redir=29 instret=94]
+branch_beq                             ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      20 [n_div=0 expected md=0/0/0/0 stalls=0 redir=49 instret=267]
+branch_bge                             ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      20 [n_div=0 expected md=0/0/0/0 stalls=0 redir=49 instret=246]
+branch_bgeu                            ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      20 [n_div=0 expected md=0/0/0/0 stalls=0 redir=49 instret=246]
+branch_blt                             ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      19 [n_div=0 expected md=0/0/0/0 stalls=0 redir=49 instret=253]
+branch_bltu                            ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      19 [n_div=0 expected md=0/0/0/0 stalls=0 redir=49 instret=253]
+branch_bne                             ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      19 [n_div=0 expected md=0/0/0/0 stalls=0 redir=49 instret=232]
+branch_notaken_misaligned_ok           ok  FAIL DIFF DIFF ok   ok     0/0       0     0      14 [n_div=0 expected md=0/0/0/0 stalls=0 redir=1 instret=7]
+fence_nop                              ok  FAIL DIFF DIFF ok   ok     0/0       0     0      16 [n_div=0 expected md=0/0/0/0 stalls=0 redir=1 instret=9]
+halt_ebreak                            ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_branch_f3_010                  ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_branch_f3_011                  ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_compressed_stage1              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_csrrw_stage1                   ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_fencei_stage1                  ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_jalr_f3_001                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_load_f3_011                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_load_f3_110                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_mret_stage1                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_ones                           ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7                      ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_0000010              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_0000011              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_0000100              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_0010000              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_0100001              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_op_funct7_1000000              ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_opcode_custom                  ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_slli_funct7                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_srli_funct7                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_store_f3_011                   ok  ok   ok   ok   ok   ok     0/0       0     0       6
+illegal_zero                           ok  ok   ok   ok   ok   ok     0/0       0     0       6
+imm_addi                               ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      20 [n_div=0 expected md=0/0/0/0 stalls=0 redir=90 instret=520]
+imm_andi                               ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      83 [n_div=0 expected md=0/0/0/0 stalls=0 redir=90 instret=485]
+imm_ori                                ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      20 [n_div=0 expected md=0/0/0/0 stalls=0 redir=90 instret=501]
+imm_slli                               ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      62 [n_div=0 expected md=0/0/0/0 stalls=0 redir=60 instret=327]
+imm_slti                               ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      20 [n_div=0 expected md=0/0/0/0 stalls=0 redir=90 instret=478]
+imm_sltiu                              ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      20 [n_div=0 expected md=0/0/0/0 stalls=0 redir=90 instret=478]
+imm_srai                               ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      62 [n_div=0 expected md=0/0/0/0 stalls=0 redir=60 instret=334]
+imm_srli                               ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      62 [n_div=0 expected md=0/0/0/0 stalls=0 redir=60 instret=342]
+imm_xori                               ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      20 [n_div=0 expected md=0/0/0/0 stalls=0 redir=90 instret=512]
+jumps                                  ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      16 [n_div=0 expected md=0/0/0/0 stalls=0 redir=18 instret=59]
+loadstore_directed                     ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      23 [n_div=0 expected md=0/0/0/0 stalls=1 redir=23 instret=147]
+loadstore_random                       ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     123 [n_div=0 expected md=0/0/0/0 stalls=0 redir=246 instret=1673]
+long_beq_n1024                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n1364                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n2048                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n2732                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n3412                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n4092                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_n4096                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_beq_p1024                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_beq_p1364                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_beq_p2048                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_beq_p2732                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_beq_p3412                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_beq_p4092                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_n10920                        ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n2048                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n21844                        ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n32764                        ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n32768                        ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n4096                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_n8192                         ok  ok   ok   ok   ok   ok     0/0       0     0      13
+long_jal_p1024                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p10920                        ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p128                          ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p16                           ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p16384                        ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p2048                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p21844                        ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p256                          ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p32                           ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p32764                        ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p32768                        ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p4                            ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p4096                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p512                          ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p64                           ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p8                            ok  ok   ok   ok   ok   ok     0/0       0     0      10
+long_jal_p8192                         ok  ok   ok   ok   ok   ok     0/0       0     0      10
+misalign_branch_taken                  ok  ok   ok   ok   ok   ok     0/0       0     0       6
+misalign_jal_target                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+misalign_jalr_target                   ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      12 [n_div=0 expected md=0/0/0/0 stalls=0 redir=0 instret=4]
+misalign_lh_off1                       ok  ok   ok   ok   ok   ok     0/0       0     0       6
+misalign_lhu_off3                      ok  ok   ok   ok   ok   ok     0/0       0     0       6
+misalign_lw_off1                       ok  ok   ok   ok   ok   ok     0/0       0     0       6
+misalign_lw_off2                       ok  ok   ok   ok   ok   ok     0/0       0     0       7
+misalign_sh_off1                       ok  ok   ok   ok   ok   ok     0/0       0     0       7
+misalign_sh_off3                       ok  ok   ok   ok   ok   ok     0/0       0     0       7
+misalign_sw_off1                       ok  ok   ok   ok   ok   ok     0/0       0     0       7
+misalign_sw_off2                       ok  ok   ok   ok   ok   ok     0/0       0     0       7
+regfile                                ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      18 [n_div=0 expected md=0/0/0/0 stalls=0 redir=91 instret=344]
+rr_add                                 ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     100 [n_div=0 expected md=0/0/0/0 stalls=0 redir=109 instret=778]
+rr_and                                 ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     122 [n_div=0 expected md=0/0/0/0 stalls=0 redir=109 instret=741]
+rr_or                                  ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     100 [n_div=0 expected md=0/0/0/0 stalls=0 redir=109 instret=763]
+rr_sll                                 ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      97 [n_div=0 expected md=0/0/0/0 stalls=0 redir=109 instret=731]
+rr_slt                                 ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      47 [n_div=0 expected md=0/0/0/0 stalls=0 redir=109 instret=717]
+rr_sltu                                ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     180 [n_div=0 expected md=0/0/0/0 stalls=0 redir=109 instret=717]
+rr_sra                                 ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     122 [n_div=0 expected md=0/0/0/0 stalls=0 redir=109 instret=734]
+rr_srl                                 ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     122 [n_div=0 expected md=0/0/0/0 stalls=0 redir=109 instret=742]
+rr_sub                                 ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     100 [n_div=0 expected md=0/0/0/0 stalls=0 redir=109 instret=775]
+rr_xor                                 ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     100 [n_div=0 expected md=0/0/0/0 stalls=0 redir=109 instret=775]
+upper_auipc                            ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      24 [n_div=0 expected md=0/0/0/0 stalls=0 redir=6 instret=43]
+upper_lui                              ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      18 [n_div=0 expected md=0/0/0/0 stalls=0 redir=7 instret=29]
+x0_behavior                            ok  FAIL DIFF DIFF ok   ok     0/0       0     0      46 [n_div=0 expected md=0/0/0/0 stalls=1 redir=5 instret=30]
+pipe_array_sum_loop                    ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     121 [n_div=0 expected md=0/0/0/0 stalls=10 redir=10 instret=78]
+pipe_basic_independent                 ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      17 [n_div=0 expected md=0/0/0/0 stalls=0 redir=4 instret=16]
+pipe_branch_beq                        ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      17 [n_div=0 expected md=0/0/0/0 stalls=0 redir=7 instret=54]
+pipe_branch_bge                        ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      39 [n_div=0 expected md=0/0/0/0 stalls=0 redir=9 instret=50]
+pipe_branch_bgeu                       ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      39 [n_div=0 expected md=0/0/0/0 stalls=0 redir=10 instret=48]
+pipe_branch_blt                        ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      17 [n_div=0 expected md=0/0/0/0 stalls=0 redir=9 instret=50]
+pipe_branch_bltu                       ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      17 [n_div=0 expected md=0/0/0/0 stalls=0 redir=8 instret=52]
+pipe_branch_bne                        ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      28 [n_div=0 expected md=0/0/0/0 stalls=0 redir=11 instret=46]
+pipe_dep_random_11                     ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     121 [n_div=0 expected md=0/0/0/0 stalls=0 redir=5 instret=122]
+pipe_dep_random_12                     ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     126 [n_div=0 expected md=0/0/0/0 stalls=0 redir=5 instret=127]
+pipe_dep_random_13                     ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     126 [n_div=0 expected md=0/0/0/0 stalls=0 redir=5 instret=128]
+pipe_ebreak_older_commit_younger_squash ok  ok   DIFF DIFF ok   ok     0/0       0     0       7 [n_div=0 expected md=0/0/0/0 stalls=0 redir=0 instret=2]
+pipe_ecall_after_loaduse               ok  ok   DIFF DIFF ok   ok     0/0       0     0      12 [n_div=0 expected md=0/0/0/0 stalls=1 redir=0 instret=6]
+pipe_fault_load_use_consumer           ok  ok   DIFF DIFF ok   ok     0/0       0     0      11 [n_div=0 expected md=0/0/0/0 stalls=1 redir=0 instret=5]
+pipe_fault_misalign_load_after_load    ok  ok   DIFF DIFF ok   ok     0/0       0     0       7 [n_div=0 expected md=0/0/0/0 stalls=0 redir=0 instret=2]
+pipe_fault_older_stores_commit         ok  ok   DIFF DIFF ok   ok     0/0       0     0      10 [n_div=0 expected md=0/0/0/0 stalls=0 redir=0 instret=5]
+pipe_fault_squashes_younger_store      ok  ok   ok   ok   ok   ok     0/0       0     0       7
+pipe_flush_sideeffects                 ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=0 redir=10 instret=32]
+pipe_flush_wrongpath_faults            ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=0 redir=5 instret=14]
+pipe_fwd_exex_chain                    ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      32 [n_div=0 expected md=0/0/0/0 stalls=0 redir=4 instret=69]
+pipe_fwd_exmem                         ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      27 [n_div=0 expected md=0/0/0/0 stalls=0 redir=4 instret=21]
+pipe_fwd_memwb                         ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      14 [n_div=0 expected md=0/0/0/0 stalls=0 redir=3 instret=19]
+pipe_fwd_priority                      ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      15 [n_div=0 expected md=0/0/0/0 stalls=0 redir=4 instret=27]
+pipe_fwd_wb_bypass                     ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      15 [n_div=0 expected md=0/0/0/0 stalls=0 redir=3 instret=23]
+pipe_illegal_after_nottaken_branch     ok  ok   ok   ok   ok   ok     0/0       0     0       7
+pipe_jumps_link_fwd                    ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      17 [n_div=0 expected md=0/0/0/0 stalls=0 redir=9 instret=34]
+pipe_loaduse_basic                     ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      32 [n_div=0 expected md=0/0/0/0 stalls=7 redir=10 instret=69]
+pipe_loaduse_chain                     ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      30 [n_div=0 expected md=0/0/0/0 stalls=4 redir=1 instret=30]
+pipe_loaduse_store                     ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      42 [n_div=0 expected md=0/0/0/0 stalls=5 redir=5 instret=46]
+pipe_mem_copy_loop                     ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     125 [n_div=0 expected md=0/0/0/0 stalls=8 redir=15 instret=109]
+pipe_mem_ops                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      24 [n_div=0 expected md=0/0/0/0 stalls=0 redir=11 instret=61]
+pipe_misalign_branch_taken_squash      ok  ok   ok   ok   ok   ok     0/0       0     0       6
+pipe_misalign_jalr_after_load          ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      15 [n_div=0 expected md=0/0/0/0 stalls=1 redir=0 instret=6]
+pipe_misalign_store_fwd_addr           ok  ok   DIFF DIFF ok   ok     0/0       0     0       8 [n_div=0 expected md=0/0/0/0 stalls=0 redir=0 instret=3]
+pipe_multi_dep_fib                     ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      56 [n_div=0 expected md=0/0/0/0 stalls=0 redir=3 instret=55]
+pipe_rand_01                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=4 redir=32 instret=281]
+pipe_rand_02                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=2 redir=38 instret=275]
+pipe_rand_03                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=1 redir=48 instret=324]
+pipe_rand_04                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=1 redir=41 instret=356]
+pipe_rand_05                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=1 redir=48 instret=358]
+pipe_rand_06                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=2 redir=41 instret=332]
+pipe_rand_07                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=2 redir=49 instret=389]
+pipe_rand_08                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=0 redir=50 instret=361]
+pipe_rand_09                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=5 redir=51 instret=334]
+pipe_rand_10                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=2 redir=48 instret=344]
+pipe_rand_11                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=1 redir=50 instret=388]
+pipe_rand_12                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=0 redir=59 instret=393]
+pipe_rand_13                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=5 redir=56 instret=445]
+pipe_rand_14                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=1 redir=63 instret=406]
+pipe_rand_15                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=4 redir=67 instret=442]
+pipe_rand_16                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=0 redir=62 instret=462]
+pipe_rand_17                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=2 redir=65 instret=481]
+pipe_rand_18                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=2 redir=72 instret=418]
+pipe_rand_19                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=10 redir=67 instret=472]
+pipe_rand_20                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=3 redir=75 instret=506]
+pipe_rand_21                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=0 redir=76 instret=483]
+pipe_rand_22                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=5 redir=72 instret=538]
+pipe_rand_23                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=3 redir=81 instret=548]
+pipe_rand_24                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=8 redir=72 instret=513]
+pipe_stall_flush_branch                ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      21 [n_div=0 expected md=0/0/0/0 stalls=2 redir=3 instret=18]
+pipe_stall_flush_jalr                  ok  FAIL DIFF DIFF FAIL ok     0/0       0     0 2000000 [n_div=0 expected md=0/0/0/0 stalls=1 redir=1 instret=8]
+pipe_writeback_all_regs                ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      41 [n_div=0 expected md=0/0/0/0 stalls=0 redir=30 instret=92]
+pipe_x0_behavior                       ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      36 [n_div=0 expected md=0/0/0/0 stalls=0 redir=8 instret=53]
+pipe_m_arithmetic                      ok  FAIL DIFF DIFF FAIL FAIL   0/0       0     0      16 [n_div=17 expected md=17/17/561/0 stalls=0 redir=0 instret=88]
+pipe_m_fwd_consumers                   ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      16 [n_div=0 expected md=0/0/0/0 stalls=1 redir=1 instret=14]
+pipe_m_jalr                            ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      26 [n_div=0 expected md=0/0/0/0 stalls=0 redir=1 instret=6]
+pipe_m_loaduse                         ok  ok   DIFF DIFF ok   ok     0/0       0     0      17 [n_div=0 expected md=0/0/0/0 stalls=1 redir=0 instret=11]
+pipe_m_back_to_back_x0                 ok  FAIL DIFF DIFF FAIL ok     2/2      66     0      84 [n_div=2 expected md=2/2/66/0 stalls=0 redir=0 instret=17]
+pipe_m_wrongpath                       ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      17 [n_div=0 expected md=0/0/0/0 stalls=0 redir=1 instret=8]
+pipe_m_fault_illegal                   ok  ok   ok   ok   ok   ok     0/0       0     0       8
+pipe_m_fault_load                      ok  ok   ok   ok   ok   ok     0/0       0     0       6
+m_chain                                ok  FAIL DIFF DIFF FAIL ok    18/18    594     0     648 [n_div=18 expected md=18/18/594/0 stalls=0 redir=4 instret=49]
+m_div                                  ok  FAIL DIFF DIFF FAIL FAIL   1/1      33     0      47 [n_div=280 expected md=280/280/9240/0 stalls=0 redir=280 instret=1889]
+m_divu                                 ok  FAIL DIFF DIFF FAIL FAIL   1/1      33     0      47 [n_div=280 expected md=280/280/9240/0 stalls=0 redir=280 instret=1882]
+m_divzero                              ok  FAIL DIFF DIFF FAIL FAIL   1/1      33     0      47 [n_div=56 expected md=56/56/1848/0 stalls=0 redir=56 instret=345]
+m_misc_use                             ok  FAIL DIFF DIFF FAIL FAIL   0/0       0     0      20 [n_div=53 expected md=53/53/1749/0 stalls=0 redir=34 instret=254]
+m_mul                                  ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     147 [n_div=0 expected md=0/0/0/0 stalls=0 redir=280 instret=1930]
+m_mulh                                 ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     147 [n_div=0 expected md=0/0/0/0 stalls=0 redir=280 instret=1867]
+m_mulhsu                               ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     280 [n_div=0 expected md=0/0/0/0 stalls=0 redir=280 instret=1896]
+m_mulhu                                ok  FAIL DIFF DIFF FAIL ok     0/0       0     0     280 [n_div=0 expected md=0/0/0/0 stalls=0 redir=280 instret=1929]
+m_overflow                             ok  FAIL DIFF DIFF FAIL FAIL   1/1      33     0      47 [n_div=32 expected md=32/32/1056/0 stalls=0 redir=32 instret=206]
+m_rand_div                             ok  FAIL DIFF DIFF FAIL FAIL   3/3      99     0     135 [n_div=150 expected md=150/150/4950/0 stalls=0 redir=150 instret=1122]
+m_rand_divu                            ok  FAIL DIFF DIFF FAIL FAIL   1/1      33     0      49 [n_div=150 expected md=150/150/4950/0 stalls=0 redir=150 instret=1127]
+m_rand_mul                             ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      17 [n_div=0 expected md=0/0/0/0 stalls=0 redir=150 instret=1187]
+m_rand_mulh                            ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      24 [n_div=0 expected md=0/0/0/0 stalls=0 redir=150 instret=1145]
+m_rand_mulhsu                          ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      15 [n_div=0 expected md=0/0/0/0 stalls=0 redir=150 instret=1168]
+m_rand_mulhu                           ok  FAIL DIFF DIFF FAIL ok     0/0       0     0      16 [n_div=0 expected md=0/0/0/0 stalls=0 redir=150 instret=1166]
+m_rand_rem                             ok  FAIL DIFF DIFF FAIL FAIL   1/1      33     0      48 [n_div=150 expected md=150/150/4950/0 stalls=0 redir=150 instret=1162]
+m_rand_remu                            ok  FAIL DIFF DIFF FAIL FAIL   1/1      33     0      50 [n_div=150 expected md=150/150/4950/0 stalls=0 redir=150 instret=1178]
+m_rem                                  ok  FAIL DIFF DIFF FAIL FAIL  17/17    561     0     708 [n_div=280 expected md=280/280/9240/0 stalls=0 redir=280 instret=1868]
+m_remu                                 ok  FAIL DIFF DIFF FAIL FAIL  17/17    561     0     708 [n_div=280 expected md=280/280/9240/0 stalls=0 redir=280 instret=1911]
+m_sign_matrix                          ok  FAIL DIFF DIFF FAIL FAIL   0/0       0     0      22 [n_div=96 expected md=96/96/3168/0 stalls=0 redir=192 instret=1159]
+m_x0                                   ok  FAIL DIFF DIFF FAIL FAIL   4/4     132     0     157 [n_div=16 expected md=16/16/528/0 stalls=0 redir=27 instret=130]
+pipe_div_dependencies                  ok  FAIL DIFF DIFF FAIL ok     1/1      33     0      48 [n_div=1 expected md=1/1/33/0 stalls=0 redir=0 instret=8]
+pipe_div_loaduse                       ok  ok   DIFF DIFF ok   ok     1/1      33     0      50 [n_div=1 expected md=1/1/33/0 stalls=1 redir=0 instret=11]
+pipe_div_back_to_back                  ok  FAIL DIFF DIFF FAIL ok     5/5     165     0     182 [n_div=5 expected md=5/5/165/0 stalls=0 redir=0 instret=16]
+pipe_div_forward_consumers             ok  FAIL DIFF DIFF FAIL FAIL   1/1      33     0      48 [n_div=4 expected md=4/4/132/0 stalls=0 redir=2 instret=21]
+pipe_div_wrongpath                     ok  ok   ok   ok   ok   ok     0/0       0     0      11
+pipe_div_fault_illegal                 ok  ok   ok   ok   ok   ok     0/0       0     0       7
+pipe_div_fault_load                    ok  ok   ok   ok   ok   ok     0/0       0     0       6
+pipe_div_before_fault                  ok  ok   DIFF DIFF ok   ok     1/1      33     0      42 [n_div=1 expected md=1/1/33/0 stalls=0 redir=0 instret=4]
+pipe_div_loaduse_rs1                   ok  ok   DIFF DIFF ok   ok     1/1      33     0      48 [n_div=1 expected md=1/1/33/0 stalls=1 redir=0 instret=9]
+pipe_div_forward_sources               ok  FAIL DIFF DIFF FAIL ok     2/2      66     0      82 [n_div=2 expected md=2/2/66/0 stalls=0 redir=0 instret=10]
+
+Pipeline event coverage (verilator):
+   0 stall_rs1            hits=  242144 tests= 12 COVERED
+   1 stall_rs2            hits=      27 tests=  7 COVERED
+   2 fwd_a_exmem          hits=       6 tests=  4 COVERED
+   3 fwd_a_memwb          hits= 1355684 tests=128 COVERED
+   4 fwd_b_exmem          hits=   32791 tests=  4 COVERED
+   5 fwd_b_memwb          hits=  474444 tests= 72 COVERED
+   6 wb_bypass_rs1        hits=  380944 tests= 79 COVERED
+   7 wb_bypass_rs2        hits=  436971 tests= 38 COVERED
+   8 fwd_a_priority       hits=       0 tests=  0 NOT COVERED
+   9 fwd_b_priority       hits=       0 tests=  0 NOT COVERED
+  10 redirect_branch      hits= 2381106 tests= 91 COVERED
+  11 redirect_jal         hits=  990632 tests=132 COVERED
+  12 redirect_jalr        hits=  976898 tests= 30 COVERED
+  13 store_data_fwd       hits=  361873 tests= 16 COVERED
+  14 branch_operand_fwd   hits=  229661 tests= 86 COVERED
+  15 x0_not_forwarded     hits=  117520 tests=  7 COVERED
+Coverage events hit: 14/16
+SUITE m_extension: 0 passed, 22 failed, 22 total
+SUITE pipeline: 3 passed, 60 failed, 63 total
+SUITE pipeline_div: 3 passed, 5 failed, 8 total
+SUITE pipeline_div_coverage: 0 passed, 2 failed, 2 total
+SUITE pipeline_m: 2 passed, 6 failed, 8 total
+SUITE rv32i: 70 passed, 36 failed, 106 total
+TOTAL: 78 passed, 131 failed, 209 total
+
+Stage 3.5 M-extension coverage dictionary
+Architectural operand bins show independent ISS/RTL counts; raw pre-writeback operand rows are compared in order.
+Pipeline and block-level protocol bins use RTL/unit evidence; the categories are not merged.
+ID                                          ISS/RTL or hits  tests status  contributors
+A.OP.MUL                                             477/34     12 MISS   m_chain,m_misc_use,m_mul,m_rand_mul,m_sign_matrix,m_x0,pipe_div_dependencies,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+P.ISSUE.MUL                                              36     12 HIT    m_chain,m_misc_use,m_mul,m_rand_mul,m_sign_matrix,m_x0,pipe_div_dependencies,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+P.COMPLETE.MUL                                           36     12 HIT    m_chain,m_misc_use,m_mul,m_rand_mul,m_sign_matrix,m_x0,pipe_div_dependencies,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+P.RETIRE.MUL                                             36     12 HIT    m_chain,m_misc_use,m_mul,m_rand_mul,m_sign_matrix,m_x0,pipe_div_dependencies,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+A.OP.MULH                                            468/28      7 MISS   m_chain,m_misc_use,m_mulh,m_rand_mulh,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.ISSUE.MULH                                             28      6 HIT    m_chain,m_mulh,m_rand_mulh,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.COMPLETE.MULH                                          28      6 HIT    m_chain,m_mulh,m_rand_mulh,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.RETIRE.MULH                                            28      6 HIT    m_chain,m_mulh,m_rand_mulh,m_sign_matrix,m_x0,pipe_m_arithmetic
+A.OP.MULHSU                                          464/38      7 MISS   m_chain,m_misc_use,m_mulhsu,m_rand_mulhsu,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.ISSUE.MULHSU                                           38      4 HIT    m_chain,m_mulhsu,m_rand_mulhsu,m_x0
+P.COMPLETE.MULHSU                                        38      4 HIT    m_chain,m_mulhsu,m_rand_mulhsu,m_x0
+P.RETIRE.MULHSU                                          38      4 HIT    m_chain,m_mulhsu,m_rand_mulhsu,m_x0
+A.OP.MULHU                                           465/38      7 MISS   m_chain,m_misc_use,m_mulhu,m_rand_mulhu,m_sign_matrix,m_x0,pipe_m_arithmetic
+P.ISSUE.MULHU                                            38      4 HIT    m_chain,m_mulhu,m_rand_mulhu,m_x0
+P.COMPLETE.MULHU                                         38      4 HIT    m_chain,m_mulhu,m_rand_mulhu,m_x0
+P.RETIRE.MULHU                                           38      4 HIT    m_chain,m_mulhu,m_rand_mulhu,m_x0
+A.OP.DIV                                             506/23     17 MISS   m_chain,m_div,m_divzero,m_misc_use,m_overflow,m_rand_div,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0
+P.ISSUE.DIV                                              23     14 HIT    m_chain,m_div,m_divzero,m_overflow,m_rand_div,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_back_to_back_x0
+P.COMPLETE.DIV                                           23     14 HIT    m_chain,m_div,m_divzero,m_overflow,m_rand_div,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_back_to_back_x0
+P.RETIRE.DIV                                             23     14 HIT    m_chain,m_div,m_divzero,m_overflow,m_rand_div,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_back_to_back_x0
+A.OP.DIVU                                             513/7     10 MISS   m_chain,m_divu,m_divzero,m_misc_use,m_overflow,m_rand_divu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic
+P.ISSUE.DIVU                                              7      5 HIT    m_chain,m_divu,m_rand_divu,m_x0,pipe_div_back_to_back
+P.COMPLETE.DIVU                                           7      5 HIT    m_chain,m_divu,m_rand_divu,m_x0,pipe_div_back_to_back
+P.RETIRE.DIVU                                             7      5 HIT    m_chain,m_divu,m_rand_divu,m_x0,pipe_div_back_to_back
+A.OP.REM                                             493/27     11 MISS   m_chain,m_divzero,m_misc_use,m_overflow,m_rand_rem,m_rem,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic,pipe_m_back_to_back_x0
+P.ISSUE.REM                                              27      6 HIT    m_chain,m_rand_rem,m_rem,m_x0,pipe_div_back_to_back,pipe_m_back_to_back_x0
+P.COMPLETE.REM                                           27      6 HIT    m_chain,m_rand_rem,m_rem,m_x0,pipe_div_back_to_back,pipe_m_back_to_back_x0
+P.RETIRE.REM                                             27      6 HIT    m_chain,m_rand_rem,m_rem,m_x0,pipe_div_back_to_back,pipe_m_back_to_back_x0
+A.OP.REMU                                            513/23     10 MISS   m_chain,m_divzero,m_misc_use,m_overflow,m_rand_remu,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_m_arithmetic
+P.ISSUE.REMU                                             23      5 HIT    m_chain,m_rand_remu,m_remu,m_x0,pipe_div_back_to_back
+P.COMPLETE.REMU                                          23      5 HIT    m_chain,m_rand_remu,m_remu,m_x0,pipe_div_back_to_back
+P.RETIRE.REMU                                            23      5 HIT    m_chain,m_rand_remu,m_remu,m_x0,pipe_div_back_to_back
+A.RS1.SIGN.NEG                                      1634/11     22 MISS   m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,pipe_m_arithmetic
+A.RS1.SIGN.NONNEG                                  2265/207     34 MISS   m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+A.RS1.CLASS.ZERO                                    258/138     21 MISS   m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_x0,pipe_m_arithmetic
+A.RS1.CLASS.POS_ONE                                  180/36     18 MISS   m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS1.CLASS.NEG_ONE                                   217/6     20 MISS   m_chain,m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS1.CLASS.SMIN                                      211/1     18 MISS   m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS1.CLASS.SMAX                                      169/0     19 MISS   m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS1.CLASS.OTHER                                   2864/37     34 MISS   m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+A.RS1.CLASS.UMAX                                      217/6     20 MISS   m_chain,m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS2.SIGN.NEG                                      1537/75     20 MISS   m_chain,m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,pipe_m_arithmetic
+A.RS2.SIGN.NONNEG                                  2362/143     34 MISS   m_chain,m_div,m_divu,m_divzero,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_jalr,pipe_m_loaduse
+A.RS2.CLASS.ZERO                                     315/54     20 MISS   m_chain,m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_x0,pipe_m_arithmetic
+A.RS2.CLASS.POS_ONE                                   181/8     21 MISS   m_div,m_divu,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_div_forward_consumers,pipe_m_arithmetic,pipe_m_jalr
+A.RS2.CLASS.NEG_ONE                                  232/16     19 MISS   m_chain,m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS2.CLASS.SMIN                                     170/18     17 MISS   m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.RS2.CLASS.SMAX                                      149/0     16 MISS   m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu
+A.RS2.CLASS.OTHER                                  2852/122     32 MISS   m_chain,m_div,m_divu,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_consumers,pipe_div_forward_sources,pipe_div_loaduse,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_fwd_consumers,pipe_m_loaduse
+A.RS2.CLASS.UMAX                                     232/16     19 MISS   m_chain,m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_rem,m_rand_remu,m_rem,m_remu,pipe_m_arithmetic
+A.ALIAS.RD_EQ_RS1                                      97/0      9 MISS   m_div,m_divu,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rem,m_remu
+A.ALIAS.RD_EQ_RS2                                      99/3      9 MISS   m_chain,m_div,m_divu,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rem,m_remu
+A.RD.X0                                                10/9      3 MISS   m_x0,pipe_div_back_to_back,pipe_m_back_to_back_x0
+A.CORNER.DIV_ZERO_QUOT                                 8/14      4 MISS   m_chain,m_div,m_divu,m_divzero
+A.CORNER.DIV_ZERO_REM                                 10/11      3 MISS   m_chain,m_rem,m_remu
+A.CORNER.SIGNED_OVERFLOW_QUOT                           1/0      1 MISS   m_overflow
+A.CORNER.SIGNED_OVERFLOW_REM                            0/0      0 MISS   -
+A.CORNER.QUOT_ZERO                                     9/12      3 MISS   m_chain,m_rand_div,m_rand_divu
+A.CORNER.QUOT_ONE                                       0/1      1 MISS   m_x0
+A.CORNER.QUOT_NEGATIVE                                  1/0      1 MISS   m_overflow
+A.CORNER.REM_ZERO                                     39/36      6 MISS   m_chain,m_rand_rem,m_rem,m_remu,pipe_div_back_to_back,pipe_m_back_to_back_x0
+A.CORNER.REM_NEGATIVE                                   3/3      1 HIT    m_chain
+P.SQUASH.REDIRECT.M                                       4      4 HIT    pipe_div_forward_consumers,pipe_div_wrongpath,pipe_m_arithmetic,pipe_m_wrongpath
+P.SQUASH.FAULT.M                                          4      4 HIT    pipe_div_before_fault,pipe_div_fault_illegal,pipe_m_fault_illegal,pipe_m_fault_load
+P.FAULT.DIV_START_SUPPRESSED                              2      2 HIT    pipe_div_before_fault,pipe_div_fault_illegal
+P.FWD.RS1.EXMEM                                           0      0 MISS   -
+P.FWD.RS1.MEMWB                                         112     22 HIT    m_chain,m_div,m_divu,m_divzero,m_mul,m_mulh,m_mulhsu,m_mulhu,m_overflow,m_rand_rem,m_rem,m_remu,m_sign_matrix,m_x0,pipe_div_back_to_back,pipe_div_before_fault,pipe_div_dependencies,pipe_div_forward_sources,pipe_div_loaduse_rs1,pipe_m_arithmetic,pipe_m_back_to_back_x0,pipe_m_jalr
+P.FWD.RS2.EXMEM                                           0      0 MISS   -
+P.FWD.RS2.MEMWB                                          59     20 HIT    m_chain,m_misc_use,m_mul,m_mulh,m_mulhsu,m_mulhu,m_rand_div,m_rand_divu,m_rand_mul,m_rand_mulh,m_rand_mulhsu,m_rand_mulhu,m_rand_remu,m_rem,m_remu,m_x0,pipe_div_forward_sources,pipe_div_loaduse,pipe_m_back_to_back_x0,pipe_m_loaduse
+P.LOAD_USE.RS1                                            1      1 HIT    pipe_div_loaduse_rs1
+P.LOAD_USE.RS2                                            2      2 HIT    pipe_div_loaduse,pipe_m_loaduse
+P.DIV.CONSECUTIVE                                        14      4 HIT    m_chain,m_x0,pipe_div_back_to_back,pipe_m_back_to_back_x0
+P.DIV.WRONG_PATH_SUPPRESSED                               2      2 HIT    pipe_div_forward_consumers,pipe_div_wrongpath
+P.RD.X0                                                  18      2 HIT    m_x0,pipe_div_back_to_back
+B.ABORT.START_CYCLE                                       1      1 HIT    tb_rv_md_exec
+B.ABORT.C01                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C02                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C03                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C04                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C05                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C06                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C07                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C08                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C09                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C10                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C11                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C12                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C13                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C14                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C15                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C16                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C17                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C18                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C19                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C20                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C21                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C22                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C23                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C24                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C25                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C26                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C27                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C28                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C29                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C30                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C31                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C32                                               1      1 HIT    tb_rv_md_exec
+B.ABORT.C33                                               1      1 HIT    tb_rv_md_exec
+Defined bins hit: 69/108
+Coverage data errors: 272
+ERROR: pipe_m_arithmetic: ISS/RTL M side-channel count differs 27 vs 2
+ERROR: pipe_m_arithmetic: RTL/ISS pre-writeback operand mismatch at pc=00000008
+ERROR: pipe_m_arithmetic: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: pipe_m_arithmetic: squashed redirect M instruction also appears in ISS
+ERROR: pipe_m_fwd_consumers: ISS/RTL M side-channel count differs 2 vs 1
+ERROR: pipe_m_fwd_consumers: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: pipe_m_jalr: ISS/RTL M side-channel count differs 1 vs 3
+ERROR: pipe_m_jalr: RTL/ISS pre-writeback operand mismatch at pc=0000000c
+ERROR: pipe_m_jalr: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: pipe_m_loaduse: RTL/ISS pre-writeback operand mismatch at pc=0000001c
+ERROR: pipe_m_loaduse: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: pipe_m_back_to_back_x0: ISS/RTL M side-channel count differs 5 vs 4
+ERROR: pipe_m_back_to_back_x0: RTL/ISS pre-writeback operand mismatch at pc=00000008
+ERROR: pipe_m_back_to_back_x0: RTL/ISS pre-writeback operand mismatch at pc=0000000c
+ERROR: pipe_m_back_to_back_x0: RTL/ISS pre-writeback operand mismatch at pc=00000010
+ERROR: pipe_m_back_to_back_x0: RTL/ISS pre-writeback operand mismatch at pc=00000014
+ERROR: pipe_m_back_to_back_x0: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=00000010
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=00000014
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=00000018
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=0000001c
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=00000020
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=00000024
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=00000028
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=0000002c
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=00000030
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=0000003c
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=00000050
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=00000058
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=0000006c
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=00000080
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=00000088
+ERROR: m_chain: RTL/ISS pre-writeback operand mismatch at pc=0000009c
+ERROR: m_chain: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_div: ISS/RTL M side-channel count differs 280 vs 1
+ERROR: m_div: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_divu: ISS/RTL M side-channel count differs 280 vs 1
+ERROR: m_divu: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_divzero: ISS/RTL M side-channel count differs 56 vs 1
+ERROR: m_divzero: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_misc_use: ISS/RTL M side-channel count differs 59 vs 1
+ERROR: m_misc_use: RTL/ISS pre-writeback operand mismatch at pc=00000018
+ERROR: m_misc_use: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_mul: ISS/RTL M side-channel count differs 280 vs 17
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=00000028
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=00000044
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=00000060
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=0000007c
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=00000098
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=000000b4
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=000000d0
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=000000ec
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=0000010c
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=00000128
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=00000148
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=00000164
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=00000184
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=000001a4
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=000001c4
+ERROR: m_mul: RTL/ISS pre-writeback operand mismatch at pc=000001e0
+ERROR: m_mul: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_mulh: ISS/RTL M side-channel count differs 280 vs 17
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=00000028
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=00000044
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=00000060
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=0000007c
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=00000098
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=000000b4
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=000000d0
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=000000ec
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=0000010c
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=00000128
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=00000148
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=00000164
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=00000184
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=000001a4
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=000001c4
+ERROR: m_mulh: RTL/ISS pre-writeback operand mismatch at pc=000001e0
+ERROR: m_mulh: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_mulhsu: ISS/RTL M side-channel count differs 280 vs 33
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000028
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000044
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000060
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=0000007c
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000098
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000000b4
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000000d0
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000000ec
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=0000010c
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000128
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000148
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000164
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000184
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000001a4
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000001c4
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000001e0
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000001fc
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000218
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000234
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000250
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=0000026c
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000288
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000002a4
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000002c0
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000002e0
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000002fc
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=0000031c
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000338
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000358
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000378
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000398
+ERROR: m_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=000003b4
+ERROR: m_mulhsu: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_mulhu: ISS/RTL M side-channel count differs 280 vs 33
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000028
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000044
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000060
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=0000007c
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000098
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000000b4
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000000d0
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000000ec
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=0000010c
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000128
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000148
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000164
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000184
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000001a4
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000001c4
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000001e0
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000001fc
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000218
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000234
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000250
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=0000026c
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000288
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000002a4
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000002c0
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000002e0
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000002fc
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=0000031c
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000338
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000358
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000378
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000398
+ERROR: m_mulhu: RTL/ISS pre-writeback operand mismatch at pc=000003b4
+ERROR: m_mulhu: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_overflow: ISS/RTL M side-channel count differs 32 vs 1
+ERROR: m_overflow: RTL/ISS pre-writeback operand mismatch at pc=0000000c
+ERROR: m_overflow: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_rand_div: ISS/RTL M side-channel count differs 150 vs 3
+ERROR: m_rand_div: RTL/ISS pre-writeback operand mismatch at pc=00000014
+ERROR: m_rand_div: RTL/ISS pre-writeback operand mismatch at pc=00000038
+ERROR: m_rand_div: RTL/ISS pre-writeback operand mismatch at pc=0000005c
+ERROR: m_rand_div: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_rand_divu: ISS/RTL M side-channel count differs 150 vs 1
+ERROR: m_rand_divu: RTL/ISS pre-writeback operand mismatch at pc=00000014
+ERROR: m_rand_divu: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_rand_mul: ISS/RTL M side-channel count differs 150 vs 1
+ERROR: m_rand_mul: RTL/ISS pre-writeback operand mismatch at pc=00000014
+ERROR: m_rand_mul: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_rand_mulh: ISS/RTL M side-channel count differs 150 vs 2
+ERROR: m_rand_mulh: RTL/ISS pre-writeback operand mismatch at pc=00000010
+ERROR: m_rand_mulh: RTL/ISS pre-writeback operand mismatch at pc=00000030
+ERROR: m_rand_mulh: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_rand_mulhsu: ISS/RTL M side-channel count differs 150 vs 1
+ERROR: m_rand_mulhsu: RTL/ISS pre-writeback operand mismatch at pc=00000010
+ERROR: m_rand_mulhsu: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_rand_mulhu: ISS/RTL M side-channel count differs 150 vs 1
+ERROR: m_rand_mulhu: RTL/ISS pre-writeback operand mismatch at pc=00000010
+ERROR: m_rand_mulhu: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_rand_rem: ISS/RTL M side-channel count differs 150 vs 1
+ERROR: m_rand_rem: RTL/ISS pre-writeback operand mismatch at pc=00000010
+ERROR: m_rand_rem: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_rand_remu: ISS/RTL M side-channel count differs 150 vs 1
+ERROR: m_rand_remu: RTL/ISS pre-writeback operand mismatch at pc=00000014
+ERROR: m_rand_remu: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_rem: ISS/RTL M side-channel count differs 280 vs 17
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=00000028
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=00000044
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=00000060
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=0000007c
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=00000098
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=000000b4
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=000000d0
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=000000ec
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=0000010c
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=00000128
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=00000148
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=00000164
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=00000184
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=000001a4
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=000001c4
+ERROR: m_rem: RTL/ISS pre-writeback operand mismatch at pc=000001e0
+ERROR: m_rem: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_remu: ISS/RTL M side-channel count differs 280 vs 17
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=00000028
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=00000044
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=00000060
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=0000007c
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=00000098
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=000000b4
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=000000d0
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=000000ec
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=0000010c
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=00000128
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=00000148
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=00000164
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=00000184
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=000001a4
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=000001c4
+ERROR: m_remu: RTL/ISS pre-writeback operand mismatch at pc=000001e0
+ERROR: m_remu: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_sign_matrix: ISS/RTL M side-channel count differs 192 vs 2
+ERROR: m_sign_matrix: RTL/ISS pre-writeback operand mismatch at pc=0000000c
+ERROR: m_sign_matrix: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: m_x0: ISS/RTL M side-channel count differs 32 vs 8
+ERROR: m_x0: RTL/ISS pre-writeback operand mismatch at pc=0000000c
+ERROR: m_x0: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: pipe_div_dependencies: RTL/ISS pre-writeback operand mismatch at pc=00000008
+ERROR: pipe_div_dependencies: RTL/ISS pre-writeback operand mismatch at pc=00000010
+ERROR: pipe_div_dependencies: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: pipe_div_loaduse: RTL/ISS pre-writeback operand mismatch at pc=0000001c
+ERROR: pipe_div_loaduse: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: pipe_div_back_to_back: RTL/ISS pre-writeback operand mismatch at pc=00000008
+ERROR: pipe_div_back_to_back: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: pipe_div_forward_consumers: ISS/RTL M side-channel count differs 4 vs 1
+ERROR: pipe_div_forward_consumers: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: pipe_div_forward_consumers: squashed redirect M instruction also appears in ISS
+ERROR: pipe_div_before_fault: RTL/ISS pre-writeback operand mismatch at pc=00000008
+ERROR: pipe_div_before_fault: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: pipe_div_loaduse_rs1: RTL/ISS pre-writeback operand mismatch at pc=00000014
+ERROR: pipe_div_loaduse_rs1: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: pipe_div_forward_sources: RTL/ISS pre-writeback operand mismatch at pc=00000008
+ERROR: pipe_div_forward_sources: RTL/ISS pre-writeback operand mismatch at pc=00000014
+ERROR: pipe_div_forward_sources: architectural operation/operand-class counts differ between ISS and RTL side channels
+ERROR: A.OP.MUL: ISS/RTL independent counts differ 477 vs 34
+ERROR: A.OP.MULH: ISS/RTL independent counts differ 468 vs 28
+ERROR: A.OP.MULHSU: ISS/RTL independent counts differ 464 vs 38
+ERROR: A.OP.MULHU: ISS/RTL independent counts differ 465 vs 38
+ERROR: A.OP.DIV: ISS/RTL independent counts differ 506 vs 23
+ERROR: A.OP.DIVU: ISS/RTL independent counts differ 513 vs 7
+ERROR: A.OP.REM: ISS/RTL independent counts differ 493 vs 27
+ERROR: A.OP.REMU: ISS/RTL independent counts differ 513 vs 23
+ERROR: A.RS1.SIGN.NEG: ISS/RTL independent counts differ 1634 vs 11
+ERROR: A.RS1.SIGN.NONNEG: ISS/RTL independent counts differ 2265 vs 207
+ERROR: A.RS1.CLASS.ZERO: ISS/RTL independent counts differ 258 vs 138
+ERROR: A.RS1.CLASS.POS_ONE: ISS/RTL independent counts differ 180 vs 36
+ERROR: A.RS1.CLASS.NEG_ONE: ISS/RTL independent counts differ 217 vs 6
+ERROR: A.RS1.CLASS.SMIN: ISS/RTL independent counts differ 211 vs 1
+ERROR: A.RS1.CLASS.SMAX: ISS/RTL independent counts differ 169 vs 0
+ERROR: A.RS1.CLASS.OTHER: ISS/RTL independent counts differ 2864 vs 37
+ERROR: A.RS1.CLASS.UMAX: ISS/RTL independent counts differ 217 vs 6
+ERROR: A.RS2.SIGN.NEG: ISS/RTL independent counts differ 1537 vs 75
+ERROR: A.RS2.SIGN.NONNEG: ISS/RTL independent counts differ 2362 vs 143
+ERROR: A.RS2.CLASS.ZERO: ISS/RTL independent counts differ 315 vs 54
+ERROR: A.RS2.CLASS.POS_ONE: ISS/RTL independent counts differ 181 vs 8
+ERROR: A.RS2.CLASS.NEG_ONE: ISS/RTL independent counts differ 232 vs 16
+ERROR: A.RS2.CLASS.SMIN: ISS/RTL independent counts differ 170 vs 18
+ERROR: A.RS2.CLASS.SMAX: ISS/RTL independent counts differ 149 vs 0
+ERROR: A.RS2.CLASS.OTHER: ISS/RTL independent counts differ 2852 vs 122
+ERROR: A.RS2.CLASS.UMAX: ISS/RTL independent counts differ 232 vs 16
+ERROR: A.ALIAS.RD_EQ_RS1: ISS/RTL independent counts differ 97 vs 0
+ERROR: A.ALIAS.RD_EQ_RS2: ISS/RTL independent counts differ 99 vs 3
+ERROR: A.RD.X0: ISS/RTL independent counts differ 10 vs 9
+ERROR: A.CORNER.DIV_ZERO_QUOT: ISS/RTL independent counts differ 8 vs 14
+ERROR: A.CORNER.DIV_ZERO_REM: ISS/RTL independent counts differ 10 vs 11
+ERROR: A.CORNER.SIGNED_OVERFLOW_QUOT: ISS/RTL independent counts differ 1 vs 0
+ERROR: A.CORNER.QUOT_ZERO: ISS/RTL independent counts differ 9 vs 12
+ERROR: A.CORNER.QUOT_ONE: ISS/RTL independent counts differ 0 vs 1
+ERROR: A.CORNER.QUOT_NEGATIVE: ISS/RTL independent counts differ 1 vs 0
+ERROR: A.CORNER.REM_ZERO: ISS/RTL independent counts differ 39 vs 36
+MISS: A.OP.MUL
+MISS: A.OP.MULH
+MISS: A.OP.MULHSU
+MISS: A.OP.MULHU
+MISS: A.OP.DIV
+MISS: A.OP.DIVU
+MISS: A.OP.REM
+MISS: A.OP.REMU
+MISS: A.RS1.SIGN.NEG
+MISS: A.RS1.SIGN.NONNEG
+MISS: A.RS1.CLASS.ZERO
+MISS: A.RS1.CLASS.POS_ONE
+MISS: A.RS1.CLASS.NEG_ONE
+MISS: A.RS1.CLASS.SMIN
+MISS: A.RS1.CLASS.SMAX
+MISS: A.RS1.CLASS.OTHER
+MISS: A.RS1.CLASS.UMAX
+MISS: A.RS2.SIGN.NEG
+MISS: A.RS2.SIGN.NONNEG
+MISS: A.RS2.CLASS.ZERO
+MISS: A.RS2.CLASS.POS_ONE
+MISS: A.RS2.CLASS.NEG_ONE
+MISS: A.RS2.CLASS.SMIN
+MISS: A.RS2.CLASS.SMAX
+MISS: A.RS2.CLASS.OTHER
+MISS: A.RS2.CLASS.UMAX
+MISS: A.ALIAS.RD_EQ_RS1
+MISS: A.ALIAS.RD_EQ_RS2
+MISS: A.RD.X0
+MISS: A.CORNER.DIV_ZERO_QUOT
+MISS: A.CORNER.DIV_ZERO_REM
+MISS: A.CORNER.SIGNED_OVERFLOW_QUOT
+MISS: A.CORNER.SIGNED_OVERFLOW_REM
+MISS: A.CORNER.QUOT_ZERO
+MISS: A.CORNER.QUOT_ONE
+MISS: A.CORNER.QUOT_NEGATIVE
+MISS: A.CORNER.REM_ZERO
+MISS: P.FWD.RS1.EXMEM
+MISS: P.FWD.RS2.EXMEM
+
+SYSTEM_REGRESSION FAIL
+UNIT_REGRESSION FAIL
+M_COVERAGE_DICTIONARY FAIL bins_hit=69/108 missing=39 data_errors=272
+STAGE3_5_REGRESSION_VERILATOR FAIL
