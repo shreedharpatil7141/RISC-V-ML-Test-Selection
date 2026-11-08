@@ -24,6 +24,30 @@
 | 14 | Advanced analysis | K-means, cost regression, importance, rare bins, ablations, unseen profiles | Findings documented honestly |
 | 15 | Final validation | Docs, report, paper outline, resume text, interview prep | Everything reproducible from scripts |
 
+## Current project status (2026-11-08)
+
+Stages 1 and 2 are the RV32I single-cycle reference and five-stage pipeline.
+Stage 3 adds and verifies the M extension in both cores. Stage 3.7 regression
+evidence and Stage 3.8 documentation are complete and pushed on
+`stage3-m-extension`; the final owner review is pending. This does not complete
+the wider project or imply architectural compliance.
+
+| Stage 3 gate | Status | Evidence / deliverable |
+|---|---|---|
+| 3.2 golden-core M | PASS | `reports/stage3_2_xsim.txt`; 22 M programs and M unit suites |
+| 3.3 combinational pipeline M | PASS | Separate XSim and Verilator 177-test reports |
+| 3.4 iterative division | PASS | Separate XSim and Verilator 207-test reports; divider unit/protocol checks |
+| 3.5 coverage | PASS | Saved-artifact reanalysis reports; final Stage 3.7 reports repeat 209 tests and 108 bins |
+| 3.6 mutation audit | PASS, scoped | 59 CAUGHT, 1 EQUIVALENT (M26), 0 unresolved/invalid; Verilator only |
+| 3.7 consolidated regression | PASS | Separate XSim and Verilator reports, each 209/209 and all defined bins |
+| 3.8 documentation package | Complete | Architecture, verification, status, evidence, limitations, and artifact manifest |
+
+Implemented ISA scope is RV32I plus RV32M. The RV32M multiplier is combinational;
+DIV/REM use a fixed 34-cycle accepted operation with pipeline holds. C, A,
+Zicsr, Zifencei, and privileged trap/interrupt support remain future scope,
+not implementation claims. The top-level README and architecture status doc
+give exact exclusions and results.
+
 ## Cross-cutting rules
 1. UVM prohibited. Features must be XSim-verified before use (e.g. classes, randomize with constraints, covergroups, DPI).
 2. Independent reference model: no reuse of DUT execution logic.

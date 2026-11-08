@@ -82,3 +82,13 @@ That command checks the saved Stage 3.5 markers and source mutation patterns onl
 ## Evidence boundary
 
 This is mutation evidence for the enumerated source changes and specified tests only. It is Verilator-only. XSim is not run by this helper. No mutation campaign result is established until a current baseline passes and every case has an audited classification. Surviving mutants require investigation; missing tests may be added only after a genuine gap is shown, and verification checks may not be weakened.
+
+## Final audited disposition
+
+The completed saved campaign and M26 adjudication are recorded in
+`reports/stage3_6_mutation_verilator.txt` and
+`reports/stage3_6_mutation_m26_adjudication.txt`: 59 CAUGHT, 1 EQUIVALENT
+within the current pipeline integration scope, 0 unresolved, and 0 INVALID.
+M26 remains `MISSED` in the raw run record. Future reachability changes listed
+in the adjudication require reassessment. Later Stage 3.7 reports are separate
+from the original Stage 3.5 precondition evidence described above.

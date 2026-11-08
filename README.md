@@ -1,23 +1,26 @@
 # Machine Learning-Based Test Selection for Accelerated Functional Coverage Closure in RISC-V Processor Verification
 
-**Status:** Stage 1 complete (XSim + Verilator). Stage 2 (5-stage pipeline) complete: XSim regression PASS (user run) and Verilator regression PASS (separate record). Stage 3 (M extension) not started. See `STAGE_CHANGELOG.md`.
+**Status:** Stage 3 RV32IM verification package approved through Stage 3.8. Stage 1/2 evidence remains historical and simulator-specific; Stage 3.7 XSim and Verilator reports each pass 209/209 system tests, all unit suites, 108/108 defined M bins, and 16/16 pipeline events. See `PROJECT_PLAN.md`, `STAGE_CHANGELOG.md`, and `IMPLEMENTATION_LOG.md`.
 
 ## Overview
-A simulation-based verification framework for a single-hart, in-order
-**RV32IMAC + Zicsr + Zifencei + M-mode** processor, verified with a
-modular (non-UVM) SystemVerilog environment, plus a MATLAB machine-learning
-pipeline that ranks candidate tests by expected *new* coverage per unit cost
-and drives actual test-selection decisions.
+A simulation-based verification project whose currently implemented and
+Stage 3-verified processor scope is a single-hart, in-order **RV32IM** core
+with a five-stage pipeline and synchronous fault halting. C, A, CSR,
+privileged trap/interrupt machinery, and Zifencei are not implemented. The
+repository also contains planned machine-learning coverage-selection work;
+no ML results are claimed.
 
 ## Toolchain
-Windows - AMD Vivado 2026.1 (XSim) - SystemVerilog - MATLAB - CSV - Git.
-**UVM is not used.** No FPGA hardware required.
+Stage 3 simulation uses Vivado 2026.1 XSim on Windows or Verilator 5.x,
+Python 3, GNU make, and a C++ compiler under WSL. MATLAB work is planned and
+has no results in this Stage 3 package. **UVM is not used.** No FPGA hardware
+is required for the simulation evidence.
 
 ## Layout
 | Folder | Contents |
 |---|---|
-| `rtl/` | Processor RTL (packages, core, pipeline, ALU, decoder, regfile, control, memory, CSR, atomic, interfaces) |
-| `verification/` | Generator, driver, monitor, reference model, scoreboard, coverage, assertions, environment |
+| `rtl/` | Implemented RV32I/RV32M packages, core, pipeline, ALU, decoder, regfile, control, memory |
+| `verification/environment/` | Self-checking RTL unit and pipeline testbenches used by the Stage 3 regressions |
 | `tests/` | Directed (per extension), random, corner-case, integration tests |
 | `dataset/` | `raw/`, `processed/`, `training/`, `reports/` (features, coverage, runs, bin_dictionary CSVs) |
 | `matlab/` | Preprocessing, models, selection, evaluation, active learning, visualization |
@@ -47,4 +50,32 @@ python scripts/simulation/run_stage1.py                 # Verilator (Linux)
 # Stage 2 (5-stage pipeline vs golden core vs ISS)
 scripts\simulation\run_stage2_xsim.bat                 # Vivado XSim
 python scripts/simulation/run_stage2.py                 # Verilator (Linux)
+
+# Consolidated Stage 3 RV32M regression (209 tests; XSim or Verilator)
+scripts\simulation\run_stage3_regression_xsim.bat      # Windows CMD after Vivado setup
+wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec python3 scripts/simulation/run_stage3_regression.py
+
+# Separate, explicit Stage 3.6 mutation campaign (long running; Verilator in WSL)
+wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec python3 scripts/simulation/run_stage6_mutation.py
 ```
+
+The consolidated Stage 3 regression runs all 209 current system tests on the
+single-cycle golden core and the M-enabled pipeline, compares architectural
+traces against the independent ISS, checks the cycle model and divider
+protocol counters, runs arithmetic/decoder/pipeline/divider/wrapper unit
+suites, and requires all 108 defined M dictionary bins and 16 pipeline events.
+The XSim command writes `reports/stage3_7_regression_xsim.txt` and a fresh
+`sim_out_stage3_7_xsim_<UTC>/` directory. Verilator writes
+`reports/stage3_7_regression_verilator.txt` and a fresh
+`sim_out_stage3_7_verilator_<UTC>/` directory. The mutation campaign is a
+separate command.
+
+The existing script filenames `run_stage4.py`, `run_stage5.py`, and their
+XSim counterparts are historical implementation-step names within the RV32M
+extension. They do not select RISC-V ISA stages or change the Stage 1/2
+scripts. The `run_stage3_regression` entry points reuse the final `run_stage5`
+suite while keeping Stage 3.5 reports and mutation-harness behavior separate.
+See [`documentation/architecture/stage3_rv32m_status.md`](documentation/architecture/stage3_rv32m_status.md)
+for implementation scope and separate simulator evidence, and
+[`documentation/verification/stage3_artifact_manifest.md`](documentation/verification/stage3_artifact_manifest.md)
+for the Stage 3 artifact manifest and reproducibility map.

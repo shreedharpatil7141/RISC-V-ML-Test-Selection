@@ -5,6 +5,9 @@ HERE=os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0,HERE)
 import stage4_lib, stage5_coverage
 
 sim,label,report=sys.argv[1],sys.argv[2],sys.argv[3]
+gate=sys.argv[4] if len(sys.argv)>4 else 'stage3_5'
+if gate not in ('stage3_5','stage3_7'):
+    raise SystemExit(f'unsupported report gate: {gate}')
 try:
     rows=list(csv.DictReader(open(os.path.join(sim,'manifest_all.csv'),newline='')))
     expected={r['name']:r for r in csv.DictReader(open(os.path.join(sim,'expected.csv'),newline=''))}
@@ -12,7 +15,7 @@ try:
     if len(rows)!=209 or len(expected)!=209 or len(names)!=209 or set(expected)!=names:
         raise ValueError(f'expected 209 unique manifest and performance rows, found {len(rows)} / {len(expected)}')
 except (OSError,ValueError,KeyError) as ex:
-    report_text=f'Stage 3.5 M-extension regression simulator={label}\nPREPARATION/INPUT ERROR: {ex}\nSTAGE3_5_REGRESSION_{label.upper()} FAIL\n'
+    report_text=f'Stage {gate.replace("_", ".")} M-extension regression simulator={label}\nPREPARATION/INPUT ERROR: {ex}\n{gate.upper()}_REGRESSION_{label.upper()} FAIL\n'
     print(report_text,end=''); os.makedirs(os.path.dirname(os.path.abspath(report)),exist_ok=True)
     open(report,'w',newline='\n').write(report_text); sys.exit(1)
 
@@ -36,7 +39,7 @@ out+=unit_lines+['']+system_lines+['']+coverage_lines
 out += ['',f'SYSTEM_REGRESSION {"PASS" if system_ok else "FAIL"}',
         f'UNIT_REGRESSION {"PASS" if unit_ok else "FAIL"}',
         f'M_COVERAGE_DICTIONARY {"PASS" if coverage_ok else "FAIL"} bins_hit={len(stage5_coverage._bins())-len(coverage_misses)}/{len(stage5_coverage._bins())} missing={len(coverage_misses)} data_errors={len(coverage_errors)}',
-        f'STAGE3_5_REGRESSION_{label.upper()} {"PASS" if passed else "FAIL"}']
+        f'{gate.upper()}_REGRESSION_{label.upper()} {"PASS" if passed else "FAIL"}']
 report_text='\n'.join(out)+'\n'
 print(report_text,end=''); os.makedirs(os.path.dirname(os.path.abspath(report)),exist_ok=True)
 open(report,'w',newline='\n').write(report_text)

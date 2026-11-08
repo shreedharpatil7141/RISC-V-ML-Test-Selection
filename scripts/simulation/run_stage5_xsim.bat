@@ -1,13 +1,23 @@
 @echo off
-rem Stage 3.5 M coverage regression. Requires Vivado environment and py -3.
+rem Consolidated Stage 3 XSim regression. Uses the Stage 3.5 verification suite.
 setlocal EnableDelayedExpansion
 cd /d "%~dp0\..\.." || exit /b 1
-set "OUT=sim_out_stage3_5_xsim"
-if not exist "%OUT%" mkdir "%OUT%"
+if not defined STAGE3_OUT set "STAGE3_OUT=sim_out_stage3_5_xsim"
+if not defined STAGE3_REPORT set "STAGE3_REPORT=reports\stage3_5_coverage_xsim.txt"
+set "OUT=%STAGE3_OUT%"
+set "REPORT=%STAGE3_REPORT%"
 if not exist reports mkdir reports
-if exist "reports\stage3_5_coverage_xsim.txt" del "reports\stage3_5_coverage_xsim.txt"
+if exist "%REPORT%" del "%REPORT%"
+for %%T in (xvlog xelab xsim py) do (
+  where %%T >nul 2>nul
+  if errorlevel 1 (echo ERROR: required tool %%T not found on PATH & exit /b 1)
+)
+py -3 --version >nul 2>nul
+if errorlevel 1 (echo ERROR: Python 3 required; install it for the py launcher & exit /b 1)
+for %%T in (xvlog xelab xsim) do echo TOOL %%T is available
+if not exist "%OUT%" mkdir "%OUT%"
 if exist "%OUT%\summary.txt" del "%OUT%\summary.txt"
-for %%f in (units_s1.log units_md.log units_decoder_m.log units_pipe.log units_div_iter.log units_md_exec.log) do if exist "%OUT%\%%f" del "%OUT%\%%f"
+for %%f in (units_s1.log units_md.log units_decoder_m.log units_pipe.log units_div_iter.log units_md_exec.log xvlog_s1.log xvlog_pipe.log xelab_units1.log xelab_units_md.log xelab_units_decoder_m.log xelab_core.log xelab_units_pipe.log xelab_div_iter.log xelab_md_exec.log xelab_pipe35.log) do if exist "%OUT%\%%f" del "%OUT%\%%f"
 
 echo [1/6] Preparing 209 tests and independent ISS M operand side channels...
 py -3 scripts\simulation\prepare_stage5.py "%OUT%"
@@ -52,7 +62,10 @@ call xsim units_md_exec_snap --runall --log "%OUT%\units_md_exec.log" >nul
 if errorlevel 1 (echo ERROR: M wrapper simulation failed & exit /b 1)
 
 echo [5/6] Running all tests on the golden core and coverage-instrumented pipeline...
+set /a CASE=0
 for /f "skip=1 tokens=1-4 delims=," %%a in (%OUT%\manifest_all.csv) do (
+  set /a CASE+=1
+  echo [!CASE!/209] %%a
   if exist "%OUT%\%%a.s1.trace" del "%OUT%\%%a.s1.trace"
   if exist "%OUT%\%%a.pipe.trace" del "%OUT%\%%a.pipe.trace"
   if exist "%OUT%\%%a.s1.log" del "%OUT%\%%a.s1.log"
@@ -74,8 +87,10 @@ for /f "skip=1 tokens=1-4 delims=," %%a in (%OUT%\manifest_all.csv) do (
 )
 
 echo [6/6] Checking traces, timing, protocol and M coverage bins...
-py -3 scripts\simulation\check_stage5_results.py "%OUT%" xsim "reports\stage3_5_coverage_xsim.txt" > "%OUT%\summary.txt"
+set "GATE=stage3_5"
+if /I "%REPORT%"=="reports\stage3_7_regression_xsim.txt" set "GATE=stage3_7"
+py -3 scripts\simulation\check_stage5_results.py "%OUT%" xsim "%REPORT%" "%GATE%" > "%OUT%\summary.txt"
 set "RC=!errorlevel!"
-findstr /B /C:"Stage" /C:"SUITE" /C:"TOTAL" /C:"Defined bins" /C:"M_COVERAGE_DICTIONARY" /C:"STAGE3_5_" "%OUT%\summary.txt"
-echo Full per-bin report: reports\stage3_5_coverage_xsim.txt
+findstr /B /C:"Stage" /C:"SUITE" /C:"TOTAL" /C:"Defined bins" /C:"M_COVERAGE_DICTIONARY" /C:"STAGE3_5_" /C:"STAGE3_7_" "%OUT%\summary.txt"
+echo Full per-bin report: %REPORT%
 endlocal & exit /b %RC%

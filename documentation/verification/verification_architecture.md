@@ -1,35 +1,58 @@
-# Verification Architecture (modular SystemVerilog, no UVM)
+# Verification architecture and implemented Stage 3 flow
 
-## Component responsibilities
-| Component | Dir | Responsibility |
-|---|---|---|
-| `verif_pkg` | verification/packages | Shared types, retirement transaction struct, constants |
-| Interfaces | verification/interfaces | Memory and retirement interfaces for DUT binding |
-| Generator | verification/generator | Directed + constrained-random program generation (seeded); writes hex image plus a static "feature manifest" |
-| Driver | verification/driver | Loads program to memory model, applies reset, drives interrupts, controls run to end-of-test |
-| Monitor | verification/monitor | Samples retirement interface into transactions (PC, insn, rd, mem, CSR, trap) |
-| Reference model | verification/reference_model | Independent behavioural ISS (own package, own decode/execute); consumes the same memory image |
-| Scoreboard | verification/scoreboard | Per-retirement comparison: PC, rd write, memory write, CSR, trap cause/tval, branch target, atomic results; end-of-test memory signature check |
-| Coverage | verification/coverage | Functional coverage (instruction, format, operand, register, dependency, branch, memory, M/A/C, CSR, exception, interrupt, crosses, sequences); per-bin hit export |
-| Assertions | verification/assertions | SVA on interfaces/pipeline invariants (x0 always 0, valid-handshake, no-retire-after-trap, etc.) |
-| Environment | verification/environment | Top-level test bench wiring, test sequencing, regression loop, fault-injection hooks, CSV export |
+The project began with a planned modular SystemVerilog environment. The
+current Stage 3 evidence is produced by the directed self-checking testbenches
+and Python orchestration described here; it does not imply that the planned
+generator/driver/monitor/scoreboard component tree exists. UVM is not used.
 
-## Reference model independence
-The model lives in its own package, shares only the architectural spec (and the ISA opcode *constants* where unavoidable - these are re-declared, not imported from RTL). It does not instantiate or call any RTL module/function.
+## Current Stage 3 evidence path
 
-## Test types
-Directed (per extension), constrained-random profiles (arith-heavy, branch-heavy, memory-heavy, M-heavy, A-heavy, C-mixed, CSR/priv, mixed), corner-case (operand extremes, div by zero, misalignment), integration (long mixed programs, interrupt injection), fault injection (mutated DUT / forced errors to prove scoreboard sensitivity).
+1. `prepare_stage5.py` reads the checked-in per-suite `manifest.csv` files,
+   assembles each `.s` source, runs the independent Python ISS, and creates
+   temporary hex files, golden ISS retirement traces, M operand/result
+   sidecars, and cycle-model expectations in a fresh simulator output folder.
+2. Each simulator compiles and runs arithmetic, M decoder, pipeline,
+   divider, and wrapper testbenches. It then runs all 209 system cases on the
+   single-cycle golden core and the iterative-M pipeline.
+3. `check_stage5_results.py`, `stage4_lib.py`, and `stage5_coverage.py` check
+   unit result markers, system PASS markers, exact pipeline/golden/ISS trace
+   equality, cycle timing, divider start/done/busy/abort protocol, the 108-bin
+   M dictionary, and the 16-element pipeline event vector. Missing or
+   malformed inputs fail the check and return a nonzero exit status.
+4. The canonical Stage 3.7 commands write separate simulator reports and
+   timestamped output directories. Exact commands and owner reports are in
+   `stage3_artifact_manifest.md` and
+   `../architecture/stage3_rv32m_status.md`.
 
-## XSim compatibility gate
-Before relying on any of these in Stage 8, a small probe project checks XSim support for: classes, `randomize() with {}`, constraints, covergroups/cross/`get_inst_coverage`, SVA, `$fwrite`/`$fscanf`, `$value$plusargs`, queues/assoc arrays, DPI-C. Fallback for anything unsupported is documented.
+The ISS (`rv32i_iss.py`) is a Python architectural model and does not import
+or call RTL. `m_model.py` uses shift/add multiplication and restoring
+division for model-side arithmetic checks. Testbenches also contain
+self-checking reference calculations. Pipeline-event counters are RTL
+microarchitectural observations; the ISS is used only for architectural
+cross-checks.
 
-## Compile order (verification, after RTL)
-1. `verification/packages`
-2. `verification/interfaces`
-3. `verification/reference_model`
-4. `verification/generator`, `driver`, `monitor`
-5. `verification/coverage`, `assertions`, `scoreboard`
-6. `verification/environment` (top testbench; simulation top)
+## Regression inventory
 
-## Simulation flow (to be scripted in scripts/simulation)
-`xvlog -sv <files in order>` -> `xelab -debug typical <top> -s sim` -> `xsim sim -runall` with `-testplusarg SEED=<n> -testplusarg TEST=<name>`. Scripts will be verified when XSim is actually run.
+| Suite | Cases | Purpose |
+|---|---:|---|
+| `rv32i` | 106 | Base arithmetic, control flow, memory, and synchronous fault behavior |
+| `pipeline` | 63 | Existing pipeline data/control hazards and retirement checks |
+| `pipeline_m` | 8 | M forwarding, holds, wrong-path and fault interactions |
+| `m_extension` | 22 | Golden-core M operation and corner cases |
+| `pipeline_div` | 8 | Iterative divider protocol and pipeline interactions |
+| `pipeline_div_coverage` | 2 | Targeted RS1 load-use and divider forwarding-source coverage |
+| **Total** | **209** | Directed regression only |
+
+Stage 3.7 reports show all 209 pass on both simulators. Per-test cycle and
+protocol values are retained in each report. Divider unit testing records
+262,144 W=8 checks and 1,600 W=32 checks; the exact simulator-specific unit
+results and event hits are tabulated in the architecture status document.
+
+## Future verification work
+
+The longer-term plan mentions generated constrained-random tests, class-based
+drivers, monitors, scoreboards, generic coverage crosses, CSR/A/C verification,
+interrupt injection, and architectural compliance testing. Those components
+or results must not be inferred from the Stage 3 regression. The RISC-V
+architectural test suite has not been run, and no compliance claim is made.
+The MATLAB machine-learning pipeline has no reported Stage 3 results.

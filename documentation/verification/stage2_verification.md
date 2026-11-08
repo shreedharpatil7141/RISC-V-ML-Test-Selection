@@ -1,6 +1,9 @@
 # Stage 2 Verification Summary (5-stage pipeline)
 
-Status: **XSim regression PASS (user run) and Verilator regression PASS (assistant sandbox) - two separate records.** Awaiting user approval; Stage 3 not started.
+Historical Stage 2 status at the time this record was written: **XSim
+regression PASS (user run) and Verilator regression PASS (separate record).**
+The approval note below is historical; Stage 3 is now documented in
+`verification_architecture.md` and `stage3_artifact_manifest.md`.
 
 ## Environment
 Independent of Stage 1 sources: new files only. Golden reference = Stage 1 RTL core (`rv_core_single`) plus the independent Python ISS.
