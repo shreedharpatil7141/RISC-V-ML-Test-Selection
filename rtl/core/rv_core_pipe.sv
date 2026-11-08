@@ -17,24 +17,34 @@ module rv_core_pipe
   import rv_pipe_pkg::*;
 #(
   parameter word_t RESET_PC = 32'h0000_0000,
-  parameter bit USE_ITERATIVE_M = 1'b1
+  parameter bit USE_ITERATIVE_M = 1'b1,
+  parameter bit ENABLE_C = 1'b0
 ) (
   input  logic        clk,
   input  logic        rst_n,
   output word_t       imem_addr,
+  output word_t       imem_addr_next,
   input  word_t       imem_rdata,
+  input  logic        imem_valid,
+  input  word_t       imem_rdata_next,
+  input  logic        imem_next_valid,
   output word_t       dmem_addr,
   output logic        dmem_re,
   output logic [3:0]  dmem_we,
   output word_t       dmem_wdata,
   input  word_t       dmem_rdata,
+  input  logic        dmem_valid,
   output logic        halted,
   output halt_cause_e halt_cause,
   output word_t       halt_pc,
+  output word_t       halt_raw_insn,
+  output logic [4:0]  halt_ilen_bytes,
   // retirement (from WB)
   output logic        ret_valid,
   output word_t       ret_pc,
   output word_t       ret_insn,
+  output word_t       ret_expanded_insn,
+  output logic [4:0]  ret_ilen_bytes,
   output logic        ret_rd_we,
   output reg_t        ret_rd,
   output word_t       ret_rd_wdata,
@@ -78,10 +88,13 @@ module rv_core_pipe
   assign kill = halted || fault;
 
   // ---------------- IF ----------------
-  rv_if_stage #(.RESET_PC(RESET_PC)) u_if (
+  rv_if_stage #(.RESET_PC(RESET_PC), .ENABLE_C(ENABLE_C)) u_if (
     .clk(clk), .rst_n(rst_n), .stall(front_stall), .redirect(redirect),
     .redirect_target(redirect_target), .halted(halted),
-    .imem_addr(imem_addr), .imem_rdata(imem_rdata), .if_id_next(if_id_next)
+    .imem_addr(imem_addr), .imem_addr_next(imem_addr_next),
+    .imem_rdata(imem_rdata), .imem_valid(imem_valid),
+    .imem_rdata_next(imem_rdata_next), .imem_next_valid(imem_next_valid),
+    .if_id_next(if_id_next)
   );
 
   // ---------------- ID ----------------
@@ -125,7 +138,7 @@ module rv_core_pipe
     .b_exmem_match(b_exmem_m), .b_memwb_match(b_memwb_m)
   );
 
-  rv_ex_stage #(.USE_ITERATIVE_M(USE_ITERATIVE_M)) u_ex (
+  rv_ex_stage #(.USE_ITERATIVE_M(USE_ITERATIVE_M), .ENABLE_C(ENABLE_C)) u_ex (
     .id_ex(id_ex), .fwd_a(fwd_a), .fwd_b(fwd_b),
     .exmem_alu_y(ex_mem.alu_y), .memwb_data(mem_wb.wb_data),
     .clk(clk), .rst_n(rst_n), .kill(kill),
@@ -139,8 +152,8 @@ module rv_core_pipe
   );
 
   // ---------------- MEM ----------------
-  rv_mem_stage u_mem (
-    .ex_mem(ex_mem), .dmem_rdata(dmem_rdata),
+  rv_mem_stage #(.ENABLE_C(ENABLE_C)) u_mem (
+    .ex_mem(ex_mem), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid),
     .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata),
     .mem_wb_next(mem_wb_next), .fault(fault), .fault_cause(fault_cause)
   );
@@ -149,6 +162,7 @@ module rv_core_pipe
   rv_wb_stage u_wb (
     .mem_wb(mem_wb), .rf_we(wb_rf_we), .rf_rd(wb_rf_rd), .rf_wdata(wb_rf_wdata),
     .ret_valid(ret_valid), .ret_pc(ret_pc), .ret_insn(ret_insn),
+    .ret_expanded_insn(ret_expanded_insn), .ret_ilen_bytes(ret_ilen_bytes),
     .ret_rd_we(ret_rd_we), .ret_rd(ret_rd), .ret_rd_wdata(ret_rd_wdata),
     .ret_mem_re(ret_mem_re), .ret_mem_we(ret_mem_we), .ret_mem_addr(ret_mem_addr),
     .ret_mem_be(ret_mem_be), .ret_mem_wdata(ret_mem_wdata), .ret_mem_rdata(ret_mem_rdata)
@@ -168,10 +182,14 @@ module rv_core_pipe
       halted     <= 1'b0;
       halt_cause <= HALT_NONE;
       halt_pc    <= 32'h0;
+      halt_raw_insn <= 32'h0;
+      halt_ilen_bytes <= 5'd0;
     end else if (!halted && fault) begin
       halted     <= 1'b1;
       halt_cause <= fault_cause;
       halt_pc    <= ex_mem.pc;
+      halt_raw_insn <= ex_mem.raw_insn;
+      halt_ilen_bytes <= ex_mem.ilen_bytes;
     end
   end
 

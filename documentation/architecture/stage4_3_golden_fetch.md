@@ -123,6 +123,10 @@ terminal test result per program, and compares complete traces. It writes a
 fresh `sim_out_stage4_3_<sim>_<UTC>/` directory and separate
 `reports/stage4_3_golden_<sim>_<UTC>.txt`. Expected final markers are
 `STAGE4_3_GOLDEN_XSIM PASS rtl_vs_iss=221` and
-`STAGE4_3_GOLDEN_VERILATOR PASS rtl_vs_iss=221`. Current local status is NOT
-RUN because Python, XSim, and Verilator are unavailable here; this is not a
-Stage 4.3 PASS. Stage 4.3 remains at its validation gate.
+`STAGE4_3_GOLDEN_VERILATOR PASS rtl_vs_iss=221`. Owner-verified XSim resume
+evidence is recorded in `reports/stage4_3_golden_xsim_resume_20261108T102530Z.txt`:
+209 source-consistent legacy results and 12/12 newly executed C trace matches.
+Fresh owner Verilator evidence is recorded in
+`reports/stage4_3_golden_verilator_20261108T102658Z.txt`: 221/221
+RTL-vs-ISS comparisons PASS. Simulator evidence remains separate by tool;
+local reruns are unavailable in the current Codex environment.

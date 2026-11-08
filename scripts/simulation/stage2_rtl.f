@@ -2,6 +2,7 @@ rtl/packages/rv32_pkg.sv
 rtl/packages/rv_pipe_pkg.sv
 rtl/decoder/rv_decoder.sv
 rtl/decoder/rv_imm_gen.sv
+rtl/decoder/rv32c_decompressor.sv
 rtl/register_file/rv_regfile.sv
 rtl/alu/rv_alu.sv
 rtl/alu/rv_md_comb.sv

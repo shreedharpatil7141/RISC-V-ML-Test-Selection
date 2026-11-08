@@ -7,7 +7,8 @@
 // Prints exactly one "TEST_RESULT: PASS|FAIL ..." line. Trace format matches scripts/simulation/rv32i_iss.py.
 `timescale 1ns/1ps
 module tb_rv_pipe_stage4 #(
-  parameter bit USE_ITERATIVE_M = 1'b1
+  parameter bit USE_ITERATIVE_M = 1'b1,
+  parameter bit ENABLE_C = 1'b0
 );
   import rv32_pkg::*;
 
@@ -19,14 +20,17 @@ module tb_rv_pipe_stage4 #(
 
   word_t mem [0:MEM_WORDS-1];
 
-  word_t imem_addr, imem_rdata, dmem_addr, dmem_wdata, dmem_rdata;
-  logic dmem_re;
+  word_t imem_addr, imem_addr_next, imem_rdata, imem_rdata_next, dmem_addr, dmem_wdata, dmem_rdata;
+  logic imem_valid, imem_next_valid;
+  logic dmem_re, dmem_valid;
   logic [3:0] dmem_we;
   logic halted;
   halt_cause_e halt_cause;
   word_t halt_pc;
   logic ret_valid, ret_rd_we, ret_mem_re, ret_mem_we;
-  word_t ret_pc, ret_insn, ret_rd_wdata, ret_mem_addr, ret_mem_wdata, ret_mem_rdata;
+  word_t ret_pc, ret_insn, ret_expanded_insn, ret_rd_wdata, ret_mem_addr, ret_mem_wdata, ret_mem_rdata;
+  logic [4:0] ret_ilen_bytes, halt_ilen_bytes;
+  word_t halt_raw_insn;
   reg_t ret_rd;
   logic [3:0] ret_mem_be;
 
@@ -38,12 +42,15 @@ module tb_rv_pipe_stage4 #(
   logic [15:0] dbg_events;
   longint md_starts=0, md_dones=0, busy_cycles=0, md_aborts_started=0;
 
-  rv_core_pipe #(.USE_ITERATIVE_M(USE_ITERATIVE_M)) dut (
+  rv_core_pipe #(.USE_ITERATIVE_M(USE_ITERATIVE_M), .ENABLE_C(ENABLE_C)) dut (
     .clk(clk), .rst_n(rst_n),
-    .imem_addr(imem_addr), .imem_rdata(imem_rdata),
-    .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata), .dmem_rdata(dmem_rdata),
+    .imem_addr(imem_addr), .imem_addr_next(imem_addr_next), .imem_rdata(imem_rdata),
+    .imem_valid(imem_valid), .imem_rdata_next(imem_rdata_next), .imem_next_valid(imem_next_valid),
+    .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid),
     .halted(halted), .halt_cause(halt_cause), .halt_pc(halt_pc),
+    .halt_raw_insn(halt_raw_insn), .halt_ilen_bytes(halt_ilen_bytes),
     .ret_valid(ret_valid), .ret_pc(ret_pc), .ret_insn(ret_insn),
+    .ret_expanded_insn(ret_expanded_insn), .ret_ilen_bytes(ret_ilen_bytes),
     .ret_rd_we(ret_rd_we), .ret_rd(ret_rd), .ret_rd_wdata(ret_rd_wdata),
     .ret_mem_re(ret_mem_re), .ret_mem_we(ret_mem_we), .ret_mem_addr(ret_mem_addr),
     .ret_mem_be(ret_mem_be), .ret_mem_wdata(ret_mem_wdata), .ret_mem_rdata(ret_mem_rdata),
@@ -63,11 +70,15 @@ module tb_rv_pipe_stage4 #(
   wire imem_oob = (imem_addr[31:16] != 16'h0);
   wire dmem_oob = (dmem_addr[31:16] != 16'h0);
   assign imem_rdata = imem_oob ? 32'h0 : mem[imem_addr[15:2]];
+  assign imem_valid = !imem_oob;
+  assign imem_rdata_next = (imem_addr_next[31:16] != 16'h0) ? 32'h0 : mem[imem_addr_next[15:2]];
+  assign imem_next_valid = (imem_addr_next[31:16] == 16'h0);
   assign dmem_rdata = dmem_oob ? 32'h0 : mem[dmem_addr[15:2]];
+  assign dmem_valid = !dmem_oob;
 
   always @(posedge clk) begin
     if (rst_n) begin
-      if (!halted && imem_oob) oob_errors++;
+      if (!ENABLE_C && !halted && imem_oob) oob_errors++;
       if ((dmem_re || (|dmem_we)) && dmem_oob) oob_errors++;
       if (|dmem_we && !dmem_oob) begin
         if (dmem_we[0]) mem[dmem_addr[15:2]][7:0]   <= dmem_wdata[7:0];
@@ -112,8 +123,13 @@ module tb_rv_pipe_stage4 #(
         else if (st_n == 2) st_d = st_d & 32'hFFFF;
       end
       if (ret_rd_we) begin rdn = int'(ret_rd); rdv = ret_rd_wdata; end
-      if (trace_fd != 0)
-        $fdisplay(trace_fd, "%08x %08x %02d %08x %0d %08x %08x", ret_pc, ret_insn, rdn, rdv, st_n, st_a, st_d);
+      if (trace_fd != 0) begin
+        if (ENABLE_C)
+          $fdisplay(trace_fd, "I %08x %08x %02d %08x %02d %08x %0d %08x %08x", ret_pc,
+                    ret_insn, ret_ilen_bytes, ret_expanded_insn, rdn, rdv, st_n, st_a, st_d);
+        else
+          $fdisplay(trace_fd, "%08x %08x %02d %08x %0d %08x %08x", ret_pc, ret_insn, rdn, rdv, st_n, st_a, st_d);
+      end
     end
   end
 
@@ -193,6 +209,7 @@ integer plusarg_ok;
    plusarg_ok = $value$plusargs("CHECK_GP=%d", check_gp);
    plusarg_ok = $value$plusargs("TIMEOUT=%d", timeout);
     if ($value$plusargs("TRACE=%s", trace_file)) trace_fd = $fopen(trace_file, "w");
+    if (trace_fd != 0 && ENABLE_C) $fdisplay(trace_fd, "TRACE_V2 RV32IMC pc raw_insn ilen_bytes expanded_insn rd rdval st_size st_addr st_data");
     if ($value$plusargs("MCOV=%s", mcov_file)) begin
       mcov_fd = $fopen(mcov_file, "w");
       if (mcov_fd == 0) begin mcov_error = 1; $display("MCOV_OPEN_FAIL: %s", mcov_file); end
@@ -216,6 +233,7 @@ integer plusarg_ok;
     if (dbg_assert_fail || mcov_error) pass = 1'b0;
 
     if (trace_fd != 0) begin
+      if (ENABLE_C) $fdisplay(trace_fd, "STOP %08x %08x %02d %0d", halt_pc, halt_raw_insn, halt_ilen_bytes, int'(halt_cause));
       $fdisplay(trace_fd, "HALT %0d %08x", int'(halt_cause), halt_pc);
       for (int r = 1; r < 32; r++) $fdisplay(trace_fd, "REG %0d %08x", r, dut.u_rf.regs[r]);
       for (int a = 16'h4000; a < 16'h6000; a += 4)

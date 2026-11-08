@@ -1,11 +1,12 @@
 # Machine Learning-Based Test Selection for Accelerated Functional Coverage Closure in RISC-V Processor Verification
 
-**Status:** Stage 3 RV32IM is complete and approved through Stage 3.9. Stage 4.2's standalone decompressor was owner-verified in XSim and Verilator (65,536 patterns, zero mismatches, 16 anchors each). Stage 4.3 mixed-width golden-core integration is implemented and awaits separate simulator validation; no Stage 4 completion is claimed. Stage 3.7 XSim and Verilator evidence remains separate (209/209 tests, all units, 108/108 finite M bins, 16/16 pipeline events). These are finite directed results, not architectural compliance.
+**Status:** Stage 3 RV32IM is complete and approved through Stage 3.9. Stage 4.2's standalone decompressor was owner-verified in XSim and Verilator (65,536 patterns, zero mismatches, 16 anchors each). Stage 4.3 mixed-width golden-core integration is owner-validated (209 source-consistent legacy results, 12 C traces in XSim; 221/221 comparisons in Verilator). Stage 4.4 C-enabled pipeline integration is implemented and awaits separate XSim and Verilator validation; no Stage 4 completion is claimed. Stage 3.7 evidence remains separate (209/209 tests, all units, 108/108 finite M bins, 16/16 pipeline events). These are finite directed results, not architectural compliance.
 
 ## Overview
-A simulation-based verification project whose currently implemented and
-Stage 3-verified processor scope is a single-hart, in-order **RV32IM** core
-with a five-stage pipeline and synchronous fault halting. C, A, CSR,
+A simulation-based verification project with an owner-validated **RV32IMC
+single-cycle golden core** and an **RV32IM pipeline**. The C-enabled pipeline
+integration is implemented and awaits its Stage 4.4 XSim/Verilator gate.
+Supported C scope is RV32C integer; compressed floating-point/Zc, A, CSR,
 privileged trap/interrupt machinery, and Zifencei are not implemented. The
 repository also contains planned machine-learning coverage-selection work;
 no ML results are claimed.
@@ -57,7 +58,20 @@ wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec python
 
 # Separate, explicit Stage 3.6 mutation campaign (long running; Verilator in WSL)
 wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec python3 scripts/simulation/run_stage6_mutation.py
+
+# Stage 4.4 C-enabled pipeline regression (new output/report for each simulator)
+scripts\simulation\run_stage4_4_xsim.bat
+wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec bash scripts/simulation/run_stage4_4_verilator.sh
 ```
+
+The Stage 4.4 batch preserves the Stage 3 C-disabled path and compares all
+209 legacy cases plus 20 C-enabled cases (the 12 golden-core cases and 8
+pipeline-specific cases) against both the single-cycle golden RTL and the
+independent ISS. It also runs seven arithmetic, decoder, pipeline, divider,
+wrapper, and decompressor unit suites. See
+[`documentation/architecture/stage4_4_pipeline.md`](documentation/architecture/stage4_4_pipeline.md)
+for the fetch/metadata contract, timing model, exact dependencies, report
+paths, and expected markers. The local Stage 4.4 simulation gate is pending.
 
 The consolidated Stage 3 regression runs all 209 current system tests on the
 single-cycle golden core and the M-enabled pipeline, compares architectural

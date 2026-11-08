@@ -8,14 +8,19 @@ package rv_pipe_pkg;
   typedef struct packed {
     logic  valid;
     word_t pc;
+    word_t raw_insn;
     word_t insn;
+    logic [4:0] ilen_bytes;
+    halt_cause_e cause;
   } if_id_t;
 
   // ID/EX
   typedef struct packed {
     logic        valid;
     word_t       pc;
+    word_t       raw_insn;
     word_t       insn;
+    logic [4:0]  ilen_bytes;
     reg_t        rd;
     reg_t        rs1;
     reg_t        rs2;
@@ -43,7 +48,9 @@ package rv_pipe_pkg;
   typedef struct packed {
     logic        valid;
     word_t       pc;
+    word_t       raw_insn;
     word_t       insn;
+    logic [4:0]  ilen_bytes;
     reg_t        rd;
     reg_t        rs2;
     logic        reg_we;
@@ -59,7 +66,9 @@ package rv_pipe_pkg;
   typedef struct packed {
     logic        valid;
     word_t       pc;
+    word_t       raw_insn;
     word_t       insn;
+    logic [4:0]  ilen_bytes;
     reg_t        rd;
     logic        reg_we;
     word_t       wb_data;
