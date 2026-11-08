@@ -12,7 +12,7 @@
 | 2 | 5-stage pipeline | Pipeline regs, forwarding, hazard unit, branch handling, stalls/flushes, retirement port | RV32I tests still pass; RAW/load-use/control-hazard tests pass; retirement trace matches Stage 1 |
 | 3 | M extension | MUL/DIV unit | All 8 ops; div-by-zero, signed overflow (MIN/-1) corner cases |
 | 4 | C extension | RV32C v2.0 integer encodings, independent compressed model/assembler, decompressor, mixed-length fetch and pipeline integration | Complete and released on `main` with annotated `stage4-complete`; exhaustive 16-bit decode, mixed 16/32-bit execution, precise retirement/fault, separate XSim/Verilator evidence, and bounded Verilator-only mutation evidence |
-| 5 | A extension | RV32A software reference, explicit assembly, atomic memory integration, reservation, hazards and verification | Gated 5.0/5.1 software plan/reference compatibility; later RTL gates cover LR/SC and all 9 AMOs |
+| 5 | A extension | RV32A software reference, explicit assembly, atomic memory integration, reservation, hazards and verification | Implementation and validation passed on `stage5-a-extension`; awaiting final release approval, no merge/tag |
 | 6 | Zicsr + Zifencei | CSR unit, FENCE.I | CSR RW/RS/RC(+I) semantics incl. no-write cases, illegal CSR access |
 | 7 | M-mode privileged | Traps, MRET, interrupts, exceptions | Each exception cause and 3 interrupt sources verified |
 | 8 | Verification environment | Generator, driver, monitor, ref model, scoreboard, regression, fault injection | Scoreboard catches injected faults; independent ref model agrees with DUT on all tests |
@@ -24,7 +24,7 @@
 | 14 | Advanced analysis | K-means, cost regression, importance, rare bins, ablations, unseen profiles | Findings documented honestly |
 | 15 | Final validation | Docs, report, paper outline, resume text, interview prep | Everything reproducible from scripts |
 
-## Current project status (2026-11-08)
+## Current project status (2026-11-09)
 
 Stages 1 and 2 are the RV32I single-cycle reference and five-stage pipeline.
 Stage 3 adds and verifies the M extension in both cores. Stages 3.7, 3.8, and
@@ -81,18 +81,42 @@ synthesis/timing, unsupported ISA implementation, or ML result is claimed.
 These are finite directed results, not full architectural compliance. See the
 Stage 4 architecture/verification docs for commands and the file manifest.
 
-## Stage 5 A-extension status (software/planning gate only)
+## Stage 5 A-extension status (validation passed; release approval pending)
 
 Stage 5 begins on `stage5-a-extension`, created from the annotated
-`stage4-complete` release. Stage 5.0/5.1 pins Unprivileged ISA v20260120,
-A v2.1, RVWMO v2.0, and defines a word-only RV32A subset. Explicit assembler,
-independent software decoder/arithmetic, A-enabled ISS behavior, software
-programs, and a five-group validation command are under the current software
-gate. There is no A RTL, simulator result, multi-hart/model-ordering result,
-or completion claim. The exact reservation, fault, trace, RTL-handshake, and
-future-gate plan is `documentation/architecture/stage5_0_rv32a_review.md`.
-The 230-case Stage 4 compatibility group uses saved images and traces from
-`stage4-complete` and requires A-disabled outputs to match exactly.
+`stage4-complete` release. The approved software gate is recorded in commit
+`603b1a07b05a9e8e55bae811634e1cdc16baa16d`. The combined batch adds the
+explicit single-edge MEM atomic contract, golden/pipeline A execution, A/C+A
+directed cases, RTL atomic sidecars, an RTL legality/arithmetic unit suite,
+coverage checks, XSim/Verilator runners, and focused Verilator mutation
+infrastructure. Separate owner-verified simulator runs passed; evidence and
+limitations are in `documentation/architecture/stage5_0_rv32a_review.md`.
+The Stage 4 230-case A-disabled compatibility suite remains included. Stage 5
+has not been merged to `main` or tagged complete.
+
+| Stage 5 evidence | Result |
+|---|---|
+| XSim `reports/stage5_a_pipeline_xsim_20261108T195247Z.txt` | PASS; 248 cases; 496 ISS comparisons; 248 pipeline-to-golden traces; 8 units; atomic checks |
+| Verilator `reports/stage5_a_pipeline_verilator_20261108T194647Z.txt`, `202745Z.txt`, `204623Z.txt` | Separate PASS reports with the same counts; the 202745Z full run is also the focused campaign's fresh baseline |
+| Original mutations `reports/stage5_a_mutation_verilator_20261108T202740Z.txt` | A03–A05 CAUGHT; A01/A02 INVALID preserved |
+| Focused mutations `reports/stage5_a_mutation_verilator_20261108T204617Z.txt` | A01 CAUGHT; A02 INVALID preserved; only A01/A02 selected |
+| A02 saved-evidence reanalysis `reports/stage5_a_mutation_verilator_20261108T204623Z_A02_reanalysis.txt` | A02 CAUGHT by independent legality assertions plus expected `$fatal`; original INVALID campaign report unchanged |
+
+Across these separate records, five mutants have detection evidence (A01–A05).
+This is not one fresh five-mutant run. Mutation evidence is Verilator-only.
+The A02 classifier implementation check against saved evidence remains
+unexecuted locally because Python is unavailable; the independent evidence
+reanalysis was recorded separately.
+
+The MEM contract is one explicit edge transaction: a valid, fault-free A
+instruction in MEM observes the old word before the edge; AMOs and successful
+SC authorize one full-word update at the edge, while LR and failed SC authorize
+none. MEM owns reservation state and the memory model applies the update. A
+divider hold inserts an EX/MEM bubble, so the transaction cannot repeat. This
+assumes one hart, no wait states, and no concurrent writer. No full ISA
+compliance, multi-hart/RVWMO, synthesis/timing, compressed floating-point/Zc,
+atomic extensions beyond RV32A word operations, CSR/privileged behavior, or ML
+result is claimed. Mutation evidence is Verilator-only.
 
 ## Cross-cutting rules
 1. UVM prohibited. Features must be XSim-verified before use (e.g. classes, randomize with constraints, covergroups, DPI).

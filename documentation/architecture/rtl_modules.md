@@ -5,7 +5,7 @@ All RTL is SystemVerilog (synthesizable subset), compiled into one library `work
 | Module | Dir | Responsibility | Stage |
 |---|---|---|---|
 | `rv32_pkg` | rtl/packages | Types, opcodes, funct codes, ALU/control enums, implementation halt causes (no CSR addresses) | 1 (extended later) |
-| `rv_decoder` | rtl/decoder | 32-bit decode to control + register fields | 1 |
+| `rv_decoder` | rtl/decoder | 32-bit decode to control + register fields; RV32A legality is parameter-gated | 1 (A extension) |
 | `rv_imm_gen` | rtl/decoder | I/S/B/U/J immediates | 1 |
 | `rv_regfile` | rtl/register_file | 32x32, 2R1W, x0=0 | 1 |
 | `rv_alu` | rtl/alu | Arithmetic, logic, shifts, compares, branch compare | 1 |
@@ -22,13 +22,26 @@ All RTL is SystemVerilog (synthesizable subset), compiled into one library `work
 | `rv_mul` | rtl/alu | Combinational 32x32 multiply and high-half selection | 3 |
 | `rv_div_iter` | rtl/alu | Fixed-latency restoring DIV/REM unit with start/ready/done/abort | 3 |
 | `rv_md_exec` | rtl/alu | Pipeline M wrapper: combinational multiply plus iterative divider | 3 |
+| `rv_a_unit` | rtl/alu | Combinational RV32A word AMO result; transaction authorization/reservation are caller-owned | 5 |
 | `rv_rvc_decoder` | rtl/decoder | Planned: 16->32 expansion + illegal detect | 4 (not implemented) |
 | `rv_fetch_buffer` | rtl/pipeline | Planned: halfword-aligned fetch, 32-bit boundary crossing | 4 (not implemented) |
-| `rv_amo_unit` | rtl/atomic | Planned atomic decode/result plus per-hart LR/SC reservation state; requires an atomic memory transaction interface | 5.2+ (not implemented; Stage 5.0/5.1 software gate only) |
 | `rv_csr_unit` | rtl/csr | Planned: CSR file, Zicsr ops, permissions | 6/7 (not implemented) |
 | `rv_trap_ctrl` | rtl/csr | Planned: trap/interrupt priority, CSRs, MRET | 7 (not implemented) |
 | retirement outputs | flat ports in the cores | Retirement observations are exposed as flat ports; no `rv_retire_if` interface module is present | 2 |
 | `rv_core_top` | rtl/core | Planned generic top; current pipeline top is `rv_core_pipe` | 2+ (not implemented) |
+
+## Stage 5 single-hart atomic memory contract
+
+`rv_core_single` and `rv_core_pipe` have an explicit `dmem_atomic_commit`
+signal. In the pipeline the MEM stage asserts it only for a valid,
+fault-free A operation. The flat memory returns the old word combinationally
+before the edge; the testbench applies full-word byte enables at that edge for
+AMOs and successful SC. LR and failed SC issue no write. Alignment/access
+faults gate the read request as well as commit, write strobes, retirement, and
+reservation changes. The design assumes a
+single hart and no concurrent writer, so no observer can interleave in this
+read/edge-write interval. Reservation state changes only at commit. This is not
+a multi-hart or general interconnect atomic protocol.
 
 ## Current retirement observations
 The cores expose flat retirement outputs for valid, PC, instruction, destination

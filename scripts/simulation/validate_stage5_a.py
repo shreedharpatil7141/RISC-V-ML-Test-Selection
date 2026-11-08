@@ -145,6 +145,7 @@ def group_directed_iss():
         "operand_overlap": {"cause": 1, "instret": 18, "regs": {1:0x89ABCDEF,3:0,5:0x89ABCDEF,7:0x13579BDF,8:0x76543210,9:0}, "mem": {0x5000:0x0F0F0F0F}},
         "atomic_orders": {"cause": 1, "instret": 13, "regs": {3:0,4:1,5:2,6:3,7:1,8:4,9:4}, "mem": {0x5000:2}},
         "reserved_encoding": {"cause": 3, "instret": 1, "regs": {}, "mem": {}},
+        "illegal_lr_rs2": {"cause": 3, "instret": 0, "regs": {}, "mem": {}},
         "lr_misaligned": {"cause": 4, "instret": 5, "regs": {}, "mem": {0x5000:0xA55AA55A}},
         "sc_misaligned": {"cause": 5, "instret": 6, "regs": {}, "mem": {0x5000:0xA55AA55A}},
         "amo_misaligned": {"cause": 5, "instret": 5, "regs": {}, "mem": {0x5000:0xA55AA55A}},
@@ -169,7 +170,7 @@ def group_directed_iss():
         for addr, value in exp["mem"].items():
             actual = next((int(line.split()[2], 16) for line in footer if line.startswith(f"MEM {addr:08x} ")), 0)
             expect(actual == value, f"{name}: mem[{addr:08x}] expected={value:08x} actual={actual:08x}")
-        if name in {"lr_misaligned", "sc_misaligned", "amo_misaligned", "lr_access_fault", "sc_access_fault", "amo_access_fault"}:
+        if name in {"lr_misaligned", "sc_misaligned", "amo_misaligned", "lr_access_fault", "sc_access_fault", "amo_access_fault", "illegal_lr_rs2"}:
             bad_atomic_pc = int(footer[0].split()[1], 16)
             expect(all(not line.startswith(f"I {bad_atomic_pc:08x} ") for line in trace), f"{name}: faulting atomic retired")
             expect(not any(e[0] == bad_atomic_pc for e in a_events), f"{name}: faulting atomic entered retire sidecar")
@@ -189,7 +190,7 @@ def group_directed_iss():
             statuses = [e[12] for e in a_events if e[2] == "sc.w"]
             expect(statuses == [1,0], f"SC failure/success including rd=x0 expected=[1,0] actual={statuses}")
         seen.add(name)
-    expect(len(cases) == 12 and seen == set(expected), f"directed inventory expected=12 actual={len(cases)} names={sorted(seen)}")
+    expect(len(cases) == 13 and seen == set(expected), f"directed inventory expected=13 actual={len(cases)} names={sorted(seen)}")
     boundary_path = ROOT / "tests/directed/rv32ima_software/amo_last_word.s"
     _, _, boundary_words = _prepare_source(boundary_path, c_enabled=False, a_enabled=True)
     boundary_events = []
@@ -199,11 +200,19 @@ def group_directed_iss():
     expect(boundary_regs[4] == 0x55 and boundary_regs[5] == 0x56,
            f"last-word atomic readback expected rd4=55 rd5=56 actual={boundary_regs[4]:08x}/{boundary_regs[5]:08x}")
 
-    c_source = ROOT / "tests/directed/rv32imac_software/amo_at_halfword_pc.s"
+    c_a_dir = ROOT / "tests/directed/rv32imac_software"
+    c_a_cases = list(csv.DictReader((c_a_dir / "manifest.csv").open(newline="")))
+    expect(len(c_a_cases) == 1 and c_a_cases[0]["name"] == "amo_at_halfword_pc",
+           f"mixed C+A manifest expected only amo_at_halfword_pc actual={[row.get('name') for row in c_a_cases]}")
+    c_a_case = c_a_cases[0]
+    expect(c_a_case["expect_cause"] == "1" and c_a_case["check_gp"] == "0",
+           f"mixed C+A manifest expectation invalid: {c_a_case}")
+    c_source = c_a_dir / (c_a_case["name"] + ".s")
     _, c_image, c_words = _prepare_source(c_source, c_enabled=True, a_enabled=True)
     events = []
     cause, regs, trace, footer, oob, instret = rv32imc_iss.run(c_words, c_enabled=True, a_enabled=True, a_events=events)
-    expect(cause == 1 and instret == 5 and oob == 0, f"amo_at_halfword_pc cause={cause} instret={instret} oob={oob}")
+    expect(cause == int(c_a_case["expect_cause"]) == 1 and instret == 5 and oob == 0,
+           f"amo_at_halfword_pc cause={cause} expected={c_a_case['expect_cause']} instret={instret} oob={oob}")
     expect(len(events) == 1 and events[0][0] == 14, f"AMO halfword-PC event expected pc=14 actual={events}")
     expect(regs[3] == 0x80000000, f"AMO halfword-PC rd expected=80000000 actual={regs[3]:08x}")
     expect(any(line == "MEM 00005000 80000000" for line in footer), "AMO halfword-PC final memory mismatch")

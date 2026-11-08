@@ -120,7 +120,8 @@ module rv_ex_stage
     ex_mem_next.funct3     = id_ex.funct3;
     ex_mem_next.mem_re     = id_ex.mem_re;
     ex_mem_next.mem_we     = id_ex.mem_we;
-    ex_mem_next.alu_y      = id_ex.is_m ? md_result : result;
+    ex_mem_next.is_a       = id_ex.is_a;
+    ex_mem_next.alu_y      = id_ex.is_a ? rs1_f : (id_ex.is_m ? md_result : result);
     ex_mem_next.store_data = rs2_f;
     ex_mem_next.cause      = cause;
   end

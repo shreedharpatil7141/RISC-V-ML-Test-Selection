@@ -18,7 +18,8 @@ module rv_core_pipe
 #(
   parameter word_t RESET_PC = 32'h0000_0000,
   parameter bit USE_ITERATIVE_M = 1'b1,
-  parameter bit ENABLE_C = 1'b0
+  parameter bit ENABLE_C = 1'b0,
+  parameter bit ENABLE_A = 1'b0
 ) (
   input  logic        clk,
   input  logic        rst_n,
@@ -32,6 +33,7 @@ module rv_core_pipe
   output logic        dmem_re,
   output logic [3:0]  dmem_we,
   output word_t       dmem_wdata,
+  output logic        dmem_atomic_commit,
   input  word_t       dmem_rdata,
   input  logic        dmem_valid,
   output logic        halted,
@@ -110,7 +112,7 @@ module rv_core_pipe
     .rs1_addr(rs1_addr), .rs2_addr(rs2_addr), .rs1_data(rf_rs1_data), .rs2_data(rf_rs2_data)
   );
 
-  rv_id_stage u_id (
+  rv_id_stage #(.ENABLE_A(ENABLE_A)) u_id (
     .if_id(if_id), .rf_rs1_data(rf_rs1_data), .rf_rs2_data(rf_rs2_data),
     .wb_we(wb_rf_we), .wb_rd(wb_rf_rd), .wb_data(wb_rf_wdata),
     .rs1_addr(rs1_addr), .rs2_addr(rs2_addr), .uses_rs1(id_uses_rs1), .uses_rs2(id_uses_rs2),
@@ -140,7 +142,7 @@ module rv_core_pipe
 
   rv_ex_stage #(.USE_ITERATIVE_M(USE_ITERATIVE_M), .ENABLE_C(ENABLE_C)) u_ex (
     .id_ex(id_ex), .fwd_a(fwd_a), .fwd_b(fwd_b),
-    .exmem_alu_y(ex_mem.alu_y), .memwb_data(mem_wb.wb_data),
+    .exmem_alu_y(mem_wb_next.wb_data), .memwb_data(mem_wb.wb_data),
     .clk(clk), .rst_n(rst_n), .kill(kill),
     .ex_mem_next(ex_mem_next), .redirect(redirect), .redirect_target(redirect_target),
     .md_hold(md_hold), .md_start(dbg_md_start), .md_busy(dbg_md_busy),
@@ -152,9 +154,10 @@ module rv_core_pipe
   );
 
   // ---------------- MEM ----------------
-  rv_mem_stage #(.ENABLE_C(ENABLE_C)) u_mem (
-    .ex_mem(ex_mem), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid),
+  rv_mem_stage #(.ENABLE_C(ENABLE_C), .ENABLE_A(ENABLE_A)) u_mem (
+    .clk(clk), .rst_n(rst_n), .ex_mem(ex_mem), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid),
     .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata),
+    .dmem_atomic_commit(dmem_atomic_commit),
     .mem_wb_next(mem_wb_next), .fault(fault), .fault_cause(fault_cause)
   );
 

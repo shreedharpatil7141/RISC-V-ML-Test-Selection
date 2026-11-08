@@ -8,7 +8,8 @@
 `timescale 1ns/1ps
 module tb_rv_pipe_stage4 #(
   parameter bit USE_ITERATIVE_M = 1'b1,
-  parameter bit ENABLE_C = 1'b0
+  parameter bit ENABLE_C = 1'b0,
+  parameter bit ENABLE_A = 1'b0
 );
   import rv32_pkg::*;
 
@@ -23,6 +24,7 @@ module tb_rv_pipe_stage4 #(
   word_t imem_addr, imem_addr_next, imem_rdata, imem_rdata_next, dmem_addr, dmem_wdata, dmem_rdata;
   logic imem_valid, imem_next_valid;
   logic dmem_re, dmem_valid;
+  logic dmem_atomic_commit;
   logic [3:0] dmem_we;
   logic halted;
   halt_cause_e halt_cause;
@@ -42,11 +44,11 @@ module tb_rv_pipe_stage4 #(
   logic [15:0] dbg_events;
   longint md_starts=0, md_dones=0, busy_cycles=0, md_aborts_started=0;
 
-  rv_core_pipe #(.USE_ITERATIVE_M(USE_ITERATIVE_M), .ENABLE_C(ENABLE_C)) dut (
+  rv_core_pipe #(.USE_ITERATIVE_M(USE_ITERATIVE_M), .ENABLE_C(ENABLE_C || ENABLE_A), .ENABLE_A(ENABLE_A)) dut (
     .clk(clk), .rst_n(rst_n),
     .imem_addr(imem_addr), .imem_addr_next(imem_addr_next), .imem_rdata(imem_rdata),
     .imem_valid(imem_valid), .imem_rdata_next(imem_rdata_next), .imem_next_valid(imem_next_valid),
-    .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid),
+    .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid), .dmem_atomic_commit(dmem_atomic_commit),
     .halted(halted), .halt_cause(halt_cause), .halt_pc(halt_pc),
     .halt_raw_insn(halt_raw_insn), .halt_ilen_bytes(halt_ilen_bytes),
     .ret_valid(ret_valid), .ret_pc(ret_pc), .ret_insn(ret_insn),
@@ -67,6 +69,18 @@ module tb_rv_pipe_stage4 #(
 
   // ---------------- Memory model ----------------
   int oob_errors = 0;
+  longint atomic_commits = 0, atomic_writes = 0;
+  integer acov_fd = 0;
+  string acov_file;
+  string acov_dash = "-";
+  function automatic string a_name(input logic [4:0] f5);
+    case(f5)
+      5'b00010:return "lr.w"; 5'b00011:return "sc.w"; 5'b00001:return "amoswap.w";
+      5'b00000:return "amoadd.w"; 5'b00100:return "amoxor.w"; 5'b01100:return "amoand.w";
+      5'b01000:return "amoor.w"; 5'b10000:return "amomin.w"; 5'b10100:return "amomax.w";
+      5'b11000:return "amominu.w"; 5'b11100:return "amomaxu.w"; default:return "reserved";
+    endcase
+  endfunction
   wire imem_oob = (imem_addr[31:16] != 16'h0);
   wire dmem_oob = (dmem_addr[31:16] != 16'h0);
   assign imem_rdata = imem_oob ? 32'h0 : mem[imem_addr[15:2]];
@@ -78,14 +92,38 @@ module tb_rv_pipe_stage4 #(
 
   always @(posedge clk) begin
     if (rst_n) begin
-      if (!ENABLE_C && !halted && imem_oob) oob_errors++;
+      if (!(ENABLE_C || ENABLE_A) && !halted && imem_oob) oob_errors++;
       if ((dmem_re || (|dmem_we)) && dmem_oob) oob_errors++;
+      if (dmem_atomic_commit) begin
+        atomic_commits++;
+        if (!dmem_re || !dmem_valid || ((|dmem_we) && dmem_we != 4'b1111)) oob_errors++;
+        if (|dmem_we) atomic_writes++;
+      end
+      if (dmem_re && (|dmem_we) && !dmem_atomic_commit) oob_errors++;
       if (|dmem_we && !dmem_oob) begin
         if (dmem_we[0]) mem[dmem_addr[15:2]][7:0]   <= dmem_wdata[7:0];
         if (dmem_we[1]) mem[dmem_addr[15:2]][15:8]  <= dmem_wdata[15:8];
         if (dmem_we[2]) mem[dmem_addr[15:2]][23:16] <= dmem_wdata[23:16];
         if (dmem_we[3]) mem[dmem_addr[15:2]][31:24] <= dmem_wdata[31:24];
       end
+    end
+  end
+
+  always @(posedge clk) begin
+    if (rst_n && dmem_atomic_commit && acov_fd != 0) begin
+      automatic word_t before_addr=dut.u_mem.reservation_valid ? dut.u_mem.reservation_addr : 32'hffffffff;
+      automatic word_t after_addr=before_addr;
+      automatic logic writes=(|dmem_we);
+      automatic integer sc_status=(dut.u_mem.atomic_sc ? int'(dut.u_mem.atomic_wb) : -1);
+      if (dut.u_mem.atomic_lr) after_addr=dmem_addr;
+      else if (dut.u_mem.atomic_sc || (writes && dut.u_mem.reservation_valid && dmem_addr[31:2]==dut.u_mem.reservation_addr[31:2])) after_addr=32'hffffffff;
+      $fdisplay(acov_fd,"%08x\t%08x\t%s\t%0d\t%0d\t%0d\t%0d\t%0d\t%08x\t%s\t%08x\t%s\t%0d\t%0d\t%0d",
+        dut.ex_mem.pc,dut.ex_mem.raw_insn,a_name(dut.ex_mem.insn[31:27]),dut.ex_mem.insn[26],dut.ex_mem.insn[25],
+        dut.ex_mem.insn[11:7],dut.ex_mem.insn[19:15],dut.ex_mem.insn[24:20],dmem_addr,
+        dmem_re ? $sformatf("%08x",dmem_rdata) : acov_dash,dut.ex_mem.store_data,
+        writes ? $sformatf("%08x",dmem_wdata) : acov_dash,sc_status,
+        dut.u_mem.reservation_valid ? int'(dut.u_mem.reservation_addr) : -1,
+        after_addr==32'hffffffff ? -1 : int'(after_addr));
     end
   end
 
@@ -124,7 +162,7 @@ module tb_rv_pipe_stage4 #(
       end
       if (ret_rd_we) begin rdn = int'(ret_rd); rdv = ret_rd_wdata; end
       if (trace_fd != 0) begin
-        if (ENABLE_C)
+        if (ENABLE_C || ENABLE_A)
           $fdisplay(trace_fd, "I %08x %08x %02d %08x %02d %08x %0d %08x %08x", ret_pc,
                     ret_insn, ret_ilen_bytes, ret_expanded_insn, rdn, rdv, st_n, st_a, st_d);
         else
@@ -166,20 +204,32 @@ module tb_rv_pipe_stage4 #(
     if (rst_n && mcov_fd != 0) begin
       // Stage 4 coverage lifecycle records are DUT-side observations. The
       // checker deduplicates retries caused by stalls using PC/raw/length.
-      if (ENABLE_C && dut.if_id.valid)
+      if ((ENABLE_C || ENABLE_A) && dut.if_id.valid)
         $fdisplay(mcov_fd, "C ATTEMPT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
-      if (ENABLE_C && ret_valid)
+      if (ENABLE_A && dut.if_id.valid && dut.if_id.insn[6:0] == OPC_AMO)
+        $fdisplay(mcov_fd, "A ATTEMPT %08x %08x", dut.if_id.pc, dut.if_id.raw_insn);
+      if ((ENABLE_C || ENABLE_A) && ret_valid)
         $fdisplay(mcov_fd, "C RETIRE %08x %08x %0d", ret_pc, ret_insn, ret_ilen_bytes);
-      if (ENABLE_C && dut.fault)
+      if (ENABLE_A && ret_valid && ret_insn[6:0] == OPC_AMO)
+        $fdisplay(mcov_fd, "A RETIRE %08x %08x", ret_pc, ret_insn);
+      if ((ENABLE_C || ENABLE_A) && dut.fault)
         $fdisplay(mcov_fd, "C FAULT %08x %08x %0d %0d", dut.ex_mem.pc, dut.ex_mem.raw_insn,
                   dut.ex_mem.ilen_bytes, int'(dut.fault_cause));
-      if (ENABLE_C && dut.redirect && dut.if_id.valid)
+      if (ENABLE_A && dut.fault && dut.ex_mem.is_a)
+        $fdisplay(mcov_fd, "A FAULT %08x %08x %0d", dut.ex_mem.pc, dut.ex_mem.raw_insn, int'(dut.fault_cause));
+      if ((ENABLE_C || ENABLE_A) && dut.redirect && dut.if_id.valid)
         $fdisplay(mcov_fd, "C SQUASH_REDIRECT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
-      if (ENABLE_C && dut.fault && dut.id_ex.valid)
+      if (ENABLE_A && dut.redirect && dut.if_id.valid && dut.if_id.insn[6:0] == OPC_AMO)
+        $fdisplay(mcov_fd, "A SQUASH_REDIRECT %08x %08x", dut.if_id.pc, dut.if_id.raw_insn);
+      if ((ENABLE_C || ENABLE_A) && dut.fault && dut.id_ex.valid)
         $fdisplay(mcov_fd, "C SQUASH_FAULT %08x %08x %0d", dut.id_ex.pc, dut.id_ex.raw_insn, dut.id_ex.ilen_bytes);
-      if (ENABLE_C && dut.fault && dut.if_id.valid)
+      if (ENABLE_A && dut.fault && dut.id_ex.valid && dut.id_ex.is_a)
+        $fdisplay(mcov_fd, "A SQUASH_FAULT %08x %08x", dut.id_ex.pc, dut.id_ex.raw_insn);
+      if ((ENABLE_C || ENABLE_A) && dut.fault && dut.if_id.valid)
         $fdisplay(mcov_fd, "C SQUASH_FAULT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
-      if (ENABLE_C && dbg_md_busy)
+      if (ENABLE_A && dut.fault && dut.if_id.valid && dut.if_id.insn[6:0] == OPC_AMO)
+        $fdisplay(mcov_fd, "A SQUASH_FAULT_IFID %08x %08x", dut.if_id.pc, dut.if_id.raw_insn);
+      if ((ENABLE_C || ENABLE_A) && dbg_md_busy)
         $fdisplay(mcov_fd, "C DIV_HOLD %08x %08x %0d", dut.id_ex.pc, dut.id_ex.raw_insn, dut.id_ex.ilen_bytes);
       if (dbg_m_issue)
         $fdisplay(mcov_fd, "M %08x %08x %08x %08x %0d %0d", dbg_m_pc, dbg_m_insn,
@@ -226,7 +276,13 @@ integer plusarg_ok;
    plusarg_ok = $value$plusargs("CHECK_GP=%d", check_gp);
    plusarg_ok = $value$plusargs("TIMEOUT=%d", timeout);
     if ($value$plusargs("TRACE=%s", trace_file)) trace_fd = $fopen(trace_file, "w");
-    if (trace_fd != 0 && ENABLE_C) $fdisplay(trace_fd, "TRACE_V2 RV32IMC pc raw_insn ilen_bytes expanded_insn rd rdval st_size st_addr st_data");
+    if ($value$plusargs("ACOV=%s", acov_file)) begin
+      acov_fd=$fopen(acov_file,"w");
+      if(acov_fd==0) begin mcov_error=1; $display("ACOV_OPEN_FAIL: %s",acov_file); end
+      else $fdisplay(acov_fd,"pc\traw\top\taq\trl\trd\trs1\trs2\taddress\told\tsource\tnew\tsc_status\treservation_before\treservation_after");
+    end
+    if (trace_fd != 0 && ENABLE_A) $fdisplay(trace_fd, "TRACE_V3 RV32IMAC pc raw_insn ilen_bytes expanded_insn rd rdval st_size st_addr st_data atomic_sidecar");
+    else if (trace_fd != 0 && ENABLE_C) $fdisplay(trace_fd, "TRACE_V2 RV32IMC pc raw_insn ilen_bytes expanded_insn rd rdval st_size st_addr st_data");
     if ($value$plusargs("MCOV=%s", mcov_file)) begin
       mcov_fd = $fopen(mcov_file, "w");
       if (mcov_fd == 0) begin mcov_error = 1; $display("MCOV_OPEN_FAIL: %s", mcov_file); end
@@ -250,7 +306,7 @@ integer plusarg_ok;
     if (dbg_assert_fail || mcov_error) pass = 1'b0;
 
     if (trace_fd != 0) begin
-      if (ENABLE_C) $fdisplay(trace_fd, "STOP %08x %08x %02d %0d", halt_pc, halt_raw_insn, halt_ilen_bytes, int'(halt_cause));
+      if (ENABLE_C || ENABLE_A) $fdisplay(trace_fd, "STOP %08x %08x %02d %0d", halt_pc, halt_raw_insn, halt_ilen_bytes, int'(halt_cause));
       $fdisplay(trace_fd, "HALT %0d %08x", int'(halt_cause), halt_pc);
       for (int r = 1; r < 32; r++) $fdisplay(trace_fd, "REG %0d %08x", r, dut.u_rf.regs[r]);
       for (int a = 16'h4000; a < 16'h6000; a += 4)
@@ -258,7 +314,9 @@ integer plusarg_ok;
       $fclose(trace_fd);
     end
     if (mcov_fd != 0) $fclose(mcov_fd);
+    if (acov_fd != 0) $fclose(acov_fd);
 
+    $display("ATOMIC_STATS commits=%0d writes=%0d", atomic_commits, atomic_writes);
     $display("MD_STATS starts=%0d dones=%0d busy_cycles=%0d aborts_started=%0d",
              md_starts, md_dones, busy_cycles, md_aborts_started);
     $display("STATS stalls=%0d redirects=%0d cycles=%0d instret=%0d assert_fail=%0d",

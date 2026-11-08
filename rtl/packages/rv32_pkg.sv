@@ -18,6 +18,7 @@ package rv32_pkg;
   localparam logic [6:0] OPC_OP       = 7'b0110011;
   localparam logic [6:0] OPC_MISC_MEM = 7'b0001111;
   localparam logic [6:0] OPC_SYSTEM   = 7'b1110011;
+  localparam logic [6:0] OPC_AMO      = 7'b0101111;
 
   // ---- Fixed full encodings ----
   localparam word_t INSN_ECALL  = 32'h0000_0073;

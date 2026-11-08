@@ -32,6 +32,7 @@ package rv_pipe_pkg;
     logic [2:0]  funct3;
     alu_op_e     alu_op;
     logic        is_m;
+    logic        is_a;
     alu_a_sel_e  a_sel;
     logic        b_imm;
     logic        reg_we;
@@ -57,6 +58,7 @@ package rv_pipe_pkg;
     logic [2:0]  funct3;
     logic        mem_re;
     logic        mem_we;
+    logic        is_a;
     word_t       alu_y;       // ALU result / mem address; pc+4 for JAL/JALR
     word_t       store_data;  // forwarded rs2
     halt_cause_e cause;

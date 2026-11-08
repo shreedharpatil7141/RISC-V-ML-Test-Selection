@@ -1,6 +1,6 @@
 # Stage 5.0 — RV32A specification review and software/planning batch
 
-**Status:** Stage 5 software/planning changes are implemented and awaiting the combined software validation gate. No RTL has changed. The release baseline is `stage4-complete` at Stage 4 commit `4a418f1eb94ae2ba6d59b03e0043c438844ed8f8`.
+**Status:** Stage 5 implementation and validation passed on `stage5-a-extension`; final release approval is pending. No merge or `stage5-complete` tag has been made. The software/planning checkpoint is `603b1a07b05a9e8e55bae811634e1cdc16baa16d`; baseline is `stage4-complete` at `4a418f1eb94ae2ba6d59b03e0043c438844ed8f8`.
 
 ## Pinned specification and scope
 
@@ -53,33 +53,50 @@ Project policy for this finite single-hart model:
 - Misalignment is checked before bounds/access in the software model, matching the existing project memory-fault priority. The ISA permits implementation/environment-specific choice between misalignment and access fault for certain cases. Project halt cause IDs are internal legacy model IDs; they are not architectural `mcause` values. In particular, the existing internal store-misalignment/access IDs map to architectural Store/AMO causes 6/7, not their internal numeric values.
 - The existing project rule that same-word ordinary stores invalidate reservations is retained. It is a conservative implementation choice; the architectural atomicity rules do not require a matching SC to succeed after every possible intervening same-hart store.
 
-## Reservation and retirement contract for future RTL
+## Reservation and retirement contract
 
 The independent ISS uses pre-instruction `rs1/rs2`, applies effects only after alignment/access checks, and records a sidecar row only for a completed/retired atomic operation. The `I` trace continues to carry original PC/raw instruction/length and the prior Stage 4 fields. A-enabled mode is tagged `TRACE_V3`; its companion `<test>.iss.a.tsv` contains the atomic opcode, aq/rl, source/destination registers, effective address, old/source/new values, SC status, and reservation before/after. A fault is represented by the existing `STOP` raw-instruction record and halt cause, with no atomic retirement row. A-disabled Stage 4 output remains byte-for-byte in its Stage 4 schema.
 
-Future pipeline implementation must not start atomic side effects before the operation reaches the oldest commit-authorized MEM position. Redirect/fault flushes kill younger requests. The atomic result is written only after the memory transaction succeeds; faulting operations suppress register write, memory write, retirement, and younger work. The reservation state belongs to the core/hart, not to a speculative stage. A valid SC consumes reservation regardless of SC success; trap/fault handling clears reservation as defined above. DIV holds must preserve all atomic/non-atomic instruction metadata and cannot issue duplicate atomic transactions.
+The pipeline does not start atomic effects until the instruction reaches its valid, fault-free MEM commit slot. Redirect/fault flushes kill younger instructions. Faults suppress the register write, memory write, retirement, and reservation change. Reservation belongs to the core/hart state in MEM, not a speculative stage. Divider holds insert an EX/MEM bubble while older MEM state advances once, preventing duplicate atomic transactions.
 
 ## Existing memory and pipeline constraints
 
-The current core interfaces expose combinational `dmem_rdata`, `dmem_re`, byte-enable `dmem_we`, and `dmem_wdata`; the SystemVerilog testbench performs synchronous writes. There is no atomic request/response, transaction lock, or external-write invalidation port. Splitting AMO into an ordinary load and later store would not provide atomicity against another memory agent. Stage 5 RTL must therefore define a single atomic transaction handshake (request with op/address/operand/aq/rl; response with old word, completion, and access status) or an explicitly locked atomic memory transaction before implementation. The one-hart testbench can implement the response atomically on one memory edge, but that is not multi-hart validation.
+### Implemented atomic MEM contract
+
+Both core interfaces expose `dmem_atomic_commit`. In the pipeline it is asserted only for a valid, fault-free A operation at MEM; in the golden core it marks the committed single-cycle A instruction. The existing no-wait-state interface provides the pre-edge old word on `dmem_rdata`. At the active memory edge, AMOs and successful SC use `dmem_we=4'b1111` and `dmem_wdata` to perform exactly one word update. LR and failed SC have no write strobes. LR/AMOs write the old word to rd; SC writes zero/nonzero status. Alignment/access faults suppress the transaction and reservation update.
+
+Fault-free qualification gates the read request and commit. This is atomic for the project's single hart and no-concurrent-writer memory model: no other observer can interleave between the combinational read and synchronous edge write. It is not a general bus protocol or multi-hart guarantee. `aq/rl` are accepted and retained; no cross-hart ordering behavior is modeled.
 
 Pipeline requirements: `rs1` is an address source for all A operations; `rs2` is a data source for SC/AMO but not LR; every A instruction has an `rd` result, including SC status. Forward both sources using the existing bypass network, retain load-use interlocks, and forward the AMO old value/SC result after completion. Freeze younger stages while an atomic transaction is outstanding. Existing divider protocol/holds must remain independent. Carry Stage 4 original instruction metadata through the atomic hold, and verify redirect/fault flushes cannot issue speculative requests.
 
 ## Software implementation and independent validation
 
-Software additions in this batch are `rv32a_model.py` (table-based legal decode/arithmetic; no assembler dependency), explicit A encodings in the mixed-width assembler, an A-enabled ISS mode, 12 `rv32ima_software` programs, and a C-enabled AMO at PC offset two. The assembler and ISS decoder do not call each other. The validator has literal hand-derived word anchors and separate literal arithmetic expectations. It scans 2,048 `funct5/funct3/rs2/aq/rl` legality combinations (expected 84 legal field combinations), checks all 36 operation/boundary arithmetic pairs, runs the directed assembly/ISS programs, and compares all 230 Stage 4 sources/images/ISS traces plus saved golden/pipeline traces in A-disabled mode.
+Software additions are `rv32a_model.py`, explicit A encodings, A-enabled ISS, A software programs, a C-enabled AMO at PC offset two, and pipeline interaction/fault programs. The assembler and ISS decoder do not call each other. The software gate passed 14 encoding anchors, 2,048 legality combinations, 36 arithmetic pairs, 13 directed ISS checks, and exact 230-case Stage 4 compatibility. RTL traces and atomic sidecars are compared separately against ISS and golden-core evidence.
 
 Keep the existing names `run_stage5.py`, `run_stage5_xsim.bat`, `prepare_stage5.py`, and `stage5_coverage.py`: these are historical Stage 3.5 M-extension regression/coverage entry points, not Stage 5 A-extension runners. This batch adds `validate_stage5_a.py` and does not repurpose historical scripts or reports.
 
-One Windows CMD command from the repo root:
+Windows CMD commands from repo root:
 
 ```cmd
 py -3 scripts\simulation\validate_stage5_a.py --stage4-dir sim_out_stage4_4_xsim_20261108T154108Z
 ```
 
-Required terminal marker after a successful run: `STAGE5_A_SOFTWARE_VALIDATION PASS groups=5 failures=0 stage4_cases=230`. Expected group markers are `STAGE5_A_ENCODING PASS checks=14`, `STAGE5_A_LEGALITY PASS checks=2048`, `STAGE5_A_ARITHMETIC PASS checks=36`, `STAGE5_A_DIRECTED_ISS PASS checks=13`, and `STAGE5_A_STAGE4_COMPAT PASS checks=230`. These are expected markers only; no software PASS is claimed until the command runs successfully. Compatibility requires the preserved Stage 4 output directory; the supplied default corresponds to the accepted XSim run and includes archived images, ISS references, golden traces, and pipeline traces.
+Preparation only (use a fresh output directory): `scripts\simulation\prepare_stage5_a.bat sim_out_stage5_a_prepare_OWNER1`.
+Full Verilator from Windows CMD via Ubuntu WSL: `wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec bash scripts/simulation/run_stage5_a_verilator.sh`.
+Full XSim in initialized Vivado CMD: `scripts\simulation\run_stage5_a_xsim.bat`.
+Focused Verilator mutants, only after source-matched XSim and Verilator full-suite PASS reports: `wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec python3 scripts/simulation/run_stage5_a_mutation.py`. For A01/A02 only: append `--mutants A01,A02`.
 
-## Gated follow-on plan
+Expected separate reports: `reports/stage5_a_pipeline_verilator_<UTC>.txt`, `reports/stage5_a_pipeline_xsim_<UTC>.txt`, and `reports/stage5_a_mutation_verilator_<UTC>.txt`. The full functional suite is 209 legacy + 21 Stage 4 C + 18 A/C+A = 248 tests, with 496 golden/pipeline-to-ISS trace comparisons and 248 pipeline-to-golden comparisons. It includes eight unit suites, a 2,048-combination RTL legality sweep, atomic operation/status/aqrl coverage, and actual 16 pipeline event counters. Outputs are fresh-only; no automatic resume is supported.
+
+The software gate passed all five groups; the owner-recorded marker was `STAGE5_A_SOFTWARE_VALIDATION PASS groups=5 failures=0 stage4_cases=230`. Compatibility used the preserved Stage 4 output directory and checked 230 images/results/traces. XSim PASS evidence is `reports/stage5_a_pipeline_xsim_20261108T195247Z.txt`; Verilator PASS evidence includes `reports/stage5_a_pipeline_verilator_20261108T194647Z.txt` and later fresh PASS reports. Each simulator reports 248 cases (209 legacy, 21 C, 18 A/C+A), 496 ISS comparisons, 248 pipeline-to-golden traces, eight units, 65,536 decompressor patterns, 41 atomic reference events (23 writes), all 11 A operations, both SC statuses, and all four aq/rl combinations. Divider protocol records: 2,029 starts, 2,029 dones, 66,957 busy cycles, zero aborts (XSim report; simulator reports remain separate).
+
+Verilator-only mutation evidence is distributed across runs and reanalysis: the original campaign caught A03–A05 and retained A01/A02 as INVALID; the focused A01/A02 run caught A01 and retained A02 as INVALID; retained A02 logs independently show four LR.W `rs2=1` legality mismatches and the expected `RV32A_UNIT FAIL` `$fatal`, recorded in `reports/stage5_a_mutation_verilator_20261108T204623Z_A02_reanalysis.txt`. Thus there is detection evidence for five mutants across separate runs and reanalysis, not one fresh five-mutant campaign. Original INVALID reports remain unchanged. The updated A02 classifier was not executable in this local environment because Python is unavailable; the saved-evidence reanalysis is distinct from an implementation test.
+
+## Current implementation gate
+
+Implemented scope is RV32I/M/C plus the RV32A word subset: LR.W, SC.W, and nine word AMOs. The design assumes one hart, no wait states, and no concurrent external writer. Results do not establish full architectural compliance, multi-hart/RVWMO behavior, synthesis/timing, unsupported extensions, CSR/privileged behavior, or ML results. The validated Stage 5 checkpoint is awaiting final owner release approval; Stage 6 has not started.
+
+## Original gated follow-on plan
 
 | Substep | Scope | Gate |
 |---|---|---|
