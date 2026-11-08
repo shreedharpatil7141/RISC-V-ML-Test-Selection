@@ -460,3 +460,6 @@ Documentation/repository review only. No RTL or testbench changes. Items: verifi
 
 ### Stage 5 release approval (2026-11-09)
 - Owner approved release. Preserve separate simulator results and mutation provenance (five detections across original/focused runs and A02 reanalysis; updated A02 classifier execution unverified). Main merge and new annotated completion tag are authorized and being finalized. Stage 6 remains unopened.
+
+### Stage 5 release finalized (2026-11-09)
+- Stage 5 is merged to `main` and marked by annotated tag `stage5-complete`. The five detections remain attributed across the original campaign, focused rerun, and A02 evidence reanalysis; classifier execution remains unverified. No Stage 6 work started.

@@ -12,7 +12,7 @@
 | 2 | 5-stage pipeline | Pipeline regs, forwarding, hazard unit, branch handling, stalls/flushes, retirement port | RV32I tests still pass; RAW/load-use/control-hazard tests pass; retirement trace matches Stage 1 |
 | 3 | M extension | MUL/DIV unit | All 8 ops; div-by-zero, signed overflow (MIN/-1) corner cases |
 | 4 | C extension | RV32C v2.0 integer encodings, independent compressed model/assembler, decompressor, mixed-length fetch and pipeline integration | Complete and released on `main` with annotated `stage4-complete`; exhaustive 16-bit decode, mixed 16/32-bit execution, precise retirement/fault, separate XSim/Verilator evidence, and bounded Verilator-only mutation evidence |
-| 5 | A extension | RV32A software reference, explicit assembly, atomic memory integration, reservation, hazards and verification | Implementation and validation passed; owner approved release; non-destructive merge/tag finalization in progress |
+| 5 | A extension | RV32A software reference, explicit assembly, atomic memory integration, reservation, hazards and verification | Complete and released on `main`; annotated `stage5-complete` tag |
 | 6 | Zicsr + Zifencei | CSR unit, FENCE.I | CSR RW/RS/RC(+I) semantics incl. no-write cases, illegal CSR access |
 | 7 | M-mode privileged | Traps, MRET, interrupts, exceptions | Each exception cause and 3 interrupt sources verified |
 | 8 | Verification environment | Generator, driver, monitor, ref model, scoreboard, regression, fault injection | Scoreboard catches injected faults; independent ref model agrees with DUT on all tests |
@@ -81,7 +81,7 @@ synthesis/timing, unsupported ISA implementation, or ML result is claimed.
 These are finite directed results, not full architectural compliance. See the
 Stage 4 architecture/verification docs for commands and the file manifest.
 
-## Stage 5 A-extension status (owner-approved release finalization)
+## Stage 5 A-extension status (complete and released)
 
 Stage 5 begins on `stage5-a-extension`, created from the annotated
 `stage4-complete` release. The approved software gate is recorded in commit
@@ -91,9 +91,9 @@ directed cases, RTL atomic sidecars, an RTL legality/arithmetic unit suite,
 coverage checks, XSim/Verilator runners, and focused Verilator mutation
 infrastructure. Separate owner-verified simulator runs passed; evidence and
 limitations are in `documentation/architecture/stage5_0_rv32a_review.md`.
-The Stage 4 230-case A-disabled compatibility suite remains included. Owner
-approved the release; merge to `main` and the annotated `stage5-complete` tag
-are being finalized.
+The Stage 4 230-case A-disabled compatibility suite remains included. The
+owner-approved branch was merged non-destructively to `main`; annotated tag
+`stage5-complete` marks the finalized release commit.
 
 | Stage 5 evidence | Result |
 |---|---|

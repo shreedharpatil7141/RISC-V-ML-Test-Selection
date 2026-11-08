@@ -412,3 +412,6 @@ Status: Stage 2 awaiting user approval. Stage 3 NOT started.
 
 ### Stage 5 release approval (2026-11-09)
 - Owner approved release after the validation checkpoint. Separate XSim/Verilator evidence and split Verilator mutation provenance remain as recorded; five detections span multiple runs and A02 saved-evidence reanalysis. The updated A02 classifier implementation check remains unexecuted. No clean mutation rerun is claimed. Preparing the authorized main merge and annotated completion tag; Stage 6 has not started.
+
+### Stage 5 released (2026-11-09)
+- Merged the owner-approved `stage5-a-extension` branch non-destructively to `main` and created the annotated `stage5-complete` tag at the finalized main commit. Separate simulator evidence and split mutation history are preserved; no Stage 6 work started.
