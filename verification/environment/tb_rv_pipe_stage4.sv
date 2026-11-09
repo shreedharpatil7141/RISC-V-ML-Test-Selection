@@ -10,7 +10,8 @@ module tb_rv_pipe_stage4 #(
   parameter bit USE_ITERATIVE_M = 1'b1,
   parameter bit ENABLE_C = 1'b0,
   parameter bit ENABLE_A = 1'b0,
-  parameter bit ENABLE_Z = 1'b0
+  parameter bit ENABLE_Z = 1'b0,
+  parameter bit ENABLE_M = 1'b0
 );
   import rv32_pkg::*;
 
@@ -24,14 +25,22 @@ module tb_rv_pipe_stage4 #(
 
   word_t imem_addr, imem_addr_next, imem_rdata, imem_rdata_next, dmem_addr, dmem_wdata, dmem_rdata;
   logic imem_valid, imem_next_valid;
+  logic irq_msip=1'b0, irq_mtip=1'b0, irq_meip=1'b0;
+  int irq_pc=-1, irq_level_mask=0, irq_wait_div=0;
+  logic irq_fired=1'b0, irq_seen=1'b0;
   logic dmem_re, dmem_valid;
   logic dmem_atomic_commit;
   logic [3:0] dmem_we;
   logic halted;
+  logic test_done=1'b0;
+  logic ret_valid, ret_rd_we, ret_mem_re, ret_mem_we;
+  word_t ret_mem_addr, ret_mem_wdata;
+  wire done_store = ENABLE_M && ret_valid && ret_mem_we && ret_mem_addr == 32'h0000_fffc && ret_mem_wdata == 32'h5354_4737;
+  word_t test_done_pc=0, test_done_raw=0;
+  logic [4:0] test_done_ilen=0;
   halt_cause_e halt_cause;
   word_t halt_pc;
-  logic ret_valid, ret_rd_we, ret_mem_re, ret_mem_we;
-  word_t ret_pc, ret_insn, ret_expanded_insn, ret_rd_wdata, ret_mem_addr, ret_mem_wdata, ret_mem_rdata;
+  word_t ret_pc, ret_insn, ret_expanded_insn, ret_rd_wdata, ret_mem_rdata;
   logic [4:0] ret_ilen_bytes, halt_ilen_bytes;
   word_t halt_raw_insn;
   reg_t ret_rd;
@@ -45,11 +54,12 @@ module tb_rv_pipe_stage4 #(
   logic [15:0] dbg_events;
   longint md_starts=0, md_dones=0, busy_cycles=0, md_aborts_started=0;
 
-  rv_core_pipe #(.USE_ITERATIVE_M(USE_ITERATIVE_M), .ENABLE_C(ENABLE_C || ENABLE_A || ENABLE_Z), .ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z)) dut (
+  rv_core_pipe #(.USE_ITERATIVE_M(USE_ITERATIVE_M), .ENABLE_C(ENABLE_C || ENABLE_A || ENABLE_Z || ENABLE_M), .ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z), .ENABLE_M(ENABLE_M)) dut (
     .clk(clk), .rst_n(rst_n),
     .imem_addr(imem_addr), .imem_addr_next(imem_addr_next), .imem_rdata(imem_rdata),
     .imem_valid(imem_valid), .imem_rdata_next(imem_rdata_next), .imem_next_valid(imem_next_valid),
     .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid), .dmem_atomic_commit(dmem_atomic_commit),
+    .irq_msip(irq_msip), .irq_mtip(irq_mtip), .irq_meip(irq_meip),
     .halted(halted), .halt_cause(halt_cause), .halt_pc(halt_pc),
     .halt_raw_insn(halt_raw_insn), .halt_ilen_bytes(halt_ilen_bytes),
     .ret_valid(ret_valid), .ret_pc(ret_pc), .ret_insn(ret_insn),
@@ -67,6 +77,20 @@ module tb_rv_pipe_stage4 #(
     .dbg_m_squash_redirect(dbg_m_squash_redirect), .dbg_m_squash_fault(dbg_m_squash_fault),
     .dbg_m_fault_start_suppressed(dbg_m_fault_start_suppressed), .dbg_m_loaduse(dbg_m_loaduse)
   );
+  always @(posedge clk) if (rst_n && ENABLE_M && dut.irq_take) irq_seen <= 1'b1;
+  always @(negedge clk) begin
+    if (!rst_n) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; irq_fired<=0; end
+    else if (ENABLE_M) begin
+      if (irq_seen) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; end
+      else if (!irq_fired && irq_pc >= 0 &&
+               // busy includes the combinational accept cycle; wait for RUN, not pre-accept.
+               ((irq_wait_div != 0 && dut.id_ex.valid && dut.id_ex.pc == irq_pc && dbg_md_busy && !dbg_md_start) ||
+                (irq_wait_div == 0 && !dut.u_machine.mstatus_mie && dut.if_id.valid && dut.if_id.pc == irq_pc) ||
+                (irq_wait_div == 0 && dut.id_ex.valid && dut.id_ex.pc == irq_pc))) begin
+        irq_msip<=irq_level_mask[0]; irq_mtip<=irq_level_mask[1]; irq_meip<=irq_level_mask[2]; irq_fired<=1'b1;
+      end
+    end
+  end
 
   // ---------------- Memory model ----------------
   int oob_errors = 0;
@@ -130,6 +154,8 @@ module tb_rv_pipe_stage4 #(
 
   // ---------------- Trace ----------------
   int trace_fd = 0;
+  int trap_fd = 0;
+  string trap_file;
   longint instret = 0;
 
   function automatic int be_size(input logic [3:0] be);
@@ -154,6 +180,7 @@ module tb_rv_pipe_stage4 #(
       automatic word_t rdv  = 32'h0;
       automatic int    rdn  = 0;
       instret++;
+      if (done_store) begin test_done<=1'b1; test_done_pc<=ret_pc; test_done_raw<=ret_insn; test_done_ilen<=ret_ilen_bytes; end
       if (ret_mem_we) begin
         st_n = be_size(ret_mem_be);
         st_a = ret_mem_addr;
@@ -225,6 +252,18 @@ module tb_rv_pipe_stage4 #(
       if (ENABLE_Z && dut.mem_wb.valid && dut.mem_wb.csr_write)
         $fdisplay(mcov_fd, "Z CSR_WRITE %08x %08x %03x %08x %08x", dut.mem_wb.pc, dut.mem_wb.raw_insn,
                   dut.mem_wb.csr_addr, dut.mem_wb.wb_data, dut.mem_wb.csr_new);
+      if (ENABLE_M && dut.mem_wb.valid && dut.mem_wb.insn[6:0] == OPC_SYSTEM && dut.mem_wb.insn[14:12] != 0)
+        $fdisplay(mcov_fd,"Z CSR_ACCESS %08x %08x %03x %08x %08x %08x %0d",
+                  dut.mem_wb.pc,dut.mem_wb.raw_insn,dut.mem_wb.csr_addr,dut.mem_wb.csr_source,
+                  dut.mem_wb.wb_data,dut.mem_wb.csr_new,dut.mem_wb.csr_write);
+      if (ENABLE_M && dut.mem_wb.valid && dut.mem_wb.is_mret)
+        $fdisplay(mcov_fd,"M MRET %08x %08x",dut.mem_wb.pc,dut.mem_wb.raw_insn);
+      if (ENABLE_M && dut.machine_trap)
+        $fdisplay(mcov_fd,"M TRAP %08x %08x %0d",dut.ex_mem.pc,dut.ex_mem.raw_insn,dut.entry_cause);
+      if (ENABLE_M && dut.irq_take)
+        $fdisplay(mcov_fd,"M IRQ %08x %0d",dut.entry_pc,dut.entry_cause);
+      if (ENABLE_M && dbg_md_abort_started)
+        $fdisplay(mcov_fd,"M DIV_ABORT %08x %08x",dbg_m_pc,dbg_m_insn);
       if (ENABLE_Z && dut.fault && dut.ex_mem.insn[6:0] == OPC_SYSTEM)
         $fdisplay(mcov_fd, "Z CSR_FAULT %08x %08x %0d", dut.ex_mem.pc, dut.ex_mem.raw_insn,
                   int'(dut.fault_cause));
@@ -278,6 +317,12 @@ module tb_rv_pipe_stage4 #(
       if (dbg_md_start && previous_md_done)
         $fdisplay(mcov_fd, "EV DIV_CONSECUTIVE %08x %08x", dbg_m_pc, dbg_m_insn);
     end
+    if (rst_n && ENABLE_M && trap_fd != 0 && (dut.machine_trap || dut.irq_take)) begin
+      automatic word_t event_raw = dut.machine_trap ? dut.ex_mem.raw_insn :
+                                   (dut.id_ex.valid ? dut.id_ex.raw_insn : dut.if_id.raw_insn);
+      $fdisplay(trap_fd,"%08x\t%08x\t%08x\t%08x\t%08x",dut.entry_pc,event_raw,
+                {dut.irq_take,26'b0,dut.entry_cause},dut.trap_value,dut.trap_target);
+    end
     if (rst_n) previous_md_done <= dbg_md_done;
     else previous_md_done <= 1'b0;
   end
@@ -300,7 +345,15 @@ integer plusarg_ok;
    plusarg_ok = $value$plusargs("EXPECT_CAUSE=%d", expect_cause);
    plusarg_ok = $value$plusargs("CHECK_GP=%d", check_gp);
    plusarg_ok = $value$plusargs("TIMEOUT=%d", timeout);
+   plusarg_ok = $value$plusargs("IRQ_PC=%h", irq_pc);
+   plusarg_ok = $value$plusargs("IRQ_LEVELS=%d", irq_level_mask);
+   plusarg_ok = $value$plusargs("IRQ_WAIT_DIV=%d", irq_wait_div);
     if ($value$plusargs("TRACE=%s", trace_file)) trace_fd = $fopen(trace_file, "w");
+    if ($value$plusargs("TRAP=%s", trap_file)) begin
+      trap_fd=$fopen(trap_file,"w");
+      if(trap_fd==0) mcov_error=1;
+      else $fdisplay(trap_fd,"fault_pc\traw\tmcause\tmtval\ttarget");
+    end
     if ($value$plusargs("ACOV=%s", acov_file)) begin
       acov_fd=$fopen(acov_file,"w");
       if(acov_fd==0) begin mcov_error=1; $display("ACOV_OPEN_FAIL: %s",acov_file); end
@@ -319,31 +372,44 @@ integer plusarg_ok;
     repeat (3) @(posedge clk);
     @(negedge clk) rst_n = 1'b1;
 
-    while (!halted && cycles < timeout) begin
+    while (!(ENABLE_M ? (test_done || done_store) : halted) && cycles < timeout) begin
       @(posedge clk);
       cycles++;
     end
     @(negedge clk);
 
     gp_val = dut.u_rf.regs[3];
-    pass = halted && (int'(halt_cause) == expect_cause) && (oob_errors == 0);
+    pass = (ENABLE_M ? (test_done || done_store) : (halted && (int'(halt_cause) == expect_cause))) && (oob_errors == 0);
     if (check_gp != 0 && expect_cause == int'(HALT_ECALL)) pass = pass && (gp_val == 32'h1);
     if (dbg_assert_fail || mcov_error) pass = 1'b0;
 
     if (trace_fd != 0) begin
-      if (ENABLE_C || ENABLE_A) $fdisplay(trace_fd, "STOP %08x %08x %02d %0d", halt_pc, halt_raw_insn, halt_ilen_bytes, int'(halt_cause));
-      $fdisplay(trace_fd, "HALT %0d %08x", int'(halt_cause), halt_pc);
+      if (ENABLE_C || ENABLE_A || ENABLE_M)
+        $fdisplay(trace_fd, "STOP %08x %08x %02d %0d", ENABLE_M ? test_done_pc + test_done_ilen : halt_pc,
+                  ENABLE_M ? test_done_raw : halt_raw_insn, ENABLE_M ? test_done_ilen : halt_ilen_bytes,
+                  ENABLE_M ? 0 : int'(halt_cause));
+      $fdisplay(trace_fd, "HALT %0d %08x", ENABLE_M ? 0 : int'(halt_cause), ENABLE_M ? test_done_pc + test_done_ilen : halt_pc);
       for (int r = 1; r < 32; r++) $fdisplay(trace_fd, "REG %0d %08x", r, dut.u_rf.regs[r]);
       if (ENABLE_Z) begin
         $fdisplay(trace_fd, "CSR 800 %08x", dut.csr0);
         $fdisplay(trace_fd, "CSR 801 %08x", dut.csr1);
         $fdisplay(trace_fd, "CSR cc0 %08x", CSR_STAGE6_ID);
       end
+      if (ENABLE_M) begin
+        $fdisplay(trace_fd,"CSR 300 %08x",dut.u_machine.mstatus); $fdisplay(trace_fd,"CSR 301 %08x",(32'h40001100 | (ENABLE_A ? 32'h1 : 32'h0) | ((ENABLE_C || ENABLE_A || ENABLE_Z || ENABLE_M) ? 32'h4 : 32'h0)));
+        $fdisplay(trace_fd,"CSR 304 %08x",dut.u_machine.mie); $fdisplay(trace_fd,"CSR 305 %08x",dut.u_machine.mtvec);
+        $fdisplay(trace_fd,"CSR 340 %08x",dut.u_machine.mscratch); $fdisplay(trace_fd,"CSR 341 %08x",dut.u_machine.mepc);
+        $fdisplay(trace_fd,"CSR 342 %08x",dut.u_machine.mcause); $fdisplay(trace_fd,"CSR 343 %08x",dut.u_machine.mtval);
+        $fdisplay(trace_fd,"CSR b00 %08x",dut.u_machine.mcycle);
+        $fdisplay(trace_fd,"CSR b02 %08x",dut.u_machine.minstret); $fdisplay(trace_fd,"CSR b80 %08x",dut.u_machine.mcycleh);
+        $fdisplay(trace_fd,"CSR b82 %08x",dut.u_machine.minstreth); $fdisplay(trace_fd,"CSR 344 %08x",dut.u_machine.pending);
+      end
       for (int a = 16'h4000; a < 16'h6000; a += 4)
         if (mem[a >> 2] != 32'h0) $fdisplay(trace_fd, "MEM %08x %08x", a, mem[a >> 2]);
       $fclose(trace_fd);
     end
     if (mcov_fd != 0) $fclose(mcov_fd);
+    if (trap_fd != 0) $fclose(trap_fd);
     if (acov_fd != 0) $fclose(acov_fd);
 
     $display("ATOMIC_STATS commits=%0d writes=%0d", atomic_commits, atomic_writes);
@@ -355,8 +421,8 @@ integer plusarg_ok;
              ev_cnt[0], ev_cnt[1], ev_cnt[2], ev_cnt[3], ev_cnt[4], ev_cnt[5], ev_cnt[6], ev_cnt[7],
              ev_cnt[8], ev_cnt[9], ev_cnt[10], ev_cnt[11], ev_cnt[12], ev_cnt[13], ev_cnt[14], ev_cnt[15]);
     $display("TEST_RESULT: %s hex=%s cause=%0d expect=%0d gp=0x%0h instret=%0d cycles=%0d oob=%0d%s",
-             pass ? "PASS" : "FAIL", hex_file, int'(halt_cause), expect_cause, gp_val, instret, cycles,
-             oob_errors, halted ? "" : " TIMEOUT");
+             pass ? "PASS" : "FAIL", hex_file, ENABLE_M ? 0 : int'(halt_cause), expect_cause, gp_val, instret, cycles,
+             oob_errors, (ENABLE_M ? (test_done || done_store) : halted) ? "" : " TIMEOUT");
     $finish;
   end
 endmodule

@@ -147,6 +147,7 @@ def assemble(src):
                 emit(enc_u(hi, rd, 0x37)); emit(enc_i(lo, rd, 0, rd, 0x13))
             elif mn == 'fence': emit(0x0FF0000F)
             elif mn == 'fence.i': emit(0x0000100F)
+            elif mn == 'mret': emit(0x30200073)
             elif mn in CSR_OPS:
                 csr = int(ops[1], 0)
                 assert 0 <= csr < 4096, f"CSR address out of range: {csr}"

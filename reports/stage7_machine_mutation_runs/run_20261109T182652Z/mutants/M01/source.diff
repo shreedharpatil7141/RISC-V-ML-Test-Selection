@@ -1,0 +1,11 @@
+--- rtl/core/rv_machine_state.sv
++++ rtl/core/rv_machine_state.sv [mutant]
+@@ -89,7 +89,7 @@
+         mcause <= {trap_interrupt,26'b0,trap_cause};
+         mtval <= trap_value;
+       end else if (mret) begin
+-        mstatus <= (32'h0000_1800 | (mstatus[7] ? 32'h8 : 0) | 32'h80);
++        mstatus <= 32'h0000_1880;
+       end else if (csr_we) begin
+         case (csr_waddr)
+           12'h300: mstatus <= 32'h0000_1800 | (csr_wdata & 32'h88);

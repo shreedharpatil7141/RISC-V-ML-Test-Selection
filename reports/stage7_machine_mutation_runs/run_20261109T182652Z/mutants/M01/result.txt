@@ -1,0 +1,1 @@
+M01 CAUGHT case=machine_trap_return description=MIE is not restored from MPIE

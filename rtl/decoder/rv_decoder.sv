@@ -6,7 +6,8 @@ module rv_decoder
   import rv32_pkg::*;
 #(
   parameter bit ENABLE_A = 1'b0,
-  parameter bit ENABLE_Z = 1'b0
+  parameter bit ENABLE_Z = 1'b0,
+  parameter bit ENABLE_M = 1'b0
 )
 (
   input  word_t insn,
@@ -29,6 +30,10 @@ module rv_decoder
   assign rs2    = insn[24:20];
   assign funct3 = insn[14:12];
   assign funct7 = insn[31:25];
+  logic csr_write_attempt;
+  assign csr_write_attempt = (funct3 == 3'b001) || (funct3 == 3'b101) ||
+                             (((funct3 == 3'b010) || (funct3 == 3'b011) ||
+                               (funct3 == 3'b110) || (funct3 == 3'b111)) && (rs1 != 0));
 
   always_comb begin
     illegal   = 1'b0;
@@ -94,12 +99,18 @@ module rv_decoder
         OPC_SYSTEM: begin
           if      (insn == INSN_ECALL)  is_ecall  = 1'b1;
           else if (insn == INSN_EBREAK) is_ebreak = 1'b1;
+          else if (ENABLE_M && insn == INSN_MRET) illegal = 1'b0;
           else if (ENABLE_Z && (funct3 inside {3'b001,3'b010,3'b011,3'b101,3'b110,3'b111})) begin
             if ((insn[31:20] == 12'h800) || (insn[31:20] == 12'h801)) illegal = 1'b0;
             else if ((insn[31:20] == 12'hCC0) &&
                      ((funct3 == 3'b010) || (funct3 == 3'b011) ||
                       (funct3 == 3'b110) || (funct3 == 3'b111)) &&
                      (insn[19:15] == 5'd0)) illegal = 1'b0;
+            else if (ENABLE_M && (insn[31:20] inside {
+                       12'h300,12'h304,12'h305,12'h340,12'h341,12'h342,12'h343,
+                       12'hB00,12'hB80,12'hB02,12'hB82})) illegal = 1'b0;
+            else if (ENABLE_M && ((insn[31:20] == 12'h301) || (insn[31:20] == 12'h344)))
+              illegal = csr_write_attempt;
             else illegal = 1'b1;
           end
           else                          illegal   = 1'b1;           // MRET and unsupported CSRs: Stage 7

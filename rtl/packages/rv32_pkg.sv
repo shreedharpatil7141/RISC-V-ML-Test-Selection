@@ -26,6 +26,7 @@ package rv32_pkg;
   // ---- Fixed full encodings ----
   localparam word_t INSN_ECALL  = 32'h0000_0073;
   localparam word_t INSN_EBREAK = 32'h0010_0073;
+  localparam word_t INSN_MRET   = 32'h3020_0073;
 
   // ---- ALU operation select ----
   typedef enum logic [3:0] {

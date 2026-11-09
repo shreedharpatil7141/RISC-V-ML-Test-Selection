@@ -4,7 +4,7 @@
 // Unified 64 KiB memory, combinational read, synchronous byte-enable write.
 // Prints exactly one "TEST_RESULT: PASS|FAIL ..." line. Trace format matches scripts/simulation/rv32i_iss.py.
 `timescale 1ns/1ps
-module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0, parameter bit ENABLE_Z = 1'b0);
+module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0, parameter bit ENABLE_Z = 1'b0, parameter bit ENABLE_M = 1'b0);
   import rv32_pkg::*;
 
   localparam int MEM_WORDS = 16384;   // 64 KiB
@@ -17,28 +17,51 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
 
   word_t imem_addr, imem_addr_next, imem_rdata, imem_rdata_next, dmem_addr, dmem_wdata, dmem_rdata;
   logic imem_valid, imem_next_valid, dmem_valid;
+  logic irq_msip=1'b0, irq_mtip=1'b0, irq_meip=1'b0;
+  int irq_pc=-1, irq_level_mask=0;
+  logic irq_fired=1'b0, irq_seen=1'b0;
   logic dmem_re;
   logic dmem_atomic_commit;
   logic [3:0] dmem_we;
   logic halted;
+  logic test_done=1'b0;
+  logic ret_valid, ret_rd_we, ret_mem_re, ret_mem_we;
+  word_t ret_mem_addr, ret_mem_wdata;
+  wire done_store = ENABLE_M && ret_valid && ret_mem_we && ret_mem_addr == 32'h0000_fffc && ret_mem_wdata == 32'h5354_4737;
+  word_t test_done_pc=0, test_done_raw=0;
+  logic [4:0] test_done_ilen=0;
   halt_cause_e halt_cause;
   word_t halt_pc;
-  logic ret_valid, ret_rd_we, ret_mem_re, ret_mem_we;
-  word_t ret_pc, ret_insn, ret_pc_next, ret_rd_wdata, ret_mem_addr, ret_mem_wdata, ret_mem_rdata;
+  word_t ret_pc, ret_insn, ret_raw_insn, ret_expanded_insn, ret_pc_next;
+  word_t ret_rd_wdata, ret_mem_rdata;
+  logic [4:0] ret_ilen_bytes;
   reg_t ret_rd;
   logic [3:0] ret_mem_be;
 
-  rv_core_single #(.ENABLE_C(ENABLE_C || ENABLE_A || ENABLE_Z), .ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z)) dut (
+  rv_core_single #(.ENABLE_C(ENABLE_C || ENABLE_A || ENABLE_Z || ENABLE_M), .ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z), .ENABLE_M(ENABLE_M)) dut (
     .clk(clk), .rst_n(rst_n),
     .imem_addr(imem_addr), .imem_addr_next(imem_addr_next), .imem_rdata(imem_rdata), .imem_valid(imem_valid),
     .imem_rdata_next(imem_rdata_next), .imem_next_valid(imem_next_valid),
     .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid), .dmem_atomic_commit(dmem_atomic_commit),
+    .irq_msip(irq_msip), .irq_mtip(irq_mtip), .irq_meip(irq_meip),
     .halted(halted), .halt_cause(halt_cause), .halt_pc(halt_pc),
-    .ret_valid(ret_valid), .ret_pc(ret_pc), .ret_insn(ret_insn), .ret_pc_next(ret_pc_next),
+    .ret_valid(ret_valid), .ret_pc(ret_pc), .ret_insn(ret_insn),
+    .ret_raw_insn(ret_raw_insn), .ret_expanded_insn(ret_expanded_insn),
+    .ret_ilen_bytes(ret_ilen_bytes), .ret_pc_next(ret_pc_next),
     .ret_rd_we(ret_rd_we), .ret_rd(ret_rd), .ret_rd_wdata(ret_rd_wdata),
     .ret_mem_re(ret_mem_re), .ret_mem_we(ret_mem_we), .ret_mem_addr(ret_mem_addr),
     .ret_mem_be(ret_mem_be), .ret_mem_wdata(ret_mem_wdata), .ret_mem_rdata(ret_mem_rdata)
   );
+  always @(posedge clk) if (rst_n && ENABLE_M && dut.irq_take) irq_seen <= 1'b1;
+  always @(negedge clk) begin
+    if (!rst_n) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; irq_fired<=0; end
+    else if (ENABLE_M) begin
+      if (irq_seen) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; end
+      else if (!irq_fired && irq_pc >= 0 && dut.pc == irq_pc) begin
+        irq_msip<=irq_level_mask[0]; irq_mtip<=irq_level_mask[1]; irq_meip<=irq_level_mask[2]; irq_fired<=1'b1;
+      end
+    end
+  end
 
   // ---------------- Memory model ----------------
   int oob_errors = 0;
@@ -65,7 +88,7 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
 
   always @(posedge clk) begin
     if (rst_n) begin
-      if (!halted && imem_oob) oob_errors++;
+      if (!halted && imem_oob && !ENABLE_M) oob_errors++;
       if ((dmem_re || (|dmem_we)) && dmem_oob) oob_errors++;
       if (dmem_atomic_commit) begin
         atomic_commits++;
@@ -101,6 +124,10 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
 
   // ---------------- Trace ----------------
   int trace_fd = 0;
+  int trap_fd = 0;
+  int mcov_fd = 0;
+  string trap_file;
+  string mcov_file;
   longint instret = 0;
 
   function automatic int be_size(input logic [3:0] be);
@@ -118,6 +145,19 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
   endfunction
 
   always @(posedge clk) begin
+    if (rst_n && ENABLE_M && mcov_fd != 0 && ret_valid && dut.csr_inst && dut.csr_write)
+      $fdisplay(mcov_fd,"Z CSR_WRITE %08x %08x %03x %08x %08x",ret_pc,ret_raw_insn,dut.csr_addr,dut.csr_old,dut.csr_new);
+    if (rst_n && ENABLE_M && mcov_fd != 0 && ret_valid && ret_insn == INSN_MRET)
+      $fdisplay(mcov_fd,"M MRET %08x %08x",ret_pc,ret_raw_insn);
+    if (rst_n && ENABLE_M && mcov_fd != 0 && ret_valid && dut.csr_inst)
+      $fdisplay(mcov_fd,"Z CSR_ACCESS %08x %08x %03x %08x %08x %08x %0d",
+                ret_pc,ret_raw_insn,dut.csr_addr,dut.csr_source,dut.csr_old,dut.csr_new,dut.csr_write);
+    if (rst_n && ENABLE_Z && mcov_fd != 0 && ret_valid && ret_insn == 32'h0000_100F)
+      $fdisplay(mcov_fd,"Z FENCEI %08x %08x %0d %08x",ret_pc,ret_raw_insn,ret_ilen_bytes,ret_pc_next);
+    if (rst_n && ENABLE_M && trap_fd != 0 && (dut.trap_enter || dut.irq_take))
+      $fdisplay(trap_fd,"%08x\t%08x\t%08x\t%08x\t%08x",dut.pc,dut.raw_insn,
+                {dut.irq_take,26'b0,(dut.irq_take ? dut.irq_cause : dut.architectural_cause)},
+                dut.trap_value,dut.trap_target);
     if (rst_n && ret_valid) begin
       automatic int    st_n = 0;
       automatic word_t st_d = 32'h0;
@@ -125,6 +165,7 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
       automatic word_t rdv  = 32'h0;
       automatic int    rdn  = 0;
       instret++;
+      if (done_store) begin test_done<=1'b1; test_done_pc<=ret_pc; test_done_raw<=ret_raw_insn; test_done_ilen<=ret_ilen_bytes; end
       if (ret_mem_we) begin
         st_n = be_size(ret_mem_be);
         st_a = ret_mem_addr;
@@ -135,7 +176,7 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
       if (ret_rd_we) begin rdn = int'(ret_rd); rdv = ret_rd_wdata; end
       if (trace_fd != 0) begin
         if (ENABLE_C || ENABLE_A)
-          $fdisplay(trace_fd, "I %08x %08x %02d %08x %02d %08x %0d %08x %08x", ret_pc, dut.ret_raw_insn, dut.ret_ilen_bytes, dut.ret_expanded_insn, rdn, rdv, st_n, st_a, st_d);
+      $fdisplay(trace_fd, "I %08x %08x %02d %08x %02d %08x %0d %08x %08x", ret_pc, ret_raw_insn, ret_ilen_bytes, ret_expanded_insn, rdn, rdv, st_n, st_a, st_d);
         else
           $fdisplay(trace_fd, "%08x %08x %02d %08x %0d %08x %08x", ret_pc, ret_insn, rdn, rdv, st_n, st_a, st_d);
       end
@@ -159,7 +200,18 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
     void'($value$plusargs("EXPECT_CAUSE=%d", expect_cause));
     void'($value$plusargs("CHECK_GP=%d", check_gp));
     void'($value$plusargs("TIMEOUT=%d", timeout));
+    void'($value$plusargs("IRQ_PC=%h", irq_pc));
+    void'($value$plusargs("IRQ_LEVELS=%d", irq_level_mask));
     if ($value$plusargs("TRACE=%s", trace_file)) trace_fd = $fopen(trace_file, "w");
+    if ($value$plusargs("TRAP=%s", trap_file)) begin
+      trap_fd=$fopen(trap_file,"w");
+      if(trap_fd==0) oob_errors++;
+      else $fdisplay(trap_fd,"fault_pc\traw\tmcause\tmtval\ttarget");
+    end
+    if ($value$plusargs("MCOV=%s", mcov_file)) begin
+      mcov_fd=$fopen(mcov_file,"w");
+      if(mcov_fd==0) oob_errors++;
+    end
     if ($value$plusargs("ACOV=%s", acov_file)) begin
       acov_fd=$fopen(acov_file,"w");
       if(acov_fd==0) begin oob_errors++; $display("ACOV_OPEN_FAIL: %s",acov_file); end
@@ -174,35 +226,49 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
     repeat (3) @(posedge clk);
     @(negedge clk) rst_n = 1'b1;
 
-    while (!halted && cycles < timeout) begin
+    while (!(ENABLE_M ? (test_done || done_store) : halted) && cycles < timeout) begin
       @(posedge clk);
       cycles++;
     end
     @(negedge clk);
 
     gp_val = dut.u_rf.regs[3];
-    pass = halted && (int'(halt_cause) == expect_cause) && (oob_errors == 0);
+    pass = (ENABLE_M ? (test_done || done_store) : (halted && (int'(halt_cause) == expect_cause))) && (oob_errors == 0);
     if (check_gp != 0 && expect_cause == int'(HALT_ECALL)) pass = pass && (gp_val == 32'h1);
 
     if (trace_fd != 0) begin
-      if (ENABLE_C || ENABLE_A) $fdisplay(trace_fd, "STOP %08x %08x %02d %0d", halt_pc, dut.halt_raw_insn, dut.halt_ilen_bytes, int'(halt_cause));
-      $fdisplay(trace_fd, "HALT %0d %08x", int'(halt_cause), halt_pc);
+      if (ENABLE_C || ENABLE_A || ENABLE_M)
+        $fdisplay(trace_fd, "STOP %08x %08x %02d %0d", ENABLE_M ? test_done_pc + test_done_ilen : halt_pc,
+                  ENABLE_M ? test_done_raw : dut.halt_raw_insn, ENABLE_M ? test_done_ilen : dut.halt_ilen_bytes,
+                  ENABLE_M ? 0 : int'(halt_cause));
+      $fdisplay(trace_fd, "HALT %0d %08x", ENABLE_M ? 0 : int'(halt_cause), ENABLE_M ? test_done_pc + test_done_ilen : halt_pc);
       for (int r = 1; r < 32; r++) $fdisplay(trace_fd, "REG %0d %08x", r, dut.u_rf.regs[r]);
       if (ENABLE_Z) begin
         $fdisplay(trace_fd, "CSR 800 %08x", dut.csr0);
         $fdisplay(trace_fd, "CSR 801 %08x", dut.csr1);
         $fdisplay(trace_fd, "CSR cc0 %08x", CSR_STAGE6_ID);
       end
+      if (ENABLE_M) begin
+        $fdisplay(trace_fd,"CSR 300 %08x",dut.u_machine.mstatus); $fdisplay(trace_fd,"CSR 301 %08x",(32'h40001100 | (ENABLE_A ? 32'h1 : 32'h0) | ((ENABLE_C || ENABLE_A || ENABLE_Z || ENABLE_M) ? 32'h4 : 32'h0)));
+        $fdisplay(trace_fd,"CSR 304 %08x",dut.u_machine.mie); $fdisplay(trace_fd,"CSR 305 %08x",dut.u_machine.mtvec);
+        $fdisplay(trace_fd,"CSR 340 %08x",dut.u_machine.mscratch); $fdisplay(trace_fd,"CSR 341 %08x",dut.u_machine.mepc);
+        $fdisplay(trace_fd,"CSR 342 %08x",dut.u_machine.mcause); $fdisplay(trace_fd,"CSR 343 %08x",dut.u_machine.mtval);
+        $fdisplay(trace_fd,"CSR b00 %08x",dut.u_machine.mcycle);
+        $fdisplay(trace_fd,"CSR b02 %08x",dut.u_machine.minstret); $fdisplay(trace_fd,"CSR b80 %08x",dut.u_machine.mcycleh);
+        $fdisplay(trace_fd,"CSR b82 %08x",dut.u_machine.minstreth); $fdisplay(trace_fd,"CSR 344 %08x",dut.u_machine.pending);
+      end
       for (int a = 16'h4000; a < 16'h6000; a += 4)
         if (mem[a >> 2] != 32'h0) $fdisplay(trace_fd, "MEM %08x %08x", a, mem[a >> 2]);
       $fclose(trace_fd);
     end
     if(acov_fd!=0) $fclose(acov_fd);
+    if(trap_fd!=0) $fclose(trap_fd);
+    if(mcov_fd!=0) $fclose(mcov_fd);
 
     $display("ATOMIC_STATS commits=%0d writes=%0d", atomic_commits, atomic_writes);
     $display("TEST_RESULT: %s hex=%s cause=%0d expect=%0d gp=0x%0h instret=%0d cycles=%0d oob=%0d%s",
-             pass ? "PASS" : "FAIL", hex_file, int'(halt_cause), expect_cause, gp_val, instret, cycles,
-             oob_errors, halted ? "" : " TIMEOUT");
+             pass ? "PASS" : "FAIL", hex_file, ENABLE_M ? 0 : int'(halt_cause), expect_cause, gp_val, instret, cycles,
+             oob_errors, (ENABLE_M ? (test_done || done_store) : halted) ? "" : " TIMEOUT");
     $finish;
   end
 endmodule

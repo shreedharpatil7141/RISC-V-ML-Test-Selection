@@ -8,4 +8,5 @@ rtl/alu/rv_md_comb.sv
 rtl/alu/rv_branch_cmp.sv
 rtl/control_unit/rv_control.sv
 rtl/memory/rv_lsu.sv
+rtl/core/rv_machine_state.sv
 rtl/core/rv_core_single.sv

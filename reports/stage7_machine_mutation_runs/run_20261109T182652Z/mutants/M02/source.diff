@@ -1,0 +1,11 @@
+--- rtl/core/rv_machine_state.sv
++++ rtl/core/rv_machine_state.sv [mutant]
+@@ -67,7 +67,7 @@
+   assign mepc_value = mepc;
+   assign mstatus_mie = mstatus[3];
+   assign trap_target = (mtvec & 32'hffff_fffc) |
+-                       ((trap_interrupt && mtvec[1:0] == 2'b01) ? {25'b0,trap_cause,2'b00} : 32'b0);
++                       ((trap_interrupt && mtvec[1:0] == 2'b01) ? 32'b0 : 32'b0);
+   assign mret_target = mepc & (ENABLE_C ? 32'hffff_fffe : 32'hffff_fffc);
+
+   always_ff @(posedge clk or negedge rst_n) begin
