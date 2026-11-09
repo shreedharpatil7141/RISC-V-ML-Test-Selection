@@ -1,0 +1,2 @@
+verilator=/mnt/c/RISC-V-ML-Test-Selection/reports/stage7_verilator_full_20261109T182310Z.txt
+xsim=/mnt/c/RISC-V-ML-Test-Selection/reports/stage7_xsim_full_20261109T181948Z.txt

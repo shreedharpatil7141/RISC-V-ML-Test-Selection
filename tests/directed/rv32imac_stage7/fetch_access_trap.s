@@ -1,0 +1,13 @@
+li x1, 0x80
+csrrw x0, 0x305, x1
+li x3, 0x10000
+jr x3
+.org 0x10
+lui x6, 0x10
+li x7, 0x53544737
+sw x7, -4(x6)
+jal x0, 0
+.org 0x80
+li x2, 0x10
+csrrw x0, 0x341, x2
+mret

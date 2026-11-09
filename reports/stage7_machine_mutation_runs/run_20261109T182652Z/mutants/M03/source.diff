@@ -1,0 +1,10 @@
+--- rtl/core/rv_core_pipe.sv
++++ rtl/core/rv_core_pipe.sv [mutant]
+@@ -191,7 +191,7 @@
+   rv_mem_stage #(.ENABLE_C(ENABLE_C), .ENABLE_A(ENABLE_A)) u_mem (
+     .clk(clk), .rst_n(rst_n), .ex_mem(ex_mem), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid),
+     .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata),
+-    .dmem_atomic_commit(dmem_atomic_commit), .reservation_invalidate(machine_trap || irq_take),
++    .dmem_atomic_commit(dmem_atomic_commit), .reservation_invalidate(1'b0),
+     .mem_wb_next(mem_wb_next), .fault(fault), .fault_cause(fault_cause)
+   );

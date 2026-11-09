@@ -7,7 +7,8 @@ module rv_ex_stage
   import rv_pipe_pkg::*;
 #(
   parameter bit USE_ITERATIVE_M = 1'b1,
-  parameter bit ENABLE_C = 1'b0
+  parameter bit ENABLE_C = 1'b0,
+  parameter bit ENABLE_M = 1'b0
 )
 (
   input  id_ex_t   id_ex,
@@ -18,6 +19,7 @@ module rv_ex_stage
   input  logic     kill,
   input  word_t    exmem_alu_y,   // forward source: EX/MEM result
   input  word_t    memwb_data,    // forward source: MEM/WB write-back data
+  input  word_t    mret_target,
   output ex_mem_t  ex_mem_next,
   output logic     redirect,
   output word_t    redirect_target,
@@ -39,6 +41,16 @@ module rv_ex_stage
   word_t rs1_f, rs2_f, alu_a, alu_b, alu_y, md_y, md_comb_y, md_result, result, target, csr_source;
   logic  cmp_taken, redirect_raw, md_ready, md_accepted, md_done_raw, md_abort_raw;
   logic  is_div, md_start_req;
+
+  function automatic word_t csr_warl(input logic [11:0] address, input word_t value);
+    case (address)
+      12'h300: return 32'h0000_1800 | (value & 32'h88);
+      12'h304: return value & 32'h888;
+      12'h305: return {value[31:2], (value[1:0] <= 1 ? value[1:0] : 2'b00)};
+      12'h341: return value & (ENABLE_C ? 32'hffff_fffe : 32'hffff_fffc);
+      default: return value;
+    endcase
+  endfunction
 
   always_comb begin
     case (fwd_a)
@@ -91,9 +103,9 @@ module rv_ex_stage
   assign dbg_m_fwd_a = fwd_a;
   assign dbg_m_fwd_b = fwd_b;
 
-  assign redirect_raw = (id_ex.is_branch && cmp_taken) || id_ex.is_jal || id_ex.is_jalr || id_ex.is_fencei;
-  assign target       = id_ex.is_fencei ? (id_ex.pc + id_ex.ilen_bytes) :
-                        (id_ex.is_jalr ? {alu_y[31:1], 1'b0} : (id_ex.pc + id_ex.imm));
+  assign redirect_raw = (id_ex.is_branch && cmp_taken) || id_ex.is_jal || id_ex.is_jalr || id_ex.is_fencei || id_ex.is_mret;
+  assign target       = id_ex.is_mret ? mret_target : (id_ex.is_fencei ? (id_ex.pc + id_ex.ilen_bytes) :
+                        (id_ex.is_jalr ? {alu_y[31:1], 1'b0} : (id_ex.pc + id_ex.imm)));
   assign md_result    = USE_ITERATIVE_M ? md_y : md_comb_y;
   // Preserve the Stage 2 link-value mutation target; M result selection is applied at EX/MEM below.
   assign result       = (id_ex.wb_sel == WB_PC4) ?
@@ -124,17 +136,20 @@ module rv_ex_stage
     ex_mem_next.mem_we     = id_ex.mem_we;
     ex_mem_next.is_a       = id_ex.is_a;
     ex_mem_next.csr_write  = id_ex.is_csr &&
-      ((id_ex.csr_addr == 12'h800) || (id_ex.csr_addr == 12'h801)) &&
       ((id_ex.funct3[1:0] == 2'b01) || (id_ex.rs1 != 0));
+    ex_mem_next.is_mret    = id_ex.is_mret;
     ex_mem_next.csr_addr   = id_ex.csr_addr;
+    ex_mem_next.csr_source = csr_source;
     case (id_ex.funct3[1:0])
       2'b01: ex_mem_next.csr_new = csr_source;
       2'b10: ex_mem_next.csr_new = id_ex.csr_old | csr_source;
       2'b11: ex_mem_next.csr_new = id_ex.csr_old & ~csr_source;
       default: ex_mem_next.csr_new = id_ex.csr_old;
     endcase
-    ex_mem_next.alu_y      = id_ex.is_csr ? id_ex.csr_old :
-                             (id_ex.is_a ? rs1_f : (id_ex.is_m ? md_result : result));
+    if (ex_mem_next.csr_write) ex_mem_next.csr_new = csr_warl(id_ex.csr_addr, ex_mem_next.csr_new);
+    ex_mem_next.alu_y      = (cause == HALT_FETCH_MISALIGN) ? target :
+                             (id_ex.is_csr ? id_ex.csr_old :
+                             (id_ex.is_a ? rs1_f : (id_ex.is_m ? md_result : result)));
     ex_mem_next.store_data = rs2_f;
     ex_mem_next.cause      = cause;
   end

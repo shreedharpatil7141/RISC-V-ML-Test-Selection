@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/mnt/c/RISC-V-ML-Test-Selection/reports/stage7_machine_mutation_runs/run_20261109T182652Z/mutants/M02/workspace/scripts/simulation/run_stage7_enabled.py", line 328, in <module>
+    if __name__ == "__main__": main()
+                               ~~~~^^
+  File "/mnt/c/RISC-V-ML-Test-Selection/reports/stage7_machine_mutation_runs/run_20261109T182652Z/mutants/M02/workspace/scripts/simulation/run_stage7_enabled.py", line 241, in main
+    text=launch.terminal(log)
+  File "/mnt/c/RISC-V-ML-Test-Selection/reports/stage7_machine_mutation_runs/run_20261109T182652Z/mutants/M02/workspace/scripts/simulation/run_stage6_enabled.py", line 94, in terminal
+    raise RuntimeError(f"invalid simulator terminal record: {log}")
+RuntimeError: invalid simulator terminal record: /mnt/c/RISC-V-ML-Test-Selection/reports/stage7_machine_mutation_runs/run_20261109T182652Z/mutants/M02/workspace/sim_out_stage7_verilator_full_20261109T182843Z/irq_vectored_priority.golden.log

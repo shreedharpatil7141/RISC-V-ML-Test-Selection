@@ -1,0 +1,328 @@
+#!/usr/bin/env python3
+"""Build and run the Stage 7 machine-mode suite against ISS, golden, and pipeline."""
+import argparse, csv, hashlib, json, os, re, shutil, subprocess, sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[1]
+sys.path.insert(0, str(HERE))
+import run_stage6_enabled as launch
+
+
+def require(ok, message):
+    if not ok: raise RuntimeError(message)
+
+
+def read_tsv_records(path, expected_fields, label):
+    with path.open(newline="", encoding="ascii") as src:
+        reader=csv.DictReader(src,delimiter="\t")
+        require(reader.fieldnames == expected_fields,
+                f"{label}: malformed header expected={expected_fields} actual={reader.fieldnames} path={path}")
+        records=list(reader)
+    for number, record in enumerate(records,2):
+        if None in record or any(value is None for value in record.values()):
+            raise RuntimeError(f"{label}: malformed record line={number} fields={record!r}")
+    return records
+
+
+def sidecar_records(lines, tag, field_count, label):
+    records=[]
+    for number, line in enumerate(lines,1):
+        fields=line.split()
+        if fields[:len(tag)] != tag: continue
+        if len(fields) != field_count:
+            raise RuntimeError(f"{label}: malformed sidecar record line={number} expected_fields={field_count} "
+                               f"actual_fields={len(fields)} record={line!r}")
+        records.append(fields)
+    return records
+
+
+def validate_z_records(records, label):
+    for number, event in enumerate(records,2):
+        malformed=[]
+        if event["kind"] not in ("CSR","FENCEI"):
+            malformed.append(f"unknown kind={event['kind']!r}")
+        for field in ("pc","raw"):
+            if not re.fullmatch(r"[0-9a-f]{8}",event[field]): malformed.append(f"bad {field}={event[field]!r}")
+        if not event["ilen"].isdigit() or int(event["ilen"]) <= 0:
+            malformed.append(f"bad ilen={event['ilen']!r}")
+        if event["kind"] == "FENCEI":
+            if not re.fullmatch(r"[0-9a-f]{8}",event["csr_or_pcnext"]):
+                malformed.append(f"bad next_pc={event['csr_or_pcnext']!r}")
+            for field in ("funct3","source_index","source","old","new","write_intent"):
+                if event[field] != "-": malformed.append(f"unexpected FENCEI {field}={event[field]!r}")
+        elif event["kind"] == "CSR":
+            if not re.fullmatch(r"[0-9a-f]{3}",event["csr_or_pcnext"]):
+                malformed.append(f"bad csr={event['csr_or_pcnext']!r}")
+            for field in ("funct3","source_index"):
+                if not event[field].isdigit(): malformed.append(f"bad {field}={event[field]!r}")
+            for field in ("source","old","new"):
+                if not re.fullmatch(r"[0-9a-f]{8}",event[field]): malformed.append(f"bad {field}={event[field]!r}")
+            if event["write_intent"] not in ("0","1"):
+                malformed.append(f"bad write_intent={event['write_intent']!r}")
+        if malformed:
+            raise RuntimeError(f"{label}: malformed event line={number} record={event!r} errors={malformed}")
+
+
+def require_records_equal(actual, expected, label):
+    if actual != expected:
+        index=next((n for n,(a,e) in enumerate(zip(actual,expected)) if a != e),min(len(actual),len(expected)))
+        raise RuntimeError(f"{label}: record mismatch index={index} actual="
+                           f"{actual[index] if index<len(actual) else '<EOF>'!r} expected="
+                           f"{expected[index] if index<len(expected) else '<EOF>'!r} "
+                           f"actual_count={len(actual)} expected_count={len(expected)}")
+
+
+def compare(actual, expected, label):
+    def filtered(text):
+        timing_counters = {0xB00, 0xB80}
+        kept = []
+        for line in text.splitlines():
+            fields = line.split()
+            if len(fields) >= 2 and fields[0] == "CSR" and int(fields[1], 16) in timing_counters:
+                continue
+            kept.append(line)
+        return "\n".join(kept)
+    a, e = filtered(actual), filtered(expected)
+    if a != e:
+        aa, ee = a.splitlines(), e.splitlines()
+        i = next((n for n,(x,y) in enumerate(zip(aa,ee)) if x!=y), min(len(aa),len(ee)))
+        raise RuntimeError(f"{label}: line={i+1} actual={aa[i] if i<len(aa) else '<EOF>'!r} expected={ee[i] if i<len(ee) else '<EOF>'!r}")
+
+
+def main():
+    global_args = argparse.ArgumentParser(description=__doc__)
+    global_args.add_argument("--sim", required=True, choices=("verilator", "xsim"))
+    global_args.add_argument("--prepared", required=True)
+    global_args.add_argument("--case", choices=("fault_before_irq", "fencei_store_replace", "fetch_access_trap",
+        "irq_div_restart", "irq_mask_pending", "irq_software", "irq_timer", "irq_vectored_priority",
+        "lr_trap_sc", "machine_trap_return", "mixed_width_trap", "store_fault_precision", "wrongpath_fault"))
+    args = global_args.parse_args()
+    prep = Path(args.prepared).resolve()
+    prep_text=(prep / "stage7_preparation.txt").read_text(encoding="ascii")
+    marker = "STAGE7_PREPARATION READY stage6_compat=259 stage7_cases=13 images=13 references=13 errors=0"
+    require(marker in prep_text, "prepared Stage 7 inventory missing")
+    for line in prep_text.splitlines():
+        m=re.fullmatch(r"(artifact_)?sha256 ([^=]+)=([0-9a-f]{64})",line)
+        if not m: continue
+        path=(ROOT/m.group(2)).resolve()
+        require(path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest()==m.group(3),
+                f"prepared provenance mismatch/missing file: {path}")
+    rows = list(csv.DictReader((prep / "m_manifest.csv").open(newline="")))
+    require(len(rows) == 13 and len({r["name"] for r in rows}) == 13, "Stage 7 case inventory mismatch")
+    run_rows = [row for row in rows if args.case is None or row["name"] == args.case]
+    require(len(run_rows) == (13 if args.case is None else 1), f"Stage 7 selected case missing or duplicated: {args.case}")
+    for row in run_rows:
+        for p in (ROOT / row["hexpath"], prep / "m_iss" / f"{row['name']}.trace",
+                  prep / "m_iss" / f"{row['name']}.trap.tsv", prep / "m_iss" / f"{row['name']}.z.tsv"):
+            require(p.is_file() and p.stat().st_size, f"missing prepared artifact: {p}")
+
+    tools = ("verilator", "make") if args.sim == "verilator" else ("xvlog", "xelab", "xsim")
+    for tool in tools:
+        path = shutil.which(tool)
+        require(path is not None and Path(path).is_file(), f"simulator preflight missing {tool}")
+        launch.TOOLS[tool] = str(Path(path).resolve())
+    if args.sim == "verilator":
+        require(any(shutil.which(c) for c in ("g++", "clang++", "c++")), "C++ compiler missing")
+    else:
+        launch.COMSPEC = os.environ.get("COMSPEC") or shutil.which("cmd.exe")
+        require(launch.COMSPEC is not None, "COMSPEC/cmd.exe missing for XSim batch executables")
+    stamp = __import__("datetime").datetime.now(__import__("datetime").timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    run_kind = f"focused_{args.case}" if args.case else "full"
+    out = ROOT / f"sim_out_stage7_{args.sim}_{run_kind}_{stamp}"
+    require(not out.exists(), f"output directory exists: {out}")
+    out.mkdir()
+    command_records={"owner_command": [sys.executable, *sys.argv], "commands": {}}
+    commands_file=out/"commands.json"
+    def record_command(label, argv, cwd):
+        command_records["commands"][label]={"argv":[str(x) for x in argv],"cwd":str(Path(cwd).resolve())}
+        commands_file.write_text(json.dumps(command_records,indent=2)+"\n",encoding="utf-8",newline="\n")
+    commands_file.write_text(json.dumps(command_records,indent=2)+"\n",encoding="utf-8",newline="\n")
+    rtl = ROOT / "scripts/simulation/stage4_4_rtl.f"
+    env = ROOT / "verification/environment"
+    rtl_sources=[ROOT/line.strip() for line in rtl.read_text(encoding="utf-8").splitlines() if line.strip()]
+    require(all(source.is_file() for source in rtl_sources),
+            "RTL file list has missing source(s): " + ", ".join(str(p) for p in rtl_sources if not p.is_file()))
+    tops = (("golden", "tb_rv_core_stage7"), ("pipe", "tb_rv_pipe_stage7"))
+    snapshots = {}
+    if args.sim == "verilator":
+        unit_obj=out/"obj_decoder_machine"; unit_obj.mkdir()
+        unit_build=["verilator","-sv","--binary","--timing","-Wno-fatal","-Wno-lint","-Wno-style",
+                    "-f",rtl,env/"tb_rv_decoder_machine.sv","--top-module","tb_rv_decoder_machine",
+                    "-Mdir",unit_obj,"-o","decoder_machine"]
+        record_command("build_decoder_machine",unit_build,ROOT)
+        launch.run(unit_build,ROOT,out/"decoder_machine.build.log")
+        record_command("run_decoder_machine",[unit_obj/"decoder_machine"],ROOT)
+        launch.run([unit_obj/"decoder_machine"],ROOT,out/"decoder_machine.unit.log")
+        require("STAGE7_DECODER_UNIT PASS checks=15 errors=0" in (out/"decoder_machine.unit.log").read_text(encoding="utf-8"),
+                "Verilator M-mode decoder unit did not pass")
+        build_errors={}
+        for name, top in tops:
+            obj=out/f"obj_{name}"; obj.mkdir()
+            build_args=["verilator","-sv","--binary","--timing","-Wno-fatal","-Wno-lint","-Wno-style",
+                        "-f",rtl,env/"tb_rv_core.sv",env/"tb_rv_pipe_stage4.sv",env/"tb_rv_stage7.sv",
+                        "--top-module",top,"-Mdir",obj,"-o",name]
+            record_command(f"build_{name}",build_args,ROOT)
+            try:
+                launch.run(build_args, ROOT, out/f"{name}.build.log")
+                binary=obj/name
+                require(binary.is_file(), f"missing successful build output: {binary}")
+                snapshots[name]=("verilator",binary)
+            except Exception as exc:
+                build_errors[name]=f"{type(exc).__name__}: {exc}"
+        require(not build_errors, f"one or more core builds failed after both were attempted; {build_errors}; evidence={out}")
+    else:
+        xdir=out/"xsim"; xdir.mkdir()
+        absfl=out/"stage7_rtl_abs.f"
+        absfl.write_text("".join(str((ROOT/ln.strip()).resolve()).replace("\\","/")+"\n" for ln in rtl.read_text(encoding="utf-8").splitlines() if ln.strip()),encoding="utf-8",newline="\n")
+        launch.run(["xvlog","-sv","-f",launch.simulator_path(absfl)],xdir,out/"xvlog_rtl.log")
+        for source in ("tb_rv_core.sv","tb_rv_pipe_stage4.sv","tb_rv_stage7.sv"):
+            args0=["xvlog","-sv",launch.simulator_path(env/source)]
+            record_command(f"compile_{source}",args0,xdir)
+            launch.run(args0,xdir,out/(source+".compile.log"))
+        args0=["xvlog","-sv",launch.simulator_path(env/"tb_rv_decoder_machine.sv")]
+        record_command("compile_decoder_machine",args0,xdir); launch.run(args0,xdir,out/"decoder_machine.compile.log")
+        args0=["xelab","-debug","off","tb_rv_decoder_machine","-s","decoder_machine"]
+        record_command("elab_decoder_machine",args0,xdir); launch.run(args0,xdir,out/"decoder_machine.elab.log")
+        args0=["xsim","decoder_machine","--runall","--log",launch.simulator_path(out/"decoder_machine.unit.log")]
+        record_command("run_decoder_machine",args0,xdir); launch.run(args0,xdir,out/"decoder_machine.launch.log")
+        require("STAGE7_DECODER_UNIT PASS checks=15 errors=0" in (out/"decoder_machine.unit.log").read_text(encoding="utf-8"),
+                "XSim M-mode decoder unit did not pass")
+        for name,top in tops:
+            args0=["xelab","-debug","off",top,"-s",name]
+            record_command(f"elab_{name}",args0,xdir); launch.run(args0,xdir,out/(name+".elab.log"))
+            snapshots[name]=("xsim",name)
+
+    full=gold_pipe=trap_count=csr_commits=mret_count=fencei_count=div_irq_aborts=0
+    sync_causes=set(); irq_causes=set(); csr_addresses=set()
+    for row in run_rows:
+        name=row["name"]
+        expected=(prep/"m_iss"/f"{name}.trace").read_text(encoding="ascii")
+        expected_trap_rows=read_tsv_records(prep/"m_iss"/f"{name}.trap.tsv",
+                                            ["fault_pc","raw","mcause","mtval","target"],
+                                            f"{name}/ISS trap reference")
+        zrows=read_tsv_records(prep/"m_iss"/f"{name}.z.tsv",
+                              ["kind","pc","raw","ilen","csr_or_pcnext","funct3",
+                               "source_index","source","old","new","write_intent"],
+                              f"{name}/ISS CSR/FENCE.I reference")
+        validate_z_records(zrows,f"{name}/ISS CSR/FENCE.I reference")
+        traces={}
+        launch_errors={}
+        # Always capture both implementations before architectural comparisons,
+        # so a golden failure does not discard pipeline diagnostics (or vice versa).
+        for kind in ("golden","pipe"):
+            engine,exe=snapshots[kind]
+            trace,log,trap=out/f"{name}.{kind}.trace",out/f"{name}.{kind}.log",out/f"{name}.{kind}.trap.tsv"
+            mcov=out/f"{name}.{kind}.mcov"
+            plus=[f"+HEX={launch.simulator_path(ROOT/row['hexpath'])}",f"+TRACE={launch.simulator_path(trace)}",
+                  f"+TRAP={launch.simulator_path(trap)}","+EXPECT_CAUSE=0","+CHECK_GP=0"]
+            if row["irq_pc"]:
+                plus += [f"+IRQ_PC={row['irq_pc']}",f"+IRQ_LEVELS={row['irq_levels']}",
+                         f"+IRQ_WAIT_DIV={row['irq_wait_div']}"]
+            plus += [f"+MCOV={launch.simulator_path(mcov)}"]
+            try:
+                if engine=="xsim":
+                    args0=["xsim",exe,"--runall","--log",launch.simulator_path(log)]
+                    for p in plus: args0 += ["--testplusarg",p[1:]]
+                    record_command(f"run_{name}_{kind}",args0,out/"xsim")
+                    launch.run(args0,out/"xsim",out/f"{name}.{kind}.launch.log")
+                else:
+                    args0=[exe,*plus]
+                    record_command(f"run_{name}_{kind}",args0,ROOT)
+                    launch.run(args0,ROOT,log)
+            except Exception as exc:
+                launch_errors[kind]=f"{type(exc).__name__}: {exc}"
+        for kind in ("golden","pipe"):
+            engine,exe=snapshots[kind]
+            trace,log,trap=out/f"{name}.{kind}.trace",out/f"{name}.{kind}.log",out/f"{name}.{kind}.trap.tsv"
+            mcov=out/f"{name}.{kind}.mcov"
+            require(kind not in launch_errors,
+                    f"{name}/{kind}: launch failed after both cores were attempted; {launch_errors}; evidence={out}")
+            text=launch.terminal(log)
+            require("TIMEOUT" not in text and "cause=0 expect=0" in text,f"{name}/{kind}: terminal check mismatch")
+            compare(trace.read_text(encoding="ascii"),expected,f"{name}/{kind} vs independent ISS")
+            actual_trap_rows=read_tsv_records(trap,["fault_pc","raw","mcause","mtval","target"],
+                                              f"{name}/{kind} trap sidecar")
+            require_records_equal(actual_trap_rows,expected_trap_rows,
+                                  f"{name}/{kind} trap events vs independent ISS")
+            mcov_lines=mcov.read_text(encoding="ascii").splitlines()
+            access_rows=sidecar_records(mcov_lines,["Z","CSR_ACCESS"],9,f"{name}/{kind} CSR_ACCESS")
+            actual_accesses=[record[2:] for record in access_rows]
+            expected_accesses=[[e["pc"],e["raw"],e["csr_or_pcnext"],e["source"],e["old"],e["new"],e["write_intent"]]
+                               for e in zrows if e["kind"]=="CSR"]
+            require_records_equal(actual_accesses,expected_accesses,f"{name}/{kind} CSR access/intent sidecar")
+            actual_writes=sidecar_records(mcov_lines,["Z","CSR_WRITE"],7,f"{name}/{kind} CSR_WRITE")
+            expected_writes=[["Z","CSR_WRITE",e["pc"],e["raw"],e["csr_or_pcnext"],e["old"],e["new"]]
+                             for e in zrows if e["kind"]=="CSR" and e["write_intent"]=="1"]
+            require_records_equal(actual_writes,expected_writes,f"{name}/{kind} CSR write commit sidecar")
+            mret_rows=sidecar_records(mcov_lines,["M","MRET"],4,f"{name}/{kind} MRET")
+            actual_mret=[record[2] for record in mret_rows]
+            expected_mret=[f"{int(line.split()[1],16):08x}" for line in expected.splitlines()
+                           if line.startswith("I ") and int(line.split()[2],16)==0x30200073]
+            require(actual_mret==expected_mret,f"{name}/{kind}: MRET commit records mismatch")
+            fencei_rows=sidecar_records(mcov_lines,["Z","FENCEI"],6,f"{name}/{kind} FENCEI")
+            actual_fencei=[record[2:] for record in fencei_rows]
+            expected_fencei=[[e["pc"],e["raw"],str(int(e["ilen"])),e["csr_or_pcnext"]]
+                             for e in zrows if e["kind"]=="FENCEI"]
+            require_records_equal(actual_fencei,expected_fencei,
+                                  f"{name}/{kind} FENCE.I PC/raw/length/next-PC/count/order")
+            if name == "irq_div_restart" and kind == "pipe":
+                aborts=[line.split()[2] for line in mcov_lines if line.startswith("M DIV_ABORT ")]
+                require(aborts == ["00000020"], f"{name}/{kind}: expected one interrupted DIV abort, got {aborts}")
+                div_insn="0262c233"
+                issues=[line.split()[2:] for line in mcov_lines if line.startswith("EV ISSUE 00000020 ")]
+                completes=[line.split()[2:] for line in mcov_lines if line.startswith("EV COMPLETE 00000020 ")]
+                retires=[line.split()[2:] for line in mcov_lines if line.startswith("EV RETIRE 00000020 ")]
+                expected_div=["00000020",div_insn]
+                require(issues == [expected_div,expected_div] and completes == [expected_div] and retires == [expected_div],
+                        f"{name}/{kind}: DIV must start, abort, restart, complete, and retire once; "
+                        f"issues={issues} completes={completes} retires={retires}")
+                div_irq_aborts += len(aborts)
+            fencei_count += len(expected_fencei) if kind == "golden" else 0
+            csr_commits += len(actual_writes); mret_count += len(actual_mret)
+            csr_addresses.update(int(e["csr_or_pcnext"],16) for e in zrows if e["kind"]=="CSR")
+            # Hardware counters have independent timing: minstret must equal the
+            # retired trace count; mcycle must equal the local simulator cycle count.
+            trace_text=trace.read_text(encoding="ascii")
+            stop=next(line.split() for line in trace_text.splitlines() if line.startswith("STOP "))
+            instret=trace_text.count("\nI ")
+            require(int(stop[-1])==0,f"{name}/{kind}: completion STOP cause is not zero")
+            result=re.search(r"instret=(\d+) cycles=(\d+)",text)
+            require(result is not None,f"{name}/{kind}: missing cycle/retirement terminal counters")
+            csr={line.split()[1]:int(line.split()[2],16) for line in trace_text.splitlines() if line.startswith("CSR ")}
+            terminal_instret,terminal_cycles=map(int,result.groups())
+            require(terminal_instret==instret,f"{name}/{kind}: terminal instret differs from retirement trace")
+            require(csr.get("b02")== (terminal_instret & 0xffffffff),f"{name}/{kind}: minstret low half differs from retired count")
+            require(csr.get("b82")== ((terminal_instret >> 32) & 0xffffffff),f"{name}/{kind}: minstret high half differs from retired count")
+            require(csr.get("b00")== (terminal_cycles & 0xffffffff),f"{name}/{kind}: mcycle low half differs from local cycle count")
+            require(csr.get("b80")== ((terminal_cycles >> 32) & 0xffffffff),f"{name}/{kind}: mcycle high half differs from local cycle count")
+            traces[kind]=trace_text; full+=1
+        compare(traces["pipe"],traces["golden"],f"{name} pipeline/golden trace")
+        gold_pipe+=1
+        trap_count += len(expected_trap_rows)
+        for event in expected_trap_rows:
+            cause=int(event["mcause"],16)
+            (irq_causes if cause & 0x80000000 else sync_causes).add(cause & 0x7fffffff)
+    report=ROOT/"reports"/f"stage7_{args.sim}_{run_kind}_{stamp}.txt"; report.parent.mkdir(exist_ok=True)
+    files=[ROOT/"rtl/core/rv_machine_state.sv",ROOT/"rtl/core/rv_core_single.sv",ROOT/"rtl/core/rv_core_pipe.sv",
+           ROOT/"rtl/pipeline/rv_id_stage.sv",ROOT/"rtl/pipeline/rv_ex_stage.sv",ROOT/"rtl/pipeline/rv_mem_stage.sv",
+           ROOT/"rtl/decoder/rv_decoder.sv",HERE/"rv32imc_iss.py",HERE/"prepare_stage7.py",HERE/"run_stage7_enabled.py",
+           HERE/"run_stage6_enabled.py",HERE/"run_stage4_4.py",HERE/"prepare_stage6.py",HERE/"stage7_software_selftest.py",
+           HERE/"rv32_asm.py",HERE/"rv32c_asm.py",HERE/"rv32c_model.py",HERE/"rv32a_model.py",HERE/"rv32i_iss.py",
+           ROOT/"rtl/packages/rv32_pkg.sv",ROOT/"rtl/packages/rv_pipe_pkg.sv",ROOT/"scripts/simulation/stage4_4_rtl.f",
+           ROOT/"verification/environment/tb_rv_core.sv",ROOT/"verification/environment/tb_rv_pipe_stage4.sv",
+           ROOT/"verification/environment/tb_rv_stage7.sv",ROOT/"verification/environment/tb_rv_decoder_machine.sv",
+           ROOT/"tests/directed/rv32imac_stage7/manifest.csv",
+           *sorted((ROOT/"tests/directed/rv32imac_stage7").glob("*.s"))]
+    digest="\n".join(f"sha256 {p.relative_to(ROOT).as_posix()}={hashlib.sha256(p.read_bytes()).hexdigest()}" for p in files)
+    coverage=(f"cases={len(run_rows)} traces={full} golden_pipeline={gold_pipe} traps={trap_count} "
+              f"sync_causes={','.join(str(x) for x in sorted(sync_causes))} "
+              f"irq_causes={','.join(str(x) for x in sorted(irq_causes))} "
+              f"csr_commits_both_cores={csr_commits} csr_addresses={','.join(f'{x:03x}' for x in sorted(csr_addresses))} "
+              f"mret={mret_count} fencei={fencei_count} interrupted_div_aborts={div_irq_aborts}\n")
+    (out/"stage7_coverage.txt").write_text(coverage,encoding="utf-8",newline="\n")
+    report.write_text(f"STAGE7_ENABLED_{args.sim.upper()} PASS {coverage}{digest}\n",encoding="utf-8",newline="\n")
+    print(report.read_text(encoding="utf-8"),end="")
+
+
+if __name__ == "__main__": main()

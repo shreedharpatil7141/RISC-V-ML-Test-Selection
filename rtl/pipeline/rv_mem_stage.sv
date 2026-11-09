@@ -15,6 +15,7 @@ module rv_mem_stage
   input  ex_mem_t      ex_mem,
   input  word_t        dmem_rdata,
   input  logic         dmem_valid,
+  input  logic         reservation_invalidate,
   output word_t        dmem_addr,
   output logic         dmem_re,
   output logic [3:0]   dmem_we,
@@ -79,6 +80,7 @@ module rv_mem_stage
   // operations cannot alter it; each completed SC consumes it.
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin reservation_valid <= 1'b0; reservation_addr <= 32'b0; end
+    else if (reservation_invalidate) reservation_valid <= 1'b0;
     else if (commit) begin
       if (atomic_lr) begin reservation_valid <= 1'b1; reservation_addr <= ex_mem.alu_y; end
       else if (atomic_sc) reservation_valid <= 1'b0;
@@ -100,8 +102,10 @@ module rv_mem_stage
     mem_wb_next.ld_re    = ex_mem.mem_re;
     mem_wb_next.st_we    = ex_mem.mem_we || atomic_write;
     mem_wb_next.csr_write = ex_mem.csr_write;
+    mem_wb_next.is_mret = ex_mem.is_mret;
     mem_wb_next.csr_addr  = ex_mem.csr_addr;
     mem_wb_next.csr_new   = ex_mem.csr_new;
+    mem_wb_next.csr_source = ex_mem.csr_source;
     mem_wb_next.mem_addr = ex_mem.alu_y;
     mem_wb_next.st_be    = ex_mem.is_a ? 4'b1111 : lsu_be;
     mem_wb_next.st_wdata = dmem_wdata;

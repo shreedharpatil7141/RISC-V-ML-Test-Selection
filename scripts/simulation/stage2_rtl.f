@@ -20,4 +20,5 @@ rtl/pipeline/rv_ex_stage.sv
 rtl/pipeline/rv_mem_stage.sv
 rtl/pipeline/rv_wb_stage.sv
 rtl/pipeline/rv_pipe_regs.sv
+rtl/core/rv_machine_state.sv
 rtl/core/rv_core_pipe.sv

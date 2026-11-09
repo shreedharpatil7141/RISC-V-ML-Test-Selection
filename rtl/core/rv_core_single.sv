@@ -13,7 +13,8 @@ module rv_core_single
   parameter word_t RESET_PC = 32'h0000_0000,
   parameter logic ENABLE_C = 1'b0,
   parameter logic ENABLE_A = 1'b0,
-  parameter logic ENABLE_Z = 1'b0
+  parameter logic ENABLE_Z = 1'b0,
+  parameter logic ENABLE_M = 1'b0
 ) (
   input  logic        clk,
   input  logic        rst_n,
@@ -32,6 +33,9 @@ module rv_core_single
   output logic        dmem_atomic_commit,
   input  word_t       dmem_rdata,
   input  logic        dmem_valid,
+  input  logic        irq_msip,
+  input  logic        irq_mtip,
+  input  logic        irq_meip,
   // status
   output logic        halted,
   output halt_cause_e halt_cause,
@@ -129,12 +133,14 @@ module rv_core_single
   logic [2:0] funct3;
   logic [6:0] funct7;
   logic       dec_illegal, is_ecall, is_ebreak, is_fence, is_m, is_a;
+  logic       is_mret;
 
-  rv_decoder #(.ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z)) u_dec (
+  rv_decoder #(.ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z), .ENABLE_M(ENABLE_M)) u_dec (
     .insn(insn), .opcode(opcode), .rd(rd), .rs1(rs1), .rs2(rs2),
     .funct3(funct3), .funct7(funct7), .illegal(dec_illegal),
     .is_ecall(is_ecall), .is_ebreak(is_ebreak), .is_fence(is_fence), .is_m(is_m), .is_a(is_a)
   );
+  assign is_mret = ENABLE_M && (insn == INSN_MRET);
 
   word_t imm;
   rv_imm_gen u_imm (.insn(insn), .imm(imm));
@@ -155,12 +161,36 @@ module rv_core_single
   word_t rs1_data, rs2_data, wb_data, alu_a, alu_b, alu_y;
   logic  rf_we;
   logic csr_inst, csr_write;
+  logic commit;
   logic [11:0] csr_addr;
-  word_t csr0, csr1, csr_old, csr_source, csr_new;
-  assign csr_inst = ENABLE_Z && opcode == OPC_SYSTEM && !is_ecall && !is_ebreak;
+  word_t csr_old, csr_source, csr_new;
+  function automatic word_t csr_warl(input logic [11:0] address, input word_t value);
+    case (address)
+      12'h300: return 32'h0000_1800 | (value & 32'h88);
+      12'h304: return value & 32'h888;
+      12'h305: return {value[31:2], (value[1:0] <= 1 ? value[1:0] : 2'b00)};
+      12'h341: return value & (ENABLE_C ? 32'hffff_fffe : 32'hffff_fffc);
+      default: return value;
+    endcase
+  endfunction
+  word_t csr0, csr1;
+  logic [2:0] irq_levels;
+  logic irq_pending, mstatus_mie, trap_enter, irq_take;
+  logic [4:0] irq_cause, architectural_cause;
+  word_t mepc_value, trap_target, mret_target, trap_value;
+  assign irq_levels = {irq_meip, irq_mtip, irq_msip};
+  rv_machine_state #(.ENABLE_A(ENABLE_A), .ENABLE_C(ENABLE_C)) u_machine (
+    .clk(clk), .rst_n(rst_n), .raddr(csr_addr), .irq_levels(irq_levels), .rdata(csr_old),
+    .irq_pending(irq_pending), .irq_cause(irq_cause), .csr_we(commit && csr_write),
+    .csr_waddr(csr_addr), .csr_wdata(csr_new), .retired(commit), .trap_enter(trap_enter || irq_take),
+    .trap_interrupt(irq_take), .trap_pc(pc), .trap_cause(irq_take ? irq_cause : architectural_cause),
+    .trap_value(trap_value), .mret(commit && is_mret), .mepc_value(mepc_value),
+    .trap_target(trap_target), .mret_target(mret_target), .mstatus_mie(mstatus_mie)
+  );
+  assign csr0 = u_machine.scratch0;
+  assign csr1 = u_machine.scratch1;
+  assign csr_inst = ENABLE_Z && opcode == OPC_SYSTEM && !is_ecall && !is_ebreak && !is_mret;
   assign csr_addr = insn[31:20];
-  assign csr_old = csr_addr == 12'hCC0 ? CSR_STAGE6_ID :
-                   (csr_addr == 12'h800 ? csr0 : csr1);
   assign csr_source = funct3[2] ? {27'b0,rs1} : rs1_data;
   always_comb begin
     csr_new = csr_old;
@@ -173,6 +203,7 @@ module rv_core_single
         default: ;
       endcase
     end
+    if (csr_write) csr_new = csr_warl(csr_addr, csr_new);
   end
 
   rv_regfile u_rf (
@@ -192,7 +223,6 @@ module rv_core_single
   rv_alu u_alu (.a(alu_a), .b(alu_b), .op(alu_op), .y(alu_y));
   word_t md_y;
   rv_md_comb u_md (.a(rs1_data), .b(rs2_data), .funct3(funct3), .y(md_y));
-  logic commit;
   logic reservation_valid, atomic_sc, atomic_lr, atomic_write;
   word_t reservation_addr, atomic_new_word, atomic_wb, atomic_addr;
   assign atomic_addr = is_a ? rs1_data : alu_y;
@@ -205,6 +235,7 @@ module rv_core_single
 
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin reservation_valid <= 1'b0; reservation_addr <= 32'b0; end
+    else if (ENABLE_M && (trap_enter || irq_take)) reservation_valid <= 1'b0;
     else if (commit) begin
       if (is_a && atomic_lr) begin reservation_valid <= 1'b1; reservation_addr <= atomic_addr; end
       else if (is_a && atomic_sc) reservation_valid <= 1'b0;
@@ -221,7 +252,7 @@ module rv_core_single
 
   assign redirect = (is_branch && cmp_taken) || is_jal || is_jalr;
   assign target   = is_jalr ? {alu_y[31:1], 1'b0} : (pc + imm);
-  assign pc_next  = redirect ? target : pc_after;
+  assign pc_next  = is_mret ? mret_target : (redirect ? target : pc_after);
 
   // ---------------- Load/store ----------------
   logic [3:0] lsu_be;
@@ -255,7 +286,27 @@ module rv_core_single
     else if (ENABLE_A && is_a && !dmem_valid) cause = atomic_lr ? HALT_LOAD_ACCESS : HALT_STORE_ACCESS;
   end
 
-  assign commit = !halted && (cause == HALT_NONE);
+  always_comb begin
+    architectural_cause = 0;
+    trap_value = 0;
+    case (cause)
+      HALT_FETCH_MISALIGN: begin architectural_cause = 0; trap_value = redirect ? target : pc; end
+      HALT_FETCH_ACCESS: begin architectural_cause = 1; trap_value = pc; end
+      HALT_ILLEGAL: begin architectural_cause = 2; trap_value = raw_insn; end
+      HALT_EBREAK: architectural_cause = 3;
+      HALT_LOAD_MISALIGN: begin architectural_cause = 4; trap_value = is_a ? atomic_addr : alu_y; end
+      HALT_LOAD_ACCESS: begin architectural_cause = 5; trap_value = is_a ? atomic_addr : alu_y; end
+      HALT_STORE_MISALIGN: begin architectural_cause = 6; trap_value = is_a ? atomic_addr : alu_y; end
+      HALT_STORE_ACCESS: begin architectural_cause = 7; trap_value = is_a ? atomic_addr : alu_y; end
+      HALT_ECALL: architectural_cause = 11;
+      default: architectural_cause = 2;
+    endcase
+  end
+
+  assign trap_enter = ENABLE_M && !halted && (cause != HALT_NONE);
+  assign irq_take = ENABLE_M && !halted && (cause == HALT_NONE) && irq_pending;
+
+  assign commit = !halted && (cause == HALT_NONE) && !irq_take;
 
   always_comb begin
     case (wb_sel)
@@ -274,14 +325,6 @@ module rv_core_single
   assign dmem_wdata = is_a ? (atomic_sc ? rs2_data : atomic_new_word) : lsu_wdata;
   assign dmem_atomic_commit = commit && ENABLE_A && is_a;
 
-  always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin csr0 <= 32'b0; csr1 <= 32'b0; end
-    else if (commit && csr_write) begin
-      if (csr_addr == 12'h800) csr0 <= csr_new;
-      else if (csr_addr == 12'h801) csr1 <= csr_new;
-    end
-  end
-
   // ---------------- State ----------------
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
@@ -292,7 +335,9 @@ module rv_core_single
       halt_raw_insn <= 32'h0;
       halt_ilen_bytes <= 5'd0;
     end else if (!halted) begin
-      if (cause != HALT_NONE) begin
+      if (ENABLE_M && (trap_enter || irq_take)) begin
+        pc <= trap_target;
+      end else if (cause != HALT_NONE) begin
         halted     <= 1'b1;
         halt_cause <= cause;
         halt_pc    <= pc;

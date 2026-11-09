@@ -1,0 +1,18 @@
+# Stage 7 machine-mode decisions
+
+- Specification pin: ratified RISC-V Privileged Architecture release 20250508, Machine ISA 1.13: https://docs.riscv.org/reference/isa/v20250508/priv/machine.html. Historical 20211203 is Machine ISA 1.12; Stage 7 uses 1.13.
+- Scope: RV32 M-mode only; no S/U, delegation, translation, PMP, debug, or user counter aliases. Disabled machine mode retains Stage 6 behavior. Unsupported CSR addresses and privilege encodings trap as illegal instructions.
+- CSR map: mstatus 300 (MIE/MPIE RW, MPP fixed M, other bits zero; reset 00001800); misa 301 (RO 40001105, RV32 I/M/A/C only); mie 304 (bits 3/7/11 RW, reset 0); mtvec 305 (base plus Direct/Vectored, reset 0; unsupported modes coerce Direct); mscratch 340 (RW, reset 0); mepc 341 (RW except bit 0, reset 0); mcause 342 (RW, reset 0); mtval 343 (RW, reset 0); mip 344 (RO input levels at bits 3/7/11, reset low); mcycle/mcycleh B00/B80 and minstret/minstreth B02/B82 (RW halves, reset 0). Stage 6 800/801 remain RW reset 0; CC0 remains RO 53544736; CC1 and all other addresses are unimplemented.
+- Synchronous mcause codes: instruction misaligned/access 0/1, illegal 2, breakpoint 3, load misaligned/access 4/5, store/AMO misaligned/access 6/7, M-mode ECALL 11. mtval is fault address for address/access faults, raw instruction for illegal, zero otherwise. mepc is the original fault PC.
+- Interrupt inputs are level-sensitive machine software/timer/external pins, priority MEI > MSI > MTI. Faults take precedence at a boundary. Entry saves the next unretired PC; an interrupted DIV is aborted and restarted from mepc after MRET. Trap entry clears a live LR reservation. MRET restores MIE from MPIE, sets MPIE, and resumes mepc.
+- Hardware mcycle advances each active core clock; hardware minstret advances once per retired instruction. Reads observe pre-edge state; writes win over the same edge's increment. The instruction-level ISS exposes counters for CSR semantics, while cycle timing is checked against each implementation's own cycle sidecar rather than equated across different pipeline latencies.
+- Interrupt scheduling in the ISS applies `(retired_count, pin_mask)` before an instruction boundary; pin-mask bits 0/1/2 map to MSIP/MTIP/MEIP. Synchronous faults at that boundary take precedence, and the directed-test pulse remains pending until accepted interrupt entry.
+- Enabled tests terminate through a dedicated testbench completion store to 0x0000FFFC with magic 0x53544737; ECALL/EBREAK are architectural traps.
+
+## Validation checkpoint
+
+- Compatibility: 248 Stage 5 cases plus 11 Stage 6 cases = 259; see `reports/stage5_a_pipeline_{verilator_20261109T174617Z,xsim_20261109T175634Z}.txt` and `reports/stage6_{verilator_20261109T174915Z,xsim_20261109T181837Z}.txt`.
+- Enabled: Verilator `reports/stage7_verilator_full_20261109T182310Z.txt`; XSim `reports/stage7_xsim_full_20261109T181948Z.txt`. Each reports 13 cases, 26 ISS traces, 13 golden/pipeline comparisons.
+- Mutation: `reports/stage7_machine_mutation_verilator_20261109T182652Z.txt` — 3 caught, 0 missed, 0 invalid. Per-mutant commands, diffs, results, and logs are retained under `reports/stage7_machine_mutation_runs/run_20261109T182652Z/`.
+- Owner commands: `python3 scripts/simulation/prepare_stage7.py <fresh_output_dir>`; `bash scripts/simulation/run_stage7_verilator.sh <prepared_dir>`; `scripts\simulation\run_stage7_xsim.bat <prepared_dir>`; `python3 scripts/simulation/run_stage7_mutation.py`.
+- Release approved for checkpoint `e0292424005903e7f38a057375f48b261b4a1c36` on 2026-11-10; the annotated `stage7-complete` tag identifies the resulting `main` commit.

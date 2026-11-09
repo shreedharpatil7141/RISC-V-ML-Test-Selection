@@ -20,7 +20,8 @@ module rv_core_pipe
   parameter bit USE_ITERATIVE_M = 1'b1,
   parameter bit ENABLE_C = 1'b0,
   parameter bit ENABLE_A = 1'b0,
-  parameter bit ENABLE_Z = 1'b0
+  parameter bit ENABLE_Z = 1'b0,
+  parameter bit ENABLE_M = 1'b0
 ) (
   input  logic        clk,
   input  logic        rst_n,
@@ -37,6 +38,9 @@ module rv_core_pipe
   output logic        dmem_atomic_commit,
   input  word_t       dmem_rdata,
   input  logic        dmem_valid,
+  input  logic        irq_msip,
+  input  logic        irq_mtip,
+  input  logic        irq_meip,
   output logic        halted,
   output halt_cause_e halt_cause,
   output word_t       halt_pc,
@@ -85,11 +89,24 @@ module rv_core_pipe
   ex_mem_t ex_mem, ex_mem_next;
   mem_wb_t mem_wb, mem_wb_next;
 
-  logic        stall, load_stall, csr_serialize, md_hold, front_stall, redirect, kill, fault;
+  logic        stall, load_stall, csr_serialize, md_hold, front_stall, redirect, ex_redirect, kill, fault;
+  logic machine_trap, irq_take, irq_pending, mstatus_mie;
+  logic csr_inflight;
+  logic [2:0] irq_levels;
+  logic [4:0] irq_cause, architectural_cause, entry_cause;
+  word_t csr_data, mepc_value, trap_target, mret_target, trap_value, entry_pc;
   word_t csr0, csr1;
-  word_t       redirect_target;
+  word_t       redirect_target, ex_redirect_target;
   halt_cause_e fault_cause;
-  assign kill = halted || fault;
+  assign kill = halted || fault || irq_take;
+  assign csr_inflight = (id_ex.valid && id_ex.is_csr) ||
+                        (id_ex.valid && id_ex.is_mret) ||
+                        (ex_mem.valid && ex_mem.insn[6:0] == OPC_SYSTEM &&
+                         (ex_mem.insn[14:12] inside {3'b001,3'b010,3'b011,3'b101,3'b110,3'b111})) ||
+                        (ex_mem.valid && ex_mem.is_mret) ||
+                        (mem_wb.valid && mem_wb.insn[6:0] == OPC_SYSTEM &&
+                         (mem_wb.insn[14:12] inside {3'b001,3'b010,3'b011,3'b101,3'b110,3'b111})) ||
+                        (mem_wb.valid && mem_wb.is_mret);
 
   // ---------------- IF ----------------
   rv_if_stage #(.RESET_PC(RESET_PC), .ENABLE_C(ENABLE_C)) u_if (
@@ -114,10 +131,10 @@ module rv_core_pipe
     .rs1_addr(rs1_addr), .rs2_addr(rs2_addr), .rs1_data(rf_rs1_data), .rs2_data(rf_rs2_data)
   );
 
-  rv_id_stage #(.ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z)) u_id (
+  rv_id_stage #(.ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z), .ENABLE_M(ENABLE_M)) u_id (
     .if_id(if_id), .rf_rs1_data(rf_rs1_data), .rf_rs2_data(rf_rs2_data),
     .wb_we(wb_rf_we), .wb_rd(wb_rf_rd), .wb_data(wb_rf_wdata),
-    .csr0(csr0), .csr1(csr1),
+    .csr_data(csr_data),
     .rs1_addr(rs1_addr), .rs2_addr(rs2_addr), .uses_rs1(id_uses_rs1), .uses_rs2(id_uses_rs2),
     .bypass_rs1(bypass_rs1), .bypass_rs2(bypass_rs2), .id_ex_next(id_ex_next)
   );
@@ -127,9 +144,19 @@ module rv_core_pipe
     .id_uses_rs1(id_uses_rs1), .id_uses_rs2(id_uses_rs2),
     .ex_valid(id_ex.valid), .ex_mem_re(id_ex.mem_re), .ex_rd(id_ex.rd), .stall(load_stall)
   );
-  assign csr_serialize = ENABLE_Z && if_id.valid && if_id.insn[6:0] == OPC_SYSTEM &&
-                         if_id.insn[14:12] inside {3'b001,3'b010,3'b011,3'b101,3'b110,3'b111} &&
-                         (id_ex.valid || ex_mem.valid || mem_wb.valid);
+  assign csr_serialize =
+      (ENABLE_Z && ((id_ex.valid && id_ex.is_csr) ||
+                    (ex_mem.valid && ex_mem.insn[6:0] == OPC_SYSTEM &&
+                     (ex_mem.insn[14:12] inside {3'b001,3'b010,3'b011,3'b101,3'b110,3'b111})) ||
+                    (mem_wb.valid && mem_wb.insn[6:0] == OPC_SYSTEM &&
+                     (mem_wb.insn[14:12] inside {3'b001,3'b010,3'b011,3'b101,3'b110,3'b111})) ||
+                    (if_id.valid && if_id.insn[6:0] == OPC_SYSTEM &&
+                     (if_id.insn[14:12] inside {3'b001,3'b010,3'b011,3'b101,3'b110,3'b111}) &&
+                     (id_ex.valid || ex_mem.valid || mem_wb.valid)))) ||
+      (ENABLE_M && ((id_ex.valid && id_ex.is_mret) || (ex_mem.valid && ex_mem.is_mret) ||
+                    (mem_wb.valid && mem_wb.is_mret) ||
+                    (if_id.valid && if_id.insn == INSN_MRET &&
+                     (id_ex.valid || ex_mem.valid || mem_wb.valid))));
   assign stall = load_stall || csr_serialize;
 
   // ---------------- EX ----------------
@@ -147,11 +174,11 @@ module rv_core_pipe
     .b_exmem_match(b_exmem_m), .b_memwb_match(b_memwb_m)
   );
 
-  rv_ex_stage #(.USE_ITERATIVE_M(USE_ITERATIVE_M), .ENABLE_C(ENABLE_C)) u_ex (
+  rv_ex_stage #(.USE_ITERATIVE_M(USE_ITERATIVE_M), .ENABLE_C(ENABLE_C), .ENABLE_M(ENABLE_M)) u_ex (
     .id_ex(id_ex), .fwd_a(fwd_a), .fwd_b(fwd_b),
     .exmem_alu_y(mem_wb_next.wb_data), .memwb_data(mem_wb.wb_data),
-    .clk(clk), .rst_n(rst_n), .kill(kill),
-    .ex_mem_next(ex_mem_next), .redirect(redirect), .redirect_target(redirect_target),
+    .clk(clk), .rst_n(rst_n), .kill(kill), .mret_target(mret_target),
+    .ex_mem_next(ex_mem_next), .redirect(ex_redirect), .redirect_target(ex_redirect_target),
     .md_hold(md_hold), .md_start(dbg_md_start), .md_busy(dbg_md_busy),
     .md_done(dbg_md_done), .md_abort_started(dbg_md_abort_started),
     .dbg_m_issue(dbg_m_issue), .dbg_m_complete(dbg_m_complete), .dbg_md_ready(dbg_md_ready),
@@ -164,9 +191,48 @@ module rv_core_pipe
   rv_mem_stage #(.ENABLE_C(ENABLE_C), .ENABLE_A(ENABLE_A)) u_mem (
     .clk(clk), .rst_n(rst_n), .ex_mem(ex_mem), .dmem_rdata(dmem_rdata), .dmem_valid(dmem_valid),
     .dmem_addr(dmem_addr), .dmem_re(dmem_re), .dmem_we(dmem_we), .dmem_wdata(dmem_wdata),
-    .dmem_atomic_commit(dmem_atomic_commit),
+    .dmem_atomic_commit(dmem_atomic_commit), .reservation_invalidate(machine_trap || irq_take),
     .mem_wb_next(mem_wb_next), .fault(fault), .fault_cause(fault_cause)
   );
+
+  assign irq_levels = {irq_meip, irq_mtip, irq_msip};
+  assign machine_trap = ENABLE_M && fault;
+  assign irq_take = ENABLE_M && !fault && irq_pending && !csr_inflight &&
+                    !(id_ex.valid && ex_mem_next.cause != HALT_NONE) &&
+                    !(if_id.valid && id_ex_next.cause != HALT_NONE) &&
+                    !(if_id.valid && if_id.cause != HALT_NONE) && (id_ex.valid || if_id.valid);
+  assign entry_pc = fault ? ex_mem.pc : (id_ex.valid ? id_ex.pc : if_id.pc);
+  always_comb begin
+    architectural_cause = 0;
+    trap_value = 0;
+    case (fault_cause)
+      HALT_FETCH_MISALIGN: begin architectural_cause = 0; trap_value = ex_mem.alu_y; end
+      HALT_FETCH_ACCESS: begin architectural_cause = 1; trap_value = ex_mem.pc; end
+      HALT_ILLEGAL: begin architectural_cause = 2; trap_value = ex_mem.raw_insn; end
+      HALT_EBREAK: architectural_cause = 3;
+      HALT_LOAD_MISALIGN: begin architectural_cause = 4; trap_value = ex_mem.alu_y; end
+      HALT_LOAD_ACCESS: begin architectural_cause = 5; trap_value = ex_mem.alu_y; end
+      HALT_STORE_MISALIGN: begin architectural_cause = 6; trap_value = ex_mem.alu_y; end
+      HALT_STORE_ACCESS: begin architectural_cause = 7; trap_value = ex_mem.alu_y; end
+      HALT_ECALL: architectural_cause = 11;
+      default: architectural_cause = 2;
+    endcase
+  end
+  assign entry_cause = irq_take ? irq_cause : architectural_cause;
+  rv_machine_state #(.ENABLE_A(ENABLE_A), .ENABLE_C(ENABLE_C)) u_machine (
+    .clk(clk), .rst_n(rst_n), .raddr(if_id.insn[31:20]), .irq_levels(irq_levels),
+    .rdata(csr_data), .irq_pending(irq_pending), .irq_cause(irq_cause),
+    .csr_we(mem_wb.valid && mem_wb.csr_write), .csr_waddr(mem_wb.csr_addr),
+    .csr_wdata(mem_wb.csr_new), .retired(ret_valid),
+    .trap_enter(machine_trap || irq_take), .trap_interrupt(irq_take),
+    .trap_pc(entry_pc), .trap_cause(entry_cause), .trap_value(trap_value),
+    .mret(mem_wb.valid && mem_wb.is_mret), .mepc_value(mepc_value),
+    .trap_target(trap_target), .mret_target(mret_target), .mstatus_mie(mstatus_mie)
+  );
+  assign csr0 = u_machine.scratch0;
+  assign csr1 = u_machine.scratch1;
+  assign redirect = machine_trap || irq_take || (ex_redirect && !fault && !irq_take);
+  assign redirect_target = (machine_trap || irq_take) ? trap_target : ex_redirect_target;
 
   // ---------------- WB ----------------
   rv_wb_stage u_wb (
@@ -177,14 +243,6 @@ module rv_core_pipe
     .ret_mem_re(ret_mem_re), .ret_mem_we(ret_mem_we), .ret_mem_addr(ret_mem_addr),
     .ret_mem_be(ret_mem_be), .ret_mem_wdata(ret_mem_wdata), .ret_mem_rdata(ret_mem_rdata)
   );
-
-  always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin csr0 <= 32'b0; csr1 <= 32'b0; end
-    else if (mem_wb.valid && mem_wb.csr_write) begin
-      if (mem_wb.csr_addr == 12'h800) csr0 <= mem_wb.csr_new;
-      else if (mem_wb.csr_addr == 12'h801) csr1 <= mem_wb.csr_new;
-    end
-  end
 
   // ---------------- Pipeline registers ----------------
   rv_pipe_regs u_regs (
@@ -202,7 +260,7 @@ module rv_core_pipe
       halt_pc    <= 32'h0;
       halt_raw_insn <= 32'h0;
       halt_ilen_bytes <= 5'd0;
-    end else if (!halted && fault) begin
+    end else if (!ENABLE_M && !halted && fault) begin
       halted     <= 1'b1;
       halt_cause <= fault_cause;
       halt_pc    <= ex_mem.pc;

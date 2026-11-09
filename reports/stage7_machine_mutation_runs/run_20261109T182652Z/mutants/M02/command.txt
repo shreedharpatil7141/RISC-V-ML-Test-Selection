@@ -1,0 +1,1 @@
+/usr/bin/python3 /mnt/c/RISC-V-ML-Test-Selection/reports/stage7_machine_mutation_runs/run_20261109T182652Z/mutants/M02/workspace/scripts/simulation/run_stage7_enabled.py --sim verilator --prepared /mnt/c/RISC-V-ML-Test-Selection/reports/stage7_machine_mutation_runs/run_20261109T182652Z/mutants/M02/workspace/sim_out_stage7_prepare_event_schema_fix

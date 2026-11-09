@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/mnt/c/RISC-V-ML-Test-Selection/reports/stage7_machine_mutation_runs/run_20261109T182652Z/mutants/M01/workspace/scripts/simulation/run_stage7_enabled.py", line 328, in <module>
+    if __name__ == "__main__": main()
+                               ~~~~^^
+  File "/mnt/c/RISC-V-ML-Test-Selection/reports/stage7_machine_mutation_runs/run_20261109T182652Z/mutants/M01/workspace/scripts/simulation/run_stage7_enabled.py", line 243, in main
+    compare(trace.read_text(encoding="ascii"),expected,f"{name}/{kind} vs independent ISS")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/RISC-V-ML-Test-Selection/reports/stage7_machine_mutation_runs/run_20261109T182652Z/mutants/M01/workspace/scripts/simulation/run_stage7_enabled.py", line 90, in compare
+    raise RuntimeError(f"{label}: line={i+1} actual={aa[i] if i<len(aa) else '<EOF>'!r} expected={ee[i] if i<len(ee) else '<EOF>'!r}")
+RuntimeError: machine_trap_return/golden vs independent ISS: line=58 actual='CSR 300 00001880' expected='CSR 300 00001888'
