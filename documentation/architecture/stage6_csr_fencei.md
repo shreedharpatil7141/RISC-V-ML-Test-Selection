@@ -18,7 +18,7 @@ FENCE.I synchronizes prior stores to subsequent instruction fetches and restarts
 
 ## Validation status
 
-Validation gate: PASS; final release approval remains pending. Scope is the six CSR instructions, the implemented custom CSR map above, and FENCE.I. Full machine-mode behavior, traps, interrupts, and MRET remain Stage 7.
+Validation gate: PASS; Stage 6 release approved on 2026-11-09. Scope is the six CSR instructions, the implemented custom CSR map above, and FENCE.I. Full machine-mode behavior, traps, interrupts, and MRET remain Stage 7.
 
 Stage 5 compatibility: 248 cases passed. Stage 6 enabled: 11 cases and 22 ISS trace comparisons passed on each of Verilator and XSim. Focused mutation result: `caught=2 missed=0 invalid=0`.
 
