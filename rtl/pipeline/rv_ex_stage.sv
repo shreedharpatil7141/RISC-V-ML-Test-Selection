@@ -36,7 +36,7 @@ module rv_ex_stage
   output logic [1:0] dbg_m_fwd_a,
   output logic [1:0] dbg_m_fwd_b
 );
-  word_t rs1_f, rs2_f, alu_a, alu_b, alu_y, md_y, md_comb_y, md_result, result, target;
+  word_t rs1_f, rs2_f, alu_a, alu_b, alu_y, md_y, md_comb_y, md_result, result, target, csr_source;
   logic  cmp_taken, redirect_raw, md_ready, md_accepted, md_done_raw, md_abort_raw;
   logic  is_div, md_start_req;
 
@@ -91,12 +91,14 @@ module rv_ex_stage
   assign dbg_m_fwd_a = fwd_a;
   assign dbg_m_fwd_b = fwd_b;
 
-  assign redirect_raw = (id_ex.is_branch && cmp_taken) || id_ex.is_jal || id_ex.is_jalr;
-  assign target       = id_ex.is_jalr ? {alu_y[31:1], 1'b0} : (id_ex.pc + id_ex.imm);
+  assign redirect_raw = (id_ex.is_branch && cmp_taken) || id_ex.is_jal || id_ex.is_jalr || id_ex.is_fencei;
+  assign target       = id_ex.is_fencei ? (id_ex.pc + id_ex.ilen_bytes) :
+                        (id_ex.is_jalr ? {alu_y[31:1], 1'b0} : (id_ex.pc + id_ex.imm));
   assign md_result    = USE_ITERATIVE_M ? md_y : md_comb_y;
   // Preserve the Stage 2 link-value mutation target; M result selection is applied at EX/MEM below.
   assign result       = (id_ex.wb_sel == WB_PC4) ?
                         (id_ex.pc + (ENABLE_C ? id_ex.ilen_bytes : 5'd4)) : alu_y;
+  assign csr_source = id_ex.insn[14] ? {27'b0,id_ex.rs1} : rs1_f;
 
   halt_cause_e cause;
   always_comb begin
@@ -121,7 +123,18 @@ module rv_ex_stage
     ex_mem_next.mem_re     = id_ex.mem_re;
     ex_mem_next.mem_we     = id_ex.mem_we;
     ex_mem_next.is_a       = id_ex.is_a;
-    ex_mem_next.alu_y      = id_ex.is_a ? rs1_f : (id_ex.is_m ? md_result : result);
+    ex_mem_next.csr_write  = id_ex.is_csr &&
+      ((id_ex.csr_addr == 12'h800) || (id_ex.csr_addr == 12'h801)) &&
+      ((id_ex.funct3[1:0] == 2'b01) || (id_ex.rs1 != 0));
+    ex_mem_next.csr_addr   = id_ex.csr_addr;
+    case (id_ex.funct3[1:0])
+      2'b01: ex_mem_next.csr_new = csr_source;
+      2'b10: ex_mem_next.csr_new = id_ex.csr_old | csr_source;
+      2'b11: ex_mem_next.csr_new = id_ex.csr_old & ~csr_source;
+      default: ex_mem_next.csr_new = id_ex.csr_old;
+    endcase
+    ex_mem_next.alu_y      = id_ex.is_csr ? id_ex.csr_old :
+                             (id_ex.is_a ? rs1_f : (id_ex.is_m ? md_result : result));
     ex_mem_next.store_data = rs2_f;
     ex_mem_next.cause      = cause;
   end

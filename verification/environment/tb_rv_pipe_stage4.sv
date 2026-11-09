@@ -9,7 +9,8 @@
 module tb_rv_pipe_stage4 #(
   parameter bit USE_ITERATIVE_M = 1'b1,
   parameter bit ENABLE_C = 1'b0,
-  parameter bit ENABLE_A = 1'b0
+  parameter bit ENABLE_A = 1'b0,
+  parameter bit ENABLE_Z = 1'b0
 );
   import rv32_pkg::*;
 
@@ -44,7 +45,7 @@ module tb_rv_pipe_stage4 #(
   logic [15:0] dbg_events;
   longint md_starts=0, md_dones=0, busy_cycles=0, md_aborts_started=0;
 
-  rv_core_pipe #(.USE_ITERATIVE_M(USE_ITERATIVE_M), .ENABLE_C(ENABLE_C || ENABLE_A), .ENABLE_A(ENABLE_A)) dut (
+  rv_core_pipe #(.USE_ITERATIVE_M(USE_ITERATIVE_M), .ENABLE_C(ENABLE_C || ENABLE_A || ENABLE_Z), .ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z)) dut (
     .clk(clk), .rst_n(rst_n),
     .imem_addr(imem_addr), .imem_addr_next(imem_addr_next), .imem_rdata(imem_rdata),
     .imem_valid(imem_valid), .imem_rdata_next(imem_rdata_next), .imem_next_valid(imem_next_valid),
@@ -208,10 +209,34 @@ module tb_rv_pipe_stage4 #(
         $fdisplay(mcov_fd, "C ATTEMPT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
       if (ENABLE_A && dut.if_id.valid && dut.if_id.insn[6:0] == OPC_AMO)
         $fdisplay(mcov_fd, "A ATTEMPT %08x %08x", dut.if_id.pc, dut.if_id.raw_insn);
+      if (ENABLE_Z && dut.if_id.valid &&
+          (dut.if_id.insn[6:0] == OPC_SYSTEM || dut.if_id.insn == 32'h0000_100F))
+        $fdisplay(mcov_fd, "Z ATTEMPT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
       if ((ENABLE_C || ENABLE_A) && ret_valid)
         $fdisplay(mcov_fd, "C RETIRE %08x %08x %0d", ret_pc, ret_insn, ret_ilen_bytes);
       if (ENABLE_A && ret_valid && ret_insn[6:0] == OPC_AMO)
         $fdisplay(mcov_fd, "A RETIRE %08x %08x", ret_pc, ret_insn);
+      if (ENABLE_Z && ret_valid &&
+          (ret_insn[6:0] == OPC_SYSTEM || ret_insn == 32'h0000_100F))
+        $fdisplay(mcov_fd, "Z RETIRE %08x %08x %0d", ret_pc, ret_insn, ret_ilen_bytes);
+      // Sample the same pre-NBA MEM/WB record consumed by rv_core_pipe's
+      // CSR state-update always_ff block. This is the single authorized commit
+      // edge and produces one record for each committed CSR write.
+      if (ENABLE_Z && dut.mem_wb.valid && dut.mem_wb.csr_write)
+        $fdisplay(mcov_fd, "Z CSR_WRITE %08x %08x %03x %08x %08x", dut.mem_wb.pc, dut.mem_wb.raw_insn,
+                  dut.mem_wb.csr_addr, dut.mem_wb.wb_data, dut.mem_wb.csr_new);
+      if (ENABLE_Z && dut.fault && dut.ex_mem.insn[6:0] == OPC_SYSTEM)
+        $fdisplay(mcov_fd, "Z CSR_FAULT %08x %08x %0d", dut.ex_mem.pc, dut.ex_mem.raw_insn,
+                  int'(dut.fault_cause));
+      if (ENABLE_Z && dut.redirect && dut.id_ex.is_fencei)
+        $fdisplay(mcov_fd, "Z FENCEI %08x %08x %0d %08x", dut.id_ex.pc, dut.id_ex.raw_insn,
+                  dut.id_ex.ilen_bytes, dut.redirect_target);
+      if (ENABLE_Z && dut.redirect && dut.id_ex.is_fencei && dut.if_id.valid)
+        $fdisplay(mcov_fd, "Z SQUASH_REDIRECT %08x %08x %0d", dut.if_id.pc,
+                  dut.if_id.raw_insn, dut.if_id.ilen_bytes);
+      if (ENABLE_Z && dut.redirect && dut.if_id.valid && dut.if_id.insn[6:0] == OPC_SYSTEM)
+        $fdisplay(mcov_fd, "Z SQUASH_REDIRECT %08x %08x %0d", dut.if_id.pc,
+                  dut.if_id.raw_insn, dut.if_id.ilen_bytes);
       if ((ENABLE_C || ENABLE_A) && dut.fault)
         $fdisplay(mcov_fd, "C FAULT %08x %08x %0d %0d", dut.ex_mem.pc, dut.ex_mem.raw_insn,
                   dut.ex_mem.ilen_bytes, int'(dut.fault_cause));
@@ -309,6 +334,11 @@ integer plusarg_ok;
       if (ENABLE_C || ENABLE_A) $fdisplay(trace_fd, "STOP %08x %08x %02d %0d", halt_pc, halt_raw_insn, halt_ilen_bytes, int'(halt_cause));
       $fdisplay(trace_fd, "HALT %0d %08x", int'(halt_cause), halt_pc);
       for (int r = 1; r < 32; r++) $fdisplay(trace_fd, "REG %0d %08x", r, dut.u_rf.regs[r]);
+      if (ENABLE_Z) begin
+        $fdisplay(trace_fd, "CSR 800 %08x", dut.csr0);
+        $fdisplay(trace_fd, "CSR 801 %08x", dut.csr1);
+        $fdisplay(trace_fd, "CSR cc0 %08x", CSR_STAGE6_ID);
+      end
       for (int a = 16'h4000; a < 16'h6000; a += 4)
         if (mem[a >> 2] != 32'h0) $fdisplay(trace_fd, "MEM %08x %08x", a, mem[a >> 2]);
       $fclose(trace_fd);

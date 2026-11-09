@@ -12,7 +12,8 @@ module rv_core_single
 #(
   parameter word_t RESET_PC = 32'h0000_0000,
   parameter logic ENABLE_C = 1'b0,
-  parameter logic ENABLE_A = 1'b0
+  parameter logic ENABLE_A = 1'b0,
+  parameter logic ENABLE_Z = 1'b0
 ) (
   input  logic        clk,
   input  logic        rst_n,
@@ -129,7 +130,7 @@ module rv_core_single
   logic [6:0] funct7;
   logic       dec_illegal, is_ecall, is_ebreak, is_fence, is_m, is_a;
 
-  rv_decoder #(.ENABLE_A(ENABLE_A)) u_dec (
+  rv_decoder #(.ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z)) u_dec (
     .insn(insn), .opcode(opcode), .rd(rd), .rs1(rs1), .rs2(rs2),
     .funct3(funct3), .funct7(funct7), .illegal(dec_illegal),
     .is_ecall(is_ecall), .is_ebreak(is_ebreak), .is_fence(is_fence), .is_m(is_m), .is_a(is_a)
@@ -153,6 +154,26 @@ module rv_core_single
   // ---------------- Register file / ALU ----------------
   word_t rs1_data, rs2_data, wb_data, alu_a, alu_b, alu_y;
   logic  rf_we;
+  logic csr_inst, csr_write;
+  logic [11:0] csr_addr;
+  word_t csr0, csr1, csr_old, csr_source, csr_new;
+  assign csr_inst = ENABLE_Z && opcode == OPC_SYSTEM && !is_ecall && !is_ebreak;
+  assign csr_addr = insn[31:20];
+  assign csr_old = csr_addr == 12'hCC0 ? CSR_STAGE6_ID :
+                   (csr_addr == 12'h800 ? csr0 : csr1);
+  assign csr_source = funct3[2] ? {27'b0,rs1} : rs1_data;
+  always_comb begin
+    csr_new = csr_old;
+    csr_write = 1'b0;
+    if (csr_inst) begin
+      case (funct3[1:0])
+        2'b01: begin csr_new = csr_source; csr_write = 1'b1; end
+        2'b10: begin csr_new = csr_old | csr_source; csr_write = (rs1 != 0); end
+        2'b11: begin csr_new = csr_old & ~csr_source; csr_write = (rs1 != 0); end
+        default: ;
+      endcase
+    end
+  end
 
   rv_regfile u_rf (
     .clk(clk), .we(rf_we), .waddr(rd), .wdata(wb_data),
@@ -240,11 +261,11 @@ module rv_core_single
     case (wb_sel)
       WB_MEM:  wb_data = lsu_load_data;
       WB_PC4:  wb_data = pc_after;
-      default: wb_data = is_a ? atomic_wb : (is_m ? md_y : alu_y);
+      default: wb_data = csr_inst ? csr_old : (is_a ? atomic_wb : (is_m ? md_y : alu_y));
     endcase
   end
 
-  assign rf_we      = commit && reg_we;
+  assign rf_we      = commit && (reg_we || csr_inst) && (rd != 0);
   assign dmem_addr  = is_a ? atomic_addr : alu_y;
   assign dmem_re    = !halted && (mem_re || is_a) &&
                       (!ENABLE_A || cause == HALT_NONE) &&
@@ -252,6 +273,14 @@ module rv_core_single
   assign dmem_we    = commit && (mem_we || atomic_write) ? (is_a ? 4'b1111 : lsu_be) : 4'b0000;
   assign dmem_wdata = is_a ? (atomic_sc ? rs2_data : atomic_new_word) : lsu_wdata;
   assign dmem_atomic_commit = commit && ENABLE_A && is_a;
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin csr0 <= 32'b0; csr1 <= 32'b0; end
+    else if (commit && csr_write) begin
+      if (csr_addr == 12'h800) csr0 <= csr_new;
+      else if (csr_addr == 12'h801) csr1 <= csr_new;
+    end
+  end
 
   // ---------------- State ----------------
   always_ff @(posedge clk or negedge rst_n) begin
@@ -283,7 +312,7 @@ module rv_core_single
   assign ret_expanded_insn = insn;
   assign ret_ilen_bytes = ilen_bytes;
   assign ret_pc_next   = pc_next;
-  assign ret_rd_we     = commit && reg_we && (rd != 5'd0);
+  assign ret_rd_we     = commit && (reg_we || csr_inst) && (rd != 5'd0);
   assign ret_rd        = rd;
   assign ret_rd_wdata  = wb_data;
   assign ret_mem_re    = commit && mem_re;

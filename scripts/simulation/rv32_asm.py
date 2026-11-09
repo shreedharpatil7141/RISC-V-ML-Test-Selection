@@ -24,6 +24,7 @@ SH_OPS = {'slli':(0,1),'srli':(0,5),'srai':(0x20,5)}
 LD_OPS = {'lb':0,'lh':1,'lw':2,'lbu':4,'lhu':5}
 ST_OPS = {'sb':0,'sh':1,'sw':2}
 BR_OPS = {'beq':0,'bne':1,'blt':4,'bge':5,'bltu':6,'bgeu':7}
+CSR_OPS = {'csrrw':1,'csrrs':2,'csrrc':3,'csrrwi':5,'csrrsi':6,'csrrci':7}
 
 def enc_r(f7,rs2,rs1,f3,rd,op): return (f7<<25)|(rs2<<20)|(rs1<<15)|(f3<<12)|(rd<<7)|op
 def enc_i(imm,rs1,f3,rd,op):
@@ -145,6 +146,13 @@ def assemble(src):
                 if hi is None: hi, lo = 0, lo
                 emit(enc_u(hi, rd, 0x37)); emit(enc_i(lo, rd, 0, rd, 0x13))
             elif mn == 'fence': emit(0x0FF0000F)
+            elif mn == 'fence.i': emit(0x0000100F)
+            elif mn in CSR_OPS:
+                csr = int(ops[1], 0)
+                assert 0 <= csr < 4096, f"CSR address out of range: {csr}"
+                src = int(ops[2], 0) if mn.endswith('i') else reg(ops[2])
+                assert 0 <= src < 32, f"CSR source out of range: {src}"
+                emit((csr << 20) | (src << 15) | (CSR_OPS[mn] << 12) | (reg(ops[0]) << 7) | 0x73)
             elif mn == 'ecall': emit(0x00000073)
             elif mn == 'ebreak': emit(0x00100073)
             else: raise ValueError(f"unknown mnemonic '{mn}'")

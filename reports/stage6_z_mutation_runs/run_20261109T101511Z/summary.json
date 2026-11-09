@@ -1,0 +1,26 @@
+{
+  "simulator": "Verilator",
+  "mutants": [
+    {
+      "id": "Z01",
+      "description": "Immediate CSR source incorrectly reads the register file",
+      "status": "CAUGHT",
+      "expected_case": "stage6_csr_ops",
+      "build_success": true,
+      "runner_exit": 1,
+      "detector": "independent ISS trace or expected halt-cause difference"
+    },
+    {
+      "id": "Z02",
+      "description": "FENCE.I fails to redirect and refetch",
+      "status": "CAUGHT",
+      "expected_case": "stage6_fencei_store_replace",
+      "build_success": true,
+      "runner_exit": 1,
+      "detector": "independent ISS trace or expected halt-cause difference"
+    }
+  ],
+  "caught": 2,
+  "missed": 0,
+  "invalid": 0
+}

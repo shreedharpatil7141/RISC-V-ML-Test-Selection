@@ -1,0 +1,9 @@
+{
+  "id": "Z02",
+  "description": "FENCE.I fails to redirect and refetch",
+  "status": "CAUGHT",
+  "expected_case": "stage6_fencei_store_replace",
+  "build_success": true,
+  "runner_exit": 1,
+  "detector": "independent ISS trace or expected halt-cause difference"
+}

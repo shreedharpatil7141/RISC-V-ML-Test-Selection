@@ -36,7 +36,19 @@ def _load_image(words):
     return mem, oob
 
 
-def _decode32(raw, a_enabled=False):
+CSR_RW_ADDRS = (0x800, 0x801)
+CSR_ID_ADDR = 0xCC0
+CSR_STAGE6_ID = 0x53544736
+
+
+def _csr_read(csrs, address):
+    """Read implemented CSR state without storing read-only CSRs as writable state."""
+    if address == CSR_ID_ADDR:
+        return CSR_STAGE6_ID
+    return csrs[address]
+
+
+def _decode32(raw, a_enabled=False, z_enabled=False):
     """Return (legal, canonical) for the existing RV32I+M software ISA."""
     if raw & 3 != 3:
         return False, 0
@@ -65,16 +77,25 @@ def _decode32(raw, a_enabled=False):
     if opcode == 0x33:
         return (f7 == 0 or (f7 == 0x20 and f3 in (0, 5)) or f7 == 1), raw
     if opcode == 0x0F:
-        return f3 == 0, raw
+        return (f3 == 0 or (z_enabled and raw == 0x0000100F)), raw
     if opcode == 0x73:
-        return raw in (0x00000073, 0x00100073), raw
+        if raw in (0x00000073, 0x00100073):
+            return True, raw
+        csr = raw >> 20
+        write_attempt = (f3 in (1, 5)) or (f3 in (2, 3, 6, 7) and rs1 != 0)
+        if z_enabled and f3 in (1, 2, 3, 5, 6, 7):
+            if csr in CSR_RW_ADDRS:
+                return True, raw
+            if csr == CSR_ID_ADDR and not write_attempt:
+                return True, raw
+        return False, 0
     if opcode == atomics.OPCODE_AMO and a_enabled:
         return atomics.decode_atomic(raw) is not None, raw
     return False, 0
 
 
 def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost_events=None,
-        start_pc=0, a_enabled=False, a_events=None):
+        start_pc=0, a_enabled=False, a_events=None, z_enabled=False, z_events=None):
     """Return legacy six-tuple; A and C are explicit independent mode flags.
 
     In V2 each retired row is:
@@ -85,7 +106,7 @@ def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost
     and known length of the stopping instruction/prefix, including illegal
     encodings and access faults.
     """
-    if not c_enabled and not a_enabled:
+    if not c_enabled and not a_enabled and not z_enabled:
         if start_pc != 0:
             raise ValueError("nonzero start_pc is available only in explicit RV32IMC mode")
         return legacy.run(words, max_steps=max_steps, m_events=m_events)
@@ -101,6 +122,7 @@ def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost
     divider_cost_events = divider_cost_events if divider_cost_events is not None else None
     reservation_valid = False
     reservation_addr = 0
+    csrs = {CSR_RW_ADDRS[0]: 0, CSR_RW_ADDRS[1]: 0}
 
     def data_read(addr, n):
         if addr + n > MEM_BYTES:
@@ -140,7 +162,7 @@ def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost
                 break
             raw = int.from_bytes(mem[pc:pc + 4], "little")
             stop_raw, stop_ilen = raw, 4
-            legal, insn = _decode32(raw, a_enabled=a_enabled)
+            legal, insn = _decode32(raw, a_enabled=a_enabled, z_enabled=z_enabled)
             if not legal:
                 cause = CAUSE_ILLEGAL
                 break
@@ -283,10 +305,34 @@ def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost
             elif f7 == 0x20 and f3 == 0: wr = (a - b) & MASK32
             elif f7 == 0x20 and f3 == 5: wr = (legacy.s32(a) >> (b & 31)) & MASK32
         elif opcode == 0x0F:
-            pass
+            if z_enabled and raw == 0x0000100F and z_events is not None:
+                z_events.append(("FENCEI", pc, raw, ilen // 8, next_pc, 0, 0, 0, 0, 0))
         elif opcode == 0x73:
-            cause = CAUSE_ECALL if insn == 0x73 else CAUSE_EBREAK
-            break
+            if insn in (0x00000073, 0x00100073):
+                cause = CAUSE_ECALL if insn == 0x73 else CAUSE_EBREAK
+                break
+            csr = insn >> 20
+            old = _csr_read(csrs, csr)
+            immediate = bool(f3 & 4)
+            source = rs1 if immediate else a
+            if f3 in (1, 5):
+                wr = old
+                csrs[csr] = source & MASK32
+                write_intent = 1
+            elif f3 in (2, 6):
+                wr = old
+                write_intent = int(rs1 != 0)
+                if write_intent:
+                    csrs[csr] = (old | source) & MASK32
+            elif f3 in (3, 7):
+                wr = old
+                write_intent = int(rs1 != 0)
+                if write_intent:
+                    csrs[csr] = old & (~source & MASK32)
+            new = _csr_read(csrs, csr)
+            if z_events is not None:
+                z_events.append(("CSR", pc, raw, ilen // 8, csr, f3, rs1, source & MASK32,
+                                 old, new, write_intent))
         else:
             cause = CAUSE_ILLEGAL
             break
@@ -307,6 +353,10 @@ def run(words, c_enabled=False, max_steps=2_000_000, m_events=None, divider_cost
         value = int.from_bytes(mem[addr:addr + 4], "little")
         if value:
             footer.append(f"MEM {addr:08x} {value:08x}")
+    if z_enabled:
+        for addr in CSR_RW_ADDRS:
+            footer.append(f"CSR {addr:03x} {csrs[addr]:08x}")
+        footer.append(f"CSR {CSR_ID_ADDR:03x} {CSR_STAGE6_ID:08x}")
     return cause, regs, trace, footer, oob, len(trace)
 
 
@@ -318,6 +368,8 @@ def load_hex(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", required=True, choices=("rv32im", "rv32imc", "rv32ima", "rv32imac"), help="never infer A or C enablement")
+    parser.add_argument("--z-enabled", action="store_true", help="enable Stage 6 Zicsr/Zifencei semantics")
+    parser.add_argument("--z-events", help="optional Zicsr/Zifencei commit event TSV")
     parser.add_argument("image", help="little-endian 32-bit word hex image")
     parser.add_argument("trace")
     parser.add_argument("--a-events", help="optional independent atomic retirement sidecar TSV")
@@ -326,7 +378,9 @@ def main():
     c_on = args.mode in ("rv32imc", "rv32imac")
     a_on = args.mode in ("rv32ima", "rv32imac")
     atomic_events = [] if args.a_events else None
-    cause, regs, rows, footer, oob, n = run(words, c_enabled=c_on, a_enabled=a_on, a_events=atomic_events)
+    z_events = [] if args.z_events else None
+    cause, regs, rows, footer, oob, n = run(words, c_enabled=c_on, a_enabled=a_on, a_events=atomic_events,
+                                             z_enabled=args.z_enabled, z_events=z_events)
     with open(args.trace, "w", newline="\n", encoding="ascii") as dst:
         if a_on:
             dst.write(f"TRACE_V3 RV32IM{'AC' if c_on else 'A'} pc raw_insn ilen_bytes expanded_insn rd rdval st_size st_addr st_data atomic_sidecar\n")
@@ -341,6 +395,19 @@ def main():
             writer.writerows((f"{row[0]:08x}", f"{row[1]:08x}", *row[2:8], f"{row[8]:08x}",
                               "-" if row[9] is None else f"{row[9]:08x}", f"{row[10]:08x}",
                               "-" if row[11] is None else f"{row[11]:08x}", *row[12:]) for row in atomic_events or [])
+    if args.z_events:
+        import csv
+        with open(args.z_events, "w", newline="", encoding="ascii") as dst:
+            writer = csv.writer(dst, delimiter="\t", lineterminator="\n")
+            writer.writerow(["kind", "pc", "raw", "ilen", "csr_or_pcnext", "funct3", "source_index", "source", "old", "new", "write_intent"])
+            for row in z_events or []:
+                if row[0] == "FENCEI":
+                    writer.writerow([row[0], f"{row[1]:08x}", f"{row[2]:08x}", row[3],
+                                     f"{row[4]:08x}", "-", "-", "-", "-", "-", "-"])
+                else:
+                    writer.writerow([row[0], f"{row[1]:08x}", f"{row[2]:08x}", row[3],
+                                     f"{row[4]:03x}", row[5], row[6], f"{row[7]:08x}",
+                                     f"{row[8]:08x}", f"{row[9]:08x}", row[10]])
     print(f"RV32IMC_ISS mode={args.mode} cause={cause} gp={regs[3]:08x} instret={n} oob={oob} div_extra_cycles_per_op={DIV_EXTRA_CYCLES}")
 
 

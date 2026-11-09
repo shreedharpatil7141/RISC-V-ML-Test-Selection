@@ -42,6 +42,10 @@ package rv_pipe_pkg;
     logic        is_branch;
     logic        is_jal;
     logic        is_jalr;
+    logic        is_fencei;
+    logic        is_csr;
+    logic [11:0] csr_addr;
+    word_t       csr_old;
     halt_cause_e cause;      // fault detected so far (resolved in MEM)
   } id_ex_t;
 
@@ -59,6 +63,9 @@ package rv_pipe_pkg;
     logic        mem_re;
     logic        mem_we;
     logic        is_a;
+    logic        csr_write;
+    logic [11:0] csr_addr;
+    word_t       csr_new;
     word_t       alu_y;       // ALU result / mem address; pc+4 for JAL/JALR
     word_t       store_data;  // forwarded rs2
     halt_cause_e cause;
@@ -76,6 +83,9 @@ package rv_pipe_pkg;
     word_t       wb_data;
     logic        ld_re;
     logic        st_we;
+    logic        csr_write;
+    logic [11:0] csr_addr;
+    word_t       csr_new;
     word_t       mem_addr;
     logic [3:0]  st_be;
     word_t       st_wdata;

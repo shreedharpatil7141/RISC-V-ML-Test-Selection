@@ -5,7 +5,8 @@
 module rv_decoder
   import rv32_pkg::*;
 #(
-  parameter bit ENABLE_A = 1'b0
+  parameter bit ENABLE_A = 1'b0,
+  parameter bit ENABLE_Z = 1'b0
 )
 (
   input  word_t insn,
@@ -86,13 +87,22 @@ module rv_decoder
 
         OPC_MISC_MEM: begin
           if (funct3 == 3'b000) is_fence = 1'b1;
-          else                  illegal  = 1'b1;                    // FENCE.I: Stage 6
+          else if (ENABLE_Z && insn == 32'h0000_100F) is_fence = 1'b1;
+          else illegal = 1'b1;
         end
 
         OPC_SYSTEM: begin
           if      (insn == INSN_ECALL)  is_ecall  = 1'b1;
           else if (insn == INSN_EBREAK) is_ebreak = 1'b1;
-          else                          illegal   = 1'b1;           // CSR/MRET: Stages 6-7
+          else if (ENABLE_Z && (funct3 inside {3'b001,3'b010,3'b011,3'b101,3'b110,3'b111})) begin
+            if ((insn[31:20] == 12'h800) || (insn[31:20] == 12'h801)) illegal = 1'b0;
+            else if ((insn[31:20] == 12'hCC0) &&
+                     ((funct3 == 3'b010) || (funct3 == 3'b011) ||
+                      (funct3 == 3'b110) || (funct3 == 3'b111)) &&
+                     (insn[19:15] == 5'd0)) illegal = 1'b0;
+            else illegal = 1'b1;
+          end
+          else                          illegal   = 1'b1;           // MRET and unsupported CSRs: Stage 7
         end
 
         default: illegal = 1'b1;

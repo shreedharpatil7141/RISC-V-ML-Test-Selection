@@ -1,0 +1,12 @@
+name,expect_cause,check_gp
+stage6_csr_ops,1,0
+stage6_csr_hazards,1,0
+stage6_csr_permissions,3,0
+stage6_fencei_store_replace,1,0
+stage6_fencei_divide,1,0
+stage6_fencei_atomic_replace,1,0
+stage6_csr_wrongpath,1,1
+stage6_csr_ro_reads,1,0
+stage6_csr_ro_write_rd0,3,0
+stage6_csr_ro_zero_source,3,0
+stage6_csr_ro_immediate_write,3,0

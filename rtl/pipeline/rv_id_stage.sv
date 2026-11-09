@@ -5,7 +5,8 @@ module rv_id_stage
   import rv32_pkg::*;
   import rv_pipe_pkg::*;
 #(
-  parameter bit ENABLE_A = 1'b0
+  parameter bit ENABLE_A = 1'b0,
+  parameter bit ENABLE_Z = 1'b0
 )
 (
   input  if_id_t  if_id,
@@ -15,6 +16,8 @@ module rv_id_stage
   input  logic    wb_we,
   input  reg_t    wb_rd,
   input  word_t   wb_data,
+  input  word_t   csr0,
+  input  word_t   csr1,
   // register file read addresses
   output reg_t    rs1_addr,
   output reg_t    rs2_addr,
@@ -29,8 +32,10 @@ module rv_id_stage
   logic [2:0] funct3;
   logic [6:0] funct7;
   logic       dec_illegal, is_ecall, is_ebreak, is_fence, is_m, is_a;
+  logic csr_inst;
+  logic [11:0] csr_addr;
 
-  rv_decoder #(.ENABLE_A(ENABLE_A)) u_dec (
+  rv_decoder #(.ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z)) u_dec (
     .insn(if_id.insn), .opcode(opcode), .rd(rd), .rs1(rs1), .rs2(rs2),
     .funct3(funct3), .funct7(funct7), .illegal(dec_illegal),
     .is_ecall(is_ecall), .is_ebreak(is_ebreak), .is_fence(is_fence), .is_m(is_m), .is_a(is_a)
@@ -53,11 +58,14 @@ module rv_id_stage
 
   assign rs1_addr = rs1;
   assign rs2_addr = rs2;
+  assign csr_inst = ENABLE_Z && opcode == OPC_SYSTEM && !dec_illegal && !is_ecall && !is_ebreak;
+  assign csr_addr = if_id.insn[31:20];
 
   // Which source registers does this (legal) instruction actually read?
   assign uses_rs1 = !dec_illegal && ((opcode == OPC_JALR)   || (opcode == OPC_BRANCH) ||
                                      (opcode == OPC_LOAD)   || (opcode == OPC_STORE)  ||
-                                     (opcode == OPC_OP_IMM) || (opcode == OPC_OP) || (ENABLE_A && is_a));
+                                     (opcode == OPC_OP_IMM) || (opcode == OPC_OP) || (ENABLE_A && is_a) ||
+                                     (csr_inst && !funct3[2] && rs1 != 0));
   assign uses_rs2 = !dec_illegal && ((opcode == OPC_BRANCH) || (opcode == OPC_STORE) ||
                                      (opcode == OPC_OP) ||
                                      (ENABLE_A && is_a && if_id.insn[31:27] != 5'b00010));
@@ -94,13 +102,18 @@ module rv_id_stage
     id_ex_next.is_a      = is_a;
     id_ex_next.a_sel     = a_sel;
     id_ex_next.b_imm     = b_imm;
-    id_ex_next.reg_we    = reg_we;
+    id_ex_next.reg_we    = reg_we || csr_inst;
     id_ex_next.mem_re    = mem_re;
     id_ex_next.mem_we    = mem_we;
     id_ex_next.wb_sel    = wb_sel;
     id_ex_next.is_branch = is_branch;
     id_ex_next.is_jal    = is_jal;
     id_ex_next.is_jalr   = is_jalr;
+    id_ex_next.is_fencei = ENABLE_Z && (if_id.insn == 32'h0000_100F);
+    id_ex_next.is_csr    = csr_inst;
+    id_ex_next.csr_addr  = csr_addr;
+    id_ex_next.csr_old   = csr_addr == 12'hCC0 ? CSR_STAGE6_ID :
+                            (csr_addr == 12'h800 ? csr0 : csr1);
     id_ex_next.cause     = id_cause;
   end
 endmodule

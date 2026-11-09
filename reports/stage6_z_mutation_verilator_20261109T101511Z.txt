@@ -1,0 +1,4 @@
+Z01 CAUGHT: Immediate CSR source incorrectly reads the register file
+Z02 CAUGHT: FENCE.I fails to redirect and refetch
+STAGE6_Z_MUTATION_VERILATOR PASS caught=2 missed=0 invalid=0
+RUN_EVIDENCE=/mnt/c/RISC-V-ML-Test-Selection/reports/stage6_z_mutation_runs/run_20261109T101511Z

@@ -6,6 +6,9 @@ package rv32_pkg;
   typedef logic [31:0] word_t;
   typedef logic [4:0]  reg_t;
 
+  // Stage 6 custom read-only identification CSR value (ASCII "STG6").
+  localparam word_t CSR_STAGE6_ID = 32'h5354_4736;
+
   // ---- Base opcodes (insn[6:0]) ----
   localparam logic [6:0] OPC_LUI      = 7'b0110111;
   localparam logic [6:0] OPC_AUIPC    = 7'b0010111;

@@ -4,7 +4,7 @@
 // Unified 64 KiB memory, combinational read, synchronous byte-enable write.
 // Prints exactly one "TEST_RESULT: PASS|FAIL ..." line. Trace format matches scripts/simulation/rv32i_iss.py.
 `timescale 1ns/1ps
-module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0);
+module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0, parameter bit ENABLE_Z = 1'b0);
   import rv32_pkg::*;
 
   localparam int MEM_WORDS = 16384;   // 64 KiB
@@ -28,7 +28,7 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
   reg_t ret_rd;
   logic [3:0] ret_mem_be;
 
-  rv_core_single #(.ENABLE_C(ENABLE_C || ENABLE_A), .ENABLE_A(ENABLE_A)) dut (
+  rv_core_single #(.ENABLE_C(ENABLE_C || ENABLE_A || ENABLE_Z), .ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z)) dut (
     .clk(clk), .rst_n(rst_n),
     .imem_addr(imem_addr), .imem_addr_next(imem_addr_next), .imem_rdata(imem_rdata), .imem_valid(imem_valid),
     .imem_rdata_next(imem_rdata_next), .imem_next_valid(imem_next_valid),
@@ -188,6 +188,11 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
       if (ENABLE_C || ENABLE_A) $fdisplay(trace_fd, "STOP %08x %08x %02d %0d", halt_pc, dut.halt_raw_insn, dut.halt_ilen_bytes, int'(halt_cause));
       $fdisplay(trace_fd, "HALT %0d %08x", int'(halt_cause), halt_pc);
       for (int r = 1; r < 32; r++) $fdisplay(trace_fd, "REG %0d %08x", r, dut.u_rf.regs[r]);
+      if (ENABLE_Z) begin
+        $fdisplay(trace_fd, "CSR 800 %08x", dut.csr0);
+        $fdisplay(trace_fd, "CSR 801 %08x", dut.csr1);
+        $fdisplay(trace_fd, "CSR cc0 %08x", CSR_STAGE6_ID);
+      end
       for (int a = 16'h4000; a < 16'h6000; a += 4)
         if (mem[a >> 2] != 32'h0) $fdisplay(trace_fd, "MEM %08x %08x", a, mem[a >> 2]);
       $fclose(trace_fd);

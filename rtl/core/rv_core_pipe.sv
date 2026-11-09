@@ -19,7 +19,8 @@ module rv_core_pipe
   parameter word_t RESET_PC = 32'h0000_0000,
   parameter bit USE_ITERATIVE_M = 1'b1,
   parameter bit ENABLE_C = 1'b0,
-  parameter bit ENABLE_A = 1'b0
+  parameter bit ENABLE_A = 1'b0,
+  parameter bit ENABLE_Z = 1'b0
 ) (
   input  logic        clk,
   input  logic        rst_n,
@@ -84,7 +85,8 @@ module rv_core_pipe
   ex_mem_t ex_mem, ex_mem_next;
   mem_wb_t mem_wb, mem_wb_next;
 
-  logic        stall, md_hold, front_stall, redirect, kill, fault;
+  logic        stall, load_stall, csr_serialize, md_hold, front_stall, redirect, kill, fault;
+  word_t csr0, csr1;
   word_t       redirect_target;
   halt_cause_e fault_cause;
   assign kill = halted || fault;
@@ -112,9 +114,10 @@ module rv_core_pipe
     .rs1_addr(rs1_addr), .rs2_addr(rs2_addr), .rs1_data(rf_rs1_data), .rs2_data(rf_rs2_data)
   );
 
-  rv_id_stage #(.ENABLE_A(ENABLE_A)) u_id (
+  rv_id_stage #(.ENABLE_A(ENABLE_A), .ENABLE_Z(ENABLE_Z)) u_id (
     .if_id(if_id), .rf_rs1_data(rf_rs1_data), .rf_rs2_data(rf_rs2_data),
     .wb_we(wb_rf_we), .wb_rd(wb_rf_rd), .wb_data(wb_rf_wdata),
+    .csr0(csr0), .csr1(csr1),
     .rs1_addr(rs1_addr), .rs2_addr(rs2_addr), .uses_rs1(id_uses_rs1), .uses_rs2(id_uses_rs2),
     .bypass_rs1(bypass_rs1), .bypass_rs2(bypass_rs2), .id_ex_next(id_ex_next)
   );
@@ -122,8 +125,12 @@ module rv_core_pipe
   rv_hazard_unit u_haz (
     .id_valid(if_id.valid), .id_rs1(rs1_addr), .id_rs2(rs2_addr),
     .id_uses_rs1(id_uses_rs1), .id_uses_rs2(id_uses_rs2),
-    .ex_valid(id_ex.valid), .ex_mem_re(id_ex.mem_re), .ex_rd(id_ex.rd), .stall(stall)
+    .ex_valid(id_ex.valid), .ex_mem_re(id_ex.mem_re), .ex_rd(id_ex.rd), .stall(load_stall)
   );
+  assign csr_serialize = ENABLE_Z && if_id.valid && if_id.insn[6:0] == OPC_SYSTEM &&
+                         if_id.insn[14:12] inside {3'b001,3'b010,3'b011,3'b101,3'b110,3'b111} &&
+                         (id_ex.valid || ex_mem.valid || mem_wb.valid);
+  assign stall = load_stall || csr_serialize;
 
   // ---------------- EX ----------------
   fwd_sel_e fwd_a, fwd_b;
@@ -170,6 +177,14 @@ module rv_core_pipe
     .ret_mem_re(ret_mem_re), .ret_mem_we(ret_mem_we), .ret_mem_addr(ret_mem_addr),
     .ret_mem_be(ret_mem_be), .ret_mem_wdata(ret_mem_wdata), .ret_mem_rdata(ret_mem_rdata)
   );
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin csr0 <= 32'b0; csr1 <= 32'b0; end
+    else if (mem_wb.valid && mem_wb.csr_write) begin
+      if (mem_wb.csr_addr == 12'h800) csr0 <= mem_wb.csr_new;
+      else if (mem_wb.csr_addr == 12'h801) csr1 <= mem_wb.csr_new;
+    end
+  end
 
   // ---------------- Pipeline registers ----------------
   rv_pipe_regs u_regs (

@@ -99,6 +99,9 @@ module rv_mem_stage
     mem_wb_next.wb_data  = ex_mem.is_a ? atomic_wb : (ex_mem.mem_re ? lsu_load_data : ex_mem.alu_y);
     mem_wb_next.ld_re    = ex_mem.mem_re;
     mem_wb_next.st_we    = ex_mem.mem_we || atomic_write;
+    mem_wb_next.csr_write = ex_mem.csr_write;
+    mem_wb_next.csr_addr  = ex_mem.csr_addr;
+    mem_wb_next.csr_new   = ex_mem.csr_new;
     mem_wb_next.mem_addr = ex_mem.alu_y;
     mem_wb_next.st_be    = ex_mem.is_a ? 4'b1111 : lsu_be;
     mem_wb_next.st_wdata = dmem_wdata;
