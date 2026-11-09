@@ -15,3 +15,4 @@
 - Enabled: Verilator `reports/stage7_verilator_full_20261109T182310Z.txt`; XSim `reports/stage7_xsim_full_20261109T181948Z.txt`. Each reports 13 cases, 26 ISS traces, 13 golden/pipeline comparisons.
 - Mutation: `reports/stage7_machine_mutation_verilator_20261109T182652Z.txt` — 3 caught, 0 missed, 0 invalid. Per-mutant commands, diffs, results, and logs are retained under `reports/stage7_machine_mutation_runs/run_20261109T182652Z/`.
 - Owner commands: `python3 scripts/simulation/prepare_stage7.py <fresh_output_dir>`; `bash scripts/simulation/run_stage7_verilator.sh <prepared_dir>`; `scripts\simulation\run_stage7_xsim.bat <prepared_dir>`; `python3 scripts/simulation/run_stage7_mutation.py`.
+- Release approved for checkpoint `e0292424005903e7f38a057375f48b261b4a1c36` on 2026-11-10; the annotated `stage7-complete` tag identifies the resulting `main` commit.
