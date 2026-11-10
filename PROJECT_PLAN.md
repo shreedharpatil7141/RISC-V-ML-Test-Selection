@@ -109,11 +109,10 @@ The A02 classifier implementation check against saved evidence remains
 unexecuted locally because Python is unavailable; the independent evidence
 reanalysis was recorded separately.
 
-Stages 6 and 7 are released on `main` at `stage7-complete`. Stage 8 is validated
-on `stage8-verification`: preparation, Verilator, and XSim pass with separate
-reports and positive/negative-check evidence. This checkpoint changes the
-verification environment only; no functional DUT RTL changed from Stage 7.
-Stage 9 has not started.
+Stages 6 and 7 are released on `main` at `stage7-complete`. Stage 8 is released
+on `main` at `stage8-complete`; preparation, Verilator, and XSim passed with
+separate reports and positive/negative-check evidence. No functional DUT RTL
+changed from Stage 7. Stage 9 has not started.
 
 The MEM contract is one explicit edge transaction: a valid, fault-free A
 instruction in MEM observes the old word before the edge; AMOs and successful
