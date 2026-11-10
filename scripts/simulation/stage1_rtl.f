@@ -1,3 +1,4 @@
+verification/stage8/rv_stage8_components.sv
 rtl/packages/rv32_pkg.sv
 rtl/decoder/rv_decoder.sv
 rtl/decoder/rv32c_decompressor.sv

@@ -1,0 +1,5 @@
+# Stage 8 verification checkpoint
+
+`stage8-verification` is based on `stage7-complete` (`7c6666355b0b355883229eb80f9d959d87aaf64d`). Stage 8 adds modular non-UVM drivers and protocol monitors, opt-in bench connections, deterministic seeded scenarios, an independent ISS-backed scoreboard, and negative checks. No functional DUT RTL changed from Stage 7. Testbench changes add optional IRQ/monitor connections and memory trace output; file lists include the monitor package.
+
+Preparation and both simulators passed. Each regression covers 259 compatibility cases plus 13 released machine-mode and 10 seeded cases, with 46 ISS trace comparisons, 23 golden-pipeline comparisons, one scoreboard fault injection, one unauthorized CSR check, and four malformed retirement checks. Separate summary and detailed reports are retained in `reports/stage8_runs/run_20261110T053555Z_verilator/`, `reports/stage8_runs/run_20261110T054049Z_xsim/`, `reports/stage8_verilator_full_20261110T054002Z.txt`, and `reports/stage8_xsim_full_20261110T060329Z.txt`. The detailed reports' source hashes match the validated workspace sources.

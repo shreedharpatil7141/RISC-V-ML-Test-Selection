@@ -1,0 +1,1 @@
+STAGE8_VERILATOR PASS compatibility=259 stage5=248 stage6=11 stage7_existing=13 seeded=10 enabled_total=23 iss_comparisons=46 golden_pipeline=23 scoreboard_negative=1 protocol_negative=1 retirement_negative=4

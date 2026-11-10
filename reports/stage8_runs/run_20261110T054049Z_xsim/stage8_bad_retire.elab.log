@@ -1,0 +1,15 @@
+Vivado Simulator v2026.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: C:/AMDDesignTools/2026.1/Vivado/bin/unwrapped/win64.o/xelab.exe -debug off tb_rv_stage8_bad_retire -s s8_bad_retire
+Multi-threading is on. Using 14 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.rv_s8_observe_if_default
+Compiling module work.rv_s8_retirement_monitor_default
+Compiling module work.tb_rv_stage8_bad_retire
+Built simulation snapshot s8_bad_retire

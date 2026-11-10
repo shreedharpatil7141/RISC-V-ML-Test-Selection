@@ -11,7 +11,9 @@ module tb_rv_pipe_stage4 #(
   parameter bit ENABLE_C = 1'b0,
   parameter bit ENABLE_A = 1'b0,
   parameter bit ENABLE_Z = 1'b0,
-  parameter bit ENABLE_M = 1'b0
+  parameter bit ENABLE_M = 1'b0,
+  parameter bit USE_STAGE8_IRQ_DRIVER = 1'b0,
+  parameter bit ENABLE_STAGE8_MONITORS = 1'b0
 );
   import rv32_pkg::*;
 
@@ -77,20 +79,72 @@ module tb_rv_pipe_stage4 #(
     .dbg_m_squash_redirect(dbg_m_squash_redirect), .dbg_m_squash_fault(dbg_m_squash_fault),
     .dbg_m_fault_start_suppressed(dbg_m_fault_start_suppressed), .dbg_m_loaduse(dbg_m_loaduse)
   );
-  always @(posedge clk) if (rst_n && ENABLE_M && dut.irq_take) irq_seen <= 1'b1;
-  always @(negedge clk) begin
-    if (!rst_n) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; irq_fired<=0; end
-    else if (ENABLE_M) begin
-      if (irq_seen) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; end
-      else if (!irq_fired && irq_pc >= 0 &&
-               // busy includes the combinational accept cycle; wait for RUN, not pre-accept.
-               ((irq_wait_div != 0 && dut.id_ex.valid && dut.id_ex.pc == irq_pc && dbg_md_busy && !dbg_md_start) ||
-                (irq_wait_div == 0 && !dut.u_machine.mstatus_mie && dut.if_id.valid && dut.if_id.pc == irq_pc) ||
-                (irq_wait_div == 0 && dut.id_ex.valid && dut.id_ex.pc == irq_pc))) begin
-        irq_msip<=irq_level_mask[0]; irq_mtip<=irq_level_mask[1]; irq_meip<=irq_level_mask[2]; irq_fired<=1'b1;
+  rv_s8_observe_if s8_observe(clk);
+  assign s8_observe.rst_n = rst_n;
+  assign s8_observe.ret_valid = ret_valid;
+  assign s8_observe.ret_pc = ret_pc;
+  assign s8_observe.ret_raw = ret_insn;
+  assign s8_observe.ret_expanded = ret_expanded_insn;
+  assign s8_observe.ret_ilen = ret_ilen_bytes;
+  assign s8_observe.trap_valid = dut.machine_trap || dut.irq_take;
+  assign s8_observe.trap_pc = dut.entry_pc;
+  assign s8_observe.trap_raw = dut.irq_take ? 32'b0 : dut.ex_mem.raw_insn;
+  assign s8_observe.trap_cause = {dut.irq_take,26'b0,dut.entry_cause};
+  assign s8_observe.trap_tval = dut.trap_value;
+  assign s8_observe.csr_access = ret_valid && dut.mem_wb.insn[6:0] == OPC_SYSTEM && dut.mem_wb.insn[14:12] != 3'b000;
+  assign s8_observe.csr_commit = ret_valid && dut.mem_wb.csr_write;
+  assign s8_observe.csr_pc = ret_pc;
+  assign s8_observe.csr_raw = dut.mem_wb.raw_insn;
+  assign s8_observe.csr_addr = dut.mem_wb.csr_addr;
+  assign s8_observe.csr_old = dut.mem_wb.wb_data;
+  assign s8_observe.csr_new = dut.mem_wb.csr_new;
+  assign s8_observe.atomic_commit = dmem_atomic_commit;
+  assign s8_observe.atomic_read = dmem_re;
+  assign s8_observe.atomic_write = |dmem_we;
+  assign s8_observe.atomic_pc = dut.ex_mem.pc;
+  assign s8_observe.atomic_raw = dut.ex_mem.raw_insn;
+  assign s8_observe.atomic_addr = dmem_addr;
+  assign s8_observe.atomic_be = dmem_we;
+  assign s8_observe.md_start = dbg_md_start; assign s8_observe.md_busy = dbg_md_busy;
+  assign s8_observe.md_done = dbg_md_done; assign s8_observe.md_abort = dbg_md_abort_started;
+  assign s8_observe.md_pc = dbg_m_pc; assign s8_observe.md_raw = dbg_m_insn;
+  integer s8_retire_events, s8_trap_events, s8_csr_accesses, s8_csr_commits;
+  integer s8_atomic_commits, s8_atomic_writes, s8_md_starts, s8_md_dones, s8_md_aborts;
+  generate if (ENABLE_STAGE8_MONITORS) begin : g_stage8_monitors
+    rv_s8_retirement_monitor retire_mon(s8_observe, s8_retire_events);
+    rv_s8_trap_monitor trap_mon(s8_observe, s8_trap_events);
+    rv_s8_csr_monitor csr_mon(s8_observe, s8_csr_accesses, s8_csr_commits);
+    rv_s8_atomic_monitor atomic_mon(s8_observe, s8_atomic_commits, s8_atomic_writes);
+    rv_s8_divider_monitor divider_mon(s8_observe, s8_md_starts, s8_md_dones, s8_md_aborts);
+  end endgenerate
+  generate
+    if (USE_STAGE8_IRQ_DRIVER) begin : g_stage8_irq
+      rv_s8_interrupt_driver u_driver(
+        .clk(clk), .rst_n(rst_n), .enabled(ENABLE_M), .schedule_pc(irq_pc),
+        .level_mask(irq_level_mask), .wait_div(irq_wait_div), .timing_mode(irq_wait_div != 0 ? 1 : 2),
+        // Pipeline schedules are keyed to the execution boundary (ID/EX);
+        // the driver's mode-2 masked-pending path separately observes IF/ID.
+        .core_pc(dut.id_ex.pc), .if_pc(dut.if_id.pc), .id_pc(dut.id_ex.pc),
+        .if_valid(dut.if_id.valid), .id_valid(dut.id_ex.valid), .mie(dut.u_machine.mstatus_mie),
+        .trap_taken(dut.irq_take), .div_busy(dbg_md_busy), .div_start(dbg_md_start),
+        .irq_msip(irq_msip), .irq_mtip(irq_mtip), .irq_meip(irq_meip), .fired(irq_fired), .seen(irq_seen));
+    end else begin : g_legacy_irq
+      always @(posedge clk) if (rst_n && ENABLE_M && dut.irq_take) irq_seen <= 1'b1;
+      always @(negedge clk) begin
+        if (!rst_n) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; irq_fired<=0; end
+        else if (ENABLE_M) begin
+          if (irq_seen) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; end
+          else if (!irq_fired && irq_pc >= 0 &&
+                   // busy includes the combinational accept cycle; wait for RUN, not pre-accept.
+                   ((irq_wait_div != 0 && dut.id_ex.valid && dut.id_ex.pc == irq_pc && dbg_md_busy && !dbg_md_start) ||
+                    (irq_wait_div == 0 && !dut.u_machine.mstatus_mie && dut.if_id.valid && dut.if_id.pc == irq_pc) ||
+                    (irq_wait_div == 0 && dut.id_ex.valid && dut.id_ex.pc == irq_pc))) begin
+            irq_msip<=irq_level_mask[0]; irq_mtip<=irq_level_mask[1]; irq_meip<=irq_level_mask[2]; irq_fired<=1'b1;
+          end
+        end
       end
     end
-  end
+  endgenerate
 
   // ---------------- Memory model ----------------
   int oob_errors = 0;
@@ -390,6 +444,8 @@ integer plusarg_ok;
                   ENABLE_M ? 0 : int'(halt_cause));
       $fdisplay(trace_fd, "HALT %0d %08x", ENABLE_M ? 0 : int'(halt_cause), ENABLE_M ? test_done_pc + test_done_ilen : halt_pc);
       for (int r = 1; r < 32; r++) $fdisplay(trace_fd, "REG %0d %08x", r, dut.u_rf.regs[r]);
+      for (int a = 16'h4000; a < 16'h6000; a += 4)
+        if (mem[a >> 2] != 32'h0) $fdisplay(trace_fd, "MEM %08x %08x", a, mem[a >> 2]);
       if (ENABLE_Z) begin
         $fdisplay(trace_fd, "CSR 800 %08x", dut.csr0);
         $fdisplay(trace_fd, "CSR 801 %08x", dut.csr1);
@@ -404,8 +460,6 @@ integer plusarg_ok;
         $fdisplay(trace_fd,"CSR b02 %08x",dut.u_machine.minstret); $fdisplay(trace_fd,"CSR b80 %08x",dut.u_machine.mcycleh);
         $fdisplay(trace_fd,"CSR b82 %08x",dut.u_machine.minstreth); $fdisplay(trace_fd,"CSR 344 %08x",dut.u_machine.pending);
       end
-      for (int a = 16'h4000; a < 16'h6000; a += 4)
-        if (mem[a >> 2] != 32'h0) $fdisplay(trace_fd, "MEM %08x %08x", a, mem[a >> 2]);
       $fclose(trace_fd);
     end
     if (mcov_fd != 0) $fclose(mcov_fd);
@@ -415,6 +469,10 @@ integer plusarg_ok;
     $display("ATOMIC_STATS commits=%0d writes=%0d", atomic_commits, atomic_writes);
     $display("MD_STATS starts=%0d dones=%0d busy_cycles=%0d aborts_started=%0d",
              md_starts, md_dones, busy_cycles, md_aborts_started);
+    if (ENABLE_STAGE8_MONITORS)
+      $display("STAGE8_COMPONENTS retire=%0d traps=%0d csr_access=%0d csr_commit=%0d atomic=%0d atomic_writes=%0d div_start=%0d div_done=%0d div_abort=%0d",
+               s8_retire_events, s8_trap_events, s8_csr_accesses, s8_csr_commits,
+               s8_atomic_commits, s8_atomic_writes, s8_md_starts, s8_md_dones, s8_md_aborts);
     $display("STATS stalls=%0d redirects=%0d cycles=%0d instret=%0d assert_fail=%0d",
              stall_cnt, redirect_cnt, cycles, instret, dbg_assert_fail);
     $display("COV %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d",

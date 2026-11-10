@@ -1,0 +1,3 @@
+[35000] %Fatal: rv_stage8_components.sv:137: Assertion failed in tb_rv_stage8_bad_retire.monitor: STAGE8_RETIRE invalid length pc=00000020 len_bytes=3 len_bits=24 length_port_bits=5 raw_bits=32 canonical_bits=32 raw=00000001 canonical=00000013
+%Error: /mnt/c/RISC-V-ML-Test-Selection/verification/stage8/rv_stage8_components.sv:137: Verilog $stop
+Aborting...

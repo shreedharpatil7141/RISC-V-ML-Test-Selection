@@ -94,9 +94,8 @@ def main():
     global_args = argparse.ArgumentParser(description=__doc__)
     global_args.add_argument("--sim", required=True, choices=("verilator", "xsim"))
     global_args.add_argument("--prepared", required=True)
-    global_args.add_argument("--case", choices=("fault_before_irq", "fencei_store_replace", "fetch_access_trap",
-        "irq_div_restart", "irq_mask_pending", "irq_software", "irq_timer", "irq_vectored_priority",
-        "lr_trap_sc", "machine_trap_return", "mixed_width_trap", "store_fault_precision", "wrongpath_fault"))
+    global_args.add_argument("--case")
+    global_args.add_argument("--stage8", action="store_true", help="run the Stage 8 extended prepared inventory")
     args = global_args.parse_args()
     prep = Path(args.prepared).resolve()
     prep_text=(prep / "stage7_preparation.txt").read_text(encoding="ascii")
@@ -109,11 +108,33 @@ def main():
         require(path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest()==m.group(3),
                 f"prepared provenance mismatch/missing file: {path}")
     rows = list(csv.DictReader((prep / "m_manifest.csv").open(newline="")))
-    require(len(rows) == 13 and len({r["name"] for r in rows}) == 13, "Stage 7 case inventory mismatch")
+    require(len({r["name"] for r in rows}) == len(rows), "duplicate case names in prepared inventory")
+    if args.stage8:
+        stage8_note=(prep / "stage8_preparation.txt").read_text(encoding="ascii")
+        match=re.search(r"STAGE8_PREPARATION READY base_cases=13 generated_cases=(\d+) total_cases=(\d+) errors=0",stage8_note)
+        require(match is not None and int(match.group(2)) == len(rows), "Stage 8 prepared inventory mismatch")
+        for line in stage8_note.splitlines():
+            source_item=re.fullmatch(r"sha256 (.+)=([0-9a-f]{64})",line)
+            if source_item:
+                rel,digest=source_item.groups(); path=ROOT/rel
+                require(path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest()==digest,
+                        f"Stage 8 source provenance mismatch: {path}")
+            item=re.fullmatch(r"artifact_sha256 (.+)=([0-9a-f]{64})",line)
+            if item:
+                rel,digest=item.groups()
+                path=prep/rel[len("@PREPARED@/"):] if rel.startswith("@PREPARED@/") else ROOT/rel
+                require(path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest()==digest,
+                        f"Stage 8 prepared artifact provenance mismatch: {path}")
+    else:
+        require(len(rows) == 13, "Stage 7 case inventory mismatch")
+    expected_count=len(rows) if args.case is None else 1
     run_rows = [row for row in rows if args.case is None or row["name"] == args.case]
-    require(len(run_rows) == (13 if args.case is None else 1), f"Stage 7 selected case missing or duplicated: {args.case}")
+    require(len(run_rows) == expected_count, f"selected case missing or duplicated: {args.case}")
+    def resolve_image(row):
+        rel=row["hexpath"]
+        return prep / rel[len("@PREPARED@/"):] if rel.startswith("@PREPARED@/") else ROOT / rel
     for row in run_rows:
-        for p in (ROOT / row["hexpath"], prep / "m_iss" / f"{row['name']}.trace",
+        for p in (resolve_image(row), prep / "m_iss" / f"{row['name']}.trace",
                   prep / "m_iss" / f"{row['name']}.trap.tsv", prep / "m_iss" / f"{row['name']}.z.tsv"):
             require(p.is_file() and p.stat().st_size, f"missing prepared artifact: {p}")
 
@@ -129,7 +150,7 @@ def main():
         require(launch.COMSPEC is not None, "COMSPEC/cmd.exe missing for XSim batch executables")
     stamp = __import__("datetime").datetime.now(__import__("datetime").timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     run_kind = f"focused_{args.case}" if args.case else "full"
-    out = ROOT / f"sim_out_stage7_{args.sim}_{run_kind}_{stamp}"
+    out = ROOT / f"sim_out_{'stage8' if args.stage8 else 'stage7'}_{args.sim}_{run_kind}_{stamp}"
     require(not out.exists(), f"output directory exists: {out}")
     out.mkdir()
     command_records={"owner_command": [sys.executable, *sys.argv], "commands": {}}
@@ -143,7 +164,8 @@ def main():
     rtl_sources=[ROOT/line.strip() for line in rtl.read_text(encoding="utf-8").splitlines() if line.strip()]
     require(all(source.is_file() for source in rtl_sources),
             "RTL file list has missing source(s): " + ", ".join(str(p) for p in rtl_sources if not p.is_file()))
-    tops = (("golden", "tb_rv_core_stage7"), ("pipe", "tb_rv_pipe_stage7"))
+    tops = (("golden", "tb_rv_core_stage8"), ("pipe", "tb_rv_pipe_stage8")) if args.stage8 else \
+           (("golden", "tb_rv_core_stage7"), ("pipe", "tb_rv_pipe_stage7"))
     snapshots = {}
     if args.sim == "verilator":
         unit_obj=out/"obj_decoder_machine"; unit_obj.mkdir()
@@ -159,9 +181,10 @@ def main():
         build_errors={}
         for name, top in tops:
             obj=out/f"obj_{name}"; obj.mkdir()
+            top_sources=[env/"tb_rv_core.sv",env/"tb_rv_pipe_stage4.sv",env/"tb_rv_stage7.sv"]
+            if args.stage8: top_sources.append(env/"tb_rv_stage8.sv")
             build_args=["verilator","-sv","--binary","--timing","-Wno-fatal","-Wno-lint","-Wno-style",
-                        "-f",rtl,env/"tb_rv_core.sv",env/"tb_rv_pipe_stage4.sv",env/"tb_rv_stage7.sv",
-                        "--top-module",top,"-Mdir",obj,"-o",name]
+                        "-f",rtl,*top_sources,"--top-module",top,"-Mdir",obj,"-o",name]
             record_command(f"build_{name}",build_args,ROOT)
             try:
                 launch.run(build_args, ROOT, out/f"{name}.build.log")
@@ -176,7 +199,9 @@ def main():
         absfl=out/"stage7_rtl_abs.f"
         absfl.write_text("".join(str((ROOT/ln.strip()).resolve()).replace("\\","/")+"\n" for ln in rtl.read_text(encoding="utf-8").splitlines() if ln.strip()),encoding="utf-8",newline="\n")
         launch.run(["xvlog","-sv","-f",launch.simulator_path(absfl)],xdir,out/"xvlog_rtl.log")
-        for source in ("tb_rv_core.sv","tb_rv_pipe_stage4.sv","tb_rv_stage7.sv"):
+        compile_sources=["tb_rv_core.sv","tb_rv_pipe_stage4.sv","tb_rv_stage7.sv"]
+        if args.stage8: compile_sources.append("tb_rv_stage8.sv")
+        for source in compile_sources:
             args0=["xvlog","-sv",launch.simulator_path(env/source)]
             record_command(f"compile_{source}",args0,xdir)
             launch.run(args0,xdir,out/(source+".compile.log"))
@@ -214,7 +239,7 @@ def main():
             engine,exe=snapshots[kind]
             trace,log,trap=out/f"{name}.{kind}.trace",out/f"{name}.{kind}.log",out/f"{name}.{kind}.trap.tsv"
             mcov=out/f"{name}.{kind}.mcov"
-            plus=[f"+HEX={launch.simulator_path(ROOT/row['hexpath'])}",f"+TRACE={launch.simulator_path(trace)}",
+            plus=[f"+HEX={launch.simulator_path(resolve_image(row))}",f"+TRACE={launch.simulator_path(trace)}",
                   f"+TRAP={launch.simulator_path(trap)}","+EXPECT_CAUSE=0","+CHECK_GP=0"]
             if row["irq_pc"]:
                 plus += [f"+IRQ_PC={row['irq_pc']}",f"+IRQ_LEVELS={row['irq_levels']}",
@@ -303,7 +328,8 @@ def main():
         for event in expected_trap_rows:
             cause=int(event["mcause"],16)
             (irq_causes if cause & 0x80000000 else sync_causes).add(cause & 0x7fffffff)
-    report=ROOT/"reports"/f"stage7_{args.sim}_{run_kind}_{stamp}.txt"; report.parent.mkdir(exist_ok=True)
+    report_prefix="stage8" if args.stage8 else "stage7"
+    report=ROOT/"reports"/f"{report_prefix}_{args.sim}_{run_kind}_{stamp}.txt"; report.parent.mkdir(exist_ok=True)
     files=[ROOT/"rtl/core/rv_machine_state.sv",ROOT/"rtl/core/rv_core_single.sv",ROOT/"rtl/core/rv_core_pipe.sv",
            ROOT/"rtl/pipeline/rv_id_stage.sv",ROOT/"rtl/pipeline/rv_ex_stage.sv",ROOT/"rtl/pipeline/rv_mem_stage.sv",
            ROOT/"rtl/decoder/rv_decoder.sv",HERE/"rv32imc_iss.py",HERE/"prepare_stage7.py",HERE/"run_stage7_enabled.py",
@@ -314,14 +340,22 @@ def main():
            ROOT/"verification/environment/tb_rv_stage7.sv",ROOT/"verification/environment/tb_rv_decoder_machine.sv",
            ROOT/"tests/directed/rv32imac_stage7/manifest.csv",
            *sorted((ROOT/"tests/directed/rv32imac_stage7").glob("*.s"))]
+    if args.stage8:
+        files += [ROOT/"verification/stage8/rv_stage8_components.sv", ROOT/"verification/environment/tb_rv_stage8.sv",
+                  ROOT/"verification/environment/tb_rv_stage8_components.sv", HERE/"stage8_scenarios.py",
+                  HERE/"run_stage8_enabled.py", prep/"stage8_preparation.txt"]
     digest="\n".join(f"sha256 {p.relative_to(ROOT).as_posix()}={hashlib.sha256(p.read_bytes()).hexdigest()}" for p in files)
-    coverage=(f"cases={len(run_rows)} traces={full} golden_pipeline={gold_pipe} traps={trap_count} "
+    coverage=(f"cases={len(run_rows)} traces={full} golden_pipeline={gold_pipe} " +
+              (f"stage7_existing={sum(1 for r in run_rows if r.get('suite') == 'stage7_enabled')} "
+               f"stage8_seeded={sum(1 for r in run_rows if r.get('suite') == 'stage8_seeded')} " if args.stage8 else "") +
+              f"traps={trap_count} "
               f"sync_causes={','.join(str(x) for x in sorted(sync_causes))} "
               f"irq_causes={','.join(str(x) for x in sorted(irq_causes))} "
               f"csr_commits_both_cores={csr_commits} csr_addresses={','.join(f'{x:03x}' for x in sorted(csr_addresses))} "
               f"mret={mret_count} fencei={fencei_count} interrupted_div_aborts={div_irq_aborts}\n")
     (out/"stage7_coverage.txt").write_text(coverage,encoding="utf-8",newline="\n")
-    report.write_text(f"STAGE7_ENABLED_{args.sim.upper()} PASS {coverage}{digest}\n",encoding="utf-8",newline="\n")
+    marker="STAGE8_ENABLED" if args.stage8 else "STAGE7_ENABLED"
+    report.write_text(f"{marker}_{args.sim.upper()} PASS {coverage}{digest}\n",encoding="utf-8",newline="\n")
     print(report.read_text(encoding="utf-8"),end="")
 
 

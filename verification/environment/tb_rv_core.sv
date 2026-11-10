@@ -4,7 +4,7 @@
 // Unified 64 KiB memory, combinational read, synchronous byte-enable write.
 // Prints exactly one "TEST_RESULT: PASS|FAIL ..." line. Trace format matches scripts/simulation/rv32i_iss.py.
 `timescale 1ns/1ps
-module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0, parameter bit ENABLE_Z = 1'b0, parameter bit ENABLE_M = 1'b0);
+module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0, parameter bit ENABLE_Z = 1'b0, parameter bit ENABLE_M = 1'b0, parameter bit USE_STAGE8_IRQ_DRIVER = 1'b0, parameter bit ENABLE_STAGE8_MONITORS = 1'b0);
   import rv32_pkg::*;
 
   localparam int MEM_WORDS = 16384;   // 64 KiB
@@ -52,16 +52,64 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
     .ret_mem_re(ret_mem_re), .ret_mem_we(ret_mem_we), .ret_mem_addr(ret_mem_addr),
     .ret_mem_be(ret_mem_be), .ret_mem_wdata(ret_mem_wdata), .ret_mem_rdata(ret_mem_rdata)
   );
-  always @(posedge clk) if (rst_n && ENABLE_M && dut.irq_take) irq_seen <= 1'b1;
-  always @(negedge clk) begin
-    if (!rst_n) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; irq_fired<=0; end
-    else if (ENABLE_M) begin
-      if (irq_seen) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; end
-      else if (!irq_fired && irq_pc >= 0 && dut.pc == irq_pc) begin
-        irq_msip<=irq_level_mask[0]; irq_mtip<=irq_level_mask[1]; irq_meip<=irq_level_mask[2]; irq_fired<=1'b1;
+  rv_s8_observe_if s8_observe(clk);
+  assign s8_observe.rst_n = rst_n;
+  assign s8_observe.ret_valid = ret_valid;
+  assign s8_observe.ret_pc = ret_pc;
+  assign s8_observe.ret_raw = ret_raw_insn;
+  assign s8_observe.ret_expanded = ret_expanded_insn;
+  assign s8_observe.ret_ilen = ret_ilen_bytes;
+  assign s8_observe.trap_valid = dut.trap_enter || dut.irq_take;
+  assign s8_observe.trap_pc = dut.pc;
+  assign s8_observe.trap_raw = dut.raw_insn;
+  assign s8_observe.trap_cause = {dut.irq_take,26'b0,(dut.irq_take ? dut.irq_cause : dut.architectural_cause)};
+  assign s8_observe.trap_tval = dut.trap_value;
+  assign s8_observe.csr_access = ret_valid && dut.csr_inst;
+  assign s8_observe.csr_commit = ret_valid && dut.csr_inst && dut.csr_write;
+  assign s8_observe.csr_pc = ret_pc;
+  assign s8_observe.csr_raw = ret_raw_insn;
+  assign s8_observe.csr_addr = dut.csr_addr;
+  assign s8_observe.csr_old = dut.csr_old;
+  assign s8_observe.csr_new = dut.csr_new;
+  assign s8_observe.atomic_commit = dmem_atomic_commit;
+  assign s8_observe.atomic_read = dmem_re;
+  assign s8_observe.atomic_write = |dmem_we;
+  assign s8_observe.atomic_pc = ret_pc;
+  assign s8_observe.atomic_raw = ret_raw_insn;
+  assign s8_observe.atomic_addr = dmem_addr;
+  assign s8_observe.atomic_be = dmem_we;
+  assign s8_observe.md_start = 1'b0; assign s8_observe.md_busy = 1'b0;
+  assign s8_observe.md_done = 1'b0; assign s8_observe.md_abort = 1'b0;
+  assign s8_observe.md_pc = ret_pc; assign s8_observe.md_raw = ret_raw_insn;
+  integer s8_retire_events, s8_trap_events, s8_csr_accesses, s8_csr_commits;
+  generate if (ENABLE_STAGE8_MONITORS) begin : g_stage8_monitors
+    rv_s8_retirement_monitor retire_mon(s8_observe, s8_retire_events);
+    rv_s8_trap_monitor trap_mon(s8_observe, s8_trap_events);
+    rv_s8_csr_monitor csr_mon(s8_observe, s8_csr_accesses, s8_csr_commits);
+    integer unused_atomic_commits, unused_atomic_writes;
+    rv_s8_atomic_monitor atomic_mon(s8_observe, unused_atomic_commits, unused_atomic_writes);
+  end endgenerate
+  generate
+    if (USE_STAGE8_IRQ_DRIVER) begin : g_stage8_irq
+      rv_s8_interrupt_driver u_driver(
+        .clk(clk), .rst_n(rst_n), .enabled(ENABLE_M), .schedule_pc(irq_pc),
+        .level_mask(irq_level_mask), .wait_div(0), .timing_mode(0),
+        .core_pc(dut.pc), .if_pc(32'b0), .id_pc(32'b0), .if_valid(1'b0), .id_valid(1'b0),
+        .mie(1'b0), .trap_taken(dut.irq_take), .div_busy(1'b0), .div_start(1'b0),
+        .irq_msip(irq_msip), .irq_mtip(irq_mtip), .irq_meip(irq_meip), .fired(irq_fired), .seen(irq_seen));
+    end else begin : g_legacy_irq
+      always @(posedge clk) if (rst_n && ENABLE_M && dut.irq_take) irq_seen <= 1'b1;
+      always @(negedge clk) begin
+        if (!rst_n) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; irq_fired<=0; end
+        else if (ENABLE_M) begin
+          if (irq_seen) begin irq_msip<=0; irq_mtip<=0; irq_meip<=0; end
+          else if (!irq_fired && irq_pc >= 0 && dut.pc == irq_pc) begin
+            irq_msip<=irq_level_mask[0]; irq_mtip<=irq_level_mask[1]; irq_meip<=irq_level_mask[2]; irq_fired<=1'b1;
+          end
+        end
       end
     end
-  end
+  endgenerate
 
   // ---------------- Memory model ----------------
   int oob_errors = 0;
@@ -243,6 +291,8 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
                   ENABLE_M ? 0 : int'(halt_cause));
       $fdisplay(trace_fd, "HALT %0d %08x", ENABLE_M ? 0 : int'(halt_cause), ENABLE_M ? test_done_pc + test_done_ilen : halt_pc);
       for (int r = 1; r < 32; r++) $fdisplay(trace_fd, "REG %0d %08x", r, dut.u_rf.regs[r]);
+      for (int a = 16'h4000; a < 16'h6000; a += 4)
+        if (mem[a >> 2] != 32'h0) $fdisplay(trace_fd, "MEM %08x %08x", a, mem[a >> 2]);
       if (ENABLE_Z) begin
         $fdisplay(trace_fd, "CSR 800 %08x", dut.csr0);
         $fdisplay(trace_fd, "CSR 801 %08x", dut.csr1);
@@ -257,8 +307,6 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
         $fdisplay(trace_fd,"CSR b02 %08x",dut.u_machine.minstret); $fdisplay(trace_fd,"CSR b80 %08x",dut.u_machine.mcycleh);
         $fdisplay(trace_fd,"CSR b82 %08x",dut.u_machine.minstreth); $fdisplay(trace_fd,"CSR 344 %08x",dut.u_machine.pending);
       end
-      for (int a = 16'h4000; a < 16'h6000; a += 4)
-        if (mem[a >> 2] != 32'h0) $fdisplay(trace_fd, "MEM %08x %08x", a, mem[a >> 2]);
       $fclose(trace_fd);
     end
     if(acov_fd!=0) $fclose(acov_fd);
@@ -266,6 +314,8 @@ module tb_rv_core #(parameter bit ENABLE_C = 1'b0, parameter bit ENABLE_A = 1'b0
     if(mcov_fd!=0) $fclose(mcov_fd);
 
     $display("ATOMIC_STATS commits=%0d writes=%0d", atomic_commits, atomic_writes);
+    if (ENABLE_STAGE8_MONITORS)
+      $display("STAGE8_COMPONENTS retire=%0d traps=%0d csr_access=%0d csr_commit=%0d", s8_retire_events, s8_trap_events, s8_csr_accesses, s8_csr_commits);
     $display("TEST_RESULT: %s hex=%s cause=%0d expect=%0d gp=0x%0h instret=%0d cycles=%0d oob=%0d%s",
              pass ? "PASS" : "FAIL", hex_file, ENABLE_M ? 0 : int'(halt_cause), expect_cause, gp_val, instret, cycles,
              oob_errors, (ENABLE_M ? (test_done || done_store) : halted) ? "" : " TIMEOUT");

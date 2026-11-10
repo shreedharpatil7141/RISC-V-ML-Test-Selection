@@ -1,0 +1,12 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/RISC-V-ML-Test-Selection/verification/stage8/rv_stage8_components.sv" into library work
+INFO: [VRFC 10-311] analyzing module rv_s8_memory_driver
+INFO: [VRFC 10-311] analyzing module rv_s8_interrupt_driver
+INFO: [VRFC 10-311] analyzing module rv_s8_retirement_monitor
+INFO: [VRFC 10-311] analyzing module rv_s8_trap_monitor
+INFO: [VRFC 10-311] analyzing module rv_s8_csr_monitor
+INFO: [VRFC 10-311] analyzing module rv_s8_atomic_monitor
+INFO: [VRFC 10-311] analyzing module rv_s8_divider_monitor
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage8_components.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb_rv_stage8_components
+INFO: [VRFC 10-311] analyzing module tb_rv_stage8_bad_retire
+INFO: [VRFC 10-311] analyzing module tb_rv_stage8_bad_csr

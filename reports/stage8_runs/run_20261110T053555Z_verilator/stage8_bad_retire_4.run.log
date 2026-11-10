@@ -1,0 +1,3 @@
+[35000] %Fatal: rv_stage8_components.sv:147: Assertion failed in tb_rv_stage8_bad_retire.monitor: STAGE8_RETIRE malformed 32-bit record pc=00000020 len_bytes=4 len_bits=32 length_port_bits=5 raw_bits=32 canonical_bits=32 raw=00000001 raw_low16=0001 raw_high16=0000 canonical=00000013
+%Error: /mnt/c/RISC-V-ML-Test-Selection/verification/stage8/rv_stage8_components.sv:147: Verilog $stop
+Aborting...

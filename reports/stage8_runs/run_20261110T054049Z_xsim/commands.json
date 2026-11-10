@@ -1,0 +1,173 @@
+[
+  {
+    "argv": [
+      "xvlog",
+      "-sv",
+      "C:/RISC-V-ML-Test-Selection/verification/stage8/rv_stage8_components.sv",
+      "C:/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage8_components.sv"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\xsim_units",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\stage8_units.compile.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "xelab",
+      "-debug",
+      "off",
+      "tb_rv_stage8_components",
+      "-s",
+      "s8_units"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\xsim_units",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\stage8_units.elab.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "xsim",
+      "s8_units",
+      "--runall",
+      "--log",
+      "C:/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T054049Z_xsim/stage8_units.sim.log",
+      "--testplusarg",
+      "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_component.hex"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\xsim_units",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\stage8_units.run.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "xelab",
+      "-debug",
+      "off",
+      "tb_rv_stage8_bad_csr",
+      "-s",
+      "s8_bad_csr"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\xsim_units",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\stage8_bad_csr.elab.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "xsim",
+      "s8_bad_csr",
+      "--runall",
+      "--log",
+      "C:/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T054049Z_xsim/stage8_bad_csr.sim.log"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\xsim_units",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\stage8_bad_csr.run.log",
+    "expected_failure": true
+  },
+  {
+    "argv": [
+      "xelab",
+      "-debug",
+      "off",
+      "tb_rv_stage8_bad_retire",
+      "-s",
+      "s8_bad_retire"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\xsim_units",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\stage8_bad_retire.elab.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "xsim",
+      "s8_bad_retire",
+      "--runall",
+      "--log",
+      "C:/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T054049Z_xsim/stage8_bad_retire_1.sim.log",
+      "--testplusarg",
+      "BAD_RETIRE_KIND=1"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\xsim_units",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\stage8_bad_retire_1.run.log",
+    "expected_failure": true
+  },
+  {
+    "argv": [
+      "xsim",
+      "s8_bad_retire",
+      "--runall",
+      "--log",
+      "C:/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T054049Z_xsim/stage8_bad_retire_2.sim.log",
+      "--testplusarg",
+      "BAD_RETIRE_KIND=2"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\xsim_units",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\stage8_bad_retire_2.run.log",
+    "expected_failure": true
+  },
+  {
+    "argv": [
+      "xsim",
+      "s8_bad_retire",
+      "--runall",
+      "--log",
+      "C:/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T054049Z_xsim/stage8_bad_retire_3.sim.log",
+      "--testplusarg",
+      "BAD_RETIRE_KIND=3"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\xsim_units",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\stage8_bad_retire_3.run.log",
+    "expected_failure": true
+  },
+  {
+    "argv": [
+      "xsim",
+      "s8_bad_retire",
+      "--runall",
+      "--log",
+      "C:/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T054049Z_xsim/stage8_bad_retire_4.sim.log",
+      "--testplusarg",
+      "BAD_RETIRE_KIND=4"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\xsim_units",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\stage8_bad_retire_4.run.log",
+    "expected_failure": true
+  },
+  {
+    "argv": [
+      "C:\\Users\\Shreedhargouda Patil\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\run_stage4_4.py",
+      "--sim",
+      "xsim",
+      "--enable-a"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\compat_stage5.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "C:\\Users\\Shreedhargouda Patil\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\run_stage6_enabled.py",
+      "--sim",
+      "xsim",
+      "--prepared",
+      "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_prepare_mem_footerfix\\stage7\\stage6_compat"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\compat_stage6.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "C:\\Users\\Shreedhargouda Patil\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\run_stage7_enabled.py",
+      "--sim",
+      "xsim",
+      "--prepared",
+      "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_prepare_mem_footerfix\\stage7",
+      "--stage8"
+    ],
+    "cwd": "C:\\RISC-V-ML-Test-Selection",
+    "log": "C:\\RISC-V-ML-Test-Selection\\reports\\stage8_runs\\run_20261110T054049Z_xsim\\stage7_and_seeded.log",
+    "expected_failure": false
+  }
+]

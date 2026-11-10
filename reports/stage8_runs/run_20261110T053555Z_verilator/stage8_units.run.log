@@ -1,0 +1,5 @@
+STAGE8_COMPONENT_UNIT PASS memory=1 irq=1 retire=2 mixed_width=1 trap=1 csr=1 atomic=1 divider=1
+- /mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage8_components.sv:72: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.032 2025-01-01
+- Verilator: $finish at 105ns; walltime 0.006 s; speed 65.608 us/s
+- Verilator: cpu 0.002 s on 1 threads; alloced 121 MB

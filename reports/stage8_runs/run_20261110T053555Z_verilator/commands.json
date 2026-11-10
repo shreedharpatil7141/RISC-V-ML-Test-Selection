@@ -1,0 +1,160 @@
+[
+  {
+    "argv": [
+      "verilator",
+      "-sv",
+      "--binary",
+      "--timing",
+      "-Wno-fatal",
+      "-Wno-lint",
+      "-Wno-style",
+      "/mnt/c/RISC-V-ML-Test-Selection/verification/stage8/rv_stage8_components.sv",
+      "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage8_components.sv",
+      "--top-module",
+      "tb_rv_stage8_components",
+      "-Mdir",
+      "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_units",
+      "-o",
+      "s8_units"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_units.build.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_units/s8_units",
+      "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_component.hex"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_units.run.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "verilator",
+      "-sv",
+      "--binary",
+      "--timing",
+      "-Wno-fatal",
+      "-Wno-lint",
+      "-Wno-style",
+      "/mnt/c/RISC-V-ML-Test-Selection/verification/stage8/rv_stage8_components.sv",
+      "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage8_components.sv",
+      "--top-module",
+      "tb_rv_stage8_bad_csr",
+      "-Mdir",
+      "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_csr",
+      "-o",
+      "s8_bad_csr"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_csr.build.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_csr/s8_bad_csr"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_csr.run.log",
+    "expected_failure": true
+  },
+  {
+    "argv": [
+      "verilator",
+      "-sv",
+      "--binary",
+      "--timing",
+      "-Wno-fatal",
+      "-Wno-lint",
+      "-Wno-style",
+      "/mnt/c/RISC-V-ML-Test-Selection/verification/stage8/rv_stage8_components.sv",
+      "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage8_components.sv",
+      "--top-module",
+      "tb_rv_stage8_bad_retire",
+      "-Mdir",
+      "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_retire",
+      "-o",
+      "s8_bad_retire"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_retire.build.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_retire/s8_bad_retire",
+      "+BAD_RETIRE_KIND=1"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_retire_1.run.log",
+    "expected_failure": true
+  },
+  {
+    "argv": [
+      "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_retire/s8_bad_retire",
+      "+BAD_RETIRE_KIND=2"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_retire_2.run.log",
+    "expected_failure": true
+  },
+  {
+    "argv": [
+      "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_retire/s8_bad_retire",
+      "+BAD_RETIRE_KIND=3"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_retire_3.run.log",
+    "expected_failure": true
+  },
+  {
+    "argv": [
+      "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_retire/s8_bad_retire",
+      "+BAD_RETIRE_KIND=4"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage8_bad_retire_4.run.log",
+    "expected_failure": true
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/run_stage4_4.py",
+      "--sim",
+      "verilator",
+      "--enable-a"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/compat_stage5.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/run_stage6_enabled.py",
+      "--sim",
+      "verilator",
+      "--prepared",
+      "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/compat_stage6.log",
+    "expected_failure": false
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/run_stage7_enabled.py",
+      "--sim",
+      "verilator",
+      "--prepared",
+      "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7",
+      "--stage8"
+    ],
+    "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+    "log": "/mnt/c/RISC-V-ML-Test-Selection/reports/stage8_runs/run_20261110T053555Z_verilator/stage7_and_seeded.log",
+    "expected_failure": false
+  }
+]

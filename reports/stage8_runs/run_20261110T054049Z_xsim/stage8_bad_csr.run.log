@@ -1,0 +1,18 @@
+
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Tue Nov 10 11:10:58 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/s8_bad_csr/xsim_script.tcl
+# xsim {s8_bad_csr} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Fatal: STAGE8_CSR unauthorized/misaligned commit pc=00000020 raw=30509073
+Time: 25 ns  Iteration: 0  Process: /tb_rv_stage8_bad_csr/monitor/Always167_1  Scope: tb_rv_stage8_bad_csr.monitor  File: C:/RISC-V-ML-Test-Selection/verification/stage8/rv_stage8_components.sv Line: 173
+$finish called at time : 25 ns
+exit
+INFO: [Common 17-206] Exiting xsim at Tue Nov 10 11:10:59 2026...

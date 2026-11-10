@@ -1,0 +1,17 @@
+
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Tue Nov 10 11:10:54 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/s8_units/xsim_script.tcl
+# xsim {s8_units} -testplusarg HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_component.hex -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+STAGE8_COMPONENT_UNIT PASS memory=1 irq=1 retire=2 mixed_width=1 trap=1 csr=1 atomic=1 divider=1
+$finish called at time : 101 ns : File "C:/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage8_components.sv" Line 72
+exit
+INFO: [Common 17-206] Exiting xsim at Tue Nov 10 11:10:56 2026...
