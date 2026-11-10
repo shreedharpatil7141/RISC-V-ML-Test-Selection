@@ -112,8 +112,8 @@ reanalysis was recorded separately.
 Stages 6 and 7 are released on `main` at `stage7-complete`. Stage 8 is released
 on `main` at `stage8-complete`; preparation, Verilator, and XSim passed with
 separate reports and positive/negative-check evidence. No functional DUT RTL
-changed from Stage 7. Stage 9 coverage consolidation is validated on
-`stage9-coverage`; both simulator collections close at 282 observations with
+changed from Stage 7. Stage 9 coverage consolidation is released on `main` at
+`stage9-complete`; both simulator collections close at 282 observations with
 separate reports and exports. Stage 10 has not started.
 
 The MEM contract is one explicit edge transaction: a valid, fault-free A
