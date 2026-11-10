@@ -1,0 +1,2 @@
+pc	raw	op	aq	rl	rd	rs1	rs2	address	old	source	new	sc_status	reservation_before	reservation_after
+00000010	1000a1af	lr.w	0	0	3	1	0	00005000	a55aa55a	00000000	-	-1	-1	20480

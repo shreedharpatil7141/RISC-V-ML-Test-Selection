@@ -1,0 +1,194 @@
+{
+  "schema_version": "stage9-observation-1.0.0",
+  "dictionary_version": "stage9-bin-1.1.0",
+  "base_commit": "fcc151dccc4e8e98b4b70ba52871c8a0594a4967",
+  "collection": "stage9-recovery-73+209",
+  "provenance_policy": {
+    "saved_legacy_accepted_for_coverage_reuse": true,
+    "status": "PASS",
+    "strict_source_provenance_closure": "PASS",
+    "unresolved_source_hashes": []
+  },
+  "superseded_historical_reports": {
+    "verilator": {
+      "stage5": {
+        "report": "reports/stage5_a_pipeline_verilator_20261110T053612Z.txt",
+        "report_sha256": "35f09bf0e40123f175e991890985256587b0a677958abf4690a1cd996acaec51"
+      },
+      "stage6": {
+        "report": "reports/stage6_verilator_20261110T053907Z.txt",
+        "report_sha256": "1967246180b609e81d635379c09ff7721d32ebb82d373ff190870ff72e93490a"
+      },
+      "stage8": {
+        "report": "reports/stage8_verilator_full_20261110T054002Z.txt",
+        "report_sha256": "c665239267e20a1e16615f5f60fe16ea76ec06d842fadfec282d469667124cbe"
+      }
+    },
+    "xsim": {
+      "stage5": {
+        "report": "reports/stage5_a_pipeline_xsim_20261110T054111Z.txt",
+        "report_sha256": "439914bf62b61baea383f48dd60dc52fb25e3f78f32a4e955e906c4767146148"
+      },
+      "stage6": {
+        "report": "reports/stage6_xsim_20261110T060223Z.txt",
+        "report_sha256": "9c3072c0454b911059bb785ab5041f5ce6b26dc31a00232ca5466b2a344c900a"
+      },
+      "stage8": {
+        "report": "reports/stage8_xsim_full_20261110T060329Z.txt",
+        "report_sha256": "35b78fef953019746da720c11199af554e9e1e7e76c87573c5eb196a00c8c401"
+      }
+    }
+  },
+  "simulators": {
+    "verilator": {
+      "stage5": {
+        "outdir": "sim_out_stage9_ca_verilator_20261110T140519Z",
+        "report": "reports/stage9_ca_verilator_20261110T140519Z.txt",
+        "pass_marker": "STAGE9_STAGE5_CA_VERILATOR PASS c_cases=21 a_cases=18 selected_cases=39 full_trace_comparisons=78",
+        "report_sha256": "a24f346d88073d4c2fea400261484d0c869b513443bcdb0c7f603dd460c86a33",
+        "source_hashes_checked": 305,
+        "provenance": "sim_out_stage9_ca_verilator_20261110T140519Z/provenance.txt",
+        "provenance_sha256": "c639dbe53e7d32953e4d2052b9c6cb7d0bfa9ba51686d8a1af0d29da78bd4afd",
+        "source_provenance_status": "PASS",
+        "unresolved_source_hashes": [],
+        "reconstructed_m_reference": {
+          "outdir": "sim_out_stage9_iss_replay_verilator_20261110T180907060163Z",
+          "report": "sim_out_stage9_iss_replay_verilator_20261110T180907060163Z/report.txt",
+          "report_sha256": "b1a798ddd098da150cd21113395e90866a1d93db7ca000426ffa6978a4fa64b1",
+          "manifest": "sim_out_stage9_iss_replay_verilator_20261110T180907060163Z/replay_manifest.csv",
+          "manifest_sha256": "b0cb855d7a86da77126bed4b5679d7173c4e046856240aa4637225ab0d1a3be9",
+          "source_snapshot": "sim_out_stage9_iss_replay_verilator_20261110T180907060163Z/producer_snapshot/snapshot.json",
+          "source_snapshot_sha256": "a290c0d236d82177ea44239dd0c1ccaed755bd0cb1b870d781082c1c82570fd1",
+          "cases": 39,
+          "evidence_status": "RECONSTRUCTED_REFERENCE_TRACE_MATCHED"
+        },
+        "legacy_outdir": "sim_out_stage9_gap_verilator_20261110T170227Z",
+        "legacy_report": "reports/stage9_gap_verilator_20261110T170227Z.txt",
+        "legacy_pass_marker": "STAGE9_LEGACY_GAP_VERILATOR PASS legacy=209 full_trace_comparisons=418 dynamic_mcov=209",
+        "legacy_report_sha256": "39ca85fd25d1d5d94e5170c0a28b6d94d2e834f530c7b9a121fa31f67148035d",
+        "legacy_provenance": "sim_out_stage9_gap_verilator_20261110T170227Z/provenance.txt",
+        "legacy_provenance_sha256": "f5651536169ac3fd7116114963f6349ec28acbf2aa758e00ee2a086d63d842c5",
+        "legacy_source_hashes_checked": 305,
+        "legacy_source_provenance_status": "PASS",
+        "legacy_unresolved_source_hashes": []
+      },
+      "stage6": {
+        "outdir": "sim_out_stage6_verilator_20261110T140824Z",
+        "report": "reports/stage6_verilator_20261110T140824Z.txt",
+        "pass_marker": "STAGE6_ENABLED_VERILATOR PASS cases=11 full_trace_comparisons=22 pipeline_golden=11 atomic_sidecars=22",
+        "report_sha256": "7d017ebb63c44372847f143ac34ea4704bab31790024c467fed1f7f0ebae4f7c",
+        "source_hashes_checked": 61,
+        "provenance": "reports/stage6_verilator_20261110T140824Z.txt",
+        "provenance_sha256": "7d017ebb63c44372847f143ac34ea4704bab31790024c467fed1f7f0ebae4f7c",
+        "source_provenance_status": "PASS",
+        "unresolved_source_hashes": [],
+        "prepared_manifest_comparison": {
+          "status": "SEMANTICALLY_IDENTICAL_INPUTS",
+          "rows_compared": 11,
+          "allowed_path_field": "hexpath",
+          "hexpath_relocations": 0,
+          "image_and_reference_hashes_compared": 44,
+          "meaningful_manifest_fields": "exact_match",
+          "original_manifest_sha256": "e5542bd1bf1fec79e96011eac88a0f30b50e911579554b4d61fcc83f2eca15b2",
+          "refreshed_manifest_sha256": "e5542bd1bf1fec79e96011eac88a0f30b50e911579554b4d61fcc83f2eca15b2",
+          "original_manifest_path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage6_compat\\z_manifest.csv",
+          "original_manifest_snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_verilator_20261110T140824Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage6_compat\\z_manifest.csv",
+          "refreshed_manifest_path": "sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_manifest.csv"
+        }
+      },
+      "stage8": {
+        "outdir": "sim_out_stage8_verilator_selected_stage8_20261110T140921Z",
+        "report": "reports/stage8_verilator_selected_stage8_20261110T140921Z.txt",
+        "pass_marker": "STAGE8_ENABLED_VERILATOR PASS",
+        "report_sha256": "ee16a06ca03c783470e732f382e7c7248ba99f434c0abdd7f7659176608712f1",
+        "source_hashes_checked": 73,
+        "provenance": "reports/stage8_verilator_selected_stage8_20261110T140921Z.txt",
+        "provenance_sha256": "ee16a06ca03c783470e732f382e7c7248ba99f434c0abdd7f7659176608712f1",
+        "source_provenance_status": "PASS",
+        "unresolved_source_hashes": [],
+        "selection_manifest": "sim_out_stage8_verilator_selected_stage8_20261110T140921Z/selection_manifest.csv",
+        "prepared_manifest": "sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_manifest.csv",
+        "prepared_manifest_sha256": "2f366409b1508c022dddb245acfa9012f080bce76a2beb24e9ea1974f621c29a",
+        "preparation_provenance": "sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_preparation.txt",
+        "preparation_artifacts_checked": 52,
+        "manifest": "sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_manifest.csv",
+        "manifest_sha256": "2f366409b1508c022dddb245acfa9012f080bce76a2beb24e9ea1974f621c29a"
+      }
+    },
+    "xsim": {
+      "stage5": {
+        "outdir": "sim_out_stage9_ca_xsim_20261110T120117Z",
+        "report": "reports/stage9_ca_xsim_20261110T120117Z.txt",
+        "pass_marker": "STAGE9_STAGE5_CA_XSIM PASS c_cases=21 a_cases=18 selected_cases=39 full_trace_comparisons=78",
+        "report_sha256": "885d02708960f1784887cab77154abec86de925d0c077a13d328aca1e0c4dfc7",
+        "source_hashes_checked": 305,
+        "provenance": "sim_out_stage9_ca_xsim_20261110T120117Z/provenance.txt",
+        "provenance_sha256": "12ef1c5957a2ff2759b43e9f1bdfb06e789e782e382944ec0e3208d66884fb8e",
+        "source_provenance_status": "PASS",
+        "unresolved_source_hashes": [],
+        "reconstructed_m_reference": {
+          "outdir": "sim_out_stage9_iss_replay_xsim_20261110T180907060163Z",
+          "report": "sim_out_stage9_iss_replay_xsim_20261110T180907060163Z/report.txt",
+          "report_sha256": "c76b9948e23560f485f96df459d1b0a92cc25799429182ef26afafa6431dd3d3",
+          "manifest": "sim_out_stage9_iss_replay_xsim_20261110T180907060163Z/replay_manifest.csv",
+          "manifest_sha256": "ddfa510713cfa37e87b72e23845ffc4b5c58b22118b474063134db9f867d0313",
+          "source_snapshot": "sim_out_stage9_iss_replay_xsim_20261110T180907060163Z/producer_snapshot/snapshot.json",
+          "source_snapshot_sha256": "406ed5c0e31598700d96d008ea07036cc3432f174507d26770c885ac409c5507",
+          "cases": 39,
+          "evidence_status": "RECONSTRUCTED_REFERENCE_TRACE_MATCHED"
+        },
+        "legacy_outdir": "sim_out_stage9_gap_xsim_20261110T173739Z",
+        "legacy_report": "reports/stage9_gap_xsim_20261110T173739Z.txt",
+        "legacy_pass_marker": "STAGE9_LEGACY_GAP_XSIM PASS legacy=209 full_trace_comparisons=418 dynamic_mcov=209",
+        "legacy_report_sha256": "9743a968dd4ff718bcb6108ea4fa900136051d38735bdff4472ba92f2bd69ec9",
+        "legacy_provenance": "sim_out_stage9_gap_xsim_20261110T173739Z/provenance.txt",
+        "legacy_provenance_sha256": "6dd900da7f9c4ba5850e0fe67dc36bf1efa83f4ed0a8a562d18ebaafd517ffa5",
+        "legacy_source_hashes_checked": 305,
+        "legacy_source_provenance_status": "PASS",
+        "legacy_unresolved_source_hashes": []
+      },
+      "stage6": {
+        "outdir": "sim_out_stage6_xsim_20261110T121507Z",
+        "report": "reports/stage6_xsim_20261110T121507Z.txt",
+        "pass_marker": "STAGE6_ENABLED_XSIM PASS cases=11 full_trace_comparisons=22 pipeline_golden=11 atomic_sidecars=22",
+        "report_sha256": "b48e58efbae4e913dcd0bb935db4f6bc58e4229e20d749abbe19f7a5f0a87260",
+        "source_hashes_checked": 61,
+        "provenance": "reports/stage6_xsim_20261110T121507Z.txt",
+        "provenance_sha256": "b48e58efbae4e913dcd0bb935db4f6bc58e4229e20d749abbe19f7a5f0a87260",
+        "source_provenance_status": "PASS",
+        "unresolved_source_hashes": [],
+        "prepared_manifest_comparison": {
+          "status": "SEMANTICALLY_IDENTICAL_INPUTS",
+          "rows_compared": 11,
+          "allowed_path_field": "hexpath",
+          "hexpath_relocations": 11,
+          "image_and_reference_hashes_compared": 44,
+          "meaningful_manifest_fields": "exact_match",
+          "original_manifest_sha256": "b3e7a1a0306bb2b6d27ba240ec6eef8f315e21bd70914e370c2c2fe24e98e350",
+          "refreshed_manifest_sha256": "e5542bd1bf1fec79e96011eac88a0f30b50e911579554b4d61fcc83f2eca15b2",
+          "original_manifest_path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_prepare_mem_footerfix\\stage7\\stage6_compat\\z_manifest.csv",
+          "original_manifest_snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\producer_snapshot\\input\\sim_out_stage8_prepare_mem_footerfix\\stage7\\stage6_compat\\z_manifest.csv",
+          "refreshed_manifest_path": "sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_manifest.csv"
+        }
+      },
+      "stage8": {
+        "outdir": "sim_out_stage8_xsim_selected_stage8_20261110T135003Z",
+        "report": "reports/stage8_xsim_selected_stage8_20261110T135003Z.txt",
+        "pass_marker": "STAGE8_ENABLED_XSIM PASS",
+        "report_sha256": "9fde5c8ba07f331220ef18a5e06e6c31f8c3b4665af5ce808a34ea4e01cbd957",
+        "source_hashes_checked": 73,
+        "provenance": "reports/stage8_xsim_selected_stage8_20261110T135003Z.txt",
+        "provenance_sha256": "9fde5c8ba07f331220ef18a5e06e6c31f8c3b4665af5ce808a34ea4e01cbd957",
+        "source_provenance_status": "PASS",
+        "unresolved_source_hashes": [],
+        "selection_manifest": "sim_out_stage8_xsim_selected_stage8_20261110T135003Z/selection_manifest.csv",
+        "prepared_manifest": "sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_manifest.csv",
+        "prepared_manifest_sha256": "2f366409b1508c022dddb245acfa9012f080bce76a2beb24e9ea1974f621c29a",
+        "preparation_provenance": "sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_preparation.txt",
+        "preparation_artifacts_checked": 52,
+        "manifest": "sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_manifest.csv",
+        "manifest_sha256": "2f366409b1508c022dddb245acfa9012f080bce76a2beb24e9ea1974f621c29a"
+      }
+    }
+  }
+}

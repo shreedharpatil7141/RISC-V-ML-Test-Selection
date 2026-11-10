@@ -1,0 +1,54 @@
+STAGE9_COVERAGE_VERILATOR PASS schema=stage9-observation-1.0.0 dictionary=stage9-bin-1.1.0 observations=282
+Coverage is DUT-observed, gated by passing per-test logs and complete DUT/ISS golden trace equality.
+Architectural and microarchitectural coverage are separate; simulator code coverage was not collected.
+targeted_bin_status=ALL_REACHABLE_TARGETED_BINS_HIT reachable_gaps=0
+per_test_evidence_status=COMPLETE observations=282 unavailable_bin_observations=0
+strict_provenance_closure=PASS unresolved_test_identities=0
+architectural_privileged_bins_original=17 reachable_targeted=16 excluded_wfi=unsupported
+coverage_closure=CLOSED
+valid_tests=282 failed_or_incomplete_excluded=0 duplicate_identities=0
+architectural bins_hit=113/113 reachable_gaps=0
+architectural_atomic bins_hit=12/12 reachable_gaps=0
+architectural_compressed bins_hit=29/29 reachable_gaps=0
+architectural_fault bins_hit=1/1 reachable_gaps=0
+architectural_privileged bins_hit=16/16 reachable_gaps=0
+microarchitectural bins_hit=106/106 reachable_gaps=0
+CLASSIFIED ARCH.OP.WFI state=UNSUPPORTED reason=Released Stage 7 scope marks WFI out of scope in tb_rv_decoder_machine.sv; no ISA feature is added to satisfy coverage.
+CLASSIFIED B.ABORT.START_CYCLE state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C01 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C02 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C03 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C04 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C05 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C06 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C07 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C08 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C09 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C10 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C11 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C12 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C13 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C14 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C15 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C16 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C17 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C18 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C19 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C20 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C21 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C22 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C23 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C24 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C25 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C26 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C27 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C28 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C29 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C30 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C31 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C32 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED B.ABORT.C33 state=NOT_TARGETED reason=The saved Stage 5-8 per-test runs do not carry independent per-offset wrapper markers; retained historical reports remain authoritative.
+CLASSIFIED CROSS.MACHINE.FAULT_IRQ_OVERLAP state=NOT_TARGETED reason=Stage 8 bounded fault/restart and IRQ/DIV scenarios separately; overlap was excluded.
+CLASSIFIED EXCLUDED.RVV state=UNSUPPORTED reason=No RVV RTL or tests are in project scope.
+CLASSIFIED EXCLUDED.FP state=UNSUPPORTED reason=No floating-point RTL or tests are in project scope.
+CLASSIFIED EXCLUDED.RVWMO state=UNSUPPORTED reason=The memory model assumes one hart and no concurrent writer.

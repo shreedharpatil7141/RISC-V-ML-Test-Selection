@@ -1,0 +1,662 @@
+{
+  "owner_command": [
+    "/usr/bin/python3",
+    "scripts/simulation/run_stage7_enabled.py",
+    "--sim",
+    "verilator",
+    "--prepared",
+    "sim_out_stage9_recovery_prepare_schemaaudit/stage7",
+    "--stage8",
+    "--cases-only"
+  ],
+  "commands": {
+    "build_golden": {
+      "argv": [
+        "verilator",
+        "-sv",
+        "--binary",
+        "--timing",
+        "-Wno-fatal",
+        "-Wno-lint",
+        "-Wno-style",
+        "-f",
+        "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/stage4_4_rtl.f",
+        "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_core.sv",
+        "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_pipe_stage4.sv",
+        "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage7.sv",
+        "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage8.sv",
+        "--top-module",
+        "tb_rv_core_stage8",
+        "-Mdir",
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden",
+        "-o",
+        "golden"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "build_pipe": {
+      "argv": [
+        "verilator",
+        "-sv",
+        "--binary",
+        "--timing",
+        "-Wno-fatal",
+        "-Wno-lint",
+        "-Wno-style",
+        "-f",
+        "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/stage4_4_rtl.f",
+        "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_core.sv",
+        "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_pipe_stage4.sv",
+        "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage7.sv",
+        "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage8.sv",
+        "--top-module",
+        "tb_rv_pipe_stage8",
+        "-Mdir",
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe",
+        "-o",
+        "pipe"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_machine_trap_return_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/machine_trap_return.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/machine_trap_return.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/machine_trap_return.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/machine_trap_return.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_machine_trap_return_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/machine_trap_return.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/machine_trap_return.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/machine_trap_return.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/machine_trap_return.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_store_fault_precision_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/store_fault_precision.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/store_fault_precision.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/store_fault_precision.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/store_fault_precision.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_store_fault_precision_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/store_fault_precision.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/store_fault_precision.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/store_fault_precision.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/store_fault_precision.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_lr_trap_sc_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/lr_trap_sc.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/lr_trap_sc.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/lr_trap_sc.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/lr_trap_sc.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_lr_trap_sc_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/lr_trap_sc.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/lr_trap_sc.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/lr_trap_sc.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/lr_trap_sc.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_irq_vectored_priority_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/irq_vectored_priority.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_vectored_priority.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_vectored_priority.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000018",
+        "+IRQ_LEVELS=7",
+        "+IRQ_WAIT_DIV=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_vectored_priority.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_irq_vectored_priority_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/irq_vectored_priority.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_vectored_priority.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_vectored_priority.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000018",
+        "+IRQ_LEVELS=7",
+        "+IRQ_WAIT_DIV=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_vectored_priority.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_irq_div_restart_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/irq_div_restart.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_div_restart.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_div_restart.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000020",
+        "+IRQ_LEVELS=4",
+        "+IRQ_WAIT_DIV=1",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_div_restart.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_irq_div_restart_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/irq_div_restart.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_div_restart.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_div_restart.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000020",
+        "+IRQ_LEVELS=4",
+        "+IRQ_WAIT_DIV=1",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_div_restart.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_mixed_width_trap_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/mixed_width_trap.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/mixed_width_trap.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/mixed_width_trap.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/mixed_width_trap.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_mixed_width_trap_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/mixed_width_trap.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/mixed_width_trap.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/mixed_width_trap.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/mixed_width_trap.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_wrongpath_fault_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/wrongpath_fault.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/wrongpath_fault.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/wrongpath_fault.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/wrongpath_fault.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_wrongpath_fault_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/wrongpath_fault.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/wrongpath_fault.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/wrongpath_fault.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/wrongpath_fault.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_irq_mask_pending_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/irq_mask_pending.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_mask_pending.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_mask_pending.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000014",
+        "+IRQ_LEVELS=4",
+        "+IRQ_WAIT_DIV=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_mask_pending.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_irq_mask_pending_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/irq_mask_pending.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_mask_pending.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_mask_pending.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000014",
+        "+IRQ_LEVELS=4",
+        "+IRQ_WAIT_DIV=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_mask_pending.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_fencei_store_replace_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/fencei_store_replace.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fencei_store_replace.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fencei_store_replace.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fencei_store_replace.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_fencei_store_replace_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/fencei_store_replace.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fencei_store_replace.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fencei_store_replace.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fencei_store_replace.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_fault_before_irq_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/fault_before_irq.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fault_before_irq.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fault_before_irq.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=0000001c",
+        "+IRQ_LEVELS=4",
+        "+IRQ_WAIT_DIV=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fault_before_irq.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_fault_before_irq_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/fault_before_irq.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fault_before_irq.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fault_before_irq.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=0000001c",
+        "+IRQ_LEVELS=4",
+        "+IRQ_WAIT_DIV=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fault_before_irq.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_fetch_access_trap_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/fetch_access_trap.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fetch_access_trap.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fetch_access_trap.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fetch_access_trap.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_fetch_access_trap_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/fetch_access_trap.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fetch_access_trap.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fetch_access_trap.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/fetch_access_trap.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_irq_software_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/irq_software.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_software.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_software.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000014",
+        "+IRQ_LEVELS=1",
+        "+IRQ_WAIT_DIV=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_software.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_irq_software_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/irq_software.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_software.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_software.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000014",
+        "+IRQ_LEVELS=1",
+        "+IRQ_WAIT_DIV=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_software.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_irq_timer_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/irq_timer.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_timer.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_timer.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000014",
+        "+IRQ_LEVELS=2",
+        "+IRQ_WAIT_DIV=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_timer.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_irq_timer_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/irq_timer.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_timer.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_timer.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000014",
+        "+IRQ_LEVELS=2",
+        "+IRQ_WAIT_DIV=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/irq_timer.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_dependency_redirect_8a710008_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_dependency_redirect_8a710008.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710008.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710008.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710008.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_dependency_redirect_8a710008_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_dependency_redirect_8a710008.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710008.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710008.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710008.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_dependency_redirect_8a710108_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_dependency_redirect_8a710108.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710108.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710108.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710108.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_dependency_redirect_8a710108_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_dependency_redirect_8a710108.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710108.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710108.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_dependency_redirect_8a710108.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_csr_fencei_8a720008_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_csr_fencei_8a720008.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720008.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720008.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720008.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_csr_fencei_8a720008_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_csr_fencei_8a720008.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720008.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720008.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720008.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_csr_fencei_8a720108_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_csr_fencei_8a720108.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720108.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720108.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720108.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_csr_fencei_8a720108_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_csr_fencei_8a720108.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720108.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720108.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_csr_fencei_8a720108.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_irq_divider_8a730008_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_irq_divider_8a730008.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730008.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730008.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000100",
+        "+IRQ_LEVELS=4",
+        "+IRQ_WAIT_DIV=1",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730008.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_irq_divider_8a730008_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_irq_divider_8a730008.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730008.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730008.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000100",
+        "+IRQ_LEVELS=4",
+        "+IRQ_WAIT_DIV=1",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730008.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_irq_divider_8a730108_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_irq_divider_8a730108.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730108.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730108.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000100",
+        "+IRQ_LEVELS=4",
+        "+IRQ_WAIT_DIV=1",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730108.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_irq_divider_8a730108_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_irq_divider_8a730108.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730108.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730108.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+IRQ_PC=00000100",
+        "+IRQ_LEVELS=4",
+        "+IRQ_WAIT_DIV=1",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_irq_divider_8a730108.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_atomic_divider_8a740008_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_atomic_divider_8a740008.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740008.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740008.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740008.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_atomic_divider_8a740008_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_atomic_divider_8a740008.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740008.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740008.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740008.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_atomic_divider_8a740108_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_atomic_divider_8a740108.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740108.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740108.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740108.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_atomic_divider_8a740108_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_atomic_divider_8a740108.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740108.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740108.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_atomic_divider_8a740108.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_fault_restart_8a750008_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_fault_restart_8a750008.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750008.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750008.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750008.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_fault_restart_8a750008_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_fault_restart_8a750008.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750008.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750008.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750008.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_fault_restart_8a750108_golden": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_golden/golden",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_fault_restart_8a750108.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750108.golden.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750108.golden.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750108.golden.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    },
+    "run_seed_fault_restart_8a750108_pipe": {
+      "argv": [
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/obj_pipe/pipe",
+        "+HEX=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_fault_restart_8a750108.hex",
+        "+TRACE=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750108.pipe.trace",
+        "+TRAP=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750108.pipe.trap.tsv",
+        "+EXPECT_CAUSE=0",
+        "+CHECK_GP=0",
+        "+MCOV=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage8_verilator_selected_stage8_20261110T140921Z/seed_fault_restart_8a750108.pipe.mcov"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection"
+    }
+  }
+}

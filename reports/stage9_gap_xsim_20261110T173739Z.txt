@@ -1,0 +1,16 @@
+Simulator: xsim
+output_dir=C:\RISC-V-ML-Test-Selection\sim_out_stage9_gap_xsim_20261110T173739Z
+provenance_file=C:\RISC-V-ML-Test-Selection\sim_out_stage9_gap_xsim_20261110T173739Z\provenance.txt
+producer_snapshot=C:\RISC-V-ML-Test-Selection\sim_out_stage9_gap_xsim_20261110T173739Z\producer_snapshot\snapshot.json
+producer_snapshot_sha256=d3b6f721793582d327934ff52d381f832c4242421636c5da218e08f96beda963
+legacy_c_disabled=209
+rv32imc_existing=12
+rv32imc_pipeline_specific=9
+rtl_vs_iss_and_golden=418
+unit_suites=7
+unit_decompress_halfwords=65536
+divider_protocol_records=209
+pipeline_vs_golden_full_traces=209
+pipeline_event_hits=70,46,8851,7908,11812,2114,5101,262,540,3777,7298,460,210,314,7642,63
+divider_protocol_checked_cases=209 starts=2025 dones=2025 busy_cycles=66825 aborts=0
+STAGE9_LEGACY_GAP_XSIM PASS legacy=209 full_trace_comparisons=418 dynamic_mcov=209

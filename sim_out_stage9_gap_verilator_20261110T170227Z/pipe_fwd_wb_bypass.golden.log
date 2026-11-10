@@ -1,0 +1,6 @@
+ATOMIC_STATS commits=0 writes=0
+TEST_RESULT: PASS hex=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_gap_verilator_20261110T170227Z/hex/pipe_fwd_wb_bypass.hex cause=1 expect=1 gp=0x1 instret=23 cycles=25 oob=0        
+- /mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_core.sv:322: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.032 2025-01-01
+- Verilator: $finish at 285ns; walltime 0.003 s; speed 252.041 us/s
+- Verilator: cpu 0.001 s on 1 threads; alloced 121 MB

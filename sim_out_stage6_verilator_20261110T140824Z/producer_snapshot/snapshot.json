@@ -1,0 +1,613 @@
+{
+  "schema": "stage9-producer-snapshot-1",
+  "command": [
+    "/usr/bin/python3",
+    "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/run_stage6_enabled.py",
+    "--sim",
+    "verilator",
+    "--prepared",
+    "sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat"
+  ],
+  "files": [
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/alu/rv_a_unit.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/alu/rv_a_unit.sv",
+      "sha256": "4c256bbb457f0b1b8f332dd0db8264c10c1cc2d0c77af3c927a30973982ccdce"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/alu/rv_alu.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/alu/rv_alu.sv",
+      "sha256": "c4badff19b74bd9795898af238cdc2e3472b7da3afdb4eae9834905c8f27d344"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/alu/rv_branch_cmp.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/alu/rv_branch_cmp.sv",
+      "sha256": "fdf1395d853462a2ec65624ce9dfd01ce72543c47c3513387e54a2c42baa40bd"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/alu/rv_div_iter.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/alu/rv_div_iter.sv",
+      "sha256": "24da75e881b8a7327920c082eaaaba40cbe396ff4beb446ea394048d1a249000"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/alu/rv_md_comb.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/alu/rv_md_comb.sv",
+      "sha256": "cd371299adbbb6c78bdbbf8d10fc81d6e6956d55225fbadadcd7d2b8516decdd"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/alu/rv_md_exec.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/alu/rv_md_exec.sv",
+      "sha256": "d3759777af1aa316cb1a20f0cf3728fc716444d10c4a412d83cbba2b7bccaede"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/alu/rv_mul.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/alu/rv_mul.sv",
+      "sha256": "f5ffc7124b2adc85896db86af1eddcc72278f74a05d457608d92150506b9f829"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/control_unit/rv_control.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/control_unit/rv_control.sv",
+      "sha256": "969ae37a9f5e3dc4d585e863286c089d2e659bbb99e1826ffb4354b77fb43ddf"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/core/rv_core_pipe.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/core/rv_core_pipe.sv",
+      "sha256": "e102a6ee136f3d0b3ef5d4a4e92b87599dd5ffda83caa68598868b9ebaafea59"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/core/rv_core_single.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/core/rv_core_single.sv",
+      "sha256": "02908d5f879caf7b16200afaec559c3a7581a8770c48fd57886c35569eecb792"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/core/rv_machine_state.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/core/rv_machine_state.sv",
+      "sha256": "31171e8ad8cc4afa65e2355391f2a22e57e9e773148f43e84f036d885713e6e7"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/decoder/rv32c_decompressor.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/decoder/rv32c_decompressor.sv",
+      "sha256": "ebd6d0e68f5e7a5868a010f491d2a1521aae18a4715e3c53b7f3ab1c23fa0eae"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/decoder/rv_decoder.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/decoder/rv_decoder.sv",
+      "sha256": "4eb6fc36477e4e394ae7b992d461753bb5de992c1934eeb3af8d6cfb6331f7fd"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/decoder/rv_imm_gen.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/decoder/rv_imm_gen.sv",
+      "sha256": "08e8f413a0bb2efa61202f57c21ce086463fded97d65b5bf531c77806b5ddee3"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/memory/rv_lsu.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/memory/rv_lsu.sv",
+      "sha256": "a114d2fbe784a0cb8b24c751b0dc95c3270ad038c86be27f000fd4b8234f27cd"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/packages/rv32_pkg.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/packages/rv32_pkg.sv",
+      "sha256": "68d77451bd7bdd3bfa93e94e23bfc4f4d9f6350f619d61caf7457105deddaa18"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/packages/rv_pipe_pkg.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/packages/rv_pipe_pkg.sv",
+      "sha256": "21534fe30a4702f5b3754a9e0885cadc650682a068e137434271f2db8a54e7e8"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/pipeline/rv_ex_stage.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/pipeline/rv_ex_stage.sv",
+      "sha256": "4934f0a112fd11df2a174754d04179ee4c36a4fa6a879218ff6c0a41de8f0188"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/pipeline/rv_forward_unit.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/pipeline/rv_forward_unit.sv",
+      "sha256": "1825d211a0393d0f01823b1255406fc0b3db103ba95ffac7b7b5431df43d98ad"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/pipeline/rv_hazard_unit.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/pipeline/rv_hazard_unit.sv",
+      "sha256": "d394bfcb348f2d281acfe8c044dc289dd75ee2ff2a31d7e585ed11c710405e35"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/pipeline/rv_id_stage.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/pipeline/rv_id_stage.sv",
+      "sha256": "88df292a202996b5a787e52655e20724889e2dfd9d3067c030da175d5f8e7ea6"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/pipeline/rv_if_stage.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/pipeline/rv_if_stage.sv",
+      "sha256": "c1b428df7feda5db3c00e943d535d2f00f283d7d2e4312726658c10635079819"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/pipeline/rv_mem_stage.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/pipeline/rv_mem_stage.sv",
+      "sha256": "200c0c33f92d0827e043e5070c007cf3ec840678adf5e8e6cc8750b4c3bf39e7"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/pipeline/rv_pipe_regs.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/pipeline/rv_pipe_regs.sv",
+      "sha256": "11fcda95af98f1e086d80c6bc0e02e80153885e7e0723d2739abb5ea1043acf9"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/pipeline/rv_wb_stage.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/pipeline/rv_wb_stage.sv",
+      "sha256": "3b7d453f1a8b790c222a272ec82735e807b922146dcdc4b7e328bc564f5a919d"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/rtl/register_file/rv_regfile.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/rtl/register_file/rv_regfile.sv",
+      "sha256": "4a6dcf4bb7427e55008c07e06f9e777727c02234d454d06856944f913ddde0f0"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/prepare_stage6.py",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/scripts/simulation/prepare_stage6.py",
+      "sha256": "73218f91c8e3fc743ea0587fdd909f99fad742f50e6145bfdd049e9c00a60fce"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/run_stage6_enabled.py",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/scripts/simulation/run_stage6_enabled.py",
+      "sha256": "79ab6465386c345bbfcf74389a83d5e19e0bfef84059698f6eba5d1f10a9e099"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/rv32_asm.py",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/scripts/simulation/rv32_asm.py",
+      "sha256": "a1ae50530089877d98bee213e4d38277f9c0081f030afefe39abbd80e27a7045"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/rv32a_model.py",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/scripts/simulation/rv32a_model.py",
+      "sha256": "baea833ab46049a3889161a347a73a3c38bfbf7502b5bca830fadaa4f353fc06"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/rv32c_asm.py",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/scripts/simulation/rv32c_asm.py",
+      "sha256": "707a4e1382d42934161f9eb270244b1331feafbaf1a25ba4a0114ff5879d07ab"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/rv32c_model.py",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/scripts/simulation/rv32c_model.py",
+      "sha256": "dc8c9b3b42396e969e7c92ac3f1471b6edcd5228a8b1eb9cde98b5aad7776569"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/rv32imc_iss.py",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/scripts/simulation/rv32imc_iss.py",
+      "sha256": "b22147ef494fc5fd5a70c7e41dd61e02054bcb755460aaa56a232d87621551ad"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/stage4_4_rtl.f",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/scripts/simulation/stage4_4_rtl.f",
+      "sha256": "9060e91e83dc68706f1be4be6140a0291cf822d7a2c290315cf04c8cdb68333d"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/stage6_software_selftest.py",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/scripts/simulation/stage6_software_selftest.py",
+      "sha256": "9a83448ceeab8012de3d3cc90e2f6e6cbd4594b44a281c73f9959406435bd981"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/stage9_run_provenance.py",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/scripts/simulation/stage9_run_provenance.py",
+      "sha256": "9ef9b0d0546a07bd4cc12b7eece99f5c70de48c0ddd61ad4c4633f2c2e75b29b"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/manifest.csv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/manifest.csv",
+      "sha256": "885e64488f8539eee90d0f089e280c83dbfef98cb09c90b9e68c18ddad3eab96"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/stage6_csr_hazards.s",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/stage6_csr_hazards.s",
+      "sha256": "b146965c8bdbd5e4e7288f3bbcf572d51abc1823aadb6df8932284514f8d78ab"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/stage6_csr_ops.s",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/stage6_csr_ops.s",
+      "sha256": "dfdbe8bcf5ab166b2819a7e693f58f9f925c959dade94ef931a4ba7ea64bb8d6"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/stage6_csr_permissions.s",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/stage6_csr_permissions.s",
+      "sha256": "c85b21193b25b717f0ffd881364022774428c6750b768f57aff0b7eb59ef8808"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/stage6_csr_ro_immediate_write.s",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/stage6_csr_ro_immediate_write.s",
+      "sha256": "795da67557bb1d56e3ceaf643c72f3961cf2f0ee5a17d76491dcfe2892cc6ead"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/stage6_csr_ro_reads.s",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/stage6_csr_ro_reads.s",
+      "sha256": "c5a9136156fd6f9452f948def0a4fa5dc9e4ed2b4af573f1281aa68f5e27f67a"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/stage6_csr_ro_write_rd0.s",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/stage6_csr_ro_write_rd0.s",
+      "sha256": "d160b38cd5aae6a61a235922d928f7b16f9dc897f35e718b5b0a22d85ba7ce0f"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/stage6_csr_ro_zero_source.s",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/stage6_csr_ro_zero_source.s",
+      "sha256": "addd16e8b82c890b77d731f92ca7ee5f2805dd63c2dfc5701216f467f0e645e3"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/stage6_csr_wrongpath.s",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/stage6_csr_wrongpath.s",
+      "sha256": "94fbbc33e0f0fbec5b45d8ad7c04434023e498102bba6d14f49ab91ff78fdc22"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/stage6_fencei_atomic_replace.s",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/stage6_fencei_atomic_replace.s",
+      "sha256": "d36e2d52b70039eedf410c9dda46b4b478b14f8fc281d3bcbcf4b9e4f5dbe2b4"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/stage6_fencei_divide.s",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/stage6_fencei_divide.s",
+      "sha256": "e84049e79d5ef928376a2a21d2a2f9696656f3620ac8e26f95fbcc2801a5e4ca"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/tests/directed/rv32imac_stage6/stage6_fencei_store_replace.s",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/tests/directed/rv32imac_stage6/stage6_fencei_store_replace.s",
+      "sha256": "7d5fd28e0e81bae8b2736255a7e877c7f8d9417950bbcb56e90f8021181da42c"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_core.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/verification/environment/tb_rv_core.sv",
+      "sha256": "a67ceea9bd69cb6a841247f6e4edc23c60a0027076052c2386393471290993d6"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_decoder_z.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/verification/environment/tb_rv_decoder_z.sv",
+      "sha256": "2f3996459cbff91c4b7bbd48b54c2ca677c8395b3bffc66ea0a4651b8cba8c3e"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_pipe_stage4.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/verification/environment/tb_rv_pipe_stage4.sv",
+      "sha256": "442528b251d5c4ef6764f594428bfb8011142387d84b4acf0e2cfe2b1be74044"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage6.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/verification/environment/tb_rv_stage6.sv",
+      "sha256": "0f2610b605b79dcd677fd9fadfe68c69802d35d6ed824fac00bb433fb4e02383"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/verification/stage8/rv_stage8_components.sv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/source/verification/stage8/rv_stage8_components.sv",
+      "sha256": "ce7dc745d4dc4ffb39976bba189a8a39669c9f1965c7b2bf14149d56b05f7f08"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/selection_manifest.csv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage6_verilator_20261110T140824Z/selection_manifest.csv",
+      "sha256": "e5542bd1bf1fec79e96011eac88a0f30b50e911579554b4d61fcc83f2eca15b2"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/stage6_preparation.txt",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/stage6_preparation.txt",
+      "sha256": "57aea857b99b9f13fefcc5acbe428a18c7a5036283a27fb65723631183b58580"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_hazards.hex",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_hazards.hex",
+      "sha256": "04db71916d8a35beee838cc03a0d926a8461c19f3fa7b877da5fd881e23ba1b3"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ops.hex",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ops.hex",
+      "sha256": "14031d5c6811a6c8dcc68e215519c8e09bd463d63dbd50b19fd559259b07939d"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_permissions.hex",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_permissions.hex",
+      "sha256": "88673be9e478ed7f6471a3785812f03f68dc75f1231de51a542571dc1a52099d"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_immediate_write.hex",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_immediate_write.hex",
+      "sha256": "f9d1e2566f3ad514ecee6235c8d00d4c731d6c62c160406b942884f1f149a2b1"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_reads.hex",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_reads.hex",
+      "sha256": "63bd737b88f2b1c738363ad8004e7b6561bd72c862634e100d4949064ce99f92"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_write_rd0.hex",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_write_rd0.hex",
+      "sha256": "440f104abeef8f5312bb49dfff31e3b4d0f19869f9819f9045d63d2e0f1594ab"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_zero_source.hex",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_zero_source.hex",
+      "sha256": "a4161b97b2c2c4f12a39867d2135cc692f076efae4e55056466879d14728fdc3"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_wrongpath.hex",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_wrongpath.hex",
+      "sha256": "0942cf1b1c2f354b7cdf517d30fa93584136ce92ce076c51ac3d98df67a81583"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_fencei_atomic_replace.hex",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_fencei_atomic_replace.hex",
+      "sha256": "3ce30d56b1a1bd082dc3a1e4c67cd2bf49baa93067135836a66bb89747786992"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_fencei_divide.hex",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_fencei_divide.hex",
+      "sha256": "5133f1b11750565948313977bc1ba8d72b829c43317dabc190a558951d3703f2"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_fencei_store_replace.hex",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_fencei_store_replace.hex",
+      "sha256": "6865476f83bff2e3b1b6dbb7168a6f70c6ab7a36de3131f8ee2473ae8e5542e5"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_hazards.a.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_hazards.a.tsv",
+      "sha256": "38ca10c5cf65998c31f661b780c0e291d6b393b6b7f88af5f8d5cf75e3012593"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_hazards.trace",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_hazards.trace",
+      "sha256": "351e2e49658f676a1392643448d3dab92b8bc1af7f9323e2139707d9e2d1f0b8"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_hazards.z.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_hazards.z.tsv",
+      "sha256": "20672143a1ef584ea88c8b70e271366eb6c82e934a6095bd33cf3f2dece95337"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ops.a.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ops.a.tsv",
+      "sha256": "38ca10c5cf65998c31f661b780c0e291d6b393b6b7f88af5f8d5cf75e3012593"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ops.trace",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ops.trace",
+      "sha256": "9c6e3c080508ff1a328f3aa11392b9dd20e3f834e67483b0f5729670b3eb270e"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ops.z.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ops.z.tsv",
+      "sha256": "1b47b099e08dc8069b64fddb238772a616b91c43543130d46d64cd672f015e97"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_permissions.a.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_permissions.a.tsv",
+      "sha256": "38ca10c5cf65998c31f661b780c0e291d6b393b6b7f88af5f8d5cf75e3012593"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_permissions.trace",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_permissions.trace",
+      "sha256": "a795c0bf67dccb45254dca5a8b73b23753c37edc74a2a4f5ecddf4f83dc32d0a"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_permissions.z.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_permissions.z.tsv",
+      "sha256": "8219113f26606a4e02c4aeb8ac5b2abf63baf10207b643692288fd3db95f6a3d"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_immediate_write.a.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_immediate_write.a.tsv",
+      "sha256": "38ca10c5cf65998c31f661b780c0e291d6b393b6b7f88af5f8d5cf75e3012593"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_immediate_write.trace",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_immediate_write.trace",
+      "sha256": "a3beb4a65dcdbdf4480b47e3a1bb59c83ae06e2083f5e8455c4d298dc57e622f"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_immediate_write.z.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_immediate_write.z.tsv",
+      "sha256": "8219113f26606a4e02c4aeb8ac5b2abf63baf10207b643692288fd3db95f6a3d"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_reads.a.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_reads.a.tsv",
+      "sha256": "38ca10c5cf65998c31f661b780c0e291d6b393b6b7f88af5f8d5cf75e3012593"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_reads.trace",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_reads.trace",
+      "sha256": "3565a5c6f8fe199dc72780a1809146e56ab55d0e74517948faf27e90acfd95bf"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_reads.z.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_reads.z.tsv",
+      "sha256": "02906d9b11b16fb162c5f2b37d189a8ee09a122e4e1a3f1fbcc6efa0d78ad4f9"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_write_rd0.a.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_write_rd0.a.tsv",
+      "sha256": "38ca10c5cf65998c31f661b780c0e291d6b393b6b7f88af5f8d5cf75e3012593"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_write_rd0.trace",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_write_rd0.trace",
+      "sha256": "571fc731caaf1c72f11240d88c0ae8de06d9accbd4ad6b47a65c5097eb355d48"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_write_rd0.z.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_write_rd0.z.tsv",
+      "sha256": "8219113f26606a4e02c4aeb8ac5b2abf63baf10207b643692288fd3db95f6a3d"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_zero_source.a.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_zero_source.a.tsv",
+      "sha256": "38ca10c5cf65998c31f661b780c0e291d6b393b6b7f88af5f8d5cf75e3012593"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_zero_source.trace",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_zero_source.trace",
+      "sha256": "f8b057987099f5a7800f34cc6e2337d736bba741543607c4432d8ed94382c7ea"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_zero_source.z.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_ro_zero_source.z.tsv",
+      "sha256": "8219113f26606a4e02c4aeb8ac5b2abf63baf10207b643692288fd3db95f6a3d"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_wrongpath.a.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_wrongpath.a.tsv",
+      "sha256": "38ca10c5cf65998c31f661b780c0e291d6b393b6b7f88af5f8d5cf75e3012593"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_wrongpath.trace",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_wrongpath.trace",
+      "sha256": "94013f63424254a9a368ebd087109f6aa0691628530c77024fa4abd9ae8e4d99"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_wrongpath.z.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_csr_wrongpath.z.tsv",
+      "sha256": "8219113f26606a4e02c4aeb8ac5b2abf63baf10207b643692288fd3db95f6a3d"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_atomic_replace.a.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_atomic_replace.a.tsv",
+      "sha256": "b9db6fa0eddff9f5f42a451a32ff5119d906970626986e7f51b70f0383301434"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_atomic_replace.trace",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_atomic_replace.trace",
+      "sha256": "d3f1f5d004afd93255a0a11b3deaf0dbb313579e300a44b44a306f8ca11b0880"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_atomic_replace.z.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_atomic_replace.z.tsv",
+      "sha256": "58baad6509d40810cb9d128ae36009283c03e0a80e77c25304515156ebafd975"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_divide.a.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_divide.a.tsv",
+      "sha256": "38ca10c5cf65998c31f661b780c0e291d6b393b6b7f88af5f8d5cf75e3012593"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_divide.trace",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_divide.trace",
+      "sha256": "e45c3b98a5f91f422601a2a43ccd0adfb33fc17b0c015e4f4173dda658e48778"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_divide.z.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_divide.z.tsv",
+      "sha256": "edfac2d77cc8800360c3266015922359ac85142b8754e62b79fe953526f704c6"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_store_replace.a.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_store_replace.a.tsv",
+      "sha256": "38ca10c5cf65998c31f661b780c0e291d6b393b6b7f88af5f8d5cf75e3012593"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_store_replace.trace",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_store_replace.trace",
+      "sha256": "58f3116d5a4949456d1f7a8528756bd32d24e5da181aba5f798cf5a11ccba100"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_store_replace.z.tsv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_iss/stage6_fencei_store_replace.z.tsv",
+      "sha256": "5a83bf0c24db8c0f834fc21bb08bc17a0fee9069088e86abf8991ea2582255e7"
+    },
+    {
+      "kind": "input",
+      "path": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_manifest.csv",
+      "snapshot": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage6_verilator_20261110T140824Z/producer_snapshot/input/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_manifest.csv",
+      "sha256": "e5542bd1bf1fec79e96011eac88a0f30b50e911579554b4d61fcc83f2eca15b2"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+ATOMIC_STATS commits=0 writes=0
+MD_STATS starts=2 dones=1 busy_cycles=34 aborts_started=1
+STAGE8_COMPONENTS retire=17 traps=1 csr_access=3 csr_commit=3 atomic=0 atomic_writes=0 div_start=2 div_done=1 div_abort=1
+STATS stalls=18 redirects=4 cycles=81 instret=17 assert_fail=0
+COV 5 0 3 0 1 0 4 0 0 1 0 3 0 1 0 0
+TEST_RESULT: PASS hex=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_irq_divider_8a730008.hex cause=0 expect=0 gp=0x0 instret=17 cycles=81 oob=0        
+- /mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_pipe_stage4.sv:512: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.032 2025-01-01
+- Verilator: $finish at 845ns; walltime 0.010 s; speed 518.690 us/s
+- Verilator: cpu 0.002 s on 1 threads; alloced 121 MB

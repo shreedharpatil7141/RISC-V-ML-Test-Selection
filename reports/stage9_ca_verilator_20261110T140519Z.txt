@@ -1,0 +1,22 @@
+Simulator: verilator
+output_dir=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_ca_verilator_20261110T140519Z
+provenance_file=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_ca_verilator_20261110T140519Z/provenance.txt
+producer_snapshot=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_ca_verilator_20261110T140519Z/producer_snapshot/snapshot.json
+producer_snapshot_sha256=bf686d4bfa8072f21080c169f3cdcc5f6323feabfa72915262e4fa1a85195034
+legacy_c_disabled=0
+rv32imc_existing=12
+rv32imc_pipeline_specific=9
+rtl_vs_iss_and_golden=78
+unit_suites=8
+unit_decompress_halfwords=65536
+divider_protocol_records=39
+a_cases=18
+a_atomic_reference_events=41
+a_atomic_reference_writes=23
+a_operation_bins=11
+a_sc_status_bins=2
+a_aqrl_bins=4
+pipeline_vs_golden_full_traces=39
+pipeline_event_hits=2,2,46,19,27,11,27,15,6,14,4,8,5,17,4,8
+divider_protocol_checked_cases=39 starts=4 dones=4 busy_cycles=132 aborts=0
+STAGE9_STAGE5_CA_VERILATOR PASS c_cases=21 a_cases=18 selected_cases=39 full_trace_comparisons=78

@@ -1,0 +1,14 @@
+name,source,irq_pc,irq_levels,irq_wait_div
+machine_trap_return,machine_trap_return.s,,
+store_fault_precision,store_fault_precision.s,,
+lr_trap_sc,lr_trap_sc.s,,
+irq_vectored_priority,irq_vectored_priority.s,00000018,7,0
+irq_div_restart,irq_div_restart.s,00000020,4,1
+mixed_width_trap,mixed_width_trap.s,,
+wrongpath_fault,wrongpath_fault.s,,
+irq_mask_pending,irq_mask_pending.s,00000014,4,0
+fencei_store_replace,fencei_store_replace.s,,
+fault_before_irq,fault_before_irq.s,0000001c,4,0
+fetch_access_trap,fetch_access_trap.s,,
+irq_software,irq_software_timer.s,00000014,1,0
+irq_timer,irq_software_timer.s,00000014,2,0

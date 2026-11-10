@@ -1,0 +1,2 @@
+kind	pc	raw	ilen	csr_or_pcnext	funct3	source_index	source	old	new	write_intent
+FENCEI	0000000c	0000100f	4	00000010	-	-	-	-	-	-

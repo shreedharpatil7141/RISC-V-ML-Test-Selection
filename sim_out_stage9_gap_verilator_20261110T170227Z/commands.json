@@ -1,0 +1,20 @@
+{
+  "owner_command": [
+    "/usr/bin/python3",
+    "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/run_stage4_4.py",
+    "--sim",
+    "verilator",
+    "--stage9-legacy-gap"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/prepare_stage4_4.py",
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_gap_verilator_20261110T170227Z"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+      "log": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_gap_verilator_20261110T170227Z/software_preflight.log"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+#-----------------------------------------------------------
+# xsim v2026.1 (64-bit)
+# SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+# IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+# SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+# Start of session at: Tue Nov 10 19:21:54 2026
+# Process ID         : 5176
+# Current directory  : C:/RISC-V-ML-Test-Selection/sim_out_stage8_xsim_selected_stage8_20261110T135003Z/xsim
+# Command line       : xsim.exe -log C:/RISC-V-ML-Test-Selection/sim_out_stage8_xsim_selected_stage8_20261110T135003Z/seed_irq_divider_8a730108.golden.log -mode tcl -source {xsim.dir/golden/xsim_script.tcl}
+# Log file           : C:/RISC-V-ML-Test-Selection/sim_out_stage8_xsim_selected_stage8_20261110T135003Z/seed_irq_divider_8a730108.golden.log
+# Journal file       : C:/RISC-V-ML-Test-Selection/sim_out_stage8_xsim_selected_stage8_20261110T135003Z/xsim\xsim.jou
+# Running On         : LAPTOP-GIAH5LJ2
+# Platform           : Windows 11
+# Operating System   : 26300
+# Processor Detail   : 13th Gen Intel(R) Core(TM) i5-13450HX
+# CPU Frequency      : 2611 MHz
+# CPU Physical cores : 10
+# CPU Logical cores  : 16
+# Host memory        : 25463 MB
+# Swap memory        : 3758 MB
+# Total Virtual      : 29221 MB
+# Available Virtual  : 4218 MB
+#-----------------------------------------------------------
+source xsim.dir/golden/xsim_script.tcl
+# xsim {golden} -testplusarg HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_irq_divider_8a730108.hex -testplusarg TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage8_xsim_selected_stage8_20261110T135003Z/seed_irq_divider_8a730108.golden.trace -testplusarg TRAP=C:/RISC-V-ML-Test-Selection/sim_out_stage8_xsim_selected_stage8_20261110T135003Z/seed_irq_divider_8a730108.golden.trap.tsv -testplusarg EXPECT_CAUSE=0 -testplusarg CHECK_GP=0 -testplusarg IRQ_PC=00000100 -testplusarg IRQ_LEVELS=4 -testplusarg IRQ_WAIT_DIV=1 -testplusarg MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage8_xsim_selected_stage8_20261110T135003Z/seed_irq_divider_8a730108.golden.mcov -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+ATOMIC_STATS commits=0 writes=0
+STAGE8_COMPONENTS retire=17 traps=1 csr_access=3 csr_commit=3
+TEST_RESULT: PASS hex=C:/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage8_hex/seed_irq_divider_8a730108.hex cause=0 expect=0 gp=0x0 instret=17 cycles=18 oob=0        
+$finish called at time : 210 ns : File "C:/RISC-V-ML-Test-Selection/verification/environment/tb_rv_core.sv" Line 322
+exit
+INFO: [Common 17-206] Exiting xsim at Tue Nov 10 19:21:56 2026...

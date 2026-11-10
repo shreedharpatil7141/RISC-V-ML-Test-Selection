@@ -1,0 +1,6 @@
+STAGE9_ISS_REPLAY_XSIM PASS cases=39 c_cases=21 a_cases=18 trace_comparisons=117 evidence=RECONSTRUCTED_REFERENCE_TRACE_MATCHED
+source_snapshot=C:\RISC-V-ML-Test-Selection\sim_out_stage9_iss_replay_xsim_20261110T180907060163Z\producer_snapshot\snapshot.json
+source_snapshot_sha256=406ed5c0e31598700d96d008ea07036cc3432f174507d26770c885ac409c5507
+stage5_outdir=C:\RISC-V-ML-Test-Selection\sim_out_stage9_ca_xsim_20261110T120117Z
+manifest=C:\RISC-V-ML-Test-Selection\sim_out_stage9_iss_replay_xsim_20261110T180907060163Z\replay_manifest.csv
+manifest_sha256=ddfa510713cfa37e87b72e23845ffc4b5c58b22118b474063134db9f867d0313

@@ -261,6 +261,11 @@ module tb_rv_pipe_stage4 #(
   integer mcov_error = 0;
   string mcov_file;
   logic previous_md_done = 1'b0;
+  integer mcov_dyn_id = 0;
+  logic mcov_prev_ifid_valid = 1'b0;
+  word_t mcov_prev_ifid_pc = '0;
+  word_t mcov_prev_ifid_raw = '0;
+  int mcov_prev_ifid_ilen = 0;
 
   initial begin
     for (int e = 0; e < 16; e++) ev_cnt[e] = 0;
@@ -283,17 +288,39 @@ module tb_rv_pipe_stage4 #(
   // unchanged; these records distinguish EX issue/completion, WB retirement,
   // and instructions removed by redirect/fault before issue.
   always @(posedge clk) begin
+    if (!rst_n) begin
+      mcov_dyn_id <= 0;
+      mcov_prev_ifid_valid <= 1'b0;
+      mcov_prev_ifid_pc <= '0;
+      mcov_prev_ifid_raw <= '0;
+      mcov_prev_ifid_ilen <= 0;
+    end else begin
+      if (dut.if_id.valid && (!mcov_prev_ifid_valid || dut.if_id.pc != mcov_prev_ifid_pc ||
+          dut.if_id.raw_insn != mcov_prev_ifid_raw || dut.if_id.ilen_bytes != mcov_prev_ifid_ilen)) begin
+        mcov_dyn_id <= mcov_dyn_id + 1;
+        if (mcov_fd != 0)
+          $fdisplay(mcov_fd, "C ENTER %0d %08x %08x %0d", mcov_dyn_id + 1, dut.if_id.pc,
+                    dut.if_id.raw_insn, dut.if_id.ilen_bytes);
+      end
+      mcov_prev_ifid_valid <= dut.if_id.valid;
+      mcov_prev_ifid_pc <= dut.if_id.pc;
+      mcov_prev_ifid_raw <= dut.if_id.raw_insn;
+      mcov_prev_ifid_ilen <= dut.if_id.ilen_bytes;
+    end
+  end
+
+  always @(posedge clk) begin
     if (rst_n && mcov_fd != 0) begin
       // Stage 4 coverage lifecycle records are DUT-side observations. The
       // checker deduplicates retries caused by stalls using PC/raw/length.
-      if ((ENABLE_C || ENABLE_A) && dut.if_id.valid)
+      if (dut.if_id.valid)
         $fdisplay(mcov_fd, "C ATTEMPT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
       if (ENABLE_A && dut.if_id.valid && dut.if_id.insn[6:0] == OPC_AMO)
         $fdisplay(mcov_fd, "A ATTEMPT %08x %08x", dut.if_id.pc, dut.if_id.raw_insn);
       if (ENABLE_Z && dut.if_id.valid &&
           (dut.if_id.insn[6:0] == OPC_SYSTEM || dut.if_id.insn == 32'h0000_100F))
         $fdisplay(mcov_fd, "Z ATTEMPT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
-      if ((ENABLE_C || ENABLE_A) && ret_valid)
+      if (ret_valid)
         $fdisplay(mcov_fd, "C RETIRE %08x %08x %0d", ret_pc, ret_insn, ret_ilen_bytes);
       if (ENABLE_A && ret_valid && ret_insn[6:0] == OPC_AMO)
         $fdisplay(mcov_fd, "A RETIRE %08x %08x", ret_pc, ret_insn);
@@ -330,24 +357,24 @@ module tb_rv_pipe_stage4 #(
       if (ENABLE_Z && dut.redirect && dut.if_id.valid && dut.if_id.insn[6:0] == OPC_SYSTEM)
         $fdisplay(mcov_fd, "Z SQUASH_REDIRECT %08x %08x %0d", dut.if_id.pc,
                   dut.if_id.raw_insn, dut.if_id.ilen_bytes);
-      if ((ENABLE_C || ENABLE_A) && dut.fault)
+      if (dut.fault)
         $fdisplay(mcov_fd, "C FAULT %08x %08x %0d %0d", dut.ex_mem.pc, dut.ex_mem.raw_insn,
                   dut.ex_mem.ilen_bytes, int'(dut.fault_cause));
       if (ENABLE_A && dut.fault && dut.ex_mem.is_a)
         $fdisplay(mcov_fd, "A FAULT %08x %08x %0d", dut.ex_mem.pc, dut.ex_mem.raw_insn, int'(dut.fault_cause));
-      if ((ENABLE_C || ENABLE_A) && dut.redirect && dut.if_id.valid)
+      if (dut.redirect && dut.if_id.valid)
         $fdisplay(mcov_fd, "C SQUASH_REDIRECT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
       if (ENABLE_A && dut.redirect && dut.if_id.valid && dut.if_id.insn[6:0] == OPC_AMO)
         $fdisplay(mcov_fd, "A SQUASH_REDIRECT %08x %08x", dut.if_id.pc, dut.if_id.raw_insn);
-      if ((ENABLE_C || ENABLE_A) && dut.fault && dut.id_ex.valid)
+      if (dut.fault && dut.id_ex.valid)
         $fdisplay(mcov_fd, "C SQUASH_FAULT %08x %08x %0d", dut.id_ex.pc, dut.id_ex.raw_insn, dut.id_ex.ilen_bytes);
       if (ENABLE_A && dut.fault && dut.id_ex.valid && dut.id_ex.is_a)
         $fdisplay(mcov_fd, "A SQUASH_FAULT %08x %08x", dut.id_ex.pc, dut.id_ex.raw_insn);
-      if ((ENABLE_C || ENABLE_A) && dut.fault && dut.if_id.valid)
+      if (dut.fault && dut.if_id.valid)
         $fdisplay(mcov_fd, "C SQUASH_FAULT %08x %08x %0d", dut.if_id.pc, dut.if_id.raw_insn, dut.if_id.ilen_bytes);
       if (ENABLE_A && dut.fault && dut.if_id.valid && dut.if_id.insn[6:0] == OPC_AMO)
         $fdisplay(mcov_fd, "A SQUASH_FAULT_IFID %08x %08x", dut.if_id.pc, dut.if_id.raw_insn);
-      if ((ENABLE_C || ENABLE_A) && dbg_md_busy)
+      if (dbg_md_busy)
         $fdisplay(mcov_fd, "C DIV_HOLD %08x %08x %0d", dut.id_ex.pc, dut.id_ex.raw_insn, dut.id_ex.ilen_bytes);
       if (dbg_m_issue)
         $fdisplay(mcov_fd, "M %08x %08x %08x %08x %0d %0d", dbg_m_pc, dbg_m_insn,
@@ -418,6 +445,7 @@ integer plusarg_ok;
     if ($value$plusargs("MCOV=%s", mcov_file)) begin
       mcov_fd = $fopen(mcov_file, "w");
       if (mcov_fd == 0) begin mcov_error = 1; $display("MCOV_OPEN_FAIL: %s", mcov_file); end
+      else $fdisplay(mcov_fd, "MCOV_VERSION 2 DYNAMIC_IFID_ENTRY");
     end
 
     for (int i = 0; i < MEM_WORDS; i++) mem[i] = 32'h0;

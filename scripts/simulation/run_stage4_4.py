@@ -1,13 +1,42 @@
 #!/usr/bin/env python3
 """Stage 4.4 C-enabled five-stage pipeline and C-disabled compatibility regression."""
-import argparse, csv, datetime, hashlib, os, shutil, subprocess, sys, traceback
+import argparse, csv, datetime, hashlib, json, os, shutil, subprocess, sys, traceback
 from pathlib import Path
 HERE=Path(__file__).resolve().parent; ROOT=HERE.parents[1]
-p=argparse.ArgumentParser(description=__doc__); p.add_argument('--sim',choices=('xsim','verilator'),required=True); p.add_argument('--only-c',action='store_true',help='run all C cases after software preflight; reserved for isolated C mutation checks'); p.add_argument('--enable-a',action='store_true'); p.add_argument('--a-only',action='store_true',help='run only the A cases after complete software/artifact preflight'); a=p.parse_args(); SIM=a.sim; ONLY_C=a.only_c; ENABLE_A=a.enable_a; A_ONLY=a.a_only
+sys.path.insert(0,str(HERE))
+from stage9_run_provenance import capture_snapshot, verify_snapshot
+p=argparse.ArgumentParser(description=__doc__); p.add_argument('--sim',choices=('xsim','verilator'),required=True); p.add_argument('--only-c',action='store_true',help='run all C cases after software preflight; reserved for isolated C mutation checks'); p.add_argument('--enable-a',action='store_true'); p.add_argument('--a-only',action='store_true',help='run only the A cases after complete software/artifact preflight'); p.add_argument('--stage9-legacy-gap',action='store_true',help='run only the 209 C-disabled legacy pipeline cases with versioned dynamic MCOV'); p.add_argument('--stage9-ca-only',action='store_true',help='run only the 21 C and 18 A Stage 5 cases'); a=p.parse_args(); SIM=a.sim; ONLY_C=a.only_c; ENABLE_A=a.enable_a; A_ONLY=a.a_only; GAP_ONLY=a.stage9_legacy_gap; CA_ONLY=a.stage9_ca_only
 STAMP=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
-OUT=ROOT/(f'sim_out_stage5_a_{SIM}_{STAMP}' if ENABLE_A else f'sim_out_stage4_4_{SIM}_{STAMP}'); REPORT=ROOT/'reports'/(f'stage5_a_pipeline_{SIM}_{STAMP}.txt' if ENABLE_A else f'stage4_4_pipeline_{SIM}_{STAMP}.txt')
+OUT=ROOT/(f'sim_out_stage9_gap_{SIM}_{STAMP}' if GAP_ONLY else (f'sim_out_stage9_ca_{SIM}_{STAMP}' if CA_ONLY else (f'sim_out_stage5_a_{SIM}_{STAMP}' if ENABLE_A else f'sim_out_stage4_4_{SIM}_{STAMP}'))); REPORT=ROOT/'reports'/(f'stage9_gap_{SIM}_{STAMP}.txt' if GAP_ONLY else (f'stage9_ca_{SIM}_{STAMP}.txt' if CA_ONLY else (f'stage5_a_pipeline_{SIM}_{STAMP}.txt' if ENABLE_A else f'stage4_4_pipeline_{SIM}_{STAMP}.txt')))
 TOOLS={}; COMSPEC=None
 EXPECTED_C_CASES=21
+COMMAND_LOG=[]
+STAGE5_INPUT_FIELDS=("name","expect_cause","check_gp","suite","hexpath")
+STAGE5_SELECTION_FIELDS=("configuration",)+STAGE5_INPUT_FIELDS
+LEGACY_INPUT_FIELDS=("name","expect_cause","check_gp","hexpath")
+LEGACY_SELECTION_FIELDS=("configuration",)+LEGACY_INPUT_FIELDS
+
+
+def selection_record(configuration,row):
+    fields=STAGE5_INPUT_FIELDS if "suite" in row else LEGACY_INPUT_FIELDS
+    if set(row)!=set(fields):
+        raise ValueError(f"Stage 5 producer row schema mismatch for {row.get('name')}: expected={fields} actual={tuple(row)}")
+    return {"configuration":configuration,**row}
+
+
+def write_selection_manifest(path, selection, legacy=False):
+    fields=LEGACY_SELECTION_FIELDS if legacy else STAGE5_SELECTION_FIELDS
+    for line,row in enumerate(selection,2):
+        if set(row)!=set(fields):
+            raise ValueError(f"Stage 5 selection row {line} schema mismatch: expected={fields} actual={tuple(row)}")
+    with Path(path).open('w',encoding='utf-8',newline='') as target:
+        writer=csv.DictWriter(target,fieldnames=fields,extrasaction='raise',lineterminator='\n')
+        writer.writeheader(); writer.writerows(selection)
+    with Path(path).open(newline='',encoding='utf-8') as source:
+        reader=csv.DictReader(source)
+        if tuple(reader.fieldnames or ())!=fields: raise ValueError(f'Stage 5 selection round-trip header mismatch: {path}')
+        actual=list(reader)
+    if actual!=selection: raise ValueError(f'Stage 5 selection round-trip mismatch: {path}')
 
 def resolve(name): return TOOLS.get(name) or shutil.which(name) or name
 def command_for(argv):
@@ -23,6 +52,7 @@ def command_for(argv):
         return '"'+shell+'" /d /s /c "'+' '.join(pieces)+'"',exe
     return [exe,*argv[1:]],exe
 def run(argv,cwd=ROOT,log=None):
+    COMMAND_LOG.append({'argv':[str(x) for x in argv],'cwd':str(Path(cwd).resolve()),'log':str(Path(log).resolve()) if log else ''})
     actual,resolved=command_for(list(map(str,argv)))
     try: r=subprocess.run(actual,cwd=cwd,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
     except OSError as exc:
@@ -131,16 +161,16 @@ def main():
     if not Path(sys.executable).is_file(): missing.append(f'active Python {sys.executable}')
     if missing: raise RuntimeError('tool preflight missing: '+', '.join(missing))
     if A_ONLY and not ENABLE_A: raise RuntimeError('--a-only requires --enable-a')
+    if GAP_ONLY and (ONLY_C or ENABLE_A or A_ONLY or CA_ONLY): raise RuntimeError('--stage9-legacy-gap cannot be combined with C/A-only options')
+    if CA_ONLY and (not ENABLE_A or ONLY_C or A_ONLY or GAP_ONLY): raise RuntimeError('--stage9-ca-only requires --enable-a and cannot be combined with other selection modes')
     if OUT.exists() or REPORT.exists(): raise RuntimeError(f'output/report is not fresh: {OUT} / {REPORT}')
     OUT.mkdir(parents=True); REPORT.parent.mkdir(parents=True,exist_ok=True)
     commit=subprocess.run(['git','rev-parse','HEAD'],cwd=ROOT,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     provenance=[f'git_head={commit.stdout.strip() if commit.returncode==0 else "unavailable"}',f'simulator={SIM}',f'enable_a={ENABLE_A}',f'a_only={A_ONLY}']
-    tracked_sources=[ROOT/'scripts/simulation/run_stage4_4.py',ROOT/'scripts/simulation/prepare_stage4_4.py',ROOT/'scripts/simulation/prepare_stage5.py',ROOT/'scripts/simulation/rv32_asm.py',ROOT/'scripts/simulation/rv32i_iss.py',ROOT/'scripts/simulation/rv32c_asm.py',ROOT/'scripts/simulation/rv32imc_iss.py',ROOT/'scripts/simulation/rv32a_model.py',ROOT/'scripts/simulation/generate_stage4_2_vectors.py',ROOT/'scripts/simulation/validate_stage5_a.py',ROOT/'scripts/simulation/stage4_4_rtl.f',ROOT/'verification/environment/tb_rv_core.sv',ROOT/'verification/environment/tb_rv_pipe_stage4.sv',ROOT/'verification/environment/tb_rv_a_unit.sv']
+    tracked_sources=[ROOT/'scripts/simulation/run_stage4_4.py',ROOT/'scripts/simulation/stage9_run_provenance.py',ROOT/'scripts/simulation/prepare_stage4_4.py',ROOT/'scripts/simulation/prepare_stage5.py',ROOT/'scripts/simulation/rv32_asm.py',ROOT/'scripts/simulation/rv32i_iss.py',ROOT/'scripts/simulation/rv32c_asm.py',ROOT/'scripts/simulation/rv32imc_iss.py',ROOT/'scripts/simulation/rv32a_model.py',ROOT/'scripts/simulation/generate_stage4_2_vectors.py',ROOT/'scripts/simulation/validate_stage5_a.py',ROOT/'scripts/simulation/stage4_4_rtl.f',ROOT/'verification/environment/tb_rv_core.sv',ROOT/'verification/environment/tb_rv_pipe_stage4.sv',ROOT/'verification/environment/tb_rv_a_unit.sv']
     tracked_sources += [ROOT/x.strip() for x in (ROOT/'scripts/simulation/stage4_4_rtl.f').read_text(encoding='utf-8').splitlines() if x.strip()]
     test_dirs=('rv32i','pipeline','pipeline_m','m_extension','pipeline_div','pipeline_div_coverage','rv32imc','rv32imc_pipeline','rv32ima_software','rv32imac_software','rv32imac_pipeline_a')
     tracked_sources += [p for name in test_dirs for d in [ROOT/'tests'/'directed'/name] if d.is_dir() for p in d.iterdir() if p.is_file() and p.suffix in ('.s','.csv')]
-    for source in sorted(set(tracked_sources),key=str):
-        if source.is_file(): provenance.append(f'sha256 {source.relative_to(ROOT).as_posix()}={hashlib.sha256(source.read_bytes()).hexdigest()}')
     if SIM=='xsim' and any(Path(TOOLS[x]).suffix.lower() in ('.bat','.cmd') for x in required):
         COMSPEC=os.environ.get('COMSPEC') or shutil.which('cmd.exe')
         if not COMSPEC or not Path(COMSPEC).is_file(): raise RuntimeError('Vivado batch wrapper requires COMSPEC/cmd.exe')
@@ -160,8 +190,12 @@ def main():
     if len(legacy)!=209 or len(crows)!=EXPECTED_C_CASES: raise RuntimeError(f'suite inventory mismatch legacy={len(legacy)} C={len(crows)} expected_C={EXPECTED_C_CASES}')
     arows=list(csv.DictReader((OUT/'a_manifest.csv').open(newline=''))) if ENABLE_A else []
     if ENABLE_A and (len(arows)!=18 or 'STAGE5_A_ARTIFACT_PREFLIGHT PASS cases=18 images=18 references=18 atomic_sidecars=18' not in prep): raise RuntimeError(f'A artifact preflight mismatch cases={len(arows)}')
-    names=[r['name'] for r in legacy+crows]
+    names=[r['name'] for r in legacy+crows+arows]
     if len(set(names))!=len(names): raise RuntimeError('legacy and C manifests contain duplicate output basenames')
+    early_selection=([('rv32im',r) for r in legacy] if GAP_ONLY else
+                     ([('rv32imc',r) for r in crows]+[('rv32imac',r) for r in arows] if CA_ONLY else []))
+    write_selection_manifest(OUT/'selection_manifest.csv',
+                             [selection_record(mode,row) for mode,row in early_selection],legacy=GAP_ONLY)
     missing_artifacts=[]
     for row in legacy:
         for f in (ROOT/row['hexpath'], OUT/'iss'/(row['name']+'.iss.trace')):
@@ -176,6 +210,25 @@ def main():
     if missing_artifacts:
         for f in missing_artifacts: print(f'PREFLIGHT_MISSING {f}',file=sys.stderr,flush=True)
         raise RuntimeError(f'artifact preflight failed; missing={len(missing_artifacts)} paths listed above')
+    selected_inputs=[OUT/'manifest_all.csv',OUT/'c_manifest.csv',OUT/'selection_manifest.csv']+([OUT/'a_manifest.csv'] if ENABLE_A else [])+[OUT/'vectors.txt']
+    if CA_ONLY:
+        selected_inputs += [OUT/'c_hex'/(r['name']+'.hex') for r in crows]
+        selected_inputs += [OUT/'c_iss'/(r['name']+'.trace') for r in crows]
+        selected_inputs += [OUT/'a_hex'/(r['name']+'.hex') for r in arows]
+        selected_inputs += [OUT/'a_iss'/(r['name']+'.trace') for r in arows]
+        selected_inputs += [OUT/'a_iss'/(r['name']+'.a.tsv') for r in arows]
+    elif GAP_ONLY:
+        selected_inputs += [ROOT/r['hexpath'] for r in legacy]
+        selected_inputs += [OUT/'iss'/(r['name']+'.iss.trace') for r in legacy]
+        selected_inputs += [OUT/'iss'/(r['name']+'.iss.m.tsv') for r in legacy]
+    snapshot_file=capture_snapshot(OUT/'producer_snapshot',tracked_sources,selected_inputs,[sys.executable,str(HERE/'run_stage4_4.py'),*sys.argv[1:]])
+    verify_snapshot(snapshot_file)
+    for source in sorted(set(tracked_sources),key=str):
+        if source.is_file(): provenance.append(f'sha256 {source.relative_to(ROOT).as_posix()}={hashlib.sha256(source.read_bytes()).hexdigest()}')
+    (OUT/'commands.json').write_text(json.dumps({'owner_command':[sys.executable,str(HERE/'run_stage4_4.py'),*sys.argv[1:]],'commands':COMMAND_LOG},indent=2)+'\n',encoding='utf-8',newline='\n')
+    provenance += [f'producer_snapshot={snapshot_file.resolve()}',
+                   f'producer_snapshot_sha256={hashlib.sha256(snapshot_file.read_bytes()).hexdigest()}']
+    (OUT/'provenance.txt').write_text('\n'.join(provenance)+'\n',encoding='utf-8',newline='\n')
     total_configs=len(legacy)+len(crows)
     print(f'STAGE4_4_ARTIFACT_PREFLIGHT PASS legacy=209 C={len(crows)} images={total_configs} references={total_configs}',flush=True)
     rtl=ROOT/'scripts/simulation/stage4_4_rtl.f'
@@ -212,7 +265,7 @@ def main():
             compile_run(['verilator','-sv','--binary','--timing','-Wno-fatal','-Wno-lint','-Wno-style','-f',rtl,tbdir/(top+'.sv'),'--top-module',top,*gen,'-Mdir',od,'-o',name],log=OUT/f'build_{name}.log')
             snaps[name]=('verilator',od/name)
     required_snapshots=set()
-    if not ONLY_C and not A_ONLY: required_snapshots.update(('golden0','pipe0'))
+    if not ONLY_C and not A_ONLY and not CA_ONLY: required_snapshots.update(('golden0','pipe0'))
     if not A_ONLY: required_snapshots.update(('golden1','pipe1'))
     if ENABLE_A: required_snapshots.update(('golden_a','pipe_a'))
     missing_snapshots=sorted(required_snapshots-set(snaps))
@@ -249,9 +302,17 @@ def main():
             raise RuntimeError(f'A unit legality sweep marker missing or malformed: {log}')
     compare_count=0; pipeline_golden_count=0; case_counts={'legacy':0,'rv32imc':0, **({'rv32imac':0} if ENABLE_A else {})}; event_totals=[0]*16; protocol=[]
     atomic_ops_seen=set(); atomic_sc_status=set(); atomic_orders=set(); a_commits=0; a_writes=0
-    modes=[] if ONLY_C or A_ONLY else [('legacy',legacy,snaps['golden0'],snaps['pipe0'],OUT/'iss',False,False)]
-    if not A_ONLY: modes.append(('rv32imc',crows,snaps['golden1'],snaps['pipe1'],OUT/'c_iss',True,False))
+    modes=[] if ONLY_C or A_ONLY or CA_ONLY else [('legacy',legacy,snaps['golden0'],snaps['pipe0'],OUT/'iss',False,False)]
+    if not A_ONLY and not GAP_ONLY: modes.append(('rv32imc',crows,snaps['golden1'],snaps['pipe1'],OUT/'c_iss',True,False))
     if ENABLE_A: modes.append(('rv32imac',arows,snaps['golden_a'],snaps['pipe_a'],OUT/'a_iss',True,True))
+    selection=[selection_record('rv32im' if mode=='legacy' else mode,row) for mode,rows,*_ in modes for row in rows]
+    if CA_ONLY:
+        if len(selection)!=39 or sum(r['configuration']=='rv32imc' for r in selection)!=21 or sum(r['configuration']=='rv32imac' for r in selection)!=18:
+            raise RuntimeError(f'Stage 9 C/A selection must be exactly 21 C + 18 A, got {len(selection)}')
+    if CA_ONLY or GAP_ONLY:
+        manifest_rows=list(csv.DictReader((OUT/'selection_manifest.csv').open(newline='')))
+        if manifest_rows!=selection:
+            raise RuntimeError('pre-execution selection manifest differs from complete producer rows')
     for mode,rows,golden,pipe,refdir,cmode,amode in modes:
         for index,row in enumerate(rows,1):
             name=row['name']; case_counts[mode]+=1; print(f'[{mode} {index}/{len(rows)}] {name}',flush=True)
@@ -276,7 +337,7 @@ def main():
                     if acov.exists(): raise RuntimeError(f'fresh-run collision: {acov}')
                     args.append(plusarg('ACOV',acov))
                 ccov=OUT/f'{name}.{kind}.ccov'
-                if cmode and kind=='pipe':
+                if (cmode or GAP_ONLY) and kind=='pipe':
                     if ccov.exists(): raise RuntimeError(f'fresh-run collision: {ccov}')
                     args.append(plusarg('MCOV',ccov))
                 if engine=='xsim': args=['xsim',exe,'--runall','--log',log,*sum((['--testplusarg',x[1:]] for x in args[1:]),[])]
@@ -287,7 +348,7 @@ def main():
                 if acov is not None:
                     if not acov.is_file(): raise RuntimeError(f'{name}/{kind}: missing RTL atomic evidence {acov}')
                     compare_trace(acov.read_text(encoding='ascii'),(OUT/'a_iss'/(name+'.a.tsv')).read_text(encoding='ascii'),f'{name}/{kind} atomic MEM evidence vs independent ISS')
-                if cmode and kind=='pipe' and not ccov.is_file(): raise RuntimeError(f'{name}/pipe: missing C coverage sidecar {ccov}')
+                if (cmode or GAP_ONLY) and kind=='pipe' and not ccov.is_file(): raise RuntimeError(f'{name}/pipe: missing MCOV sidecar {ccov}')
                 if amode and kind=='pipe':
                     covtext=ccov.read_text(encoding='ascii',errors='replace')
                     if 'A ATTEMPT ' not in covtext: raise RuntimeError(f'{name}: RTL A attempted-instruction evidence missing from {ccov}')
@@ -315,27 +376,36 @@ def main():
             pipeline_golden_count+=1
             event,counts=check_pipeline_log(OUT/f'{name}.pipe.log',OUT/f'{name}.pipe.trace',image,cmode)
             event_totals=[a+b for a,b in zip(event_totals,event)]; protocol.append(counts)
-    expected_cases={'legacy':0 if ONLY_C or A_ONLY else 209,'rv32imc':0 if A_ONLY else EXPECTED_C_CASES}
+    expected_cases={'legacy':0 if ONLY_C or A_ONLY or CA_ONLY else 209,'rv32imc':0 if A_ONLY or GAP_ONLY else EXPECTED_C_CASES}
     if ENABLE_A: expected_cases['rv32imac']=18
     expected_comparisons=2*sum(expected_cases.values()); expected_pairs=sum(expected_cases.values())
     if case_counts != expected_cases: raise RuntimeError(f'suite inventory mismatch actual={case_counts} expected={expected_cases}')
     if compare_count!=expected_comparisons or pipeline_golden_count!=expected_pairs: raise RuntimeError(f'full trace inventory mismatch rtl_vs_iss={compare_count} pipeline_vs_golden={pipeline_golden_count}')
-    if not ONLY_C and not A_ONLY and not all(event_totals): raise RuntimeError(f'pipeline event bins not all exercised: {event_totals}')
+    if not ONLY_C and not A_ONLY and not CA_ONLY and not all(event_totals): raise RuntimeError(f'pipeline event bins not all exercised: {event_totals}')
     if ENABLE_A:
         required_ops={'lr.w','sc.w','amoswap.w','amoadd.w','amoxor.w','amoand.w','amoor.w','amomin.w','amomax.w','amominu.w','amomaxu.w'}
         if atomic_ops_seen != required_ops or atomic_sc_status != {'0','1'} or atomic_orders != {('0','0'),('0','1'),('1','0'),('1','1')}:
             raise RuntimeError(f'A architectural coverage incomplete ops={sorted(atomic_ops_seen)} SC={sorted(atomic_sc_status)} aqrl={sorted(atomic_orders)}')
+    verify_snapshot(snapshot_file)
     with REPORT.open('w',encoding='utf-8',newline='\n') as f:
-        f.write(f'Simulator: {SIM}\noutput_dir={OUT.resolve()}\nprovenance_file={(OUT/"provenance.txt").resolve()}\nlegacy_c_disabled={expected_cases["legacy"]}\nrv32imc_existing=12\nrv32imc_pipeline_specific=9\nrtl_vs_iss_and_golden={compare_count}\nunit_suites={len(tops)}\nunit_decompress_halfwords=65536\ndivider_protocol_records={len(protocol)}\n')
+        f.write(f'Simulator: {SIM}\noutput_dir={OUT.resolve()}\nprovenance_file={(OUT/"provenance.txt").resolve()}\n'
+                f'producer_snapshot={snapshot_file.resolve()}\nproducer_snapshot_sha256={hashlib.sha256(snapshot_file.read_bytes()).hexdigest()}\n'
+                f'legacy_c_disabled={expected_cases["legacy"]}\nrv32imc_existing=12\nrv32imc_pipeline_specific=9\nrtl_vs_iss_and_golden={compare_count}\nunit_suites={len(tops)}\nunit_decompress_halfwords=65536\ndivider_protocol_records={len(protocol)}\n')
         if ENABLE_A: f.write(f'a_cases={expected_cases["rv32imac"]}\na_atomic_reference_events={a_commits}\na_atomic_reference_writes={a_writes}\na_operation_bins={len(atomic_ops_seen)}\na_sc_status_bins={len(atomic_sc_status)}\na_aqrl_bins={len(atomic_orders)}\n')
         f.write(f'pipeline_vs_golden_full_traces={pipeline_golden_count}\n')
         f.write('pipeline_event_hits='+','.join(map(str,event_totals))+'\n')
         f.write(f'divider_protocol_checked_cases={len(protocol)} starts={sum(x[4] for x in protocol)} dones={sum(x[5] for x in protocol)} busy_cycles={sum(x[6] for x in protocol)} aborts=0\n')
-        marker=f'STAGE5_A_PIPELINE_{SIM.upper()}_A_ONLY PASS a_cases=18 full_trace_comparisons={compare_count} units={len(tops)}' if A_ONLY else (f'STAGE5_A_PIPELINE_{SIM.upper()} PASS legacy=209 c_cases={EXPECTED_C_CASES} a_cases=18 full_trace_comparisons={compare_count} units={len(tops)}' if ENABLE_A else (f'STAGE4_4_PIPELINE_{SIM.upper()}_C_ONLY PASS rv32imc={EXPECTED_C_CASES} full_trace_comparisons={compare_count} units={len(tops)}' if ONLY_C else f'STAGE4_4_PIPELINE_{SIM.upper()} PASS legacy=209 rv32imc={EXPECTED_C_CASES} full_trace_comparisons={compare_count} units={len(tops)}'))
+        if CA_ONLY: marker=f'STAGE9_STAGE5_CA_{SIM.upper()} PASS c_cases=21 a_cases=18 selected_cases=39 full_trace_comparisons={compare_count}'
+        elif GAP_ONLY: marker=f'STAGE9_LEGACY_GAP_{SIM.upper()} PASS legacy=209 full_trace_comparisons={compare_count} dynamic_mcov=209'
+        elif A_ONLY: marker=f'STAGE5_A_PIPELINE_{SIM.upper()}_A_ONLY PASS a_cases=18 full_trace_comparisons={compare_count} units={len(tops)}'
+        elif ENABLE_A: marker=f'STAGE5_A_PIPELINE_{SIM.upper()} PASS legacy=209 c_cases={EXPECTED_C_CASES} a_cases=18 full_trace_comparisons={compare_count} units={len(tops)}'
+        elif ONLY_C: marker=f'STAGE4_4_PIPELINE_{SIM.upper()}_C_ONLY PASS rv32imc={EXPECTED_C_CASES} full_trace_comparisons={compare_count} units={len(tops)}'
+        else: marker=f'STAGE4_4_PIPELINE_{SIM.upper()} PASS legacy=209 rv32imc={EXPECTED_C_CASES} full_trace_comparisons={compare_count} units={len(tops)}'
         f.write(marker+'\n')
-    marker=(f'STAGE5_A_PIPELINE_{SIM.upper()}_A_ONLY PASS a_cases=18 full_trace_comparisons={expected_comparisons} units={len(tops)}' if A_ONLY else (f'STAGE5_A_PIPELINE_{SIM.upper()} PASS legacy=209 c_cases={EXPECTED_C_CASES} a_cases=18 full_trace_comparisons={expected_comparisons} units={len(tops)}' if ENABLE_A else (f'STAGE4_4_PIPELINE_{SIM.upper()}_C_ONLY PASS rv32imc={EXPECTED_C_CASES} full_trace_comparisons={expected_comparisons} units={len(tops)}' if ONLY_C else f'STAGE4_4_PIPELINE_{SIM.upper()} PASS legacy=209 rv32imc={EXPECTED_C_CASES} full_trace_comparisons={expected_comparisons} units={len(tops)}')))
+    marker=(f'STAGE9_STAGE5_CA_{SIM.upper()} PASS c_cases=21 a_cases=18 selected_cases=39 full_trace_comparisons={expected_comparisons}' if CA_ONLY else (f'STAGE9_LEGACY_GAP_{SIM.upper()} PASS legacy=209 full_trace_comparisons={expected_comparisons} dynamic_mcov=209' if GAP_ONLY else (f'STAGE5_A_PIPELINE_{SIM.upper()}_A_ONLY PASS a_cases=18 full_trace_comparisons={expected_comparisons} units={len(tops)}' if A_ONLY else (f'STAGE5_A_PIPELINE_{SIM.upper()} PASS legacy=209 c_cases={EXPECTED_C_CASES} a_cases=18 full_trace_comparisons={expected_comparisons} units={len(tops)}' if ENABLE_A else (f'STAGE4_4_PIPELINE_{SIM.upper()}_C_ONLY PASS rv32imc={EXPECTED_C_CASES} full_trace_comparisons={expected_comparisons} units={len(tops)}' if ONLY_C else f'STAGE4_4_PIPELINE_{SIM.upper()} PASS legacy=209 rv32imc={EXPECTED_C_CASES} full_trace_comparisons={expected_comparisons} units={len(tops)}')))))
     terminal(REPORT,marker)
     print(REPORT.read_text(),flush=True)
+    print(f'RUN_REPORT={REPORT.resolve()}',flush=True)
 if __name__=='__main__':
     try:
         main()

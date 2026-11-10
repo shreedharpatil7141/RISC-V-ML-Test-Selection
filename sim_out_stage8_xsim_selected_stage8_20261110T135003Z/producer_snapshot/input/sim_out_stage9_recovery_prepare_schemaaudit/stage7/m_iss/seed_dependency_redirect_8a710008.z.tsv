@@ -1,0 +1,2 @@
+kind	pc	raw	ilen	csr_or_pcnext	funct3	source_index	source	old	new	write_intent
+CSR	00000004	30509073	4	305	1	1	00000180	00000000	00000180	1

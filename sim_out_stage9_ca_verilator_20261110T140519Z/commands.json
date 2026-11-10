@@ -1,0 +1,22 @@
+{
+  "owner_command": [
+    "/usr/bin/python3",
+    "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/run_stage4_4.py",
+    "--sim",
+    "verilator",
+    "--enable-a",
+    "--stage9-ca-only"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "/mnt/c/RISC-V-ML-Test-Selection/scripts/simulation/prepare_stage4_4.py",
+        "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_ca_verilator_20261110T140519Z",
+        "--enable-a"
+      ],
+      "cwd": "/mnt/c/RISC-V-ML-Test-Selection",
+      "log": "/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_ca_verilator_20261110T140519Z/software_preflight.log"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+#-----------------------------------------------------------
+# xsim v2026.1 (64-bit)
+# SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+# IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+# SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+# Start of session at: Tue Nov 10 23:18:30 2026
+# Process ID         : 43320
+# Current directory  : C:/RISC-V-ML-Test-Selection/sim_out_stage9_gap_xsim_20261110T173739Z/xsim
+# Command line       : xsim.exe -log C:\RISC-V-ML-Test-Selection\sim_out_stage9_gap_xsim_20261110T173739Z\pipe_ebreak_older_commit_younger_squash.pipe.log -mode tcl -source {xsim.dir/pipe0/xsim_script.tcl}
+# Log file           : C:/RISC-V-ML-Test-Selection/sim_out_stage9_gap_xsim_20261110T173739Z/pipe_ebreak_older_commit_younger_squash.pipe.log
+# Journal file       : C:/RISC-V-ML-Test-Selection/sim_out_stage9_gap_xsim_20261110T173739Z/xsim\xsim.jou
+# Running On         : LAPTOP-GIAH5LJ2
+# Platform           : Windows 11
+# Operating System   : 26300
+# Processor Detail   : 13th Gen Intel(R) Core(TM) i5-13450HX
+# CPU Frequency      : 2611 MHz
+# CPU Physical cores : 10
+# CPU Logical cores  : 16
+# Host memory        : 25463 MB
+# Swap memory        : 3758 MB
+# Total Virtual      : 29221 MB
+# Available Virtual  : 8283 MB
+#-----------------------------------------------------------
+source xsim.dir/pipe0/xsim_script.tcl
+# xsim {pipe0} -testplusarg HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage9_gap_xsim_20261110T173739Z/hex/pipe_ebreak_older_commit_younger_squash.hex -testplusarg TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage9_gap_xsim_20261110T173739Z/pipe_ebreak_older_commit_younger_squash.pipe.trace -testplusarg EXPECT_CAUSE=2 -testplusarg CHECK_GP=0 -testplusarg MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage9_gap_xsim_20261110T173739Z/pipe_ebreak_older_commit_younger_squash.pipe.ccov -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+ATOMIC_STATS commits=0 writes=0
+MD_STATS starts=0 dones=0 busy_cycles=0 aborts_started=0
+STATS stalls=0 redirects=0 cycles=7 instret=2 assert_fail=0
+COV 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0
+TEST_RESULT: PASS hex=C:/RISC-V-ML-Test-Selection/sim_out_stage9_gap_xsim_20261110T173739Z/hex/pipe_ebreak_older_commit_younger_squash.hex cause=2 expect=2 gp=0x0 instret=2 cycles=7 oob=0        
+$finish called at time : 100 ns : File "C:/RISC-V-ML-Test-Selection/verification/environment/tb_rv_pipe_stage4.sv" Line 512
+exit
+INFO: [Common 17-206] Exiting xsim at Tue Nov 10 23:18:31 2026...

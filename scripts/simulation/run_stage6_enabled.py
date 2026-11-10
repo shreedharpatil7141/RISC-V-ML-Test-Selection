@@ -3,6 +3,7 @@
 import argparse
 import csv
 import hashlib
+import json
 import os
 import shutil
 import subprocess
@@ -12,8 +13,51 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
+sys.path.insert(0,str(HERE))
+from stage9_run_provenance import capture_snapshot, verify_snapshot
 TOOLS = {}
 COMSPEC = None
+COMMAND_LOG = []
+STAGE6_MANIFEST_FIELDS = ("name", "expect_cause", "check_gp", "hexpath", "atomics", "z_events", "retired")
+
+
+def read_stage6_manifest(path):
+    """Read the prepared Stage 6 schema without dropping or padding columns."""
+    with Path(path).open(newline="", encoding="utf-8") as source:
+        reader = csv.DictReader(source)
+        if tuple(reader.fieldnames or ()) != STAGE6_MANIFEST_FIELDS:
+            raise ValueError(f"Stage 6 manifest schema mismatch: expected={STAGE6_MANIFEST_FIELDS} actual={reader.fieldnames}")
+        rows = list(reader)
+    names = set()
+    for line, row in enumerate(rows, 2):
+        if None in row or any(value is None for value in row.values()):
+            raise ValueError(f"Stage 6 manifest malformed row {line}: {row!r}")
+        if set(row) != set(STAGE6_MANIFEST_FIELDS):
+            raise ValueError(f"Stage 6 manifest row {line} has unexpected fields: {sorted(row)}")
+        if not row["name"] or row["name"] in names:
+            raise ValueError(f"Stage 6 manifest empty or duplicate identity at row {line}: {row['name']!r}")
+        names.add(row["name"])
+        if not row["hexpath"] or row["check_gp"] not in ("0", "1"):
+            raise ValueError(f"Stage 6 manifest invalid required values at row {line}: {row!r}")
+        for field in ("expect_cause", "atomics", "z_events", "retired"):
+            if not row[field].isdigit():
+                raise ValueError(f"Stage 6 manifest invalid integer {field} at row {line}: {row[field]!r}")
+    return rows
+
+
+def write_stage6_selection_manifest(path, rows):
+    """Serialize and round-trip the full prepared Stage 6 metadata schema."""
+    for line, row in enumerate(rows, 2):
+        if set(row) != set(STAGE6_MANIFEST_FIELDS):
+            raise ValueError(f"Stage 6 selection row {line} schema mismatch: expected={STAGE6_MANIFEST_FIELDS} actual={tuple(row)}")
+    with Path(path).open("w", newline="", encoding="utf-8") as target:
+        writer = csv.DictWriter(target, fieldnames=STAGE6_MANIFEST_FIELDS,
+                                extrasaction="raise", lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    reread = read_stage6_manifest(path)
+    if reread != rows:
+        raise ValueError(f"Stage 6 selection manifest round-trip mismatch: {path}")
 
 
 def resolve(name):
@@ -46,6 +90,7 @@ def simulator_path(path):
 
 
 def run(args, cwd, log):
+    COMMAND_LOG.append({"argv":[str(x) for x in args],"cwd":str(Path(cwd).resolve()),"log":str(Path(log).resolve())})
     actual, executable = command_for(list(map(str, args)))
     try:
         result = subprocess.run(actual, cwd=cwd, text=True,
@@ -104,7 +149,7 @@ def main():
     prep = Path(args.prepared).resolve()
     if "STAGE6_PREPARATION PASS stage5=248 stage6=11 total=259 images=259 references=259 errors=0" not in (prep / "stage6_preparation.txt").read_text(encoding="ascii"):
         raise RuntimeError("prepared inventory/provenance marker missing")
-    rows = list(csv.DictReader((prep / "z_manifest.csv").open(newline="")))
+    rows = read_stage6_manifest(prep / "z_manifest.csv")
     if len(rows) != 11 or len({r["name"] for r in rows}) != 11:
         raise RuntimeError(f"expected eleven unique Stage 6 prepared rows, found {len(rows)}")
     required = []
@@ -139,6 +184,29 @@ def main():
     if out.exists():
         raise RuntimeError(f"output path exists: {out}")
     out.mkdir()
+    stage6_suite = ROOT / "tests/directed/rv32imac_stage6"
+    source_paths = [ROOT / "rtl/packages/rv32_pkg.sv", ROOT / "rtl/packages/rv_pipe_pkg.sv",
+                    ROOT / "rtl/decoder/rv_decoder.sv", ROOT / "rtl/core/rv_core_single.sv",
+                    ROOT / "rtl/core/rv_core_pipe.sv", ROOT / "rtl/pipeline/rv_id_stage.sv",
+                    ROOT / "rtl/pipeline/rv_ex_stage.sv", ROOT / "rtl/pipeline/rv_mem_stage.sv",
+                    HERE / "rv32_asm.py", HERE / "rv32c_asm.py", HERE / "rv32c_model.py",
+                    HERE / "rv32a_model.py", HERE / "rv32imc_iss.py", HERE / "prepare_stage6.py",
+                    HERE / "stage6_software_selftest.py", HERE / "run_stage6_enabled.py", HERE / "stage9_run_provenance.py",
+                    ROOT / "verification/environment/tb_rv_core.sv",
+                    ROOT / "verification/environment/tb_rv_pipe_stage4.sv",
+                    ROOT / "verification/environment/tb_rv_stage6.sv",
+                    ROOT / "verification/environment/tb_rv_decoder_z.sv",
+                    stage6_suite / "manifest.csv", *sorted(stage6_suite.glob("*.s"))]
+    rtl_filelist=ROOT/"scripts/simulation/stage4_4_rtl.f"
+    source_paths += [rtl_filelist,*[ROOT/line.strip() for line in rtl_filelist.read_text(encoding="utf-8").splitlines() if line.strip()]]
+    write_stage6_selection_manifest(out/"selection_manifest.csv", rows)
+    snapshot_inputs=[prep/"z_manifest.csv",prep/"stage6_preparation.txt",out/"selection_manifest.csv"]
+    for row in rows:
+        n=row["name"]
+        snapshot_inputs += [ROOT/row["hexpath"],prep/"z_iss"/(n+".trace"),
+                            prep/"z_iss"/(n+".a.tsv"),prep/"z_iss"/(n+".z.tsv")]
+    snapshot_file=capture_snapshot(out/"producer_snapshot",source_paths,snapshot_inputs,
+                                   [sys.executable,str(HERE/"run_stage6_enabled.py"),*sys.argv[1:]])
     rtl = ROOT / "scripts" / "simulation" / "stage4_4_rtl.f"
     env = ROOT / "verification" / "environment"
     if args.sim == "verilator":
@@ -244,23 +312,14 @@ def main():
     report = ROOT / "reports" / f"stage6_{args.sim}_{stamp}.txt"
     report.parent.mkdir(exist_ok=True)
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stage6_suite = ROOT / "tests/directed/rv32imac_stage6"
-    source_paths = [ROOT / "rtl/packages/rv32_pkg.sv", ROOT / "rtl/packages/rv_pipe_pkg.sv",
-                    ROOT / "rtl/decoder/rv_decoder.sv", ROOT / "rtl/core/rv_core_single.sv",
-                    ROOT / "rtl/core/rv_core_pipe.sv", ROOT / "rtl/pipeline/rv_id_stage.sv",
-                    ROOT / "rtl/pipeline/rv_ex_stage.sv", ROOT / "rtl/pipeline/rv_mem_stage.sv",
-                    HERE / "rv32_asm.py", HERE / "rv32c_asm.py", HERE / "rv32c_model.py",
-                    HERE / "rv32a_model.py", HERE / "rv32imc_iss.py", HERE / "prepare_stage6.py",
-                    HERE / "stage6_software_selftest.py", HERE / "run_stage6_enabled.py",
-                    ROOT / "verification/environment/tb_rv_core.sv",
-                    ROOT / "verification/environment/tb_rv_pipe_stage4.sv",
-                    ROOT / "verification/environment/tb_rv_stage6.sv",
-                    ROOT / "verification/environment/tb_rv_decoder_z.sv",
-                    stage6_suite / "manifest.csv", *sorted(stage6_suite.glob("*.s"))]
+    verify_snapshot(snapshot_file)
+    (out/"commands.json").write_text(json.dumps({"owner_command":[sys.executable,str(HERE/"run_stage6_enabled.py"),*sys.argv[1:]],"commands":COMMAND_LOG},indent=2)+"\n",encoding="utf-8",newline="\n")
     hashes = [f"sha256 {p.relative_to(ROOT).as_posix()}={hashlib.sha256(p.read_bytes()).hexdigest()}"
               for p in source_paths]
     report.write_text(f"Stage 6 enabled functional validation simulator={args.sim}\n"
                       f"git_head={head.stdout.strip() if head.returncode == 0 else 'unavailable'}\n"
+                      f"output_dir={out.resolve()}\nproducer_snapshot={snapshot_file.resolve()}\n"
+                      f"producer_snapshot_sha256={hashlib.sha256(snapshot_file.read_bytes()).hexdigest()}\n"
                       f"prepared_manifest_sha256={hashlib.sha256((prep / 'z_manifest.csv').read_bytes()).hexdigest()}\n"
                       + "\n".join(hashes) + "\n"
                       f"STAGE6_ENABLED_{args.sim.upper()} PASS cases=11 full_trace_comparisons={full_count} "
@@ -268,6 +327,7 @@ def main():
                       encoding="utf-8", newline="\n")
     print(report.read_text(encoding="utf-8"), end="")
     print(f"RUN_OUTPUT={out}\nREPORT={report}")
+    print(f"RUN_REPORT={report.resolve()}")
 
 
 if __name__ == "__main__":

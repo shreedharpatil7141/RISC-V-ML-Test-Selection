@@ -1,3 +1,9 @@
 reports/stage3_6_mutation_runs/** -whitespace
 reports/stage4_c_mutation_runs/** -whitespace
+# Preserve captured Stage 9 run logs and producer snapshots byte-for-byte.
+sim_out_stage6_*/** -whitespace
+sim_out_stage8_*/** -whitespace
+sim_out_stage9_*/** -whitespace
+# This exact helper revision is referenced by captured producer snapshots.
+scripts/simulation/stage9_run_provenance.py -whitespace
 *.sh text eol=lf

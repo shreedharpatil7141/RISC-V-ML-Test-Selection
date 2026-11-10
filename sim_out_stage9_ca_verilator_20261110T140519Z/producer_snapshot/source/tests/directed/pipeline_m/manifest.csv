@@ -1,0 +1,9 @@
+name,expect_cause,check_gp
+pipe_m_arithmetic,1,1
+pipe_m_fwd_consumers,1,1
+pipe_m_jalr,1,1
+pipe_m_loaduse,1,1
+pipe_m_back_to_back_x0,1,1
+pipe_m_wrongpath,1,1
+pipe_m_fault_illegal,3,0
+pipe_m_fault_load,4,0

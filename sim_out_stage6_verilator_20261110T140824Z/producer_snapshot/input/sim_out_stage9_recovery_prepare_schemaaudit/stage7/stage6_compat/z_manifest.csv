@@ -1,0 +1,12 @@
+name,expect_cause,check_gp,hexpath,atomics,z_events,retired
+stage6_csr_ops,1,0,sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ops.hex,0,8,9
+stage6_csr_hazards,1,0,sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_hazards.hex,0,4,5
+stage6_csr_permissions,3,0,sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_permissions.hex,0,0,0
+stage6_fencei_store_replace,1,0,sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_fencei_store_replace.hex,0,1,8
+stage6_fencei_divide,1,0,sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_fencei_divide.hex,0,1,5
+stage6_fencei_atomic_replace,1,0,sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_fencei_atomic_replace.hex,1,1,6
+stage6_csr_wrongpath,1,1,sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_wrongpath.hex,0,0,2
+stage6_csr_ro_reads,1,0,sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_reads.hex,0,5,5
+stage6_csr_ro_write_rd0,3,0,sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_write_rd0.hex,0,0,0
+stage6_csr_ro_zero_source,3,0,sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_zero_source.hex,0,0,1
+stage6_csr_ro_immediate_write,3,0,sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_csr_ro_immediate_write.hex,0,0,0

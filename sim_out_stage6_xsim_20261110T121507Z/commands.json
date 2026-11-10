@@ -1,0 +1,589 @@
+{
+  "owner_command": [
+    "C:\\Users\\Shreedhargouda Patil\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\run_stage6_enabled.py",
+    "--sim",
+    "xsim",
+    "--prepared",
+    "sim_out_stage8_prepare_mem_footerfix\\stage7\\stage6_compat"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "xvlog",
+        "-sv",
+        "-f",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_rtl_abs.f"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xvlog_rtl.log"
+    },
+    {
+      "argv": [
+        "xvlog",
+        "-sv",
+        "C:/RISC-V-ML-Test-Selection/verification/environment/tb_rv_core.sv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\tb_rv_core.sv.compile.log"
+    },
+    {
+      "argv": [
+        "xvlog",
+        "-sv",
+        "C:/RISC-V-ML-Test-Selection/verification/environment/tb_rv_pipe_stage4.sv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\tb_rv_pipe_stage4.sv.compile.log"
+    },
+    {
+      "argv": [
+        "xvlog",
+        "-sv",
+        "C:/RISC-V-ML-Test-Selection/verification/environment/tb_rv_stage6.sv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\tb_rv_stage6.sv.compile.log"
+    },
+    {
+      "argv": [
+        "xvlog",
+        "-sv",
+        "C:/RISC-V-ML-Test-Selection/verification/environment/tb_rv_decoder_z.sv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\tb_rv_decoder_z.compile.log"
+    },
+    {
+      "argv": [
+        "xelab",
+        "-debug",
+        "off",
+        "tb_rv_decoder_z",
+        "-s",
+        "decoder_z"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\decoder_z.elab.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "decoder_z",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/decoder_z.unit.log"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\decoder_z.launch.log"
+    },
+    {
+      "argv": [
+        "xelab",
+        "-debug",
+        "off",
+        "tb_rv_core_stage6",
+        "-s",
+        "golden"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\golden.elab.log"
+    },
+    {
+      "argv": [
+        "xelab",
+        "-debug",
+        "off",
+        "tb_rv_pipe_stage6",
+        "-s",
+        "pipe"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\pipe.elab.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "golden",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ops.golden.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_ops.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ops.golden.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ops.golden.a.tsv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_ops.golden.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "pipe",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ops.pipe.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_ops.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ops.pipe.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ops.pipe.a.tsv",
+        "--testplusarg",
+        "MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ops.pipe.mcov"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_ops.pipe.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "golden",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_hazards.golden.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_hazards.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_hazards.golden.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_hazards.golden.a.tsv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_hazards.golden.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "pipe",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_hazards.pipe.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_hazards.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_hazards.pipe.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_hazards.pipe.a.tsv",
+        "--testplusarg",
+        "MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_hazards.pipe.mcov"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_hazards.pipe.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "golden",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_permissions.golden.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_permissions.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_permissions.golden.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=3",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_permissions.golden.a.tsv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_permissions.golden.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "pipe",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_permissions.pipe.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_permissions.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_permissions.pipe.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=3",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_permissions.pipe.a.tsv",
+        "--testplusarg",
+        "MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_permissions.pipe.mcov"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_permissions.pipe.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "golden",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_store_replace.golden.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_fencei_store_replace.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_store_replace.golden.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_store_replace.golden.a.tsv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_fencei_store_replace.golden.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "pipe",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_store_replace.pipe.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_fencei_store_replace.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_store_replace.pipe.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_store_replace.pipe.a.tsv",
+        "--testplusarg",
+        "MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_store_replace.pipe.mcov"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_fencei_store_replace.pipe.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "golden",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_divide.golden.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_fencei_divide.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_divide.golden.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_divide.golden.a.tsv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_fencei_divide.golden.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "pipe",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_divide.pipe.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_fencei_divide.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_divide.pipe.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_divide.pipe.a.tsv",
+        "--testplusarg",
+        "MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_divide.pipe.mcov"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_fencei_divide.pipe.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "golden",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_atomic_replace.golden.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_fencei_atomic_replace.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_atomic_replace.golden.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_atomic_replace.golden.a.tsv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_fencei_atomic_replace.golden.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "pipe",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_atomic_replace.pipe.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_fencei_atomic_replace.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_atomic_replace.pipe.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_atomic_replace.pipe.a.tsv",
+        "--testplusarg",
+        "MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_fencei_atomic_replace.pipe.mcov"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_fencei_atomic_replace.pipe.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "golden",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_wrongpath.golden.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_wrongpath.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_wrongpath.golden.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=1",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_wrongpath.golden.a.tsv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_wrongpath.golden.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "pipe",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_wrongpath.pipe.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_wrongpath.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_wrongpath.pipe.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=1",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_wrongpath.pipe.a.tsv",
+        "--testplusarg",
+        "MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_wrongpath.pipe.mcov"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_wrongpath.pipe.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "golden",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_reads.golden.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_ro_reads.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_reads.golden.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_reads.golden.a.tsv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_ro_reads.golden.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "pipe",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_reads.pipe.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_ro_reads.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_reads.pipe.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=1",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_reads.pipe.a.tsv",
+        "--testplusarg",
+        "MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_reads.pipe.mcov"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_ro_reads.pipe.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "golden",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_write_rd0.golden.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_ro_write_rd0.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_write_rd0.golden.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=3",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_write_rd0.golden.a.tsv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_ro_write_rd0.golden.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "pipe",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_write_rd0.pipe.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_ro_write_rd0.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_write_rd0.pipe.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=3",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_write_rd0.pipe.a.tsv",
+        "--testplusarg",
+        "MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_write_rd0.pipe.mcov"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_ro_write_rd0.pipe.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "golden",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_zero_source.golden.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_ro_zero_source.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_zero_source.golden.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=3",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_zero_source.golden.a.tsv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_ro_zero_source.golden.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "pipe",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_zero_source.pipe.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_ro_zero_source.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_zero_source.pipe.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=3",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_zero_source.pipe.a.tsv",
+        "--testplusarg",
+        "MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_zero_source.pipe.mcov"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_ro_zero_source.pipe.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "golden",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_immediate_write.golden.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_ro_immediate_write.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_immediate_write.golden.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=3",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_immediate_write.golden.a.tsv"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_ro_immediate_write.golden.launch.log"
+    },
+    {
+      "argv": [
+        "xsim",
+        "pipe",
+        "--runall",
+        "--log",
+        "C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_immediate_write.pipe.log",
+        "--testplusarg",
+        "HEX=C:/RISC-V-ML-Test-Selection/sim_out_stage8_prepare_mem_footerfix/stage7/stage6_compat/z_hex/stage6_csr_ro_immediate_write.hex",
+        "--testplusarg",
+        "TRACE=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_immediate_write.pipe.trace",
+        "--testplusarg",
+        "EXPECT_CAUSE=3",
+        "--testplusarg",
+        "CHECK_GP=0",
+        "--testplusarg",
+        "ACOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_immediate_write.pipe.a.tsv",
+        "--testplusarg",
+        "MCOV=C:/RISC-V-ML-Test-Selection/sim_out_stage6_xsim_20261110T121507Z/stage6_csr_ro_immediate_write.pipe.mcov"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\xsim",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage6_xsim_20261110T121507Z\\stage6_csr_ro_immediate_write.pipe.launch.log"
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+legacy_bin_id,target_bin_ids,migration_status,reason
+A.OP.MUL,A.OP.MUL,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.ISSUE.MUL,P.ISSUE.MUL,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.COMPLETE.MUL,P.COMPLETE.MUL,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.RETIRE.MUL,P.RETIRE.MUL,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.OP.MULH,A.OP.MULH,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.ISSUE.MULH,P.ISSUE.MULH,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.COMPLETE.MULH,P.COMPLETE.MULH,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.RETIRE.MULH,P.RETIRE.MULH,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.OP.MULHSU,A.OP.MULHSU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.ISSUE.MULHSU,P.ISSUE.MULHSU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.COMPLETE.MULHSU,P.COMPLETE.MULHSU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.RETIRE.MULHSU,P.RETIRE.MULHSU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.OP.MULHU,A.OP.MULHU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.ISSUE.MULHU,P.ISSUE.MULHU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.COMPLETE.MULHU,P.COMPLETE.MULHU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.RETIRE.MULHU,P.RETIRE.MULHU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.OP.DIV,A.OP.DIV,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.ISSUE.DIV,P.ISSUE.DIV,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.COMPLETE.DIV,P.COMPLETE.DIV,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.RETIRE.DIV,P.RETIRE.DIV,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.OP.DIVU,A.OP.DIVU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.ISSUE.DIVU,P.ISSUE.DIVU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.COMPLETE.DIVU,P.COMPLETE.DIVU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.RETIRE.DIVU,P.RETIRE.DIVU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.OP.REM,A.OP.REM,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.ISSUE.REM,P.ISSUE.REM,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.COMPLETE.REM,P.COMPLETE.REM,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.RETIRE.REM,P.RETIRE.REM,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.OP.REMU,A.OP.REMU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.ISSUE.REMU,P.ISSUE.REMU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.COMPLETE.REMU,P.COMPLETE.REMU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.RETIRE.REMU,P.RETIRE.REMU,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS1.SIGN.NEG,A.RS1.SIGN.NEG,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS1.SIGN.NONNEG,A.RS1.SIGN.NONNEG,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS1.CLASS.ZERO,A.RS1.CLASS.ZERO,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS1.CLASS.POS_ONE,A.RS1.CLASS.POS_ONE,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS1.CLASS.NEG_ONE,A.RS1.CLASS.NEG_ONE,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS1.CLASS.SMIN,A.RS1.CLASS.SMIN,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS1.CLASS.SMAX,A.RS1.CLASS.SMAX,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS1.CLASS.OTHER,A.RS1.CLASS.OTHER,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS1.CLASS.UMAX,A.RS1.CLASS.UMAX,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS2.SIGN.NEG,A.RS2.SIGN.NEG,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS2.SIGN.NONNEG,A.RS2.SIGN.NONNEG,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS2.CLASS.ZERO,A.RS2.CLASS.ZERO,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS2.CLASS.POS_ONE,A.RS2.CLASS.POS_ONE,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS2.CLASS.NEG_ONE,A.RS2.CLASS.NEG_ONE,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS2.CLASS.SMIN,A.RS2.CLASS.SMIN,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS2.CLASS.SMAX,A.RS2.CLASS.SMAX,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS2.CLASS.OTHER,A.RS2.CLASS.OTHER,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RS2.CLASS.UMAX,A.RS2.CLASS.UMAX,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.ALIAS.RD_EQ_RS1,A.ALIAS.RD_EQ_RS1,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.ALIAS.RD_EQ_RS2,A.ALIAS.RD_EQ_RS2,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.RD.X0,A.RD.X0,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.CORNER.DIV_ZERO_QUOT,A.CORNER.DIV_ZERO_QUOT,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.CORNER.DIV_ZERO_REM,A.CORNER.DIV_ZERO_REM,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.CORNER.SIGNED_OVERFLOW_QUOT,A.CORNER.SIGNED_OVERFLOW_QUOT,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.CORNER.SIGNED_OVERFLOW_REM,A.CORNER.SIGNED_OVERFLOW_REM,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.CORNER.QUOT_ZERO,A.CORNER.QUOT_ZERO,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.CORNER.QUOT_ONE,A.CORNER.QUOT_ONE,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.CORNER.QUOT_NEGATIVE,A.CORNER.QUOT_NEGATIVE,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.CORNER.REM_ZERO,A.CORNER.REM_ZERO,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+A.CORNER.REM_NEGATIVE,A.CORNER.REM_NEGATIVE,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.SQUASH.REDIRECT.M,P.SQUASH.REDIRECT.M,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.SQUASH.FAULT.M,P.SQUASH.FAULT.M,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.FAULT.DIV_START_SUPPRESSED,P.FAULT.DIV_START_SUPPRESSED,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.FWD.RS1.EXMEM,P.FWD.RS1.EXMEM,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.FWD.RS1.MEMWB,P.FWD.RS1.MEMWB,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.FWD.RS2.EXMEM,P.FWD.RS2.EXMEM,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.FWD.RS2.MEMWB,P.FWD.RS2.MEMWB,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.LOAD_USE.RS1,P.LOAD_USE.RS1,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.LOAD_USE.RS2,P.LOAD_USE.RS2,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.DIV.CONSECUTIVE,P.DIV.CONSECUTIVE,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.DIV.WRONG_PATH_SUPPRESSED,P.DIV.WRONG_PATH_SUPPRESSED,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+P.RD.X0,P.RD.X0,retained,Stage 9 preserves the stable Stage 3.5 identifier and its exact evidence rule.
+B.ABORT.START_CYCLE,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C01,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C02,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C03,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C04,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C05,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C06,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C07,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C08,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C09,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C10,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C11,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C12,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C13,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C14,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C15,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C16,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C17,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C18,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C19,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C20,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C21,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C22,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C23,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C24,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C25,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C26,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C27,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C28,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C29,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C30,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C31,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C32,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+B.ABORT.C33,,historical_only,Block-level abort-offset markers lack per-test identifiers; retained Stage 3.5 reports remain authoritative.
+E.C.HALFWORD.65536,,historical_only,"Exhaustive unit code coverage is run-level, not attributable to an individual system test."
+A.C.FAMILY.ADDI4SPN,A.C.FAMILY.ADDI4SPN,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.LW,A.C.FAMILY.LW,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.SW,A.C.FAMILY.SW,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.NOP,A.C.FAMILY.NOP,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.ADDI,A.C.FAMILY.ADDI,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.JAL,A.C.FAMILY.JAL,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.LI,A.C.FAMILY.LI,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.ADDI16SP,A.C.FAMILY.ADDI16SP,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.LUI,A.C.FAMILY.LUI,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.SRLI,A.C.FAMILY.SRLI,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.SRAI,A.C.FAMILY.SRAI,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.ANDI,A.C.FAMILY.ANDI,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.SUB,A.C.FAMILY.SUB,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.XOR,A.C.FAMILY.XOR,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.OR,A.C.FAMILY.OR,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.AND,A.C.FAMILY.AND,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.J,A.C.FAMILY.J,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.BEQZ,A.C.FAMILY.BEQZ,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.BNEZ,A.C.FAMILY.BNEZ,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.SLLI,A.C.FAMILY.SLLI,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.LWSP,A.C.FAMILY.LWSP,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.JR,A.C.FAMILY.JR,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.MV,A.C.FAMILY.MV,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.EBREAK,A.C.FAMILY.EBREAK,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.JALR,A.C.FAMILY.JALR,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.ADD,A.C.FAMILY.ADD,retained,Raw compressed family IDs and classifier are preserved.
+A.C.FAMILY.SWSP,A.C.FAMILY.SWSP,retained,Raw compressed family IDs and classifier are preserved.
+A.C.HINT.RETIRED,A.C.HINT.RETIRED,retained,Stage 4 stable ID and event definition are preserved.
+A.C.NOP.RETIRED,A.C.NOP.RETIRED,retained,Stage 4 stable ID and event definition are preserved.
+P.ATTEMPTED,P.ATTEMPTED,retained,Stage 4 stable ID and event definition are preserved.
+P.RETIRED,P.RETIRED,retained,Stage 4 stable ID and event definition are preserved.
+P.FAULTING,P.FAULTING,retained,Stage 4 stable ID and event definition are preserved.
+P.SQUASH.REDIRECT,P.SQUASH.REDIRECT,retained,Stage 4 stable ID and event definition are preserved.
+P.SQUASH.FAULT,P.SQUASH.FAULT,retained,Stage 4 stable ID and event definition are preserved.
+P.DIV.HALFWORD,P.DIV.HALFWORD,retained,Stage 4 stable ID and event definition are preserved.
+P.DIV.METADATA_HOLD_CYCLES,P.DIV.METADATA_HOLD_CYCLES,retained,Stage 4 stable ID and event definition are preserved.
+P.PIPE_EVENT.00,P.PIPE_EVENT.00,retained,Stage 2 event counter preserved: stall_rs1.
+P.PIPE_EVENT.01,P.PIPE_EVENT.01,retained,Stage 2 event counter preserved: stall_rs2.
+P.PIPE_EVENT.02,P.PIPE_EVENT.02,retained,Stage 2 event counter preserved: fwd_a_exmem.
+P.PIPE_EVENT.03,P.PIPE_EVENT.03,retained,Stage 2 event counter preserved: fwd_a_memwb.
+P.PIPE_EVENT.04,P.PIPE_EVENT.04,retained,Stage 2 event counter preserved: fwd_b_exmem.
+P.PIPE_EVENT.05,P.PIPE_EVENT.05,retained,Stage 2 event counter preserved: fwd_b_memwb.
+P.PIPE_EVENT.06,P.PIPE_EVENT.06,retained,Stage 2 event counter preserved: wb_bypass_rs1.
+P.PIPE_EVENT.07,P.PIPE_EVENT.07,retained,Stage 2 event counter preserved: wb_bypass_rs2.
+P.PIPE_EVENT.08,P.PIPE_EVENT.08,retained,Stage 2 event counter preserved: fwd_a_priority.
+P.PIPE_EVENT.09,P.PIPE_EVENT.09,retained,Stage 2 event counter preserved: fwd_b_priority.
+P.PIPE_EVENT.10,P.PIPE_EVENT.10,retained,Stage 2 event counter preserved: redirect_branch.
+P.PIPE_EVENT.11,P.PIPE_EVENT.11,retained,Stage 2 event counter preserved: redirect_jal.
+P.PIPE_EVENT.12,P.PIPE_EVENT.12,retained,Stage 2 event counter preserved: redirect_jalr.
+P.PIPE_EVENT.13,P.PIPE_EVENT.13,retained,Stage 2 event counter preserved: store_data_fwd.
+P.PIPE_EVENT.14,P.PIPE_EVENT.14,retained,Stage 2 event counter preserved: branch_operand_fwd.
+P.PIPE_EVENT.15,P.PIPE_EVENT.15,retained,Stage 2 event counter preserved: x0_not_forwarded.
+A.C.ILLEGAL.FAULT,PIPE.FAULTING,mapped_coarse,Stage 9 keeps generic precise fault coverage; detailed C legality is preserved in historical Stage 4 reports.
+A.C.UNSUPPORTED_LENGTH.FAULT,PIPE.FAULTING,mapped_coarse,Stage 9 keeps generic precise fault coverage; raw-length detail is historical-only.
+A.FAULT.NO_RETIRE,PIPE.FAULTING,mapped_coarse,Mapped to generic precise fault coverage.
+A.FAULT.PRECISE,PIPE.FAULTING,mapped_coarse,Mapped to generic precise fault coverage.
+A.C.IMM.MEM.MAX,ARCH.FORMAT.COMPRESSED,mapped_coarse,Coarsened to compressed retired encoding; immediate detail remains in Stage 4 reports.
+A.C.IMM.SHIFT.MAX,ARCH.FORMAT.COMPRESSED,mapped_coarse,Coarsened to compressed retired encoding; immediate detail remains in Stage 4 reports.
+A.C.IMM.SIGNED6.MAX,ARCH.FORMAT.COMPRESSED,mapped_coarse,Coarsened to compressed retired encoding; immediate detail remains in Stage 4 reports.
+A.C.IMM.SIGNED6.MIN,ARCH.FORMAT.COMPRESSED,mapped_coarse,Coarsened to compressed retired encoding; immediate detail remains in Stage 4 reports.
+A.C.IMM.STACK.MAX,ARCH.FORMAT.COMPRESSED,mapped_coarse,Coarsened to compressed retired encoding; immediate detail remains in Stage 4 reports.
+A.C.REG.PRIME.HIGH,ARCH.FORMAT.COMPRESSED,mapped_coarse,Coarsened to compressed retired encoding; register detail remains in Stage 4 reports.
+A.C.REG.PRIME.LOW,ARCH.FORMAT.COMPRESSED,mapped_coarse,Coarsened to compressed retired encoding; register detail remains in Stage 4 reports.
+A.C.REG.SP,ARCH.FORMAT.COMPRESSED,mapped_coarse,Coarsened to compressed retired encoding; register detail remains in Stage 4 reports.
+A.C.REG.X0.HINT,ARCH.FORMAT.COMPRESSED,mapped_coarse,Coarsened to compressed retired encoding; register detail remains in Stage 4 reports.
+A.FETCH.CROSS_WORD,ARCH.FORMAT.COMPRESSED,mapped_coarse,Fetch-crossing detail is not a Stage 9 per-test bin; historic report is retained.
+A.LINK.COMPRESSED_PC_PLUS_2,ARCH.OP.JALR,mapped_coarse,Mapped to the retired link operation; increment detail remains historical.
+A.LINK.STANDARD_PC_PLUS_4,ARCH.OP.JALR,mapped_coarse,Mapped to the retired link operation; increment detail remains historical.
+A.PC.OFFSET.0,ARCH.FORMAT.WORD32,mapped_coarse,Coarsened PC-alignment detail remains in historical Stage 4 reports.
+A.PC.OFFSET.2,ARCH.FORMAT.COMPRESSED,mapped_coarse,Coarsened PC-alignment detail remains in historical Stage 4 reports.
+A.WIDTH.16_TO_32,ARCH.FORMAT.COMPRESSED|ARCH.FORMAT.WORD32,mapped_coarse,Mixed-width transition detail remains in historical Stage 4 reports.
+A.WIDTH.32_TO_16,ARCH.FORMAT.COMPRESSED|ARCH.FORMAT.WORD32,mapped_coarse,Mixed-width transition detail remains in historical Stage 4 reports.

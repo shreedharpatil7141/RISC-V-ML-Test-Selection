@@ -1,0 +1,9 @@
+ATOMIC_STATS commits=0 writes=0
+MD_STATS starts=150 dones=150 busy_cycles=4950 aborts_started=0
+STATS stalls=0 redirects=150 cycles=6433 instret=1178 assert_fail=0
+COV 0 0 277 121 300 150 213 0 0 179 150 0 0 0 150 0
+TEST_RESULT: PASS hex=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_gap_verilator_20261110T170227Z/hex/m_rand_remu.hex cause=1 expect=1 gp=0x1 instret=1178 cycles=6433 oob=0        
+- /mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_pipe_stage4.sv:512: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.032 2025-01-01
+- Verilator: $finish at 64us; walltime 0.102 s; speed 4.110 ms/s
+- Verilator: cpu 0.016 s on 1 threads; alloced 121 MB

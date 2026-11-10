@@ -1,0 +1,1 @@
+cases=23 traces=46 golden_pipeline=23 stage7_existing=13 stage8_seeded=10 traps=21 sync_causes=1,2,3,4,5,6,7,11 irq_causes=3,7,11 csr_commits_both_cores=116 csr_addresses=300,304,305,341,342,344,800,801,cc0 mret=42 fencei=3 interrupted_div_aborts=1

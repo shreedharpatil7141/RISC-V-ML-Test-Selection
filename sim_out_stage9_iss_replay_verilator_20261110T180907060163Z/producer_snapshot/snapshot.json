@@ -1,0 +1,1011 @@
+{
+  "schema": "stage9-producer-snapshot-1",
+  "command": [
+    "C:\\Users\\Shreedhargouda Patil\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\replay_stage9_iss_operands.py",
+    "--sim",
+    "verilator",
+    "--stage5-outdir",
+    "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z",
+    "--output",
+    "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z"
+  ],
+  "files": [
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\replay_stage9_iss_operands.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\source\\scripts\\simulation\\replay_stage9_iss_operands.py",
+      "sha256": "8a3b8c1eb46bfb5917e0520e82c96db0e084fbf9588927d0ab6906a65985f403"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\rv32a_model.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\source\\scripts\\simulation\\rv32a_model.py",
+      "sha256": "baea833ab46049a3889161a347a73a3c38bfbf7502b5bca830fadaa4f353fc06"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\rv32c_model.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\source\\scripts\\simulation\\rv32c_model.py",
+      "sha256": "dc8c9b3b42396e969e7c92ac3f1471b6edcd5228a8b1eb9cde98b5aad7776569"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\rv32i_iss.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\source\\scripts\\simulation\\rv32i_iss.py",
+      "sha256": "ddf11283374856fa45222006d68acb3dec629e694412f1510c0ad86d82b5a8f3"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\rv32imc_iss.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\source\\scripts\\simulation\\rv32imc_iss.py",
+      "sha256": "b22147ef494fc5fd5a70c7e41dd61e02054bcb755460aaa56a232d87621551ad"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\stage9_run_provenance.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\source\\scripts\\simulation\\stage9_run_provenance.py",
+      "sha256": "9ef9b0d0546a07bd4cc12b7eece99f5c70de48c0ddd61ad4c4633f2c2e75b29b"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_divider.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_divider.golden.trace",
+      "sha256": "4b17e86a05a9b08114e6ccf27c751f37730225f718efde8464e6919836467c3b"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_divider.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_divider.pipe.trace",
+      "sha256": "4b17e86a05a9b08114e6ccf27c751f37730225f718efde8464e6919836467c3b"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\a_divider.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\a_divider.hex",
+      "sha256": "cc1a1224b7e612edee770efe0f7fe5c3162eee07c76dc335bda0ea37d3ff7d4e"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\amo_access_fault.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\amo_access_fault.hex",
+      "sha256": "1fd9c7f9e54da6c24056217d3b326311f1825f9fe7976fe7781661a59da5158e"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\amo_at_halfword_pc.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\amo_at_halfword_pc.hex",
+      "sha256": "5ddfda13868cdf7d8a21fbd5a8bededeab5f47b855c88d658966d96cd85e4611"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\amo_last_word.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\amo_last_word.hex",
+      "sha256": "f064a44b55cb5e0fc0b9a30a8f88d75b8a91be360aa623677b991e68a0f94cb9"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\amo_misaligned.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\amo_misaligned.hex",
+      "sha256": "1c603f78b38edb151f466d31ced02c209c97885d1b9193ff772bc110e2e34b20"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\atomic_dependency.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\atomic_dependency.hex",
+      "sha256": "d1a83da432c654a3a99cc10d861dec09fa2faed22558b4024d6536a66a841ebf"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\atomic_fault_squash.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\atomic_fault_squash.hex",
+      "sha256": "c5ad45a45bdfd1889261a37ed4cf03f3e714c1770e04376e45b1d59869bd7304"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\atomic_ops.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\atomic_ops.hex",
+      "sha256": "6d80de067353c71b9493031521151669b85a32148f26024e853643d04d8ee976"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\atomic_orders.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\atomic_orders.hex",
+      "sha256": "6077460f705d9266eede6e08300482f71e2eb2fece50ae353f051c6040ae6c13"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\illegal_lr_rs2.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\illegal_lr_rs2.hex",
+      "sha256": "378601be4aacabdeeaaf90fbd6db04eda778f01106b85a437c51e79b30647720"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\lr_access_fault.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\lr_access_fault.hex",
+      "sha256": "ab52c65b85779a9c2e878eb3585f4f2abf58645c39d2fae28967fa5a5a072b16"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\lr_misaligned.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\lr_misaligned.hex",
+      "sha256": "0101c74feb35ddded05acac5945633d92fc9bf7ee6c6788ed2a0638ea3d2821e"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\lrsc_sequences.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\lrsc_sequences.hex",
+      "sha256": "17d0087b4e857523b5db22cca73f1a5cf1bd3c14ac8b1980e3450e8d95be68ed"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\operand_overlap.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\operand_overlap.hex",
+      "sha256": "dc9faaabea5931ef518509c60303c28590ef3b9b6613d7ba7b9edf7a4a2221b3"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\reserved_encoding.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\reserved_encoding.hex",
+      "sha256": "48431a6707ba509e4948220681b65ffbaec54f3865118f9df17655095b3ea5cf"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\sc_access_fault.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\sc_access_fault.hex",
+      "sha256": "cbfa95fabc817a81d8dea10b4f49e78cca55a07354cd09d2bc26e523704e421c"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\sc_misaligned.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\sc_misaligned.hex",
+      "sha256": "e22c0a8334c76bcc2270d8c2dd1abdfe5bb2f6db7b0a15e3126b8a8d7fffdf87"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\wrong_path_atomic.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_hex\\wrong_path_atomic.hex",
+      "sha256": "53b1822f1c6009268f504948403cff3c29266ea4df1e889a7bb4e8ae063e11ad"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\a_divider.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\a_divider.trace",
+      "sha256": "4b17e86a05a9b08114e6ccf27c751f37730225f718efde8464e6919836467c3b"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\amo_access_fault.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\amo_access_fault.trace",
+      "sha256": "8bfc446ce709b9304dad4424cb3967c0483621b587bde75a2b48eb3ba74b6f95"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\amo_at_halfword_pc.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\amo_at_halfword_pc.trace",
+      "sha256": "5f38946f69cc1f4a1f3e657d7b709c363261454284f7411d0541d32aaa3b2916"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\amo_last_word.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\amo_last_word.trace",
+      "sha256": "9b1a6db02aa9fb34ddd6e6c60ba01397dfd23769f7e7ed8798f4d89b357bfc03"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\amo_misaligned.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\amo_misaligned.trace",
+      "sha256": "72aa15198508ff765cebe5a5340503a5e36574e44f42afd952f1819dfce10511"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\atomic_dependency.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\atomic_dependency.trace",
+      "sha256": "51e6f1edb1bfad01aa11220dadd0476e80d1d55f9ce32525ef6ebe8eaf86a34f"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\atomic_fault_squash.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\atomic_fault_squash.trace",
+      "sha256": "21da759a3c0d5c0afcd3570f4d91786f2a8bd11bdc5836fc319d1ba310165066"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\atomic_ops.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\atomic_ops.trace",
+      "sha256": "972b06a7cab8d56179a3ecd148b5590430ee99fbd19496c7f2c8b931ce4b2ce4"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\atomic_orders.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\atomic_orders.trace",
+      "sha256": "5a1f9133b7a0d8bc7e68b5836e16cee4045622ab8f647d81c992bedbd508310a"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\illegal_lr_rs2.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\illegal_lr_rs2.trace",
+      "sha256": "2959298d4d30b165e82b36dcc4721cd60f6549ce0efb1528e0307b085535ef34"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\lr_access_fault.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\lr_access_fault.trace",
+      "sha256": "77fbb4c08c0adf59f4ad8650228a07acf47e8b9cc53a6216a7679291bb71bb3a"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\lr_misaligned.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\lr_misaligned.trace",
+      "sha256": "6b18b2bba45467f8a5005271e04d2ba8e7404973038508384a1138a5cb174bc0"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\lrsc_sequences.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\lrsc_sequences.trace",
+      "sha256": "fe883e3d9cd2df62fb2052462ece3021da68ee49f00b3e28b1493f3b631cb899"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\operand_overlap.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\operand_overlap.trace",
+      "sha256": "c50d23d7dac50b50657cdaeb158f12bf7c7db118630658eda196702dd0bb14f3"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\reserved_encoding.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\reserved_encoding.trace",
+      "sha256": "4f548269ee2c2a99c787d0033f6b7acb299beb8df1d9f80126dd74f2ab3bf46d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\sc_access_fault.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\sc_access_fault.trace",
+      "sha256": "1fbd4baf53816a78ed3273b75f986aa0b846e204d2ee6e1e6add6b0d6353b46d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\sc_misaligned.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\sc_misaligned.trace",
+      "sha256": "f48dd65e5e99e121d023f51b39f7ff011c7d3e15463e4df2aba89cf9725a3dca"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\wrong_path_atomic.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_iss\\wrong_path_atomic.trace",
+      "sha256": "44ac3b06bc23785db4a48516633b5fd6ad3c14127ad63a112bdc9546e48ee2ba"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_manifest.csv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\a_manifest.csv",
+      "sha256": "1ce99b1f061704475df0bffd7b94e8a57d533866993d943c7e977060b30a94f7"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_access_fault.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_access_fault.golden.trace",
+      "sha256": "8bfc446ce709b9304dad4424cb3967c0483621b587bde75a2b48eb3ba74b6f95"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_access_fault.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_access_fault.pipe.trace",
+      "sha256": "8bfc446ce709b9304dad4424cb3967c0483621b587bde75a2b48eb3ba74b6f95"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_at_halfword_pc.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_at_halfword_pc.golden.trace",
+      "sha256": "5f38946f69cc1f4a1f3e657d7b709c363261454284f7411d0541d32aaa3b2916"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_at_halfword_pc.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_at_halfword_pc.pipe.trace",
+      "sha256": "5f38946f69cc1f4a1f3e657d7b709c363261454284f7411d0541d32aaa3b2916"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_last_word.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_last_word.golden.trace",
+      "sha256": "9b1a6db02aa9fb34ddd6e6c60ba01397dfd23769f7e7ed8798f4d89b357bfc03"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_last_word.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_last_word.pipe.trace",
+      "sha256": "9b1a6db02aa9fb34ddd6e6c60ba01397dfd23769f7e7ed8798f4d89b357bfc03"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_misaligned.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_misaligned.golden.trace",
+      "sha256": "72aa15198508ff765cebe5a5340503a5e36574e44f42afd952f1819dfce10511"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_misaligned.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\amo_misaligned.pipe.trace",
+      "sha256": "72aa15198508ff765cebe5a5340503a5e36574e44f42afd952f1819dfce10511"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_dependency.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_dependency.golden.trace",
+      "sha256": "51e6f1edb1bfad01aa11220dadd0476e80d1d55f9ce32525ef6ebe8eaf86a34f"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_dependency.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_dependency.pipe.trace",
+      "sha256": "51e6f1edb1bfad01aa11220dadd0476e80d1d55f9ce32525ef6ebe8eaf86a34f"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_fault_squash.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_fault_squash.golden.trace",
+      "sha256": "21da759a3c0d5c0afcd3570f4d91786f2a8bd11bdc5836fc319d1ba310165066"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_fault_squash.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_fault_squash.pipe.trace",
+      "sha256": "21da759a3c0d5c0afcd3570f4d91786f2a8bd11bdc5836fc319d1ba310165066"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_ops.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_ops.golden.trace",
+      "sha256": "972b06a7cab8d56179a3ecd148b5590430ee99fbd19496c7f2c8b931ce4b2ce4"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_ops.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_ops.pipe.trace",
+      "sha256": "972b06a7cab8d56179a3ecd148b5590430ee99fbd19496c7f2c8b931ce4b2ce4"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_orders.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_orders.golden.trace",
+      "sha256": "5a1f9133b7a0d8bc7e68b5836e16cee4045622ab8f647d81c992bedbd508310a"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_orders.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\atomic_orders.pipe.trace",
+      "sha256": "5a1f9133b7a0d8bc7e68b5836e16cee4045622ab8f647d81c992bedbd508310a"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\branch_store_jalr.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\branch_store_jalr.golden.trace",
+      "sha256": "c769a968d43db44690cf14a98d28ccbcdb51df457dba205d9c084c84d815a9c7"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\branch_store_jalr.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\branch_store_jalr.pipe.trace",
+      "sha256": "c769a968d43db44690cf14a98d28ccbcdb51df457dba205d9c084c84d815a9c7"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\branch_store_jalr.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\branch_store_jalr.hex",
+      "sha256": "e66fe5c55e5aa8fb664ec4807a8b36d5cb31f2f70ab458fee3dcc255b68c511c"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\compressed_link_forward.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\compressed_link_forward.hex",
+      "sha256": "a4a6ef5ba15f3e9897c3289151b118b6ccc594882e9715dc162eeadd406825b3"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\compressed_links.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\compressed_links.hex",
+      "sha256": "91671612624586e1894c86d0910aecef125f59d70c207750a30128315ee3a946"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\control_flow.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\control_flow.hex",
+      "sha256": "62fe522760bec569a965a6174c0b0f19b60be7415bdf58bc8370b2c653cec105"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\coverage_boundaries.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\coverage_boundaries.hex",
+      "sha256": "61657fc1eb6af72ca8987cdc18199b808deaf06c68d834bbdcf3818cb0d36364"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\crossing.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\crossing.hex",
+      "sha256": "28d9c5b9eb47bdc75dfdc797e6df9c84e2881db3496e9b76db71990d7a9b82dd"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\crossword_divs.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\crossword_divs.hex",
+      "sha256": "bcb4d9179fa8f9ed4331d1040d1d11538adb6faf59b74f89ae83f8ae07a66dff"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\data_boundary.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\data_boundary.hex",
+      "sha256": "070593948c2a32464a56cfb82a455269589a188c8242e0039bffe61610cb1076"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\families.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\families.hex",
+      "sha256": "03259f537b69ff9658a09da960a7e090ae63b78b857571040ff127c555652376"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\fetch_faults.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\fetch_faults.hex",
+      "sha256": "7586e007260e1e44e527a88ecc8a32cb0ae62ef5d791e1ca1dcac3ec7ad41af6"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\final_parcel.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\final_parcel.hex",
+      "sha256": "3f79541ad7d93abb9ef0fc9fac6bcc56a1ca89bf6b03c2fb4a985f1a93ac2a6b"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\hint_x0.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\hint_x0.hex",
+      "sha256": "305467bdb3ea8889be676909d4bea0dbfe03cd9a643aa0c98e83ea7fa8c867de"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\illegal.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\illegal.hex",
+      "sha256": "22dbe6b7b70a64966e31813e597db3e863492d341bee2fb05c0e8864773387af"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\jalr_link.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\jalr_link.hex",
+      "sha256": "6152d0581315b5b13c1109226801f612752d8088b21811e7abf767ef431ea28f"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\load_use.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\load_use.hex",
+      "sha256": "1cec48c2cdfa869e84672961c60f4310e1a8f7fa61a1b58f8008f7ad552f0d41"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\long_prefix.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\long_prefix.hex",
+      "sha256": "e7f0093773bb9d1f6132ace432e51df01eec3b8bb69fcd758b2fa5df29eacc17"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\mixed_forward.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\mixed_forward.hex",
+      "sha256": "cd902100e8817bf508ffb6ac3663cbdef9c55ffe57ab25f462446222b93d5327"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\older_fault.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\older_fault.hex",
+      "sha256": "643083e55763d4e659c0fbf5ffc56bc4302572520ad1b7e972a0875202f04e43"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\stack_jump.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\stack_jump.hex",
+      "sha256": "4031ff944dbcbf300669312f7a77ce8e3b9df00713a2f40cd99ac5e558928766"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\wrong_path_fault.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\wrong_path_fault.hex",
+      "sha256": "7c26d69afb948442350502550995371cdd07c1c5980449a9654bc3ca61169392"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\wrong_path_fetch_fault.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_hex\\wrong_path_fetch_fault.hex",
+      "sha256": "fb8faede76741fe8b448d09bbb0d1127212b589846ab7972692d46ce63c92911"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\branch_store_jalr.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\branch_store_jalr.trace",
+      "sha256": "c769a968d43db44690cf14a98d28ccbcdb51df457dba205d9c084c84d815a9c7"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\compressed_link_forward.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\compressed_link_forward.trace",
+      "sha256": "29e94cf20d6e914bf7780e9301c3f3fe1214b9c54d8a34051b79319b3a3e4976"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\compressed_links.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\compressed_links.trace",
+      "sha256": "8d06a6316fdd5f4c980113da478057e29a5cdc304d8f009fab543c78ed1546cd"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\control_flow.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\control_flow.trace",
+      "sha256": "bd5338427c397bdabfbeda5ff19f934b00768f2cc04da038eeb010261d01b667"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\coverage_boundaries.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\coverage_boundaries.trace",
+      "sha256": "a628161ba586b8b0936a8efda2a2545a27c986a6ed6b49ee3e782719aeb45e96"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\crossing.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\crossing.trace",
+      "sha256": "1b71c08279f58110db5d530f1c9a0d5d7853f1ca1ec301425a82d41c2239a230"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\crossword_divs.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\crossword_divs.trace",
+      "sha256": "ca45d4b23391adcd9e09f8a140e95a6441269dab6c9d89ef6cf08396e10b645b"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\data_boundary.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\data_boundary.trace",
+      "sha256": "e62ea0be2c93f93e6f8574c83d72b872415fc03d8ef7265e582c250a52931082"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\families.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\families.trace",
+      "sha256": "960f416b73aae2f9af515f85cc8643b0b3f7b2b58b40c1b59997fcb0a7d93305"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\fetch_faults.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\fetch_faults.trace",
+      "sha256": "c17380781dc1297f583203fa19288fb0f707a5ee7ad866387bd906eb5bc8df5d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\final_parcel.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\final_parcel.trace",
+      "sha256": "5eaf5c792a244c64c3b650debf9e370959f1c3d306bf97539ea36588f476368c"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\hint_x0.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\hint_x0.trace",
+      "sha256": "977780a57d4899199fbc6b6efa708ed31b6055b7859c76bab4cb1ebcba5b5993"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\illegal.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\illegal.trace",
+      "sha256": "8c0efb44f724deb40506e1c1994993f1ee51306e18e9c6a2527308ec41ebe575"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\jalr_link.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\jalr_link.trace",
+      "sha256": "1a248e352cd66c12ebf32db9e66e316980075c1ca931f7281d434413f00ade15"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\load_use.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\load_use.trace",
+      "sha256": "afb5c865d02240039230d1f1e7c641e526a4634e6ecb3937c3f702aec63b6078"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\long_prefix.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\long_prefix.trace",
+      "sha256": "e26bb780cfe244cb0ba1fc77def9f0ff5275bd4fa3dbf28c283656ea4af5a27c"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\mixed_forward.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\mixed_forward.trace",
+      "sha256": "173491cd49ecbb2a3a637f2b942a4eb549b491fb7b88a66e646d6d3900b93789"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\older_fault.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\older_fault.trace",
+      "sha256": "1a6db882f8bfe8aa2bf25b621cbc3651e9cee8b74ad7edc9e96d080078a67b69"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\stack_jump.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\stack_jump.trace",
+      "sha256": "48d6e5ed5f49698e5c7c6a233041c83127dcaadb948a5291eadd5a7c8127a78d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\wrong_path_fault.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\wrong_path_fault.trace",
+      "sha256": "c0c635173e070ed2e2dfc4f0af175be8ef48402773ddd9a38cc108978926a4da"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\wrong_path_fetch_fault.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_iss\\wrong_path_fetch_fault.trace",
+      "sha256": "800f4f7bc42d5c02345f84441e81449809b68e7fb39e71cec4c900d0db274888"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_manifest.csv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\c_manifest.csv",
+      "sha256": "0ef3a7c155027f045e2f4ef84e244bbd1883a7e026be0f6be8fad8c8d34f40bd"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\compressed_link_forward.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\compressed_link_forward.golden.trace",
+      "sha256": "29e94cf20d6e914bf7780e9301c3f3fe1214b9c54d8a34051b79319b3a3e4976"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\compressed_link_forward.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\compressed_link_forward.pipe.trace",
+      "sha256": "29e94cf20d6e914bf7780e9301c3f3fe1214b9c54d8a34051b79319b3a3e4976"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\compressed_links.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\compressed_links.golden.trace",
+      "sha256": "8d06a6316fdd5f4c980113da478057e29a5cdc304d8f009fab543c78ed1546cd"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\compressed_links.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\compressed_links.pipe.trace",
+      "sha256": "8d06a6316fdd5f4c980113da478057e29a5cdc304d8f009fab543c78ed1546cd"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\control_flow.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\control_flow.golden.trace",
+      "sha256": "bd5338427c397bdabfbeda5ff19f934b00768f2cc04da038eeb010261d01b667"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\control_flow.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\control_flow.pipe.trace",
+      "sha256": "bd5338427c397bdabfbeda5ff19f934b00768f2cc04da038eeb010261d01b667"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\coverage_boundaries.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\coverage_boundaries.golden.trace",
+      "sha256": "a628161ba586b8b0936a8efda2a2545a27c986a6ed6b49ee3e782719aeb45e96"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\coverage_boundaries.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\coverage_boundaries.pipe.trace",
+      "sha256": "a628161ba586b8b0936a8efda2a2545a27c986a6ed6b49ee3e782719aeb45e96"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\crossing.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\crossing.golden.trace",
+      "sha256": "1b71c08279f58110db5d530f1c9a0d5d7853f1ca1ec301425a82d41c2239a230"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\crossing.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\crossing.pipe.trace",
+      "sha256": "1b71c08279f58110db5d530f1c9a0d5d7853f1ca1ec301425a82d41c2239a230"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\crossword_divs.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\crossword_divs.golden.trace",
+      "sha256": "ca45d4b23391adcd9e09f8a140e95a6441269dab6c9d89ef6cf08396e10b645b"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\crossword_divs.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\crossword_divs.pipe.trace",
+      "sha256": "ca45d4b23391adcd9e09f8a140e95a6441269dab6c9d89ef6cf08396e10b645b"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\data_boundary.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\data_boundary.golden.trace",
+      "sha256": "e62ea0be2c93f93e6f8574c83d72b872415fc03d8ef7265e582c250a52931082"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\data_boundary.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\data_boundary.pipe.trace",
+      "sha256": "e62ea0be2c93f93e6f8574c83d72b872415fc03d8ef7265e582c250a52931082"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\families.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\families.golden.trace",
+      "sha256": "960f416b73aae2f9af515f85cc8643b0b3f7b2b58b40c1b59997fcb0a7d93305"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\families.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\families.pipe.trace",
+      "sha256": "960f416b73aae2f9af515f85cc8643b0b3f7b2b58b40c1b59997fcb0a7d93305"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\fetch_faults.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\fetch_faults.golden.trace",
+      "sha256": "c17380781dc1297f583203fa19288fb0f707a5ee7ad866387bd906eb5bc8df5d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\fetch_faults.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\fetch_faults.pipe.trace",
+      "sha256": "c17380781dc1297f583203fa19288fb0f707a5ee7ad866387bd906eb5bc8df5d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\final_parcel.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\final_parcel.golden.trace",
+      "sha256": "5eaf5c792a244c64c3b650debf9e370959f1c3d306bf97539ea36588f476368c"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\final_parcel.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\final_parcel.pipe.trace",
+      "sha256": "5eaf5c792a244c64c3b650debf9e370959f1c3d306bf97539ea36588f476368c"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\hint_x0.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\hint_x0.golden.trace",
+      "sha256": "977780a57d4899199fbc6b6efa708ed31b6055b7859c76bab4cb1ebcba5b5993"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\hint_x0.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\hint_x0.pipe.trace",
+      "sha256": "977780a57d4899199fbc6b6efa708ed31b6055b7859c76bab4cb1ebcba5b5993"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\illegal.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\illegal.golden.trace",
+      "sha256": "8c0efb44f724deb40506e1c1994993f1ee51306e18e9c6a2527308ec41ebe575"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\illegal.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\illegal.pipe.trace",
+      "sha256": "8c0efb44f724deb40506e1c1994993f1ee51306e18e9c6a2527308ec41ebe575"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\illegal_lr_rs2.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\illegal_lr_rs2.golden.trace",
+      "sha256": "2959298d4d30b165e82b36dcc4721cd60f6549ce0efb1528e0307b085535ef34"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\illegal_lr_rs2.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\illegal_lr_rs2.pipe.trace",
+      "sha256": "2959298d4d30b165e82b36dcc4721cd60f6549ce0efb1528e0307b085535ef34"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\jalr_link.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\jalr_link.golden.trace",
+      "sha256": "1a248e352cd66c12ebf32db9e66e316980075c1ca931f7281d434413f00ade15"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\jalr_link.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\jalr_link.pipe.trace",
+      "sha256": "1a248e352cd66c12ebf32db9e66e316980075c1ca931f7281d434413f00ade15"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\load_use.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\load_use.golden.trace",
+      "sha256": "afb5c865d02240039230d1f1e7c641e526a4634e6ecb3937c3f702aec63b6078"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\load_use.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\load_use.pipe.trace",
+      "sha256": "afb5c865d02240039230d1f1e7c641e526a4634e6ecb3937c3f702aec63b6078"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\long_prefix.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\long_prefix.golden.trace",
+      "sha256": "e26bb780cfe244cb0ba1fc77def9f0ff5275bd4fa3dbf28c283656ea4af5a27c"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\long_prefix.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\long_prefix.pipe.trace",
+      "sha256": "e26bb780cfe244cb0ba1fc77def9f0ff5275bd4fa3dbf28c283656ea4af5a27c"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\lr_access_fault.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\lr_access_fault.golden.trace",
+      "sha256": "77fbb4c08c0adf59f4ad8650228a07acf47e8b9cc53a6216a7679291bb71bb3a"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\lr_access_fault.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\lr_access_fault.pipe.trace",
+      "sha256": "77fbb4c08c0adf59f4ad8650228a07acf47e8b9cc53a6216a7679291bb71bb3a"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\lr_misaligned.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\lr_misaligned.golden.trace",
+      "sha256": "6b18b2bba45467f8a5005271e04d2ba8e7404973038508384a1138a5cb174bc0"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\lr_misaligned.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\lr_misaligned.pipe.trace",
+      "sha256": "6b18b2bba45467f8a5005271e04d2ba8e7404973038508384a1138a5cb174bc0"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\lrsc_sequences.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\lrsc_sequences.golden.trace",
+      "sha256": "fe883e3d9cd2df62fb2052462ece3021da68ee49f00b3e28b1493f3b631cb899"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\lrsc_sequences.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\lrsc_sequences.pipe.trace",
+      "sha256": "fe883e3d9cd2df62fb2052462ece3021da68ee49f00b3e28b1493f3b631cb899"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\mixed_forward.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\mixed_forward.golden.trace",
+      "sha256": "173491cd49ecbb2a3a637f2b942a4eb549b491fb7b88a66e646d6d3900b93789"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\mixed_forward.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\mixed_forward.pipe.trace",
+      "sha256": "173491cd49ecbb2a3a637f2b942a4eb549b491fb7b88a66e646d6d3900b93789"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\older_fault.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\older_fault.golden.trace",
+      "sha256": "1a6db882f8bfe8aa2bf25b621cbc3651e9cee8b74ad7edc9e96d080078a67b69"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\older_fault.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\older_fault.pipe.trace",
+      "sha256": "1a6db882f8bfe8aa2bf25b621cbc3651e9cee8b74ad7edc9e96d080078a67b69"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\operand_overlap.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\operand_overlap.golden.trace",
+      "sha256": "c50d23d7dac50b50657cdaeb158f12bf7c7db118630658eda196702dd0bb14f3"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\operand_overlap.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\operand_overlap.pipe.trace",
+      "sha256": "c50d23d7dac50b50657cdaeb158f12bf7c7db118630658eda196702dd0bb14f3"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\provenance.txt",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\provenance.txt",
+      "sha256": "c639dbe53e7d32953e4d2052b9c6cb7d0bfa9ba51686d8a1af0d29da78bd4afd"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\reserved_encoding.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\reserved_encoding.golden.trace",
+      "sha256": "4f548269ee2c2a99c787d0033f6b7acb299beb8df1d9f80126dd74f2ab3bf46d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\reserved_encoding.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\reserved_encoding.pipe.trace",
+      "sha256": "4f548269ee2c2a99c787d0033f6b7acb299beb8df1d9f80126dd74f2ab3bf46d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\sc_access_fault.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\sc_access_fault.golden.trace",
+      "sha256": "1fbd4baf53816a78ed3273b75f986aa0b846e204d2ee6e1e6add6b0d6353b46d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\sc_access_fault.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\sc_access_fault.pipe.trace",
+      "sha256": "1fbd4baf53816a78ed3273b75f986aa0b846e204d2ee6e1e6add6b0d6353b46d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\sc_misaligned.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\sc_misaligned.golden.trace",
+      "sha256": "f48dd65e5e99e121d023f51b39f7ff011c7d3e15463e4df2aba89cf9725a3dca"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\sc_misaligned.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\sc_misaligned.pipe.trace",
+      "sha256": "f48dd65e5e99e121d023f51b39f7ff011c7d3e15463e4df2aba89cf9725a3dca"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\selection_manifest.csv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\selection_manifest.csv",
+      "sha256": "77302c42205cbfa12e2fd86f7c5010fb783a60e3bacaa5a53615a88f056e8be8"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\stack_jump.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\stack_jump.golden.trace",
+      "sha256": "48d6e5ed5f49698e5c7c6a233041c83127dcaadb948a5291eadd5a7c8127a78d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\stack_jump.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\stack_jump.pipe.trace",
+      "sha256": "48d6e5ed5f49698e5c7c6a233041c83127dcaadb948a5291eadd5a7c8127a78d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_atomic.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_atomic.golden.trace",
+      "sha256": "44ac3b06bc23785db4a48516633b5fd6ad3c14127ad63a112bdc9546e48ee2ba"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_atomic.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_atomic.pipe.trace",
+      "sha256": "44ac3b06bc23785db4a48516633b5fd6ad3c14127ad63a112bdc9546e48ee2ba"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_fault.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_fault.golden.trace",
+      "sha256": "c0c635173e070ed2e2dfc4f0af175be8ef48402773ddd9a38cc108978926a4da"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_fault.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_fault.pipe.trace",
+      "sha256": "c0c635173e070ed2e2dfc4f0af175be8ef48402773ddd9a38cc108978926a4da"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_fetch_fault.golden.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_fetch_fault.golden.trace",
+      "sha256": "800f4f7bc42d5c02345f84441e81449809b68e7fb39e71cec4c900d0db274888"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_fetch_fault.pipe.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_iss_replay_verilator_20261110T180907060163Z\\producer_snapshot\\input\\sim_out_stage9_ca_verilator_20261110T140519Z\\wrong_path_fetch_fault.pipe.trace",
+      "sha256": "800f4f7bc42d5c02345f84441e81449809b68e7fb39e71cec4c900d0db274888"
+    }
+  ]
+}

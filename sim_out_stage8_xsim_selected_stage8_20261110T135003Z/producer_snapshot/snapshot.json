@@ -1,0 +1,969 @@
+{
+  "schema": "stage9-producer-snapshot-1",
+  "command": [
+    "C:\\Users\\Shreedhargouda Patil\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\run_stage7_enabled.py",
+    "--sim",
+    "xsim",
+    "--prepared",
+    "sim_out_stage9_recovery_prepare_schemaaudit\\stage7",
+    "--stage8",
+    "--cases-only"
+  ],
+  "files": [
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\alu\\rv_a_unit.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\alu\\rv_a_unit.sv",
+      "sha256": "4c256bbb457f0b1b8f332dd0db8264c10c1cc2d0c77af3c927a30973982ccdce"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\alu\\rv_alu.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\alu\\rv_alu.sv",
+      "sha256": "c4badff19b74bd9795898af238cdc2e3472b7da3afdb4eae9834905c8f27d344"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\alu\\rv_branch_cmp.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\alu\\rv_branch_cmp.sv",
+      "sha256": "fdf1395d853462a2ec65624ce9dfd01ce72543c47c3513387e54a2c42baa40bd"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\alu\\rv_div_iter.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\alu\\rv_div_iter.sv",
+      "sha256": "24da75e881b8a7327920c082eaaaba40cbe396ff4beb446ea394048d1a249000"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\alu\\rv_md_comb.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\alu\\rv_md_comb.sv",
+      "sha256": "cd371299adbbb6c78bdbbf8d10fc81d6e6956d55225fbadadcd7d2b8516decdd"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\alu\\rv_md_exec.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\alu\\rv_md_exec.sv",
+      "sha256": "d3759777af1aa316cb1a20f0cf3728fc716444d10c4a412d83cbba2b7bccaede"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\alu\\rv_mul.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\alu\\rv_mul.sv",
+      "sha256": "f5ffc7124b2adc85896db86af1eddcc72278f74a05d457608d92150506b9f829"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\control_unit\\rv_control.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\control_unit\\rv_control.sv",
+      "sha256": "969ae37a9f5e3dc4d585e863286c089d2e659bbb99e1826ffb4354b77fb43ddf"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\core\\rv_core_pipe.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\core\\rv_core_pipe.sv",
+      "sha256": "e102a6ee136f3d0b3ef5d4a4e92b87599dd5ffda83caa68598868b9ebaafea59"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\core\\rv_core_single.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\core\\rv_core_single.sv",
+      "sha256": "02908d5f879caf7b16200afaec559c3a7581a8770c48fd57886c35569eecb792"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\core\\rv_machine_state.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\core\\rv_machine_state.sv",
+      "sha256": "31171e8ad8cc4afa65e2355391f2a22e57e9e773148f43e84f036d885713e6e7"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\decoder\\rv32c_decompressor.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\decoder\\rv32c_decompressor.sv",
+      "sha256": "ebd6d0e68f5e7a5868a010f491d2a1521aae18a4715e3c53b7f3ab1c23fa0eae"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\decoder\\rv_decoder.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\decoder\\rv_decoder.sv",
+      "sha256": "4eb6fc36477e4e394ae7b992d461753bb5de992c1934eeb3af8d6cfb6331f7fd"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\decoder\\rv_imm_gen.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\decoder\\rv_imm_gen.sv",
+      "sha256": "08e8f413a0bb2efa61202f57c21ce086463fded97d65b5bf531c77806b5ddee3"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\memory\\rv_lsu.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\memory\\rv_lsu.sv",
+      "sha256": "a114d2fbe784a0cb8b24c751b0dc95c3270ad038c86be27f000fd4b8234f27cd"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\packages\\rv32_pkg.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\packages\\rv32_pkg.sv",
+      "sha256": "68d77451bd7bdd3bfa93e94e23bfc4f4d9f6350f619d61caf7457105deddaa18"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\packages\\rv_pipe_pkg.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\packages\\rv_pipe_pkg.sv",
+      "sha256": "21534fe30a4702f5b3754a9e0885cadc650682a068e137434271f2db8a54e7e8"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\pipeline\\rv_ex_stage.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\pipeline\\rv_ex_stage.sv",
+      "sha256": "4934f0a112fd11df2a174754d04179ee4c36a4fa6a879218ff6c0a41de8f0188"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\pipeline\\rv_forward_unit.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\pipeline\\rv_forward_unit.sv",
+      "sha256": "1825d211a0393d0f01823b1255406fc0b3db103ba95ffac7b7b5431df43d98ad"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\pipeline\\rv_hazard_unit.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\pipeline\\rv_hazard_unit.sv",
+      "sha256": "d394bfcb348f2d281acfe8c044dc289dd75ee2ff2a31d7e585ed11c710405e35"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\pipeline\\rv_id_stage.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\pipeline\\rv_id_stage.sv",
+      "sha256": "88df292a202996b5a787e52655e20724889e2dfd9d3067c030da175d5f8e7ea6"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\pipeline\\rv_if_stage.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\pipeline\\rv_if_stage.sv",
+      "sha256": "c1b428df7feda5db3c00e943d535d2f00f283d7d2e4312726658c10635079819"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\pipeline\\rv_mem_stage.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\pipeline\\rv_mem_stage.sv",
+      "sha256": "200c0c33f92d0827e043e5070c007cf3ec840678adf5e8e6cc8750b4c3bf39e7"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\pipeline\\rv_pipe_regs.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\pipeline\\rv_pipe_regs.sv",
+      "sha256": "11fcda95af98f1e086d80c6bc0e02e80153885e7e0723d2739abb5ea1043acf9"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\pipeline\\rv_wb_stage.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\pipeline\\rv_wb_stage.sv",
+      "sha256": "3b7d453f1a8b790c222a272ec82735e807b922146dcdc4b7e328bc564f5a919d"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\rtl\\register_file\\rv_regfile.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\rtl\\register_file\\rv_regfile.sv",
+      "sha256": "4a6dcf4bb7427e55008c07e06f9e777727c02234d454d06856944f913ddde0f0"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\prepare_stage6.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\prepare_stage6.py",
+      "sha256": "73218f91c8e3fc743ea0587fdd909f99fad742f50e6145bfdd049e9c00a60fce"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\prepare_stage7.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\prepare_stage7.py",
+      "sha256": "4af22b30460c5dd3586453f19469ff6cffb7b271255008725642ae1164d22dbe"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\run_stage4_4.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\run_stage4_4.py",
+      "sha256": "f679a98bb54dfae1a8806f152044f845b145c0f63df3adbca9d574277b5e6326"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\run_stage6_enabled.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\run_stage6_enabled.py",
+      "sha256": "79ab6465386c345bbfcf74389a83d5e19e0bfef84059698f6eba5d1f10a9e099"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\run_stage7_enabled.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\run_stage7_enabled.py",
+      "sha256": "65465fd8228dbec33bbfec9c9a49acaa15503ae61bd4546744dac961fd40018d"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\run_stage8_enabled.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\run_stage8_enabled.py",
+      "sha256": "3c916d956e6e9cb332701c506aa15e8c271835ebe91307b98fab18b26c7951d1"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\rv32_asm.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\rv32_asm.py",
+      "sha256": "a1ae50530089877d98bee213e4d38277f9c0081f030afefe39abbd80e27a7045"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\rv32a_model.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\rv32a_model.py",
+      "sha256": "baea833ab46049a3889161a347a73a3c38bfbf7502b5bca830fadaa4f353fc06"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\rv32c_asm.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\rv32c_asm.py",
+      "sha256": "707a4e1382d42934161f9eb270244b1331feafbaf1a25ba4a0114ff5879d07ab"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\rv32c_model.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\rv32c_model.py",
+      "sha256": "dc8c9b3b42396e969e7c92ac3f1471b6edcd5228a8b1eb9cde98b5aad7776569"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\rv32i_iss.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\rv32i_iss.py",
+      "sha256": "ddf11283374856fa45222006d68acb3dec629e694412f1510c0ad86d82b5a8f3"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\rv32imc_iss.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\rv32imc_iss.py",
+      "sha256": "b22147ef494fc5fd5a70c7e41dd61e02054bcb755460aaa56a232d87621551ad"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\stage4_4_rtl.f",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\stage4_4_rtl.f",
+      "sha256": "9060e91e83dc68706f1be4be6140a0291cf822d7a2c290315cf04c8cdb68333d"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\stage7_software_selftest.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\stage7_software_selftest.py",
+      "sha256": "181f5c6369013df89b4f2adeee46ef7b0840189d14e074eeb24bc317b447aa2d"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\stage8_scenarios.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\stage8_scenarios.py",
+      "sha256": "d311bd600f2723ff8a786ac38a32ed55c3fbe9b3637fdd9cb196b94b3b4b31b6"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\stage9_run_provenance.py",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\scripts\\simulation\\stage9_run_provenance.py",
+      "sha256": "9ef9b0d0546a07bd4cc12b7eece99f5c70de48c0ddd61ad4c4633f2c2e75b29b"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_preparation.txt",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_preparation.txt",
+      "sha256": "b2288224715c7a91041e4906d7d7cc99edc22e00d0c4746d254d686d9b002c24"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\fault_before_irq.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\fault_before_irq.s",
+      "sha256": "2a51914dfcf5b00b8296a81f846523ed2f990e039b621a7f04ecf9f44943ab88"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\fencei_store_replace.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\fencei_store_replace.s",
+      "sha256": "4df4489c0a71b671358424604ee3fe4f7483f11eb2dcb0e8d8f3f8f45d99b134"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\fetch_access_trap.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\fetch_access_trap.s",
+      "sha256": "88d3cb634459d3a4668f4def2497402f923fe2d223177eac2168900714f647ee"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\irq_div_restart.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\irq_div_restart.s",
+      "sha256": "51b2f53b3589718243faee39a4799d672c962e6bcac6966fccecc25d32583a31"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\irq_mask_pending.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\irq_mask_pending.s",
+      "sha256": "3425d10ca2a03c94116d4626f6b1bc0983ddd183b9d81456880f64fe1be5b249"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\irq_software_timer.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\irq_software_timer.s",
+      "sha256": "5b3ab6912e291d998b7daccecd57e69606df55995881f8e8ee3ae0d91277646b"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\irq_vectored_priority.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\irq_vectored_priority.s",
+      "sha256": "2c0daad12be33625996832ee1364e9d79f0981a8898eaac690f44f926ca7e48c"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\lr_trap_sc.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\lr_trap_sc.s",
+      "sha256": "e3fa4170fb18716598dfe1b04010983d7f86e28b0e48d14b9b8868741023b037"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\machine_trap_return.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\machine_trap_return.s",
+      "sha256": "3d27d1116b5f0fc8af583c39b41219a52b78c4a209f0a0b497b4f68340264ed3"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\manifest.csv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\manifest.csv",
+      "sha256": "844ab01af62fddc7a345353d5169d3e56f09b4faa8c0c144112997b6771943cd"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\mixed_width_trap.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\mixed_width_trap.s",
+      "sha256": "9983418b1dcb388576f302656f3bf20065e52d98c876c0414686af6bd137ff8e"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\store_fault_precision.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\store_fault_precision.s",
+      "sha256": "89a99982023a0d957106b2ffd494531b8857a685e2cf41799f1b31510350d386"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\tests\\directed\\rv32imac_stage7\\wrongpath_fault.s",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\tests\\directed\\rv32imac_stage7\\wrongpath_fault.s",
+      "sha256": "fb67ab35dfa09e21ba10905ae894d611389742c2db8d8e436d8c06cdb54db9b1"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\verification\\environment\\tb_rv_core.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\verification\\environment\\tb_rv_core.sv",
+      "sha256": "a67ceea9bd69cb6a841247f6e4edc23c60a0027076052c2386393471290993d6"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\verification\\environment\\tb_rv_decoder_machine.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\verification\\environment\\tb_rv_decoder_machine.sv",
+      "sha256": "db7bcd38c4e0e0cf1f6ca5a768208bfca901a2cfc1dcdace546f49d0eef6cfa0"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\verification\\environment\\tb_rv_pipe_stage4.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\verification\\environment\\tb_rv_pipe_stage4.sv",
+      "sha256": "442528b251d5c4ef6764f594428bfb8011142387d84b4acf0e2cfe2b1be74044"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\verification\\environment\\tb_rv_stage7.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\verification\\environment\\tb_rv_stage7.sv",
+      "sha256": "6fda809615db40ceb5563efd7944ae2736e4c12631ac46327b405f7a00cce509"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\verification\\environment\\tb_rv_stage8.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\verification\\environment\\tb_rv_stage8.sv",
+      "sha256": "a80d382b50e5e4b0cfb314114ba0a0755db3404a115e5b65bc5ec6a40bdb5836"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\verification\\environment\\tb_rv_stage8_components.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\verification\\environment\\tb_rv_stage8_components.sv",
+      "sha256": "b886de5b2c378966072067729a9156c576d0d2c53910cb9ed6c49e902c18074a"
+    },
+    {
+      "kind": "source",
+      "path": "C:\\RISC-V-ML-Test-Selection\\verification\\stage8\\rv_stage8_components.sv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\source\\verification\\stage8\\rv_stage8_components.sv",
+      "sha256": "ce7dc745d4dc4ffb39976bba189a8a39669c9f1965c7b2bf14149d56b05f7f08"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\selection_manifest.csv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\selection_manifest.csv",
+      "sha256": "2f366409b1508c022dddb245acfa9012f080bce76a2beb24e9ea1974f621c29a"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\fault_before_irq.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\fault_before_irq.hex",
+      "sha256": "f5119e1cb8278ee523b60cd77eafe909299fd26922f779bf816553ce97253c2c"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\fencei_store_replace.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\fencei_store_replace.hex",
+      "sha256": "dc1172a99cb4cd764bab0e3faf6fce75c78d0417165c8bcbd19bbe9baa49828d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\fetch_access_trap.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\fetch_access_trap.hex",
+      "sha256": "68d6347d52ce92b34a7d4677cb4918cb5e630026de3d46fb9b8a9a011c1e07da"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\irq_div_restart.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\irq_div_restart.hex",
+      "sha256": "1fb187279f13e873ccefa64898525438651d3de72eff599e6164bb7b5ef864eb"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\irq_mask_pending.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\irq_mask_pending.hex",
+      "sha256": "32c36b52258a5d2ac1dbb23c2247cfd5130a50d1d88786f12d53e753914c6721"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\irq_software.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\irq_software.hex",
+      "sha256": "66119b29cc8acf86f92b969387ce25cbbbbffc66b635ba69f5b51a69cbb4d71f"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\irq_timer.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\irq_timer.hex",
+      "sha256": "66119b29cc8acf86f92b969387ce25cbbbbffc66b635ba69f5b51a69cbb4d71f"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\irq_vectored_priority.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\irq_vectored_priority.hex",
+      "sha256": "5007958761d331dcec2c977b101d12e8375c689e690aab3fbb9e1fe0e7a898e9"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\lr_trap_sc.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\lr_trap_sc.hex",
+      "sha256": "33f78f7f44082ec1f8f8bc216385bcfae660c866bfc0feca8475f60d696207b7"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\machine_trap_return.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\machine_trap_return.hex",
+      "sha256": "d50ca1467b11fef262432948676756b0b85c378bbd35b267d86af7540c45f39e"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\mixed_width_trap.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\mixed_width_trap.hex",
+      "sha256": "9479153a93776bf396134824ecdf1d8cc3de798e97069165e6ac2ec02f212833"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\store_fault_precision.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\store_fault_precision.hex",
+      "sha256": "aa5f67f4226bff53560dbd3d7ef6aad7049354edf362b95a4b12962fbc47b89d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\wrongpath_fault.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_hex\\wrongpath_fault.hex",
+      "sha256": "e990ed1249b8c66f2bd60c20cf5ba2c136d1daaf02f22786ffc46cc8a79906f4"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fault_before_irq.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fault_before_irq.trace",
+      "sha256": "bde656630fbf69769d6b69946c8adda9d69315b53fdd773131b6274561eedfe8"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fault_before_irq.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fault_before_irq.trap.tsv",
+      "sha256": "b0e282ed7874a6fb2f0f76abb1573aaa3ae197d6f37cf71c037de366a1b0d1ca"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fault_before_irq.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fault_before_irq.z.tsv",
+      "sha256": "145702d17b3faa3006e3389be642f2e430b50f004057ed91a0b72dcbe64b09dd"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fencei_store_replace.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fencei_store_replace.trace",
+      "sha256": "26a92f4b40807f81017d42d1fcb1876b2f03b7a9a82b27b00bd5cd2a986d002d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fencei_store_replace.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fencei_store_replace.trap.tsv",
+      "sha256": "1fe4979fcac8c1aefe0d6cce653e7ba8281242ee49c5b103b2b66140bf8b4136"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fencei_store_replace.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fencei_store_replace.z.tsv",
+      "sha256": "3b63d3e991854de2d9977134b7636708607fc7a7d9f3b9a45725fbf8e5737214"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fetch_access_trap.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fetch_access_trap.trace",
+      "sha256": "aabd3ba7356f4cb696365515f82c93f991e1974101f51216a41a526c32a55c9f"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fetch_access_trap.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fetch_access_trap.trap.tsv",
+      "sha256": "887623606092e0831b7484c212ccf0d6aecded8171c9ef85a80f918e02a29353"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fetch_access_trap.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\fetch_access_trap.z.tsv",
+      "sha256": "f61781f7c89420046b1fe97457ec47f3f561b7668be44a52f75c78251446592c"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_div_restart.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_div_restart.trace",
+      "sha256": "49f242a4cb25d09bb2faabeb40863d962c8b51813353671080c9acdf397aed70"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_div_restart.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_div_restart.trap.tsv",
+      "sha256": "c3a26d6d936e20ae1dd5186b73459abb9bc712c14aba3fb86adb5c827c5ebf12"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_div_restart.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_div_restart.z.tsv",
+      "sha256": "ffbd92bae3a90cd1e4c871919262f35817555ac5c945fe34104cca288d681ecd"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_mask_pending.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_mask_pending.trace",
+      "sha256": "dcc69f050b8242878b26327bfec5fe597a6ff50f1062689da1f1534f969ba855"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_mask_pending.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_mask_pending.trap.tsv",
+      "sha256": "cb919a7e766dac5041540ec80ea84484ac0f66e192ed6bfb1c14b5275c2143f2"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_mask_pending.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_mask_pending.z.tsv",
+      "sha256": "3e6c1224e85b44c6f1392335a7841f24939d23ef8b53bbbb0e13f82dfeb3e304"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_software.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_software.trace",
+      "sha256": "3d91fdae6619fb999e9972d040646d2bb06e67d1b68459ef79726e9a9ca82c08"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_software.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_software.trap.tsv",
+      "sha256": "682fc6c5b2a7284fe637d2097b1178b125158e248e2502d8f1177741bb04b5a7"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_software.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_software.z.tsv",
+      "sha256": "98ee1fbde47da7d3c405032d27bd4fba2cc896be605e4120bb0e7df6bf4695da"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_timer.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_timer.trace",
+      "sha256": "59ca04f32d005520c5835584cc520640c32fa5d5da8213467275ae42a7eab0e6"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_timer.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_timer.trap.tsv",
+      "sha256": "cde6a719fe24a4cd57cbd616627daa4d76043ac46cfef8dc7985fde821b2ca69"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_timer.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_timer.z.tsv",
+      "sha256": "98ee1fbde47da7d3c405032d27bd4fba2cc896be605e4120bb0e7df6bf4695da"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_vectored_priority.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_vectored_priority.trace",
+      "sha256": "305bacdb3f12fede661f20ab3f2ade0a49af581354db94733080cf61dd37e590"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_vectored_priority.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_vectored_priority.trap.tsv",
+      "sha256": "b511a41e650028e22229f588f9848e99596622f3dc6b3048353d4fb173eb14e7"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_vectored_priority.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\irq_vectored_priority.z.tsv",
+      "sha256": "9d20def2fa18446fae445ce9409b08e8ea122394bee6fe1a7d9013f03a6b16ce"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\lr_trap_sc.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\lr_trap_sc.trace",
+      "sha256": "8ed25cf137745417cc70cf910a36c01d1fbba72b416f1bacfc8b0689f12123a5"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\lr_trap_sc.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\lr_trap_sc.trap.tsv",
+      "sha256": "f9f98921c55749619ab94b6e9f163f5da1bd7c0c5105adf8729207ff0b54123d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\lr_trap_sc.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\lr_trap_sc.z.tsv",
+      "sha256": "6e5ca6a5731bb387fc4ff148a70331cca0675b5abda4cba95bb09a615a641088"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\machine_trap_return.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\machine_trap_return.trace",
+      "sha256": "8c3d4150ad544c2979018a3514fc827be0d0ae3237ddb62cb783f0c110ec0f94"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\machine_trap_return.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\machine_trap_return.trap.tsv",
+      "sha256": "b2dbfd90a57bf44e28dc1d09941e9599fa001e8c86633e4522a48dae47f256d1"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\machine_trap_return.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\machine_trap_return.z.tsv",
+      "sha256": "c05018728337408208a2b375567da64d74f671333bd27fd370077e71c70e22a5"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\mixed_width_trap.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\mixed_width_trap.trace",
+      "sha256": "19de0f09e8d0e97ef4e1bc2db8529cb804e43206e65d1f059b1cea0d5380f141"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\mixed_width_trap.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\mixed_width_trap.trap.tsv",
+      "sha256": "34e66c8f8fc20b8fb69b7b4c913a19fdc5de50a169813854d885cfc8724706d5"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\mixed_width_trap.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\mixed_width_trap.z.tsv",
+      "sha256": "fe0ea43168262f381e36fe6d43597edfd89a6373d919fe79f7fcea85eb8f3f84"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740008.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740008.trace",
+      "sha256": "2f701a5be990320933394b0430545581eed52d7503ac2acaecc09987d3ce7f1d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740008.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740008.trap.tsv",
+      "sha256": "1fe4979fcac8c1aefe0d6cce653e7ba8281242ee49c5b103b2b66140bf8b4136"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740008.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740008.z.tsv",
+      "sha256": "5627e6eb760fe7d1a1cf2e4584ecf0e6ac36a152db86d8331014f358fa3672d2"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740108.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740108.trace",
+      "sha256": "583dae2e2cce65570227197a8c716fcf5b7488c4c9bd756b8b7685ec712e70f5"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740108.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740108.trap.tsv",
+      "sha256": "1fe4979fcac8c1aefe0d6cce653e7ba8281242ee49c5b103b2b66140bf8b4136"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740108.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_atomic_divider_8a740108.z.tsv",
+      "sha256": "5627e6eb760fe7d1a1cf2e4584ecf0e6ac36a152db86d8331014f358fa3672d2"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720008.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720008.trace",
+      "sha256": "7378678402423a460e9496ec5605463902bb5e7f3ce831abbf6018d000e6c5dd"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720008.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720008.trap.tsv",
+      "sha256": "1fe4979fcac8c1aefe0d6cce653e7ba8281242ee49c5b103b2b66140bf8b4136"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720008.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720008.z.tsv",
+      "sha256": "71babe24bb35a63f0f0350cbd40c5cdca748f810df0c533744ec04aa957c0d2b"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720108.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720108.trace",
+      "sha256": "385e65208596dc5d89dbfdb4f43e77b7a8d67d2d0e6ee81d16fb04c24af5b442"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720108.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720108.trap.tsv",
+      "sha256": "1fe4979fcac8c1aefe0d6cce653e7ba8281242ee49c5b103b2b66140bf8b4136"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720108.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_csr_fencei_8a720108.z.tsv",
+      "sha256": "2827fb586a6fa4383a259b18982a74ccb02618cd0f90fd7b84acaf72b60abda5"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710008.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710008.trace",
+      "sha256": "0b6f769c021efb8b43e3a1a2820f11f2181b499a8611cc97a44f5004e90127a8"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710008.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710008.trap.tsv",
+      "sha256": "1fe4979fcac8c1aefe0d6cce653e7ba8281242ee49c5b103b2b66140bf8b4136"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710008.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710008.z.tsv",
+      "sha256": "5627e6eb760fe7d1a1cf2e4584ecf0e6ac36a152db86d8331014f358fa3672d2"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710108.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710108.trace",
+      "sha256": "37eef55ba19b2d72233ca4a361d696a8848b99add087f1e9b0ec25f60021421e"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710108.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710108.trap.tsv",
+      "sha256": "1fe4979fcac8c1aefe0d6cce653e7ba8281242ee49c5b103b2b66140bf8b4136"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710108.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_dependency_redirect_8a710108.z.tsv",
+      "sha256": "5627e6eb760fe7d1a1cf2e4584ecf0e6ac36a152db86d8331014f358fa3672d2"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750008.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750008.trace",
+      "sha256": "039914e36b280751284c0a211d951d3a021245994d32797be01af67f01d5b03e"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750008.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750008.trap.tsv",
+      "sha256": "61e374c66726d7958c8dba4a00ca8514003edc25b0bc4e38a37ac771ba5c4ef9"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750008.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750008.z.tsv",
+      "sha256": "2e7bc6ef5ffbdc13042d70ec9203438425b6db18723bfb466f515f734d5a78d4"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750108.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750108.trace",
+      "sha256": "0ccbdad360f7827a88df64cb711f81f54d4a6f34bf7c1ebefe87f7b74481dbb2"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750108.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750108.trap.tsv",
+      "sha256": "61e374c66726d7958c8dba4a00ca8514003edc25b0bc4e38a37ac771ba5c4ef9"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750108.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_fault_restart_8a750108.z.tsv",
+      "sha256": "2e7bc6ef5ffbdc13042d70ec9203438425b6db18723bfb466f515f734d5a78d4"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730008.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730008.trace",
+      "sha256": "63490e7dd1b1a1555c5ec42583942884a3193cf045efe8e6b517755f43189629"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730008.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730008.trap.tsv",
+      "sha256": "1c90379d6bb3ec0b5071c8cb6365077cff3c1b22ebbf6e7083f63219e0bb30f7"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730008.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730008.z.tsv",
+      "sha256": "94a8917274275dba330547a2c868f5e36dbab2b73742c26b9d77d21cb181f2b9"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730108.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730108.trace",
+      "sha256": "63a50f90dc5fc4082f9b8ea2adacdd5800e99d8164e145f7d32bc68ac05300ad"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730108.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730108.trap.tsv",
+      "sha256": "1c90379d6bb3ec0b5071c8cb6365077cff3c1b22ebbf6e7083f63219e0bb30f7"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730108.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\seed_irq_divider_8a730108.z.tsv",
+      "sha256": "94a8917274275dba330547a2c868f5e36dbab2b73742c26b9d77d21cb181f2b9"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\store_fault_precision.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\store_fault_precision.trace",
+      "sha256": "473e3c12e811f10a3a993a1eb1d31a5f884eeac3f8de3a4abb433f9381334c13"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\store_fault_precision.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\store_fault_precision.trap.tsv",
+      "sha256": "39c9d0603272b9c9fe5f2f3ae6b7b47d4d86a7d7ae787955b05013d7e630e2a1"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\store_fault_precision.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\store_fault_precision.z.tsv",
+      "sha256": "4fc8663e11e6087f350c93343e1c16315cfae60e6aea6a85fbde933e3b0a2100"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\wrongpath_fault.trace",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\wrongpath_fault.trace",
+      "sha256": "de9c7537b1ee47ef60a04916f879d0e0bc3b335d4e009ed79081e4b32f75861b"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\wrongpath_fault.trap.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\wrongpath_fault.trap.tsv",
+      "sha256": "1fe4979fcac8c1aefe0d6cce653e7ba8281242ee49c5b103b2b66140bf8b4136"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\wrongpath_fault.z.tsv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_iss\\wrongpath_fault.z.tsv",
+      "sha256": "8219113f26606a4e02c4aeb8ac5b2abf63baf10207b643692288fd3db95f6a3d"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_manifest.csv",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\m_manifest.csv",
+      "sha256": "2f366409b1508c022dddb245acfa9012f080bce76a2beb24e9ea1974f621c29a"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage7_preparation.txt",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage7_preparation.txt",
+      "sha256": "56f0f1de48d3f38a812f92aca02aca3541db189aa346e609a12c40bca5541ace"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_atomic_divider_8a740008.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_atomic_divider_8a740008.hex",
+      "sha256": "bd67eaa298f7385c5395945001d213ad759fe8ed412614a856e6a511ae1610e1"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_atomic_divider_8a740108.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_atomic_divider_8a740108.hex",
+      "sha256": "7e18c2af052f21352fa408459e75b6b02f83735127b7953fe0899bce7b31d95f"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_csr_fencei_8a720008.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_csr_fencei_8a720008.hex",
+      "sha256": "7cc14fd742ee965cd9dd813435631281b70d10bc873ebd195f54af1b375301ac"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_csr_fencei_8a720108.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_csr_fencei_8a720108.hex",
+      "sha256": "e1368ed0ef4888dfc47c4dac65b1b1b209ce3ddcca8f0ade3090e08f08a75d05"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_dependency_redirect_8a710008.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_dependency_redirect_8a710008.hex",
+      "sha256": "c8c3f9a570e5f91849d387d914c82575f9e60ea4db9052f60dc4ad0932b70c1f"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_dependency_redirect_8a710108.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_dependency_redirect_8a710108.hex",
+      "sha256": "efb23a58a6a1c536385b67647110e328b84d33b9ed5e8c6499f30315824b1b17"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_fault_restart_8a750008.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_fault_restart_8a750008.hex",
+      "sha256": "0a28d9e787e19f6cd5849adc7d4c49e966625d8e7d14ba81a252ca28e4647841"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_fault_restart_8a750108.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_fault_restart_8a750108.hex",
+      "sha256": "ae23f2797a7df2f4143eef8482207c1031c89a2a6af8e8dd5d31da5fb0eefa62"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_irq_divider_8a730008.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_irq_divider_8a730008.hex",
+      "sha256": "fb2e1f26ae6bff633de801b8ef9fc9ea8b2e5637dd762057b5448b5b20a31d36"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_irq_divider_8a730108.hex",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_hex\\seed_irq_divider_8a730108.hex",
+      "sha256": "b346a3283db9b52e0881c681f83ee4a63652d29745451cac9be18b0ab6725985"
+    },
+    {
+      "kind": "input",
+      "path": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_preparation.txt",
+      "snapshot": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage8_xsim_selected_stage8_20261110T135003Z\\producer_snapshot\\input\\sim_out_stage9_recovery_prepare_schemaaudit\\stage7\\stage8_preparation.txt",
+      "sha256": "b2288224715c7a91041e4906d7d7cc99edc22e00d0c4746d254d686d9b002c24"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+pc	insn	op	rd	rs1	rs2	a	b	result
+00000008	0262c3b3	4	7	5	6	00000064	00000009	0000000b

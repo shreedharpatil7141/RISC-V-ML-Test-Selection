@@ -1,0 +1,9 @@
+ATOMIC_STATS commits=0 writes=0
+MD_STATS starts=1 dones=1 busy_cycles=33 aborts_started=0
+STATS stalls=0 redirects=1 cycles=45 instret=5 assert_fail=0
+COV 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0
+TEST_RESULT: PASS hex=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/stage6_compat/z_hex/stage6_fencei_divide.hex cause=1 expect=1 gp=0xc instret=5 cycles=45 oob=0        
+- /mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_pipe_stage4.sv:512: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.032 2025-01-01
+- Verilator: $finish at 485ns; walltime 0.023 s; speed 212.264 us/s
+- Verilator: cpu 0.002 s on 1 threads; alloced 121 MB

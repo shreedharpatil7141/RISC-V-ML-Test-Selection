@@ -1,0 +1,16 @@
+Simulator: verilator
+output_dir=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_gap_verilator_20261110T170227Z
+provenance_file=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_gap_verilator_20261110T170227Z/provenance.txt
+producer_snapshot=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_gap_verilator_20261110T170227Z/producer_snapshot/snapshot.json
+producer_snapshot_sha256=0b291222a7fc7508aeb0f63675a377981c655f0d5a63b71b404122ae6770a66a
+legacy_c_disabled=209
+rv32imc_existing=12
+rv32imc_pipeline_specific=9
+rtl_vs_iss_and_golden=418
+unit_suites=7
+unit_decompress_halfwords=65536
+divider_protocol_records=209
+pipeline_vs_golden_full_traces=209
+pipeline_event_hits=70,46,8851,7908,11812,2114,5101,262,540,3777,7298,460,210,314,7642,63
+divider_protocol_checked_cases=209 starts=2025 dones=2025 busy_cycles=66825 aborts=0
+STAGE9_LEGACY_GAP_VERILATOR PASS legacy=209 full_trace_comparisons=418 dynamic_mcov=209

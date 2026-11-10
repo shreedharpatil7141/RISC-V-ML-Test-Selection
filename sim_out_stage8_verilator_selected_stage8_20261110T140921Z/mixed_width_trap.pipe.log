@@ -1,0 +1,10 @@
+ATOMIC_STATS commits=0 writes=0
+MD_STATS starts=0 dones=0 busy_cycles=0 aborts_started=0
+STAGE8_COMPONENTS retire=15 traps=2 csr_access=5 csr_commit=3 atomic=0 atomic_writes=0 div_start=0 div_done=0 div_abort=0
+STATS stalls=30 redirects=3 cycles=59 instret=15 assert_fail=0
+COV 8 0 1 0 1 0 6 0 0 1 0 1 0 1 0 0
+TEST_RESULT: PASS hex=/mnt/c/RISC-V-ML-Test-Selection/sim_out_stage9_recovery_prepare_schemaaudit/stage7/m_hex/mixed_width_trap.hex cause=0 expect=0 gp=0x0 instret=15 cycles=59 oob=0        
+- /mnt/c/RISC-V-ML-Test-Selection/verification/environment/tb_rv_pipe_stage4.sv:512: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.032 2025-01-01
+- Verilator: $finish at 625ns; walltime 0.017 s; speed 346.011 us/s
+- Verilator: cpu 0.002 s on 1 threads; alloced 121 MB

@@ -1,0 +1,2 @@
+pc	raw	op	aq	rl	rd	rs1	rs2	address	old	source	new	sc_status	reservation_before	reservation_after
+0000000e	8620a1af	amomin.w	1	1	3	1	2	00005000	80000000	80000000	80000000	-1	-1	-1

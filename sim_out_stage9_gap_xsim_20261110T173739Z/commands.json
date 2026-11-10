@@ -1,0 +1,20 @@
+{
+  "owner_command": [
+    "C:\\Users\\Shreedhargouda Patil\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\run_stage4_4.py",
+    "--sim",
+    "xsim",
+    "--stage9-legacy-gap"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "C:\\Users\\Shreedhargouda Patil\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\RISC-V-ML-Test-Selection\\scripts\\simulation\\prepare_stage4_4.py",
+        "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_gap_xsim_20261110T173739Z"
+      ],
+      "cwd": "C:\\RISC-V-ML-Test-Selection",
+      "log": "C:\\RISC-V-ML-Test-Selection\\sim_out_stage9_gap_xsim_20261110T173739Z\\software_preflight.log"
+    }
+  ]
+}
