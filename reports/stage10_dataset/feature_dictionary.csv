@@ -1,0 +1,12 @@
+feature,role,description
+configuration,pre_execution_static,Pre-execution identity or static program-image feature; no simulator observation
+scenario,pre_execution_static,Pre-execution identity or static program-image feature; no simulator observation
+seed,pre_execution_static,Pre-execution identity or static program-image feature; no simulator observation
+seed_numeric,pre_execution_static,Pre-execution identity or static program-image feature; no simulator observation
+family,pre_execution_static,Pre-execution identity or static program-image feature; no simulator observation
+template_family,pre_execution_static,Pre-execution identity or static program-image feature; no simulator observation
+seed_family,pre_execution_static,Pre-execution identity or static program-image feature; no simulator observation
+suite,pre_execution_static,Pre-execution identity or static program-image feature; no simulator observation
+image_sha256,pre_execution_static,Pre-execution identity or static program-image feature; no simulator observation
+program_bytes,pre_execution_static,Pre-execution identity or static program-image feature; no simulator observation
+unique_byte_values,pre_execution_static,Pre-execution identity or static program-image feature; no simulator observation
