@@ -1,0 +1,98 @@
+{
+  "schema_version": "stage14-experiments-1.0.0",
+  "configuration_sha256": "7cd35153a090f63789fd4ebba1aefc087c2bee44c4fca5b6201543c440cda3fa",
+  "cost_join_audit_sha256": "f02e0e541ac5a7044a320cb047a95dc6716d5b2c8efa8ffe0738d3dd1270bb90",
+  "rare_mask_audit_sha256": "9b34691c853b36f4f8d1b553cb1b39f56c6379497c7026fc60f7d2be804a7159",
+  "initial_sets_sha256": "ac551815210c192a32b26d7d6d14d9d76a172ad0e5099911959d4a9d8a33c2d5",
+  "curves_sha256": "181e881945a216b0059a2d91411066b365e0bc195f2126dc639375871a397053",
+  "paired_summary_sha256": "eb028f34412cfdb311296a9bc810a8f3304b2687bbaa1b78375436aafdb224a7",
+  "paired_differences_sha256": "2c311989d22175c6f5f43eefbbb1d9a4c7081b453ad561df17dbfbd29f29fbab",
+  "auc_summary_sha256": "a52e4838037d02ddb72f4f30cba52061e94d0bf4389ae9df558e801ae9a6b792",
+  "runtime": {
+    "release": "2025a",
+    "version": "25.1.0.2973910 (R2025a) Update 1",
+    "toolboxes": [
+      {
+        "Name": "Aerospace Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Aerospace Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Communications Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Control System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "DSP System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Database Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Signal Processing Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Electrical",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink 3D Animation",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Statistics and Machine Learning Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      }
+    ]
+  },
+  "batch_runtime_seconds": 1655.8883866,
+  "conditions_separate": true,
+  "heldout_is_exploratory": true
+}
