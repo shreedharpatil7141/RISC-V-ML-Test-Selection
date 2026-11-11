@@ -114,11 +114,11 @@ on `main` at `stage8-complete`; preparation, Verilator, and XSim passed with
 separate reports and positive/negative-check evidence. No functional DUT RTL
 changed from Stage 7. Stage 9 coverage consolidation is released on `main` at
 `stage9-complete`; both simulator collections close at 282 observations with
-separate reports and exports. Stage 10 is implemented on `stage10-dataset`
-from `73fb3948627c79a0b26f0179e106adf2ec6e624d`; the combined dataset build
-and validation gate passed. It contains 282 logical tests and 564 separate
-simulator observations, with grouped splits and hashed lineage. This does not
-start Stage 11 or make a generalization claim.
+separate reports and exports. Stage 10 is released on `main` from approved
+checkpoint `556b11ab833771c115dd61d0f5d565ba06e9bcb6` and identified by
+`stage10-complete`. The validated dataset contains 282 logical tests and 564
+separate simulator observations with grouped splits and hashed lineage. No
+generalization claim is made; Stage 11 has not started.
 
 The MEM contract is one explicit edge transaction: a valid, fault-free A
 instruction in MEM observes the old word before the edge; AMOs and successful
