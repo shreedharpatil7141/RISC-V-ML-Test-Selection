@@ -1,0 +1,1264 @@
+{
+  "schema_version": "stage11-matlab-ml-1.0.0",
+  "base_commit": "2d195e581075c1a4cb7bb17d172d22a7472a8a9b",
+  "approved_stage10_commit": "2d195e581075c1a4cb7bb17d172d22a7472a8a9b",
+  "input_hashes": [
+    {
+      "path": "reports/stage10_dataset/manifest.json",
+      "sha256": "2fe6d918073892743b30013d671f64a40a8a1c744ea31c5611919eeea94253f0"
+    },
+    {
+      "path": "documentation/verification/stage9_bin_dictionary.csv",
+      "sha256": "0b682f324dfcce80a20a53ba07acd2d1f4f1084d11ff2c6813b15c5c7c81b536"
+    },
+    {
+      "path": "program_images/sim_out_stage6_prepare_OWNER4/z_hex/stage6_csr_hazards.hex",
+      "sha256": "04db71916d8a35beee838cc03a0d926a8461c19f3fa7b877da5fd881e23ba1b3"
+    },
+    {
+      "path": "program_images/sim_out_stage6_prepare_OWNER4/z_hex/stage6_csr_ops.hex",
+      "sha256": "14031d5c6811a6c8dcc68e215519c8e09bd463d63dbd50b19fd559259b07939d"
+    },
+    {
+      "path": "program_images/sim_out_stage6_prepare_OWNER4/z_hex/stage6_csr_permissions.hex",
+      "sha256": "88673be9e478ed7f6471a3785812f03f68dc75f1231de51a542571dc1a52099d"
+    },
+    {
+      "path": "program_images/sim_out_stage6_prepare_OWNER4/z_hex/stage6_csr_ro_immediate_write.hex",
+      "sha256": "f9d1e2566f3ad514ecee6235c8d00d4c731d6c62c160406b942884f1f149a2b1"
+    },
+    {
+      "path": "program_images/sim_out_stage6_prepare_OWNER4/z_hex/stage6_csr_ro_reads.hex",
+      "sha256": "63bd737b88f2b1c738363ad8004e7b6561bd72c862634e100d4949064ce99f92"
+    },
+    {
+      "path": "program_images/sim_out_stage6_prepare_OWNER4/z_hex/stage6_csr_ro_write_rd0.hex",
+      "sha256": "440f104abeef8f5312bb49dfff31e3b4d0f19869f9819f9045d63d2e0f1594ab"
+    },
+    {
+      "path": "program_images/sim_out_stage6_prepare_OWNER4/z_hex/stage6_csr_ro_zero_source.hex",
+      "sha256": "a4161b97b2c2c4f12a39867d2135cc692f076efae4e55056466879d14728fdc3"
+    },
+    {
+      "path": "program_images/sim_out_stage6_prepare_OWNER4/z_hex/stage6_csr_wrongpath.hex",
+      "sha256": "0942cf1b1c2f354b7cdf517d30fa93584136ce92ce076c51ac3d98df67a81583"
+    },
+    {
+      "path": "program_images/sim_out_stage6_prepare_OWNER4/z_hex/stage6_fencei_atomic_replace.hex",
+      "sha256": "3ce30d56b1a1bd082dc3a1e4c67cd2bf49baa93067135836a66bb89747786992"
+    },
+    {
+      "path": "program_images/sim_out_stage6_prepare_OWNER4/z_hex/stage6_fencei_divide.hex",
+      "sha256": "5133f1b11750565948313977bc1ba8d72b829c43317dabc190a558951d3703f2"
+    },
+    {
+      "path": "program_images/sim_out_stage6_prepare_OWNER4/z_hex/stage6_fencei_store_replace.hex",
+      "sha256": "6865476f83bff2e3b1b6dbb7168a6f70c6ab7a36de3131f8ee2473ae8e5542e5"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/fault_before_irq.hex",
+      "sha256": "f496c50be7eeebf1a8017233dd284342573e51282fd96b3c0f76e1db7eb9189c"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/fencei_store_replace.hex",
+      "sha256": "e40e18a0b4a2f43be8414040ace865109863024c05e545475d7ee78ad0cd0054"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/fetch_access_trap.hex",
+      "sha256": "ae3d281e530d86a2b29ec777d57d0ba53f32e294c2e6d706767978af9bdf952a"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/irq_div_restart.hex",
+      "sha256": "dc2e7bd4472e71ecbd6fee38c0dd4a7f58bfa0564985e5dfdcfa04a75a526b35"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/irq_mask_pending.hex",
+      "sha256": "83ca2291cf4acd0d8acd5d9e42669d30b34248a3aa823644568d960d234c4eda"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/irq_software.hex",
+      "sha256": "5b45880c117abd1c881658dd0a2ab02e59c45db497a25f9becb577631413de4e"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/irq_timer.hex",
+      "sha256": "5b45880c117abd1c881658dd0a2ab02e59c45db497a25f9becb577631413de4e"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/irq_vectored_priority.hex",
+      "sha256": "670271b43dbb9ab11265ab2e122f10eb33ba6e9569fb585e2a3d4d8c9f1dcea8"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/lr_trap_sc.hex",
+      "sha256": "d73f8228c341fbd26efef6f3ef1530b543b4d3d27c4769a005a04a905fcf9867"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/machine_trap_return.hex",
+      "sha256": "95e4ff42e4eadcd9017a923214e66534126f65ab00acd7f3eb0807cd8a6b52ec"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/mixed_width_trap.hex",
+      "sha256": "8c1b34ed7c3ed23aef7544b6e93f24c8ab5b7272bedb2146100596424a047115"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/store_fault_precision.hex",
+      "sha256": "84bf963c71a77a79e47a88ad814baf90669408a73f1704f0fd70995eb0250d3f"
+    },
+    {
+      "path": "program_images/sim_out_stage7_prepare_decoder_units/m_hex/wrongpath_fault.hex",
+      "sha256": "a4da7de45ef3ce8f71125db5cd526f73bac705c1680d0fd7dde84541abd38ff2"
+    },
+    {
+      "path": "program_images/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_hex/seed_atomic_divider_8a740008.hex",
+      "sha256": "bd67eaa298f7385c5395945001d213ad759fe8ed412614a856e6a511ae1610e1"
+    },
+    {
+      "path": "program_images/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_hex/seed_atomic_divider_8a740108.hex",
+      "sha256": "7e18c2af052f21352fa408459e75b6b02f83735127b7953fe0899bce7b31d95f"
+    },
+    {
+      "path": "program_images/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_hex/seed_csr_fencei_8a720008.hex",
+      "sha256": "7cc14fd742ee965cd9dd813435631281b70d10bc873ebd195f54af1b375301ac"
+    },
+    {
+      "path": "program_images/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_hex/seed_csr_fencei_8a720108.hex",
+      "sha256": "e1368ed0ef4888dfc47c4dac65b1b1b209ce3ddcca8f0ade3090e08f08a75d05"
+    },
+    {
+      "path": "program_images/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_hex/seed_dependency_redirect_8a710008.hex",
+      "sha256": "c8c3f9a570e5f91849d387d914c82575f9e60ea4db9052f60dc4ad0932b70c1f"
+    },
+    {
+      "path": "program_images/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_hex/seed_dependency_redirect_8a710108.hex",
+      "sha256": "efb23a58a6a1c536385b67647110e328b84d33b9ed5e8c6499f30315824b1b17"
+    },
+    {
+      "path": "program_images/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_hex/seed_fault_restart_8a750008.hex",
+      "sha256": "0a28d9e787e19f6cd5849adc7d4c49e966625d8e7d14ba81a252ca28e4647841"
+    },
+    {
+      "path": "program_images/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_hex/seed_fault_restart_8a750108.hex",
+      "sha256": "ae23f2797a7df2f4143eef8482207c1031c89a2a6af8e8dd5d31da5fb0eefa62"
+    },
+    {
+      "path": "program_images/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_hex/seed_irq_divider_8a730008.hex",
+      "sha256": "fb2e1f26ae6bff633de801b8ef9fc9ea8b2e5637dd762057b5448b5b20a31d36"
+    },
+    {
+      "path": "program_images/sim_out_stage8_prepare_mem_footerfix/stage7/stage8_hex/seed_irq_divider_8a730108.hex",
+      "sha256": "b346a3283db9b52e0881c681f83ee4a63652d29745451cac9be18b0ab6725985"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/a_divider.hex",
+      "sha256": "04b775baf8a5e2bc89a79d5448a71425f92c3a3df313e9401aa884827888022e"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/amo_access_fault.hex",
+      "sha256": "6d0ae2e8be7f5c6078cf09a11574213a2dee3af4aafbeb5ac4ed3c8df0a8dd4d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/amo_at_halfword_pc.hex",
+      "sha256": "27772297165a490c517a52ae789e901c7fe88c3b0b4a2fafb068bebf27c234e1"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/amo_last_word.hex",
+      "sha256": "e6819393d84dfceb0e6862d51af2b6b90e522346045444f3942bf25b196884fa"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/amo_misaligned.hex",
+      "sha256": "057cb06ed484c909bca31f39fe20be31a919a5ea0fd71531832d431526fd9577"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/atomic_dependency.hex",
+      "sha256": "01978a2ca7c0ce04a367d51561627b86fb46ecf40095e7f45cbd85894d991b40"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/atomic_fault_squash.hex",
+      "sha256": "5d67c1c3fae87e08616e9cb365c8544c726ed9340e228d5c57bcee4789e49dc8"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/atomic_ops.hex",
+      "sha256": "58a6e5097beea966c179308ff03b492c8c6954f79e1ad33ac9d33c152bf1e205"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/atomic_orders.hex",
+      "sha256": "1506adc6fb7b0e9c51fd8166ca703b02d7efcc9d8ccbd000460a37612849e50b"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/illegal_lr_rs2.hex",
+      "sha256": "cc673b453b6aa752d746691ce6e9e201dd5f7d1b618d3426636c7e300f9833c3"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/lr_access_fault.hex",
+      "sha256": "1118d18a9a4c2e878dc9f9bec7c243e353dcda603d395442b5c8e5b659ef067d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/lr_misaligned.hex",
+      "sha256": "3e5b4d08f6e90406115a8dfac73cea2370588c46b9ab22258551d94964ddcb83"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/lrsc_sequences.hex",
+      "sha256": "df1749c8ef0985f22801c43c7107e820a006a74f13d001747a04c93cca3c789c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/operand_overlap.hex",
+      "sha256": "3647d2215be5009743076181f5e13fdca44d6534e8d50d63722ec9646abf29aa"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/reserved_encoding.hex",
+      "sha256": "37ce0eee13722ef04690a1ff75efa941dd5a5bc7b0dae8b83c434687de5b4dfa"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/sc_access_fault.hex",
+      "sha256": "c6dcfe77f18e7b5ce99cbddeb7c2343ef1b9f6f0391520f0cb7928f1bb8b2d4d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/sc_misaligned.hex",
+      "sha256": "b2b818658b365f9c58d5220b19403b9c082edb63ba56c74f3d6259f87793c515"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/a_hex/wrong_path_atomic.hex",
+      "sha256": "f101e35ff75afb2ac261e807d08685eeb8f3730a386e384b1c5161e1faa17cea"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/branch_store_jalr.hex",
+      "sha256": "b0226ca9d507dfe2e812f3db8a693d0886550e445070803e20912338f4fe89c6"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/compressed_link_forward.hex",
+      "sha256": "9f6e352837eb1cd9a231641013965aadfedce960a2bb51a21553875d0ad4db73"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/compressed_links.hex",
+      "sha256": "2006330b24aca310674745015d7f92deecf4cb73c35fe6da4ac425623f98b2ac"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/control_flow.hex",
+      "sha256": "84bab953933521a36538effcedf609731e57209b5a6fec878f8113774477b045"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/coverage_boundaries.hex",
+      "sha256": "99c2deb28c740d1b2027c3b896c4dd481300759fd9f6b7089bb8da6a681436f2"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/crossing.hex",
+      "sha256": "2c932e80da899dd5ec5a3a54b79a081c53c20d082f69b7d562258477f62fdfda"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/crossword_divs.hex",
+      "sha256": "2112597a553e09b73bdfc99f093fcfb08ea12eda2fd08997320f6c417db94c72"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/data_boundary.hex",
+      "sha256": "70c7f5bcc0539de420245d134d86455272427e08a8ddf54baf82f2d278f8a2d4"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/families.hex",
+      "sha256": "6402baa5011ee82825f95a78aa59748192e563a691a027c5ecbcb1caaa23338c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/fetch_faults.hex",
+      "sha256": "439795f58c90f1f2bda7af96cb64a1ec5554689bef753d4c7617c481f2130e38"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/final_parcel.hex",
+      "sha256": "06124a7ed7a942ba7ed5d4f22843ef8d18c2ac1ae2930e2573c67a1b8cb0c5d9"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/hint_x0.hex",
+      "sha256": "4e9575b69bcd8fed1624885b17589b9fc254d205bc2483c690ca2c4dab5d447d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/illegal.hex",
+      "sha256": "5d0f568d2ff4b1464cb73f6ed1f4363d2f8676114249fb7a342e2f7402c3c05f"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/jalr_link.hex",
+      "sha256": "1c830bf1a1af70c0362a3c38c4bcf8a4ab6c39a0aa6d853e1e9bed572ff8eaca"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/load_use.hex",
+      "sha256": "0b551a46fbe8afa5d7f1aabbf87805d350477f10daa87bdf90013fccb0a8f080"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/long_prefix.hex",
+      "sha256": "02e670121b770f34092181de5c5457125a2d1222f508b27ce5b8baa1dd20aff5"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/mixed_forward.hex",
+      "sha256": "bd647fa1e86086c80f392b0c53f740ed47b30dd7411ee0a5301151785691fdd8"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/older_fault.hex",
+      "sha256": "12bbb0a49a9c0e4e6b27efdaf85c5f47f55c7bbb08276a97ac042b021d66aa0a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/stack_jump.hex",
+      "sha256": "193b6c9de3b5c02cf43e60c39df92d19af9e6552a658e2a366ce150b0cc0c42c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/wrong_path_fault.hex",
+      "sha256": "bb20c7d59283798a3df16bda167339be1cdc088cd7e3701ae7b75040430784a1"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/c_hex/wrong_path_fetch_fault.hex",
+      "sha256": "ca7fd89c9b33c4c4c936287978ffa1c17d319dd75eca0cb9479c5b34684b91cb"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/branch_backward.hex",
+      "sha256": "7f3f66582b9ebbdfe5a9cc6216186db1e111eb895803521f608632623b49f48c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/branch_beq.hex",
+      "sha256": "958cf57a78c66ec7af29b7d3d3290fcb7ae1a9fcfca8a7811b53f16a9d0240e9"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/branch_bge.hex",
+      "sha256": "94d29e4dc0e62716448e457c051c5a629272f068a5e976d065161ae46cfb2f84"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/branch_bgeu.hex",
+      "sha256": "0619c5d3553755f34625c3a3c9bc8ab1733205130c2e3015689a08a6542be375"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/branch_blt.hex",
+      "sha256": "daffeae8e8562d04d9a12d6c4cef17a9d0b47192c823a4110e9c1b00c7a77e23"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/branch_bltu.hex",
+      "sha256": "d83d059e29bb14e75d6cadeba6e0919ecc1ece225c3d619c853cf4acb140fea9"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/branch_bne.hex",
+      "sha256": "e4985320fa6680b7174dbacb5e25dc7e183a28e87f6d5c0025cef7dcf9e8805d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/branch_notaken_misaligned_ok.hex",
+      "sha256": "0c3f88f9cd7855b7946b8700b02a23014bc5e76e67297fa09e14487321a2a2b4"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/fence_nop.hex",
+      "sha256": "02e419a3b8140f203ca738bb57782dcc7572d1a51b2e34cb0f459ac9de75cfe9"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/halt_ebreak.hex",
+      "sha256": "5c1f19e91fb4f05f3428f36db942383f37d29ac61734090ebd549e4f43e3ea64"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_branch_f3_010.hex",
+      "sha256": "503a6cfc50e60eef43abef5ebd8b1e2bacb7ca67a53783f46ac92d8a02b48482"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_branch_f3_011.hex",
+      "sha256": "572f2bcf6b80f09f17152ad8bbb145e67c763899a43bce050e4bce65d609a474"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_compressed_stage1.hex",
+      "sha256": "a74a7cc7c15a5a08fb3d29c3b63607fe216de7e37c39d0e1ab3d27ccac50b399"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_csrrw_stage1.hex",
+      "sha256": "37a933bde9a55801c6e9cecf179bed76c32d6b6d37501e4b19bf68b7c1955df9"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_fencei_stage1.hex",
+      "sha256": "c0718c57c36f79990a30a4e6184bbce4822a75b34130049da1210b7ab0b2a5df"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_jalr_f3_001.hex",
+      "sha256": "bbaaf18a3db2cba97bb3b81b00fef2182173cc77158a2173f241646e6e2b84c0"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_load_f3_011.hex",
+      "sha256": "e4b80777dc8db96b23fba77dbcda12400ac626fb84defb0936e4e2f42a3d10b3"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_load_f3_110.hex",
+      "sha256": "7a5a0f47ab411837f27d44202adf1bdc6fc54b4cdba60328abd2e08e352ba2e7"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_mret_stage1.hex",
+      "sha256": "ac942a663c466f8d005b23c7547b5accd2a7e5f1611a6fc47f943c7872e7e44e"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_ones.hex",
+      "sha256": "0194973b0c1df76b980475d822e909d93a01682fefb0fb690d43bb3351cad804"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_op_funct7.hex",
+      "sha256": "e6525d02cb4db3312b134359628aaf5baf7740fad61f1cc1d3574faf384f2383"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_op_funct7_0000010.hex",
+      "sha256": "cca3cfe066b672f9008e820c0159c670284fd909a8e33d11ec05ff7daca562b8"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_op_funct7_0000011.hex",
+      "sha256": "9c488b3d5036363f3ce73c28c23abbdc78298c954576421b706e1dc079c8288c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_op_funct7_0000100.hex",
+      "sha256": "725a2fab104a1965ca6e9ccb8535e8c05a93fe4c776b184cb33c5eb907e0ab91"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_op_funct7_0010000.hex",
+      "sha256": "d4f0b667c956590481f847fdef0646602d4ec08a9c13783ed55f067c00228e59"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_op_funct7_0100001.hex",
+      "sha256": "10c2f9ffa818e91518191b6ccf64595a97076e8e78e019b967986ef8814aacef"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_op_funct7_1000000.hex",
+      "sha256": "f448a5efe6839a6b6fdf742334bf1e67e0e22c65e621244539b875416ad86e4c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_opcode_custom.hex",
+      "sha256": "e2793f22e35a23b34b029cc9e6c70d49191f137f1a207f1e0addae72df949b84"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_slli_funct7.hex",
+      "sha256": "c7f0f4f6be3a8bb360a288ecb5064507d9b65c460f89be261f4c5777e54c944b"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_srli_funct7.hex",
+      "sha256": "5c19507d13de6f6ef0aa7e6c2a5baec0f94cf6c97fb082b0a019e4ea64730e57"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_store_f3_011.hex",
+      "sha256": "7259e406e90adb03cca27c93fd0092d1eea975ca5dc188f4a316681d50b1fbc9"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/illegal_zero.hex",
+      "sha256": "f456d87b695dec9a55d740b46f25317518c4d613536e3519e4a22c0aaf0f8af8"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/imm_addi.hex",
+      "sha256": "5f817d925311ef5f2920832940e9af48d871dd192eec77ebcd0581d2cd809e21"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/imm_andi.hex",
+      "sha256": "b316a597def3c28107317723486fcac710bb25bbd489a3360c75f570de76a449"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/imm_ori.hex",
+      "sha256": "e2fa524f875721cbee6e4af35149332b56d8b145ab90822922ec8f6d48da52f8"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/imm_slli.hex",
+      "sha256": "e1d0b421960ae46366567e7fc7bfc59dd00dc6e574edd9cf1a0d7ce76e7d26e3"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/imm_slti.hex",
+      "sha256": "c47b5876764cbc9d069395c67905315bf59a9d6354d690850661f0fd68645918"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/imm_sltiu.hex",
+      "sha256": "7f94ea02aa931f5b33e364c7ad28518810ea09e68dfc5969c618d7ee7dedd380"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/imm_srai.hex",
+      "sha256": "bf408c7d09cbefa8e084d3162abd9b5672b0db96e5469ca6c8cf3b923aac9f2f"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/imm_srli.hex",
+      "sha256": "0dcd3992f65f1b68be6fd9db2b1d7f7d189ccf385a8b2ef1ae5a92cde75442a5"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/imm_xori.hex",
+      "sha256": "4405ea42b18becb429bde4ac8ee598507ac14ecd90d48f3281275adb67fe405b"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/jumps.hex",
+      "sha256": "64b0b00c4519f5005f625298fbea90d65eb9c41cafee77f8665e046bd466a19e"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/loadstore_directed.hex",
+      "sha256": "7360bbc269f969f1ffab26defe602c13f864108f70dde0cc8e7bb003dedb3a3d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/loadstore_random.hex",
+      "sha256": "3e260cefbfe9845d70d4ec4a6cd0aa95ea794740b837c5c2f64f4b7f39c6f69a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_n1024.hex",
+      "sha256": "a434c7cd89312e54b923d39c1d1cc0bf106326680abf2d09c1f2220325d872f4"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_n1364.hex",
+      "sha256": "4023cf0165619760da93ab0351851d6cbd9c78c9051f0d38f3300ff259f51c8a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_n2048.hex",
+      "sha256": "8d261badb1799934a5975be479d7d678760d8a236e212f742bf9be8c823722d8"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_n2732.hex",
+      "sha256": "f63258b65dea462cb455d6e680fd589cb4374b528ba9b9e9b321d0aba43d1f20"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_n3412.hex",
+      "sha256": "e471bb0667dca668a15d286b5b3940956906234141541f0d0e0a9411a417d422"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_n4092.hex",
+      "sha256": "a02037887212b57a32fef41c67765b77945261c3b6058ed48d3483432fdd59e4"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_n4096.hex",
+      "sha256": "2cc03ccedbb33fea3ec6957f36f4e93ce03a9ec7fd0fb8993258c40fd6f89575"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_p1024.hex",
+      "sha256": "fff77db4714d4efe711e8e84d13f2fe9a3ce59c7d41087395fe46ea85b130979"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_p1364.hex",
+      "sha256": "2a17368819e039e7ccef28d194e86cbbb698f8f2283599d4edc0ce1c9a772746"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_p2048.hex",
+      "sha256": "b950b23f0b5f52f6aa33ad442823856ece6924b25fbfdb48eddce0209bc8ec08"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_p2732.hex",
+      "sha256": "0b59f41e33d4188f77292952123102eb12ae30bf4641bc0c3c01077ec2f24799"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_p3412.hex",
+      "sha256": "a972f7f63225d19930d55aea97be7b5c36c3402632714125c814e2496f4b4bb3"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_beq_p4092.hex",
+      "sha256": "eb3492089fe8eebb5ca5ee0804d87720671c9f7c0489610f0cb2ed0babb8f975"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_n10920.hex",
+      "sha256": "18884c2835f86b344f82e6553f2a35015908af14cc4e4b099c79a1c515d67ed2"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_n2048.hex",
+      "sha256": "651fd0a867c236467c95b1b6f666ca4540b675380bbd0dec83ea615e52aa5d3f"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_n21844.hex",
+      "sha256": "b2a85289b119843e36a24f2225f912944aa4379d18d15bb6b6049170e39a456b"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_n32764.hex",
+      "sha256": "6c97617de70ca76346918966389b72367c6f3d85992cba0941e49a7bdbb49347"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_n32768.hex",
+      "sha256": "d25a9333e3d53aca6c00c52ddf71e3e9bb5c9fda11ab41e51d7ead5c026d9cbb"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_n4096.hex",
+      "sha256": "55634ae372ac4f6974281b1c365e213044c70c15d9aa82e2b96d16275af9f040"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_n8192.hex",
+      "sha256": "ea2801fee201d09b0a4836592c2c4c6c3e809c97145dccd441519cbf970e4bd2"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p1024.hex",
+      "sha256": "fb57d9c2bed4b5185b7a911f652d13579267bef1084323f3cfd4ca0ffa0bd54e"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p10920.hex",
+      "sha256": "44a92e8f5d89fca1a8595a865d4ce58edf163916cd88f5bd790081964e5d550f"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p128.hex",
+      "sha256": "4a726a10c49bccdcafaa2608c741000b45ae5365d8aeb9560a83138416e1e90b"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p16.hex",
+      "sha256": "b755fc09201529070ff18450455e4ea10df71004e62c62d9f2965ce7bf0bcf45"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p16384.hex",
+      "sha256": "e146cd27d9bb0ab8479e8f1c1209d4f1181f97dc1e34d1c09998829207170609"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p2048.hex",
+      "sha256": "6999d668c8e3bd9a2b992fd1e385a09738f4ea5b7c2e7be174159ea8615ba4ad"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p21844.hex",
+      "sha256": "1ef09fc05a55b6ae8112cf5ecd0749db6ca3e5222f1e81851cdd9ad0d87b507c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p256.hex",
+      "sha256": "7a42f60dc9c21478a1d7b66233fbd48db8fdbf1664739ea014472c4f5e3c4d1b"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p32.hex",
+      "sha256": "af119241c4da93885b8cf3d1c358e9cdd66474316cd29d8112754ff441283ef8"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p32764.hex",
+      "sha256": "64a6018ea1f5a2657a9528c6406e0a029b721475b13600d46561ef176cfcdbbc"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p32768.hex",
+      "sha256": "522bc2154f9e42279f00e0e5e2a0c949161f38c8d0c95bc69bcb26d5a28f706c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p4.hex",
+      "sha256": "b6ea86ef4dad51dbb73a6a2a07d887d85d7e07530e2860860c20fa92d61eeb1d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p4096.hex",
+      "sha256": "dc8a40eab1e00e00f9edb10671e74759eacb8c5a151d5e216c707e2a4a2a1d28"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p512.hex",
+      "sha256": "cb668a6f8248e6bab96c967c8b7df08c3c3e688c3a6d8919fbd6826a4d591974"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p64.hex",
+      "sha256": "df94f170e626ca52897c93c677b507e363192dbe2f6963e0100b8e2004c0145b"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p8.hex",
+      "sha256": "ca8ad3b3737796faeeffeb981bcb923c0c9c8840590137219d3ecd2c79f49e34"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/long_jal_p8192.hex",
+      "sha256": "267586788628c90f2fde17e0072d5d513bf7c6b9dc33419f4502acf35668ba8a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_chain.hex",
+      "sha256": "dc85162bc9a22091e013a479ad29ef829b04bbb331e85b146b3c062f3a5806bb"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_div.hex",
+      "sha256": "a00a7fd87b143aa3879db385fa62eaf802ef7e39f3441cf29c96b665ff1e7c66"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_divu.hex",
+      "sha256": "3e988115abbdc8a7f5c4a734220a015c1746bb4a4f72a409cc14d860948628eb"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_divzero.hex",
+      "sha256": "5e17e93ab4e89d680ab80c898e54d375be01d73508292da519db09982b3b5acd"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_misc_use.hex",
+      "sha256": "b4267fa27d28f5b0029443fd56203cfd79330e683b23ff79e6c3b8de41eee4f7"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_mul.hex",
+      "sha256": "91274d6e77def20115aae29326278c41fe50e9c4e03f67d387a9fd7f0805b909"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_mulh.hex",
+      "sha256": "bdd99808082e4f16d7af23aff7fc45fb232cd00fda3b987923ec517a84d326cb"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_mulhsu.hex",
+      "sha256": "5a6a8699fe2566a1fd2e79b2f487417983473bed36fdff3810ecb8477c0b4d76"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_mulhu.hex",
+      "sha256": "dd5e60d1e77b7382905c975308304d744dce51c8a1c9f9c6b1bff35bf37b627c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_overflow.hex",
+      "sha256": "8d0abf7fb4b41bc46d0c9d148f239915bf0215fb99f9bb482a4fdb1eac405124"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_rand_div.hex",
+      "sha256": "0b7be165fd731c8f8219e43ad6a207fb271fe59928dc50b8439789140f8ca786"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_rand_divu.hex",
+      "sha256": "c481ae5118058d1672a0c5a0fd5546092c02d28ff482d873057d25efc0012575"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_rand_mul.hex",
+      "sha256": "48f94a36620ee19dae9be8652d8bf13fa88aafbd035dac1cafad0a7c7aeb781b"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_rand_mulh.hex",
+      "sha256": "656ae18aa0366c9a91df29ee912a11591f67e64bb4c6d40b77d3e38825cf8ab4"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_rand_mulhsu.hex",
+      "sha256": "5b46afc5f1035412eb6dfbdc6d6e4cd5fafe47a30d39a6e8080391f9bb7347a9"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_rand_mulhu.hex",
+      "sha256": "897d3de88408fe683bc05105d780487811635c448672b867cc90639f034d42bb"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_rand_rem.hex",
+      "sha256": "7d87a6ab749f922c994cc52076ff3b94c196b79dfe4895c30b2370f39598015d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_rand_remu.hex",
+      "sha256": "00435c4589535b6d307a624a879e2ba2d72b9a44ac1248ef726f38010dfe5163"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_rem.hex",
+      "sha256": "21466d4cdb680b545b63e8094e69ce1576801cf8b569810beb26e2001aca1e09"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_remu.hex",
+      "sha256": "29617760aa9a8de3917795dcd52ef5d75447e684bb83112f01ea150db836b623"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_sign_matrix.hex",
+      "sha256": "e5e97b40317ad7aa20eac82245d86b05c399af80a07fcd84b87c937a5bf9a8ac"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/m_x0.hex",
+      "sha256": "11cc591ab3a35a46036019435c5df06512cd30f20ec3859e3543e029858c2c8d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/misalign_branch_taken.hex",
+      "sha256": "a78c5427a8838bc99baf785b2c6b87f0948cf0c7112f13bdee9644d6ac46114a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/misalign_jal_target.hex",
+      "sha256": "2181f876281327d65e22297ad17b4d407e999b0b0d17e8b02a871cafb169c43b"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/misalign_jalr_target.hex",
+      "sha256": "6fbd2a3ace130a61cb4b5721edc2ade31a4a4b5c13395aa920673982e0525720"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/misalign_lh_off1.hex",
+      "sha256": "dd71c44c459a8945fea2c66d740168a0764e40a38ca107295adb6ae213de147f"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/misalign_lhu_off3.hex",
+      "sha256": "78500447ad0a982d595419abf339b56e28499b8d211d672cf5f5b3e9ca30d3b6"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/misalign_lw_off1.hex",
+      "sha256": "424bd4f759c64c3a97c475ec443b39b84b298856a473b3e3c37c2bb47192011a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/misalign_lw_off2.hex",
+      "sha256": "203d02cea82c816108b3f4fa1905b7a71e33605d5a12f4f395e73ede8b25a181"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/misalign_sh_off1.hex",
+      "sha256": "b4a0383041ded2ed2e3b8ed4ec26c012134e6a7591ae8bad8c845d47f8593f8c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/misalign_sh_off3.hex",
+      "sha256": "4512d2187080ed65d09d49731bb15e0e220d97e71d673ea96cb217368dbe0cbb"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/misalign_sw_off1.hex",
+      "sha256": "c77a63c47e11f96e78edadc3bc73aac52fd56f63565fe81473839151515414a8"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/misalign_sw_off2.hex",
+      "sha256": "ec8e445e024ba0c53e5ebef02e7c45fc434ce53c26675eb6b88dc5358628ad16"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_array_sum_loop.hex",
+      "sha256": "9c63b5907740afd1d6a65231ed044c192f22192424d6ab74022847e331f635c6"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_basic_independent.hex",
+      "sha256": "399c1c15100c0e4e29448ceb58f96f633fc8a64ad55d45764e9f5bfc70817cfc"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_branch_beq.hex",
+      "sha256": "6f24e951eed97e72abd64dc2b9516bc3ce8c945c8628565578b302b78be07bed"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_branch_bge.hex",
+      "sha256": "afdebccc22b7ba333e4df7d5b3a77534dc80821342bea09b06186469e7961ff4"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_branch_bgeu.hex",
+      "sha256": "b01c6af300709ec618df14e1e31f406d912a0211f92298a044ce2a34b263ad0a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_branch_blt.hex",
+      "sha256": "13175e02be1c57f179bb2685f492946278d2aaf9dd2900e993ced5c8bb85d4ac"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_branch_bltu.hex",
+      "sha256": "c1619bdf60bd11f436a1664da6d15a4ea674e62ea8ba3750292a259ab6167484"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_branch_bne.hex",
+      "sha256": "98aa906a25d7ad1c9851d0c8a8cc251719fa6c136fe9b4e471cbfc2d4ab219c5"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_dep_random_11.hex",
+      "sha256": "7dd1be00d57494b9fe8f672779e6edcef64a491dbf85ed4203a7a815c66acd0c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_dep_random_12.hex",
+      "sha256": "faec9da2d1d2b91460ce955b0b719418fd10edca7d388198a84bf340f0c24aaa"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_dep_random_13.hex",
+      "sha256": "071fbf310fdb944d9200ce0678ae4594d25b21be0846c47478bee121ad698087"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_div_back_to_back.hex",
+      "sha256": "927a33f4c8a37c6e31426a9153e5240737758626e5e6f316468347cedcf12b28"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_div_before_fault.hex",
+      "sha256": "8d6f9b6cee32fc8490063a17c1975a759fb9f78c31b4cc8e6e290351fbf7172d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_div_dependencies.hex",
+      "sha256": "68b55e3d93dd5c2870610e3be7a07cf91e7ab8918b1d075391590e8a838ca660"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_div_fault_illegal.hex",
+      "sha256": "5fa1e44db98b90b7f3c78e4f3234e7bf55bba9559cfb6d7d847d78eb3f4e68c7"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_div_fault_load.hex",
+      "sha256": "b0cb4ce43b933f3c093fbeb10359d91a252a4a7ffaa4a0c3b5a2b9ab9e92c6aa"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_div_forward_consumers.hex",
+      "sha256": "3a276ad25e334ab4706e4ce6613890bb62044086e38cb5e266f4a87f6e8a6ff6"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_div_forward_sources.hex",
+      "sha256": "b163180ca8606832b8b4314aa67d17f9e334ea40a3e35b87e36618b6ef215872"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_div_loaduse.hex",
+      "sha256": "9ca5100f73ade32a21ca27d0428f4b299dc066fbea9fdbe76aeafc6262496a79"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_div_loaduse_rs1.hex",
+      "sha256": "a270f0070b5b5ca02b2d0e98a8deacdef8b83fdb2019d933fdc8e7bcf3550940"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_div_wrongpath.hex",
+      "sha256": "ce8699df3220669ad08ea14cfe223462b420edbe15f1c6c9442a280957973987"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_ebreak_older_commit_younger_squash.hex",
+      "sha256": "8c2cc92467a2fde23caccdbba39cffbfd80bfe33c119c77ebb21212595f8986f"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_ecall_after_loaduse.hex",
+      "sha256": "1ba216e0780f61794f9b44d5f047ff366e195ca79b4bc8062a4299025f669ddf"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_fault_load_use_consumer.hex",
+      "sha256": "81435694b204a434e90e16a62ed1db1dc5c27e376e6e314c4c09fe15ecd04aaf"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_fault_misalign_load_after_load.hex",
+      "sha256": "a7400353e3ff360b423a889580e623ff990ed6568b773a0152fbb6cce1aac5dd"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_fault_older_stores_commit.hex",
+      "sha256": "c65493746072a4948ea8f4f308a0f3fcf41aaa0ed907fea86d967fc96f36b435"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_fault_squashes_younger_store.hex",
+      "sha256": "bc8f5d27d5805c9672116dc08058312e5fd11f4f07051665f5e7ce1b099a1807"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_flush_sideeffects.hex",
+      "sha256": "edc8c5df63d7b3db54256f8a45441f586eeba8530c17a3d9d0e292de73869dcb"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_flush_wrongpath_faults.hex",
+      "sha256": "cfa020f5ecd42f067014da4cbd92222d2b7fa238798ed9b1f223004b6eb44d1c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_fwd_exex_chain.hex",
+      "sha256": "61681f42b9c3643b60f53de9784defeae56a839fb89951b46090ac8a80a578d9"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_fwd_exmem.hex",
+      "sha256": "b36dc7cbc1d14fe875887ad6f5768459c48882259a3d2902b17f1ba0feb0af5f"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_fwd_memwb.hex",
+      "sha256": "160376c75c9b6e7b6d04f4699f7a93c2cbb198778e4d7a386de8e3e0d8481916"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_fwd_priority.hex",
+      "sha256": "34795da6c1a74eb4a9d21c414cf9b224d10ccad0647b6f9e941ce97398911f21"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_fwd_wb_bypass.hex",
+      "sha256": "c0324ce1a85349d33e55f85fde2fc08aa3daa86b1b6253665d0b3f1e2bb3ec49"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_illegal_after_nottaken_branch.hex",
+      "sha256": "c944802993cfb96de30bea07fcd3ec922bef88e01deaa96ea61eb033678d8205"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_jumps_link_fwd.hex",
+      "sha256": "3aac807b9cf87cab42aba4fe1a33e4926917882f48e147344b7449b01e666cb1"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_loaduse_basic.hex",
+      "sha256": "1f6871ca470882eaf7215244cafd443d1fb0f2730c4df187312c840d0eda38a2"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_loaduse_chain.hex",
+      "sha256": "2ad8da76bc56a945810e502b87cbe782fe19c46327186c4ce6415e4fc158133f"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_loaduse_store.hex",
+      "sha256": "0430eaaaa37062f66ba986609e960ed70f04d55422a546d04a46386b025b0137"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_m_arithmetic.hex",
+      "sha256": "c16e9c6db84c4377ee5a62b985961e75087407f3df2c1d2a7f884894655c9286"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_m_back_to_back_x0.hex",
+      "sha256": "96a981be019fc8eaa426126b961accc966e267063098b10d464147a14b387ffd"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_m_fault_illegal.hex",
+      "sha256": "37c6fec86de45f28821fcda726102e2501e125c071db85f5f5a69e87c35a5c4b"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_m_fault_load.hex",
+      "sha256": "74e6f6fa4f99142cba9fcd30c0a2ceff4604210b71372e0200e8465b5fb0852a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_m_fwd_consumers.hex",
+      "sha256": "9782e18666cec2b7bd53402f482f2f29c05e0ec162061754450d105cf343f2dc"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_m_jalr.hex",
+      "sha256": "e0c9ce125f71c95d87b1d06c235e55102583e8894a1f12273755f86d684ebf64"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_m_loaduse.hex",
+      "sha256": "e0ff08f2c1d9bcbea88b4fc7dd521c80500e8b71071a785a2fa81dda11ab7c84"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_m_wrongpath.hex",
+      "sha256": "571722322853876996124448aa93411f5285f44132e265f132f81fe69c1ca494"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_mem_copy_loop.hex",
+      "sha256": "09b8fa709ae428b805677057747d0cc37df2bddf13f9a93c9c3617dba42e7fab"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_mem_ops.hex",
+      "sha256": "b5251b53e5d2afcfa119a27c61d7839f72a6faeed36defa5e470086c452a058d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_misalign_branch_taken_squash.hex",
+      "sha256": "14e140ea1b0fabf1fca37956f3e3fb395792b880fe324648c3173375c7b8e714"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_misalign_jalr_after_load.hex",
+      "sha256": "d1960f02d4ab9ac1880dd8ecc8fc942316944d0437e47c45cbf46b41ed330740"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_misalign_store_fwd_addr.hex",
+      "sha256": "8385135e2f6a69ed71b2233d90e228e2d695c917c2429c3bc899a64d3e00ed67"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_multi_dep_fib.hex",
+      "sha256": "db901dc8623622eecb0cedb08ae3d84e400c33261e432696626bc4e943deb02a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_01.hex",
+      "sha256": "26d03a9b64a01e0523288f43cdf31fa36e037689e69adb06f48fb83b249e393f"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_02.hex",
+      "sha256": "4003e38027d4b797b8dde6f15409c6b1178ba923b879eb581ce4dbe41e43fb9a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_03.hex",
+      "sha256": "1eec57f38d013430c8308bc93e767f8a50fbae821089c981cc6af1ea48091935"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_04.hex",
+      "sha256": "cdded18321ca3db3e453cd01bce96fb53aba3e1893a790aabb94acace43b496a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_05.hex",
+      "sha256": "ca47805967b16f8ff6abaf17229898d98a263d7535021611bf03e70d3d6605a4"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_06.hex",
+      "sha256": "a18bbff6ad99a40b34bf1be3da4d11a6dbb745afcaa2ceb0bf61e710aae213e9"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_07.hex",
+      "sha256": "3963b12c81b6fa05079ee82b3561efa0e43b7e84e71bcce61617a82cb0022bf1"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_08.hex",
+      "sha256": "3e11ade734b76c8feb872361571fcebbc2fcb35530ef0988c571d9ee73707ddd"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_09.hex",
+      "sha256": "dc649d42510a1eea5ae65c50b02f84a421452dde525ee36cec90c37c91824bba"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_10.hex",
+      "sha256": "fea504e2fd071120cc9aa5d9b2a59635016a6f0fd677eeca56717d585a3be463"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_11.hex",
+      "sha256": "8a00536db95df4a705a3d3dca5cab4375bc2e50210f270a6c93f891d8a6a30a6"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_12.hex",
+      "sha256": "515c95eb0ae4066778b6fbd3b37e7d6a91f85bd029a6b9851683162525ec451e"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_13.hex",
+      "sha256": "ee5d4fdaed426c4a0bce0bfd7488c206e32a9c0440a40a75879c72197637d9e5"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_14.hex",
+      "sha256": "737077d4430cdf65fce5c9b04f3b3607bb8fe43ddd50787731e66d81ec86ad08"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_15.hex",
+      "sha256": "3dbd5ab8ead84427acff6226d215c5daf8a3ae35b9bc4566f670701b68e77e7c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_16.hex",
+      "sha256": "950929fccdb57a63d42843ef1abbac9cbb569aa7210d92e4647179e6706df352"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_17.hex",
+      "sha256": "339922c101f8b6a9bd836272293839e7cdeec6102e5993391b3e1edb27d7b581"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_18.hex",
+      "sha256": "0a55cae405259a56bbf4c5f37bb6cccfa4984956862567adfc992ef786056116"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_19.hex",
+      "sha256": "13535f71443fc215e9354ccbd8a7cca9b1b85e7819f39f2214bc8b4dd91c185a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_20.hex",
+      "sha256": "9a4525a92d1a35068fe054b67e349107d0b14115003d0d8853cd92241d096344"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_21.hex",
+      "sha256": "b14e1a020045d4c64ece2b7a2dc6e7ea57f88d70bd335efb6325f5b88dc2a4f7"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_22.hex",
+      "sha256": "0dbaa032cd8693ddeecc0cfb32ab414728f1f376b2427964a4fb7d66ad467d8b"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_23.hex",
+      "sha256": "ce449c31d9854fd8d02d9686ce33c03e648ae8204a95a47485c5c8a855c5dab2"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_rand_24.hex",
+      "sha256": "74063885125a01f7ff129ad0b977be7a486bae4b6533b04808bcd64694b5bee0"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_stall_flush_branch.hex",
+      "sha256": "352aeea1766bdbcbaf6468431d3b8d7cec72346c374e4ee7ca9f6483fec2e50e"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_stall_flush_jalr.hex",
+      "sha256": "b11cc9cef0efb620320d0b0eb146a01025eeea13aae0c78058611aeedd143cc0"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_writeback_all_regs.hex",
+      "sha256": "842ff0fa58edbcde080e2d4560a16fec351c36fc410fbe41643c104b7f9f9a2c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/pipe_x0_behavior.hex",
+      "sha256": "99c0db7ccb854042c2315bc381420e1b45ee12f4807b4e2d8687df11a84cc86a"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/regfile.hex",
+      "sha256": "426a105b0a6a3086c94a30e0fdc5da4a40019f39c63acee6d2ffa8ab90479c0d"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/rr_add.hex",
+      "sha256": "1afee5215914afc5c2eed010d42eb88b3fcd9770d7ee636c59a7af1356cbbf99"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/rr_and.hex",
+      "sha256": "6dec63ff73c6fe908d04bd176081c6b6da27360cda92ae76e634fa113c92e3ac"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/rr_or.hex",
+      "sha256": "bca105414559a9f7d26e632ac5e2ec6c185d043594dde03e5f2d3466abaca5ea"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/rr_sll.hex",
+      "sha256": "04bd6dd57113e42a0bb3d714327334cf05eda7eefe120174bffc3709c11c0708"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/rr_slt.hex",
+      "sha256": "7103bc9b42903fa14727c1a67f5ecc42fb015afe4084b5f7d424927885e29b39"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/rr_sltu.hex",
+      "sha256": "dcf43fc38f7cf8367292a03d560f73cabf27855184c42844a0a41b03dc1ecaea"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/rr_sra.hex",
+      "sha256": "f658b8fe06c2e168512aba628626b594083839e1489403e45b835ccef5295b08"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/rr_srl.hex",
+      "sha256": "42678d172f4963fab945103d99aff01ef2cdf4e30f72db90e27d6c92e0c0a5a2"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/rr_sub.hex",
+      "sha256": "d33b35c1a0d16a78e6ee6fa7ad4423f3912e787cca3592fd36958341dbac3656"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/rr_xor.hex",
+      "sha256": "a498f587d3be7e33f62037128cd4fa4ad77e9b7c2f522df0dead1bf491205967"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/upper_auipc.hex",
+      "sha256": "69f4718f8a992bfd6dba0a4ce4f4994d5f95dd328f2a1f19093f05b07b32acda"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/upper_lui.hex",
+      "sha256": "ac86f30a93dc8873dde377c87db390dc3b4c45b83101a99c48bec2050b0ac17c"
+    },
+    {
+      "path": "program_images/sim_out_stage9_ca_verilator_20261110T140519Z/hex/x0_behavior.hex",
+      "sha256": "00346780b9a0de8a47859ff66bac407314528fb80eaaabf4ad9ca500fb950d08"
+    },
+    {
+      "path": "verilator/coverage.csv",
+      "sha256": "67c8545f5b7a9be8f7b97d08bc9d13b3aea40282d739fb3a1755040983510650"
+    },
+    {
+      "path": "verilator/report.txt",
+      "sha256": "12b335d66859416e06ca5d6c766bd1cb6838d80e3d7d907167f3ab559f00f9be"
+    },
+    {
+      "path": "verilator/runs.csv",
+      "sha256": "1f6887ca306d44c953adabf69ff3ce160f942218b9ba5b3c51bf96e63b5e22de"
+    },
+    {
+      "path": "xsim/coverage.csv",
+      "sha256": "3c83b0734fb61e0fef66ab3836578dc77dc11cd38fd777858e6c4a619d89eeed"
+    },
+    {
+      "path": "xsim/report.txt",
+      "sha256": "81047c6154423b69aeaf50d82fbf293919eac8601db8baf24a8cec8b0a509e8d"
+    },
+    {
+      "path": "xsim/runs.csv",
+      "sha256": "263c91158ec44842619d499e824d621f1317087b55ab1eb2236cecdb16d3baee"
+    },
+    {
+      "path": "reports/stage10_dataset/bin_dictionary.csv",
+      "sha256": "f502500387ed33afc187d3ce6912d560a1f4ba29835441c62c1007dfb85b35ee"
+    },
+    {
+      "path": "reports/stage10_dataset/coverage_labels.csv",
+      "sha256": "1e77719743258418acac1ea51d673e446fa00838db4751d6fb53eb7adbe662f5"
+    },
+    {
+      "path": "reports/stage10_dataset/duplicate_audit.csv",
+      "sha256": "adf08ff702f3938e63d7131162a3d3474a2bc16c01eb7f6935fd09d2489260b9"
+    },
+    {
+      "path": "reports/stage10_dataset/execution_costs.csv",
+      "sha256": "4c2c4214543416e202a61c0da77100a21079a96866dccd06071f10f556cf6915"
+    },
+    {
+      "path": "reports/stage10_dataset/feature_dictionary.csv",
+      "sha256": "75c02d429f972204e50984d533964983c6533dd0e3b8b0bd2bcbaf67af16640d"
+    },
+    {
+      "path": "reports/stage10_dataset/features.csv",
+      "sha256": "a853afd45eabdc21189a519c2b442a3dfc056e70222b9804d9d99ff792523c81"
+    },
+    {
+      "path": "reports/stage10_dataset/provenance.csv",
+      "sha256": "5afe766a9cdacc957618fa2916fcc222dde17fdf93e6b8ecd9d584168363cee2"
+    },
+    {
+      "path": "reports/stage10_dataset/schema_dictionary.csv",
+      "sha256": "0f92d7c55d0bfeab3f8383ed68d0ef2752bf1e308c505faafbf6f494e13ae9e8"
+    },
+    {
+      "path": "reports/stage10_dataset/split_assignments.csv",
+      "sha256": "be1b66d0154a42e13e77fc1fb1368f568a8785edcdc2633b7dabaf148bfccf6f"
+    },
+    {
+      "path": "reports/stage10_dataset/test_metadata.csv",
+      "sha256": "d85127107502b32fad74359647aa31151f7b26f5ca5c79ec827db82f3b80bd81"
+    },
+    {
+      "path": "scripts/machine_learning/stage11_run.m",
+      "sha256": "5e6ab3d114ac190c3d4b1d5e22705dfdfd57ef8fbab7a28e6a39574acf722051"
+    },
+    {
+      "path": "scripts/machine_learning/run_stage11_matlab.bat",
+      "sha256": "8fdfcb90f10ed1f5275ee1deebf3b2c47256ffd4e8c2a4626df787e1bfa9120d"
+    },
+    {
+      "path": "scripts/machine_learning/validate_stage11_matlab.bat",
+      "sha256": "d8a4fdc33e0d556da090adcd2621601ce6a235780fb0d1b114b158733c829ead"
+    }
+  ],
+  "output_files": {
+    "configuration_json": {
+      "path": "configuration.json",
+      "sha256": "4e30e64ab461e9775258baa91fe51a4dd128091db478fd1b452c2d3991b5a7c0"
+    },
+    "cycle_cost_metrics_csv": {
+      "path": "cycle_cost_metrics.csv",
+      "sha256": "234bf7ff6436aa04cc94199a366db4a48c22762cbbfccad28d51b4d8d2e45809"
+    },
+    "cycle_predictions_csv": {
+      "path": "cycle_predictions.csv",
+      "sha256": "8f3df7123c250f34891fb55255fb88324c5e71ce01b7b5332b99ca691b64ba5b"
+    },
+    "metrics_aggregate_csv": {
+      "path": "metrics_aggregate.csv",
+      "sha256": "3d383d0a1ed36bb614721d5c585c0e5a23b8d1b20feb764c6680e007a4ba0625"
+    },
+    "metrics_per_bin_csv": {
+      "path": "metrics_per_bin.csv",
+      "sha256": "dc474d9c003d27b1eab9157263f309ccbb4bc13047e6543a7d9bbde7533263f4"
+    },
+    "models_mat": {
+      "path": "models.mat",
+      "sha256": "ca90701b5a4312a0c36e306b171bb331fb4d41e99a8710f27f4c0601a4a5be9a"
+    },
+    "predictions_csv": {
+      "path": "predictions.csv",
+      "sha256": "3669eb3b04ab6dd3022275eb26985403407f2667daa990a63645a42ef2ec7f3b"
+    },
+    "validation_evidence_txt": {
+      "path": "validation_evidence.txt",
+      "sha256": "9677839a1e3eb2f4591e70563d8204310f45a477e72314e50fbb6d6d40d47e80"
+    },
+    "validation_model_comparison_csv": {
+      "path": "validation_model_comparison.csv",
+      "sha256": "5df6711f4abd936526c4e27fefcaa1b64a798ccaf756431d0e3293410a759de1"
+    }
+  },
+  "validation_status": "PASS",
+  "logical_tests": 282,
+  "training_examples_per_simulator": 196,
+  "test_examples_per_simulator": 40,
+  "simulator_rows_pooled": false,
+  "preprocessing_scope": "train_only",
+  "generalization_claim": false
+}
