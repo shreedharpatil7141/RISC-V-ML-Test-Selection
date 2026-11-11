@@ -118,10 +118,10 @@ separate reports and exports. Stage 10 is released on `main` from approved
 checkpoint `556b11ab833771c115dd61d0f5d565ba06e9bcb6` and identified by
 `stage10-complete`. The validated dataset contains 282 logical tests and 564
 separate simulator observations with grouped splits and hashed lineage. No
-generalization claim is made. Stage 11 MATLAB baselines were implemented and
-validated on R2025a Update 1 with the Statistics and Machine Learning Toolbox;
-results remain exploratory for this small corpus, with no generalization or
-superiority claim.
+generalization claim is made. Stage 11 is released on `main` at
+`stage11-complete`; MATLAB R2025a Update 1 and the licensed Statistics and
+Machine Learning Toolbox validated the baselines. Results remain exploratory
+for this small corpus, with no generalization or superiority claim.
 
 The MEM contract is one explicit edge transaction: a valid, fault-free A
 instruction in MEM observes the old word before the edge; AMOs and successful
