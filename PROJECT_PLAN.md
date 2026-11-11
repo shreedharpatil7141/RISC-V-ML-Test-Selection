@@ -139,6 +139,7 @@ budget by 261 cycles per simulator. Training-pool replay and random-seed
 variability are exploratory; the small corpus supports no claim of
 generalization, savings, or policy superiority. No live tests or simulators
 were run.
+Stage 13 is released on `main` at `stage13-complete`.
 
 The MEM contract is one explicit edge transaction: a valid, fault-free A
 instruction in MEM observes the old word before the edge; AMOs and successful
