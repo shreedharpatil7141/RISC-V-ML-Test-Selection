@@ -1,0 +1,9 @@
+STATUS: INVALID_SOURCE_CHANGED
+
+The Stage 14 partial outputs in this directory are retained but are not successful evidence. No standalone validation was run on them. Do not validate, publish, pool, or reuse them as successful results.
+
+At investigation time, the run-start normalized hashes matched the then-current stage14_run.m and both MATLAB batch files; timestamps predated run start. No editor, another Codex turn, or the replay script modified those files during execution.
+
+The false rejection was caused by the guard: `sourceRunHashes=[sourceHashes.sha256]` concatenated the three hashes, then `sourceRunHashes(k)` selected one character instead of the corresponding full hash. This guard implementation defect came from the prior Codex edit; the guard was not disabled.
+
+After the run was marked invalid, Codex repaired the hash container/indexing and changed the next corrected run to use a fresh `reports/stage14_experiments_corrected_retry` directory. That deliberate post-run edit explains why current stage14_run.m no longer matches its captured run-start hash. It does not alter or validate the retained partial outputs.
