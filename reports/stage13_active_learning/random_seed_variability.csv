@@ -1,0 +1,3 @@
+simulator,seed_count,mean_covered_bins,std_covered_bins,mean_observed_cycles,std_observed_cycles
+verilator,10,155,8.37987005998436,925.3,630.534350108435
+xsim,10,155,8.37987005998436,925.3,630.534350108435
