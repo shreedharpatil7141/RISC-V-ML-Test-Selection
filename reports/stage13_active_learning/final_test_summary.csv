@@ -1,0 +1,3 @@
+simulator,policy,test_logical_candidates,selected_test_count,budget_rejections,predicted_cycle_budget,predicted_cycles_spent,observed_cycles_spent_evaluation_only,observed_budget_overrun_cycles_evaluation_only,prediction_budget_overrun_evaluation_only,initial_training_covered_bins,test_covered_bins_after_selected_prefix,reachable_denominator,new_test_bins,test_micro_brier,prediction_support,actual_test_bins_with_any_hit,test_outcomes_used_for_updates
+xsim,uncertainty,40,8,0,2193.61832999414,541.843137822117,2455,261.381670005858,1,167,167,277,0,0.105821946103836,7965,62,0
+verilator,uncertainty,40,8,0,2193.61832999414,541.843137822117,2455,261.381670005858,1,167,167,277,0,0.105821946103836,7965,62,0

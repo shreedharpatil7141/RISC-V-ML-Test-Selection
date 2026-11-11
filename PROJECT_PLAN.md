@@ -127,7 +127,18 @@ validated the selector without retraining or changing Stage 11 model hashes.
 Zero added bins reflects train plus validation already covering all 277
 reachable bins per simulator. The 2,082-cycle predicted budget used 3,451
 observed cycles; predicted budgets are not hard guarantees. These results do
-not demonstrate effective prioritization or savings. Stage 13 has not started.
+not demonstrate effective prioritization or savings. Stage 13 active-learning
+replay is implemented and validated offline in MATLAB R2025a Update 1. It used
+the frozen 196/46/40 split, separate XSim and Verilator runs, and acquired-only
+training refits. The training uncertainty replay moved from 148 to 167 of 277
+reachable bins after eight acquisitions; random replay averaged 155 bins
+(standard deviation 8.38 across ten seeds). On the heldout 40 logical tests,
+the validation-selected uncertainty policy added zero reachable bins (47 of
+153 rare bins were already covered) and observed cost exceeded its predicted
+budget by 261 cycles per simulator. Training-pool replay and random-seed
+variability are exploratory; the small corpus supports no claim of
+generalization, savings, or policy superiority. No live tests or simulators
+were run.
 
 The MEM contract is one explicit edge transaction: a valid, fault-free A
 instruction in MEM observes the old word before the edge; AMOs and successful
