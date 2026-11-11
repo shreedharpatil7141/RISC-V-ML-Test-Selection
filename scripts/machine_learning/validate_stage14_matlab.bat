@@ -9,5 +9,5 @@ if not exist "%MATLAB_EXE%" (
 set "APPDATA=%TEMP%\stage14-matlab-appdata"
 set "MATLAB_PREFDIR=%APPDATA%\MathWorks\MATLAB\R2025a"
 if not exist "%MATLAB_PREFDIR%" mkdir "%MATLAB_PREFDIR%"
-"%MATLAB_EXE%" -batch "addpath('scripts/machine_learning'); stage14_run('validate')"
+"%MATLAB_EXE%" -batch "addpath('scripts/machine_learning'); stage14_run('validate_corrected')"
 exit /b %ERRORLEVEL%

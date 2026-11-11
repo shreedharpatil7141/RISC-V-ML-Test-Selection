@@ -2,17 +2,34 @@ function stage14_run(mode)
 % Stage 14 comparative offline replay. Configuration is saved before replay.
 if nargin==0, mode="run"; end
 root=pwd; out=fullfile(root,'reports','stage14_experiments');
-if string(mode)=="run", runBatch(root,out); elseif string(mode)=="validate", validateBatch(root,out); elseif string(mode)=="check_dictionary", checkDictionary(root); elseif string(mode)=="check_mask_audit", checkMaskAudit(root,out); elseif string(mode)=="check_selection", checkSelectionLoops(); else, error('Mode must be run, validate, check_dictionary, check_mask_audit, or check_selection.'); end
+if string(mode)=="run", runBatch(root,out); elseif string(mode)=="validate", validateBatch(root,out); elseif string(mode)=="run_corrected", out=prepareCorrectedOutput(root,'stage14_experiments_corrected_retry');runBatch(root,out); elseif string(mode)=="validate_corrected", validateBatch(root,fullfile(root,'reports','stage14_experiments_corrected_retry')); elseif string(mode)=="check_dictionary", checkDictionary(root); elseif string(mode)=="check_mask_audit", checkMaskAudit(root,out); elseif string(mode)=="check_selection", checkSelectionLoops(); else, error('Mode must be run, validate, run_corrected, validate_corrected, check_dictionary, check_mask_audit, or check_selection.'); end
+end
+
+function out=prepareCorrectedOutput(root,outputName)
+source=fullfile(root,'reports','stage14_experiments','configuration.json');out=fullfile(root,'reports',outputName);
+if isfolder(out)&&~isempty(dir(fullfile(out,'*'))),error('Corrected output directory already exists; preserve it and choose a fresh output name: %s',out);end
+if ~isfolder(out),mkdir(out);end
+target=fullfile(out,'configuration.json');
+if ~isfile(target)
+ cfg=jsondecode(fileread(source));cfg.policy_audit_correction=struct('based_on_original_configuration_sha256',sha(source),'reason','Stage 11 prediction export contains validation/test only; frozen Stage 11 models are now applied to training candidates without refitting. The predicted policies are explicitly in-sample exploratory replay.','prediction_scope','frozen Stage 11 selected models inferred on their own training candidates; no retraining or generalization claim.','oracle_label_correction','actual_label_oracle_greedy_baseline is a greedy actual-label baseline; no mathematical upper-bound guarantee is claimed.');
+ pol=string(cfg.policies);pol(pol=="actual_label_oracle_upper_bound")="actual_label_oracle_greedy_baseline";cfg.policies=cellstr(pol);
+ cfg.model_overhead.stage11_inference='Frozen selected coverage models are inferred on training candidates in-sample; elapsed inference is reported separately in the output manifest.';
+ cfg.model_overhead.overhead_seconds='Coverage-model inference time is measured separately; Stage 11 fitting is not repeated.';
+writeJson(target,cfg);
+end
 end
 
 function runBatch(root,out)
 batchClock=tic;
 validateMaskFixtures();
-cfg=jsondecode(fileread(fullfile(out,'configuration.json')));
+configPath=fullfile(out,'configuration.json');snapshotPath=fullfile(out,'configuration_input_snapshot.json');
+if ~isfile(snapshotPath),copyfile(configPath,snapshotPath);end
+initialConfigHash=sha(snapshotPath);if ~strcmpi(initialConfigHash,sha(configPath)),error('Configuration changed after its run-input snapshot was captured.');end
+cfg=jsondecode(fileread(configPath));
 if cfg.frozen_split.train~=196 || cfg.frozen_split.validation~=46 || cfg.frozen_split.test~=40
     error('Pre-registered split changed.');
 end
-% Freeze source hashes into the preregistration before any replay begins.
+% Preserve the preregistered hashes and reject changed inputs.
 files={"reports/stage10_dataset/manifest.json","reports/stage10_dataset/split_assignments.csv", ...
  "reports/stage10_dataset/features.csv","reports/stage10_dataset/coverage_labels.csv", ...
  "reports/stage10_dataset/bin_dictionary.csv","reports/stage10_dataset/execution_costs.csv", ...
@@ -21,9 +38,19 @@ files={"reports/stage10_dataset/manifest.json","reports/stage10_dataset/split_as
  "reports/stage11_matlab_ml/models.mat","reports/stage11_matlab_ml/manifest.json", ...
  "reports/stage12_test_selection/selection_curves.csv","reports/stage12_test_selection/manifest.json", ...
  "reports/stage13_active_learning/learning_curves.csv","reports/stage13_active_learning/manifest.json"};
-for k=1:numel(files), cfg.input_hashes(k)=struct('path',files{k},'sha256',sha(fullfile(root,strrep(files{k},'/',filesep)))); end
+if isfield(cfg,'input_hashes')&&~isempty(cfg.input_hashes)
+ if numel(cfg.input_hashes)~=numel(files),error('Frozen input hash set has unexpected cardinality.');end
+ for k=1:numel(files),actual=sha(fullfile(root,strrep(files{k},'/',filesep)));if ~strcmpi(cfg.input_hashes(k).sha256,actual),error('Frozen preregistered input hash changed: %s',files{k});end,end
+else
+ for k=1:numel(files),cfg.input_hashes(k)=struct('path',files{k},'sha256',sha(fullfile(root,strrep(files{k},'/',filesep))));end
+end
+sourceFiles={which('stage14_run'),fullfile(root,'scripts','machine_learning','run_stage14_matlab.bat'),fullfile(root,'scripts','machine_learning','validate_stage14_matlab.bat')};
+sourceHashes=struct('path',{},'sha256',{});for k=1:numel(sourceFiles),sourceHashes(k)=struct('path',string(strrep(sourceFiles{k},[root filesep],'')),'sha256',sha(sourceFiles{k}));end
+cfg.execution_provenance=struct('configuration_input_sha256',initialConfigHash,'source_hashes',sourceHashes,'hash_capture','captured at run start; inputs/configuration/source rechecked before successful completion');
 cfg.runtime=struct('release',version('-release'),'version',version,'toolboxes',ver);
-writeJson(fullfile(out,'configuration.json'),cfg); % written before replay
+writeJson(configPath,cfg); % source/config/input provenance is recorded before replay
+configRunHash=sha(configPath);sourceRunHashes=cell(1,numel(sourceHashes));
+for k=1:numel(sourceHashes),sourceRunHashes{k}=sourceHashes(k).sha256;end
 
 d10=fullfile(root,'reports','stage10_dataset');
 F=readtable(fullfile(d10,'features.csv'),'TextType','string','VariableNamingRule','preserve');
@@ -37,6 +64,7 @@ ids=string(F.test_id); [tf,si]=ismember(ids,string(S.test_id)); if ~all(tf), err
 src=jsondecode(fileread(fullfile(d10,'manifest.json'))); names=fieldnames(src.csv_outputs);
 for k=1:numel(names), fn=strrep(names{k},'_csv','.csv'); if ~strcmpi(src.csv_outputs.(names{k}).sha256,sha(fullfile(d10,fn))),error('Stage 10 manifest hash mismatch: %s',fn);end,end
 split=string(S.split(si)); group=string(S.group_id(si));
+if any(string(P.split)=="train"),error('Stage 11 exported probabilities unexpectedly contain training rows; use the explicitly frozen inference path.');end
 if sum(split=="train")~=196||sum(split=="validation")~=46||sum(split=="test")~=40,error('Frozen 196/46/40 split mismatch.');end
 for g=unique(group)',if numel(unique(split(group==g)))~=1,error('Split isolation violated for group %s',g);end,end
 if height(F)~=282||numel(unique(ids))~=282,error('Logical dataset count/IDs invalid.');end
@@ -45,7 +73,7 @@ if height(F)~=282||numel(unique(ids))~=282,error('Logical dataset count/IDs inva
 s11m=jsondecode(fileread(fullfile(root,'reports','stage11_matlab_ml','manifest.json')));
 modelPath=fullfile(root,'reports','stage11_matlab_ml','models.mat');
 if ~isfield(s11m.output_files,'models_mat')||~strcmpi(sha(modelPath),s11m.output_files.models_mat.sha256),error('Frozen Stage 11 cost-model hash mismatch.');end
-bundle=load(modelPath,'costModels','preprocess');
+bundle=load(modelPath,'coverageModels','costModels','preprocess');
 if numel(bundle.costModels)~=2||bundle.preprocess.fit_scope~="train_only"||~isequal(string(bundle.preprocess.train_ids(:)),ids(split=="train")),error('Frozen Stage 11 cost-model lineage/split invalid.');end
 verifyStage11Outputs(root,s11m);
 costAudit=buildTrainingCostJoin(F,ids,split,CP,bundle.costModels,bundle.preprocess);
@@ -59,7 +87,8 @@ if ~strcmpi(sha(fullfile(root,'reports','stage12_test_selection','selection_curv
 [bins,reachText,reach]=validateDictionary(D);
 % Rarity is frozen in Stage 11's per-bin training support metadata.
 MD=readtable(fullfile(root,'reports','stage11_matlab_ml','metrics_per_bin.csv'),'TextType','string','VariableNamingRule','preserve');
-simulators=["xsim","verilator"]; result=struct([]); initialSetRows=struct([]); rareAuditRows=struct([]);
+simulators=["xsim","verilator"]; result=struct([]); initialSetRows=struct([]); rareAuditRows=struct([]);policyOrderRows=struct([]);
+coverageInferenceSeconds=0;
 seeds=1401:1410; initSizes=[8,16,32]; countBudgets=[5,10,20,40]; costFractions=[.25,.5,.75,1];
 % Validate both simulators' complete label/mask/bin joins before any policy replay.
 prepared=struct([]);train=find(split=="train");n=numel(train);b=numel(bins);
@@ -71,10 +100,19 @@ end
 writeStruct(fullfile(out,'rare_mask_audit.csv'),rareAuditRows);
 for z=1:numel(simulators)
  sim=simulators(z);p=prepared(z);Y=p.Y;V=p.V;usable=p.usable;rare=p.rare;trainMax=p.trainMax;Prob=nan(n,b);obsCost=nan(n,1);predCost=nan(n,1);
+ modelRows=find(string({bundle.coverageModels.simulator})==sim);modelBins=string({bundle.coverageModels(modelRows).bin_id});
+ inferenceClock=tic;
+ for bj=1:b
+  if ~usable(bj),continue;end
+  mr=modelRows(modelBins==bins(bj));if numel(mr)~=1,error('Frozen Stage 11 coverage model missing/duplicated for usable bin %s/%s.',sim,bins(bj));end
+  eligible=find(p.App(:,bj));if isempty(eligible),continue;end
+  rawP=predictFrozenCoverage(bundle.coverageModels(mr).candidate_models(1),coverageFeatures(F,bundle.preprocess,train(eligible)));
+  Prob(eligible,bj)=applyFrozenCalibration(rawP,bundle.coverageModels(mr).calibration);
+ end
+ coverageInferenceSeconds=coverageInferenceSeconds+toc(inferenceClock);
+ if any(p.App(:,usable)&~isfinite(Prob(:,usable)),'all'),error('Frozen Stage 11 inference left applicable training candidate probabilities missing for %s.',sim);end
  for i=1:n
   id=ids(train(i));
-  q=P(string(P.test_id)==id & string(P.simulator)==sim,:); [ok,bi]=ismember(string(q.bin_id),bins);
-  Prob(i,bi(ok))=str2double(string(q.calibrated_probability(ok)));
   c=C(string(C.test_id)==id & string(C.simulator)==sim,:); obsCost(i)=str2double(string(c.observed_cycles));
   % Exact candidate key is asserted in the pre-loop cost audit.
   modelLoc=find(string({bundle.costModels.simulator})==sim); selectedModel=string(bundle.costModels(modelLoc).selected_model);
@@ -90,13 +128,17 @@ for z=1:numel(simulators)
    init=base(1:initSizes(iz)); cand=setdiff(1:n,init,'stable'); start=any(V(init,:) & (Y(init,:)==1),1)';
    % Fixed candidate scores use predictions and the initial observed coverage only.
    residual=~start & usable; marginal=sum(Prob(cand,residual),2,'omitnan');
+   if any(residual)&&any(p.App(cand,residual),'all')&&all(marginal==0),error('All predicted marginal scores are zero despite applicable residual bins; refusing silent fallback. sim=%s seed=%d initial=%d',sim,seed,initSizes(iz));end
    bytes=str2double(string(F.program_bytes(train(cand)))); uniq=str2double(string(F.unique_byte_values(train(cand))));
    static=bytes+uniq; costScore=marginal./predCost(cand);
    orderRandom=randperm(numel(cand));
-   methods=["full_suite","random","static_heuristic","predicted_coverage","cost_aware_predicted","actual_label_oracle_upper_bound"];
-   orders={1:numel(cand),orderRandom,rankDesc(static),rankDesc(marginal),rankDesc(costScore),rankDesc(sum(V(cand,residual)&(Y(cand,residual)==1),2))};
+   oracleGain=sum(V(cand,residual)&(Y(cand,residual)==1),2);
+   methods=["full_suite","random","static_heuristic","predicted_coverage","cost_aware_predicted","actual_label_oracle_greedy_baseline"];
+   orders={1:numel(cand),orderRandom,rankDesc(static),rankDesc(marginal),rankDesc(costScore),rankDesc(oracleGain)};
+   policyScores={nan(numel(cand),1),nan(numel(cand),1),static(:),marginal(:),costScore(:),oracleGain(:)};
    for mi=1:numel(methods)
      ord=orders{mi}; ord=ord(:); % preserve ranking, remove row/column loop ambiguity
+    policyOrderRows=appendPolicyOrderAudit(policyOrderRows,sim,seed,initSizes(iz),methods(mi),ord,cand,ids,train,policyScores{mi},marginal,oracleGain,predCost,obsCost);
     % Both budget families share candidates/initial set. Full suite is a reference curve.
     for bt=1:numel(countBudgets)
       take=reshape(ord(1:min(countBudgets(bt),numel(ord))),1,[]);
@@ -113,6 +155,7 @@ for z=1:numel(simulators)
  end
 end
 writeStruct(fullfile(out,'partial_replay_curves.csv'),result);
+writeStruct(fullfile(out,'policy_order_audit.csv'),policyOrderRows);
 writeStruct(fullfile(out,'initial_sets.csv'),initialSetRows);
 % Stage 13 acquired-only replay remains a separate condition and source artifact.
 copyfile(fullfile(root,'reports','stage13_active_learning','learning_curves.csv'),fullfile(out,'stage13_training_active_learning_curves.csv'));
@@ -124,7 +167,8 @@ writeStruct(fullfile(out,'auc_summary.csv'),aucSummary(result));
 makePlots(out,result);
 save(fullfile(out,'stage14_replay.mat'),'result','summary','cfg','-v7.3');
 elapsed=toc(batchClock);
-writeJson(fullfile(out,'manifest.json'),struct('schema_version','stage14-experiments-1.0.0','configuration_sha256',sha(fullfile(out,'configuration.json')),'cost_join_audit_sha256',sha(fullfile(out,'cost_join_audit.csv')),'rare_mask_audit_sha256',sha(fullfile(out,'rare_mask_audit.csv')),'initial_sets_sha256',sha(fullfile(out,'initial_sets.csv')),'curves_sha256',sha(fullfile(out,'partial_replay_curves.csv')),'paired_summary_sha256',sha(fullfile(out,'paired_summary.csv')),'paired_differences_sha256',sha(fullfile(out,'paired_differences.csv')),'auc_summary_sha256',sha(fullfile(out,'auc_summary.csv')),'runtime',cfg.runtime,'batch_runtime_seconds',elapsed,'conditions_separate',true,'heldout_is_exploratory',true));
+assertRunStable(root,files,cfg.input_hashes,sourceFiles,sourceRunHashes,configPath,configRunHash);
+writeJson(fullfile(out,'manifest.json'),struct('schema_version','stage14-experiments-1.0.0','configuration_sha256',sha(fullfile(out,'configuration.json')),'cost_join_audit_sha256',sha(fullfile(out,'cost_join_audit.csv')),'rare_mask_audit_sha256',sha(fullfile(out,'rare_mask_audit.csv')),'initial_sets_sha256',sha(fullfile(out,'initial_sets.csv')),'curves_sha256',sha(fullfile(out,'partial_replay_curves.csv')),'policy_order_audit_sha256',sha(fullfile(out,'policy_order_audit.csv')),'paired_summary_sha256',sha(fullfile(out,'paired_summary.csv')),'paired_differences_sha256',sha(fullfile(out,'paired_differences.csv')),'auc_summary_sha256',sha(fullfile(out,'auc_summary.csv')),'runtime',cfg.runtime,'batch_runtime_seconds',elapsed,'coverage_model_inference_seconds',coverageInferenceSeconds,'conditions_separate',true,'heldout_is_exploratory',true,'actual_label_oracle_is_greedy_baseline',true));
 validateBatch(root,out);
 end
 
@@ -168,19 +212,61 @@ if ~isequal(belowTake,3)||belowCost~=5,error('Strictly below exact-budget bounda
 fprintf('Focused selection checks passed: row/column equivalence, empty pool, one candidate, exact and below-boundary budgets.\n');
 end
 
+function P=coverageFeatures(F,pre,rows)
+raw=[str2double(string(F.program_bytes(rows))),str2double(string(F.unique_byte_values(rows)))];
+if any(~isfinite(raw),'all')||numel(pre.training_mean)~=2||numel(pre.training_scale)~=2||any(pre.training_scale==0),error('Frozen Stage 11 feature preprocessing is invalid for training inference.');end
+cfg=string(F.configuration(rows));levels=string(pre.configuration_levels_from_training(:))';cfgOne=double(cfg==levels);
+P=[(raw-double(pre.training_mean))./double(pre.training_scale),cfgOne];
+if any(~isfinite(P),'all'),error('Frozen Stage 11 inference features are nonfinite.');end
+end
+function p=predictFrozenCoverage(c,X)
+switch string(c.type)
+ case "constant",p=repmat(double(c.probability),size(X,1),1);
+ case {"fitctree","fitcnb","TreeBagger"}
+  [~,scores]=predict(c.model,X);classes=string(c.model.ClassNames(:));pos=find(classes=="1",1);if isempty(pos),p=zeros(size(scores,1),1);else,p=scores(:,pos);end
+ case "logistic",p=stableSigmoid([ones(size(X,1),1),X]*double(c.model));
+ otherwise,error('Unsupported frozen Stage 11 coverage estimator type %s.',string(c.type));
+end
+p=min(max(double(p(:)),1e-8),1-1e-8);
+end
+function p=applyFrozenCalibration(raw,c)
+p=min(max(double(raw(:)),1e-6),1-1e-6);
+if string(c.method)=="validation_platt",z=log(p./(1-p));p=stableSigmoid(double(c.intercept)+double(c.slope).*z);end
+end
+function p=stableSigmoid(z),p=1./(1+exp(-max(min(double(z),30),-30)));end
+function rows=appendPolicyOrderAudit(rows,sim,seed,initN,policy,order,cand,ids,train,score,marginal,oracleGain,predCost,obsCost)
+score=score(:);order=order(:);cand=cand(:);marginal=marginal(:);oracleGain=oracleGain(:);
+if numel(order)~=numel(cand)||numel(score)~=numel(cand)||numel(marginal)~=numel(cand)||numel(oracleGain)~=numel(cand),error('Policy order audit vectors misalign for %s/%s/%d/%d.',sim,policy,seed,initN);end
+for rank=1:numel(order)
+ j=order(rank);tieSize=NaN;if isfinite(score(j)),tieSize=sum(score==score(j));end
+ rows=append(rows,struct('simulator',sim,'seed',seed,'initial_count',initN,'policy',policy,'rank',rank,'candidate_index',j,'test_id',ids(train(cand(j))),'score',score(j),'score_tie_size',tieSize,'predicted_marginal_gain',marginal(j),'oracle_actual_marginal_gain',oracleGain(j),'predicted_cycles',predCost(cand(j)),'observed_cycles_evaluation_only',obsCost(cand(j))));
+end
+end
+
+function assertRunStable(root,files,frozenInputs,sourceFiles,sourceRunHashes,configPath,configRunHash)
+if ~strcmpi(sha(configPath),configRunHash),error('Run configuration changed after execution began.');end
+for k=1:numel(files)
+ p=fullfile(root,strrep(files{k},'/',filesep));
+ if ~strcmpi(sha(p),frozenInputs(k).sha256),error('Input changed during Stage 14 run: %s',files{k});end
+end
+for k=1:numel(sourceFiles)
+ if ~strcmpi(sha(sourceFiles{k}),sourceRunHashes{k}),error('Stage 14 source changed during run: %s (start=%s current=%s).',sourceFiles{k},sourceRunHashes{k},sha(sourceFiles{k}));end
+end
+end
+
 function r=addCurve(r,sim,seed,initN,policy,budgetType,budget,take,cand,init,Y,V,usable,rare,obsCost,predCost,start,attainable)
 ix=cand(take); covered=start | any(V(ix,:) & (Y(ix,:)==1),1)'; actual=sum(obsCost(ix)); predicted=sum(predCost(ix)); target=unique(max(0,min(1,[.5 .75 .9]))*attainable);
 % One row per selected prefix supports curves and explicit target attainability.
 for k=0:numel(ix)
  cov=start; if k>0,cov=cov|any(V(ix(1:k),:) & (Y(ix(1:k),:)==1),1)';end
  observed=sum(obsCost(ix(1:k))); if budgetType=="predicted_cost",overrun=max(0,observed-budget);else,overrun=NaN;end
- r=append(r,struct('condition',"partial_training_pool_replay",'simulator',sim,'seed',seed,'initial_count',initN,'candidate_count',numel(cand),'policy',policy,'budget_type',budgetType,'budget',budget,'selected_count',k,'reachable_covered',sum(cov&usable),'reachable_denominator',sum(usable),'rare_retained',sum(cov&rare&usable),'rare_denominator',sum(rare&usable),'predicted_cycles',sum(predCost(ix(1:k))),'observed_cycles_evaluation_only',observed,'observed_budget_overrun',overrun,'oracle_actual_labels',policy=="actual_label_oracle_upper_bound"));
+ r=append(r,struct('condition',"partial_training_pool_replay",'simulator',sim,'seed',seed,'initial_count',initN,'candidate_count',numel(cand),'policy',policy,'budget_type',budgetType,'budget',budget,'selected_count',k,'reachable_covered',sum(cov&usable),'reachable_denominator',sum(usable),'rare_retained',sum(cov&rare&usable),'rare_denominator',sum(rare&usable),'predicted_cycles',sum(predCost(ix(1:k))),'observed_cycles_evaluation_only',observed,'observed_budget_overrun',overrun,'oracle_actual_labels',policy=="actual_label_oracle_greedy_baseline"));
 end
 % Cost-to-target table rows are emitted in the same machine-readable curve file.
 for t=1:numel(target)
  reached=find(arrayfun(@(k) sum((start|any(V(ix(1:k),:) & (Y(ix(1:k),:)==1),1)')&usable)>=target(t),0:numel(ix)),1)-1;
  if isempty(reached), reached=-1; end
- r=append(r,struct('condition',"partial_training_pool_replay",'simulator',sim,'seed',seed,'initial_count',initN,'candidate_count',numel(cand),'policy',policy,'budget_type',budgetType+"_target",'budget',target(t),'selected_count',reached,'reachable_covered',sum(covered&usable),'reachable_denominator',sum(usable),'rare_retained',sum(covered&rare&usable),'rare_denominator',sum(rare&usable),'predicted_cycles',NaN,'observed_cycles_evaluation_only',NaN,'observed_budget_overrun',NaN,'oracle_actual_labels',policy=="actual_label_oracle_upper_bound"));
+  r=append(r,struct('condition',"partial_training_pool_replay",'simulator',sim,'seed',seed,'initial_count',initN,'candidate_count',numel(cand),'policy',policy,'budget_type',budgetType+"_target",'budget',target(t),'selected_count',reached,'reachable_covered',sum(covered&usable),'reachable_denominator',sum(usable),'rare_retained',sum(covered&rare&usable),'rare_denominator',sum(rare&usable),'predicted_cycles',NaN,'observed_cycles_evaluation_only',NaN,'observed_budget_overrun',NaN,'oracle_actual_labels',policy=="actual_label_oracle_greedy_baseline"));
 end
 end
 function rows=buildTrainingCostJoin(F,ids,split,CP,costModels,pre)
@@ -467,12 +553,19 @@ end
 function validateBatch(root,out)
 validateMaskFixtures();
 req={'configuration.json','manifest.json','cost_join_audit.csv','rare_mask_audit.csv','initial_sets.csv','partial_replay_curves.csv','paired_summary.csv','paired_differences.csv','auc_summary.csv','stage13_training_active_learning_curves.csv','historical_saturated_heldout_curves_exploratory.csv','partial_coverage_xsim.png','partial_coverage_cost_xsim.png','stage14_replay.mat'};
+if isfile(fullfile(out,'policy_order_audit.csv')),req{end+1}='policy_order_audit.csv';end
+if isfile(fullfile(out,'configuration_input_snapshot.json')),req{end+1}='configuration_input_snapshot.json';end
 for k=1:numel(req),if ~isfile(fullfile(out,req{k})),error('Missing Stage 14 artifact %s',req{k});end,end
 c=jsondecode(fileread(fullfile(out,'configuration.json')));if ~strcmp(c.schema_version,'stage14-experiments-1.0.0')||numel(c.input_hashes)~=16,error('Config/hash validation failed.');end
 for k=1:numel(c.input_hashes),if ~strcmpi(c.input_hashes(k).sha256,sha(fullfile(root,strrep(c.input_hashes(k).path,'/',filesep)))),error('Input hash changed: %s',c.input_hashes(k).path);end,end
+if isfield(c,'execution_provenance')
+ if ~strcmpi(c.execution_provenance.configuration_input_sha256,sha(fullfile(out,'configuration_input_snapshot.json'))),error('Configuration input snapshot hash mismatch.');end
+ sh=c.execution_provenance.source_hashes;for k=1:numel(sh),p=fullfile(root,strrep(sh(k).path,'/',filesep));if ~strcmpi(sh(k).sha256,sha(p)),error('Validated Stage 14 source hash changed: %s',sh(k).path);end,end
+end
 T=readtable(fullfile(out,'partial_replay_curves.csv'),'TextType','string');
 if any(T.reachable_covered>T.reachable_denominator)||any(T.rare_retained>T.rare_denominator)||any(T.selected_count < -1),error('Metric bounds/target markers invalid.');end
-if ~any(T.oracle_actual_labels),error('Actual-label oracle must be labeled separately.');end
+configuredPolicies=string(c.policies);if any(configuredPolicies=="actual_label_oracle_greedy_baseline"),oracleName="actual_label_oracle_greedy_baseline";else,oracleName="actual_label_oracle_upper_bound";end
+if ~any(T.oracle_actual_labels)||~any(string(T.policy)==oracleName),error('Actual-label greedy baseline must be labeled separately.');end
 if ~any(T.condition=="partial_training_pool_replay"),error('Partial condition missing.');end
 R=readtable(fullfile(out,'rare_mask_audit.csv'),'TextType','string','VariableNamingRule','preserve');
 if height(R)~=632||numel(unique(string(R.simulator)+"|"+string(R.bin_id)))~=632,error('Rare audit dimensions/order keys do not cover both simulator/bin sets.');end
@@ -488,6 +581,13 @@ J=readtable(fullfile(out,'cost_join_audit.csv'),'TextType','string','VariableNam
 if height(J)~=392||any(J.match_count~=1)||any(~isfinite(J.predicted_cycles)|J.predicted_cycles<=0),error('Candidate cost join has missing, duplicate, or invalid predictions.');end
 jkey=joinKey(string(J.test_id),string(J.simulator),string(J.split),string(J.target),string(J.selected_model),string(J.unit));if numel(unique(jkey))~=height(J),error('Duplicate complete candidate cost keys.');end
 M=jsondecode(fileread(fullfile(out,'manifest.json'))); if ~strcmpi(M.curves_sha256,sha(fullfile(out,'partial_replay_curves.csv')))||~strcmpi(M.rare_mask_audit_sha256,sha(fullfile(out,'rare_mask_audit.csv'))),error('Export manifest mismatch.');end
+if isfile(fullfile(out,'policy_order_audit.csv'))
+ if ~isfield(M,'policy_order_audit_sha256')||~strcmpi(M.policy_order_audit_sha256,sha(fullfile(out,'policy_order_audit.csv'))),error('Policy-order audit hash mismatch.');end
+ O=readtable(fullfile(out,'policy_order_audit.csv'),'TextType','string','VariableNamingRule','preserve');
+ orderKey=string(O.simulator)+"|"+string(O.seed)+"|"+string(O.initial_count)+"|"+string(O.policy);
+ if height(O)~=63840||any(~isfinite(O.score(O.policy=="predicted_coverage"|O.policy=="cost_aware_predicted")))||numel(unique(orderKey+"|"+string(O.rank)))~=height(O),error('Policy-order audit is incomplete or contains invalid predictive scores.');end
+ for g=unique(orderKey)',q=O(orderKey==g,:);if ~isequal(sort(double(q.rank)),(1:height(q))')||numel(unique(string(q.test_id)))~=height(q),error('Policy order ranks/IDs are invalid for %s.',g);end,end
+end
 % Hand-checkable metric example and deterministic seed schedule guard.
 if abs(trapz([0 1],[0 1])-.5)>eps,error('AUC hand-check failed.');end
 rng(1401,'twister'); a=randperm(196,32);rng(1401,'twister');b=randperm(196,32);if ~isequal(a,b),error('Seed replay is not deterministic.');end

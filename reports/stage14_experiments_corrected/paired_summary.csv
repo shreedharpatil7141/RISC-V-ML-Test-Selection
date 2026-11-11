@@ -1,0 +1,7 @@
+policy,condition,rows,seed_count,mean_covered_bins,std_covered_bins,mean_observed_cycles,mean_predicted_cycles,mean_overrun_cycles
+actual_label_oracle_greedy_baseline,partial_training_pool_replay,240,10,237.966666666667,17.4365236513256,1486.55,938.357147435897,NaN
+cost_aware_predicted,partial_training_pool_replay,240,10,136.1625,37.5078604035235,141.6375,140.723438390313,NaN
+full_suite,partial_training_pool_replay,240,10,158.333333333333,28.5414866021664,1422.19166666667,1391.85079059829,NaN
+predicted_coverage,partial_training_pool_replay,240,10,200.058333333333,17.0857036488734,6302.2625,6158.39779443935,NaN
+random,partial_training_pool_replay,240,10,155.675,32.7250911375073,2010.51666666667,2034.73496845747,NaN
+static_heuristic,partial_training_pool_replay,240,10,130.5,33.8480483420985,4404.13333333333,4389.00806547619,NaN

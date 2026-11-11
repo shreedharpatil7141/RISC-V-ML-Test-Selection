@@ -1,0 +1,284 @@
+{
+  "schema_version": "stage14-experiments-1.0.0",
+  "status": "pre-registered-before-execution",
+  "research_questions": [
+    "How do deterministic static and predicted-coverage rankings compare with random selection under paired count and predicted-cost budgets on training-pool replay?",
+    "How variable are paired gains across predefined seeds, and how often do predicted cost budgets overrun observed cycles?",
+    "How does the historical saturated initial-coverage result differ from predefined partial-coverage replay and training-pool active-learning replay?"
+  ],
+  "frozen_split": {
+    "train": 196,
+    "validation": 46,
+    "test": 40,
+    "grouped": true
+  },
+  "conditions": [
+    {
+      "id": "historical_saturated_initial_coverage",
+      "source": "Stage 12/13 existing held-out artifacts",
+      "new_blind_evaluation": false,
+      "interpretation": "Previously inspected; subsequent use is exploratory only; preserve zero gains."
+    },
+    {
+      "id": "partial_training_pool_replay",
+      "candidate_population": "training logical tests not in paired initial set",
+      "initial_counts": [
+        8,
+        16,
+        32
+      ],
+      "initial_policy": "seeded random sample without replacement from train; same IDs across paired policies per seed and simulator",
+      "seed_schedule": [
+        1401,
+        1402,
+        1403,
+        1404,
+        1405,
+        1406,
+        1407,
+        1408,
+        1409,
+        1410
+      ],
+      "evaluation_population": "training pool; exploratory replay, no generalization claim"
+    },
+    {
+      "id": "training_pool_active_learning",
+      "source": "Stage 13 acquired-only refit replay outputs",
+      "interpretation": "Separate population/condition; do not pool with partial replay or held-out results."
+    }
+  ],
+  "policies": [
+    "full_suite",
+    "random",
+    "static_heuristic",
+    "predicted_coverage",
+    "cost_aware_predicted",
+    "active_learning_stage13",
+    "actual_label_oracle_greedy_baseline"
+  ],
+  "budgets": {
+    "test_count": [
+      5,
+      10,
+      20,
+      40
+    ],
+    "predicted_cost_fraction": [
+      0.25,
+      0.5,
+      0.75,
+      1
+    ],
+    "cost_unit": "simulated execution cycles",
+    "cost_estimate_source": "Stage 11 predicted_cycles; actual candidate costs evaluation only",
+    "overrun_rule": "report max(0, observed_cycles - predicted_budget); never feed actual candidate cost to predictive rankings"
+  },
+  "metrics": [
+    "reachable coverage versus selected test count",
+    "reachable coverage versus predicted and observed cycles",
+    "normalized trapezoidal AUC by test count and observed cycles",
+    "rare-bin retention with denominator",
+    "paired policy differences by seed",
+    "mean and standard deviation across seeds",
+    "predicted and observed cost and overrun",
+    "cost to predefined attainable coverage targets with explicit unreached status",
+    "model fit and inference overhead separately"
+  ],
+  "model_overhead": {
+    "stage11_fitting": "not repeated; frozen model outputs reused",
+    "stage11_inference": "Frozen selected coverage models are inferred on training candidates in-sample; elapsed inference is reported separately in the output manifest.",
+    "overhead_seconds": "Coverage-model inference time is measured separately; Stage 11 fitting is not repeated."
+  },
+  "stopping_rules": {
+    "count": "stop at requested count or candidate exhaustion",
+    "cost": "stop before next item whose predicted cost exceeds budget; report actual overrun after evaluation",
+    "targets_fraction_of_training_pool_attainable": [
+      0.5,
+      0.75,
+      0.9
+    ],
+    "unreached": "emit explicit unreached marker; do not extrapolate"
+  },
+  "replication_unit": "seed-level paired replay on one logical-test training pool; simulator counterparts are repeated views, not independent samples; rounds and near-duplicate programs are not independent replicates",
+  "heldout_policy": "No tuning or configuration decisions from test labels. Previously reported test outcomes are already inspected. Any further use is exploratory, not a new blind evaluation.",
+  "negative_and_inconclusive": "Retain zero-gain, saturated, overrun, and unreached outcomes. No significance or generalization claims supported by this corpus.",
+  "plots": {
+    "format": "PNG, 300 dpi",
+    "captions": "Include population, condition, denominator, units, seed count, and exploratory status."
+  },
+  "input_hashes": [
+    {
+      "path": "reports/stage10_dataset/manifest.json",
+      "sha256": "c7e0d95926d5eca79f686201c85440945069c56b7a528c3f0574a1e840f646f9"
+    },
+    {
+      "path": "reports/stage10_dataset/split_assignments.csv",
+      "sha256": "be1b66d0154a42e13e77fc1fb1368f568a8785edcdc2633b7dabaf148bfccf6f"
+    },
+    {
+      "path": "reports/stage10_dataset/features.csv",
+      "sha256": "a853afd45eabdc21189a519c2b442a3dfc056e70222b9804d9d99ff792523c81"
+    },
+    {
+      "path": "reports/stage10_dataset/coverage_labels.csv",
+      "sha256": "1e77719743258418acac1ea51d673e446fa00838db4751d6fb53eb7adbe662f5"
+    },
+    {
+      "path": "reports/stage10_dataset/bin_dictionary.csv",
+      "sha256": "f502500387ed33afc187d3ce6912d560a1f4ba29835441c62c1007dfb85b35ee"
+    },
+    {
+      "path": "reports/stage10_dataset/execution_costs.csv",
+      "sha256": "4c2c4214543416e202a61c0da77100a21079a96866dccd06071f10f556cf6915"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/predictions.csv",
+      "sha256": "6871b1d65eba668f261bf3e9c599ea5f6a6b40674c66c4469fe29a3e7a72b549"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/cycle_predictions.csv",
+      "sha256": "61426f1a696f843136ea5dcdccde0b07b4e5c28665e1abc7855e257016cf1677"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/cycle_cost_metrics.csv",
+      "sha256": "950df3e3fab166b585ad71755d107dd1ca2869a2119fe910100e1c62db39250d"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/metrics_per_bin.csv",
+      "sha256": "8516d13471eacb02ecfd8aa1a49b7dd8ecf35ec7e2aff542f28a8624767db9a5"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/models.mat",
+      "sha256": "ca90701b5a4312a0c36e306b171bb331fb4d41e99a8710f27f4c0601a4a5be9a"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/manifest.json",
+      "sha256": "bd9671b573eb081282bca0d3e2d50d8d37c019bc9d36d31f4a91d035ba97e56d"
+    },
+    {
+      "path": "reports/stage12_test_selection/selection_curves.csv",
+      "sha256": "4039e49df0e49ec089b05913145da02ae384ea27cffd85040ce72574113b1878"
+    },
+    {
+      "path": "reports/stage12_test_selection/manifest.json",
+      "sha256": "c139f92b06fd9174e644ce6a2e80a6390ddf623e678708d6856f2d37d99cf64c"
+    },
+    {
+      "path": "reports/stage13_active_learning/learning_curves.csv",
+      "sha256": "d386ba972af56b5191b5527ecc0b1aefd5bc58ab31e757fd0da8c4242b66779e"
+    },
+    {
+      "path": "reports/stage13_active_learning/manifest.json",
+      "sha256": "74f7aef7f44f42c43ce0fa0f8377b62d29b404b725dbbaf73c23e3b07046101a"
+    }
+  ],
+  "runtime": {
+    "release": "2025a",
+    "version": "25.1.0.2973910 (R2025a) Update 1",
+    "toolboxes": [
+      {
+        "Name": "Aerospace Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Aerospace Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Communications Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Control System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "DSP System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Database Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Signal Processing Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Electrical",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink 3D Animation",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Statistics and Machine Learning Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      }
+    ]
+  },
+  "policy_audit_correction": {
+    "based_on_original_configuration_sha256": "7cd35153a090f63789fd4ebba1aefc087c2bee44c4fca5b6201543c440cda3fa",
+    "reason": "Stage 11 prediction export contains validation/test only; frozen Stage 11 models are now applied to training candidates without refitting. The predicted policies are explicitly in-sample exploratory replay.",
+    "prediction_scope": "frozen Stage 11 selected models inferred on their own training candidates; no retraining or generalization claim.",
+    "oracle_label_correction": "actual_label_oracle_greedy_baseline is a greedy actual-label baseline; no mathematical upper-bound guarantee is claimed."
+  },
+  "execution_provenance": {
+    "configuration_input_sha256": "a2ab1299c495081b0b4a517b40282ab0f7eba599e5f1d82101c21c133edf2b09",
+    "source_hashes": [
+      {
+        "path": "scripts\\machine_learning\\stage14_run.m",
+        "sha256": "94716703aa53e0e62dfdb08aba7f59c7b74a4b472085bac7ca38c3a763f79c39"
+      },
+      {
+        "path": "scripts\\machine_learning\\run_stage14_matlab.bat",
+        "sha256": "412fac52d1b73a27e55828a53b3c1d70cba4eb1dfbc7510dfe7b16a6f10dc952"
+      },
+      {
+        "path": "scripts\\machine_learning\\validate_stage14_matlab.bat",
+        "sha256": "77ce72c0b36c6a42a79116eadbc653c8060585b368858036113b507fc038f877"
+      }
+    ],
+    "hash_capture": "captured at run start; inputs/configuration/source rechecked before successful completion"
+  }
+}

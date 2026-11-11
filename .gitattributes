@@ -8,3 +8,5 @@ sim_out_stage9_*/** -whitespace
 scripts/simulation/stage9_run_provenance.py -whitespace
 *.sh text eol=lf
 reports/stage14_experiments/stage14_replay.mat filter=lfs diff=lfs merge=lfs -text
+reports/stage14_experiments_corrected/stage14_replay.mat filter=lfs diff=lfs merge=lfs -text
+reports/stage14_experiments_corrected_retry/stage14_replay.mat filter=lfs diff=lfs merge=lfs -text
