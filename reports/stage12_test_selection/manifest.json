@@ -1,0 +1,179 @@
+{
+  "schema_version": "stage12-selection-1.0.0",
+  "base_commit": "b0856cc6f7e954908f266ee0bf31299542aec3c2",
+  "input_hashes": [
+    {
+      "path": "reports/stage10_dataset/manifest.json",
+      "sha256": "c7e0d95926d5eca79f686201c85440945069c56b7a528c3f0574a1e840f646f9"
+    },
+    {
+      "path": "reports/stage10_dataset/bin_dictionary.csv",
+      "sha256": "f502500387ed33afc187d3ce6912d560a1f4ba29835441c62c1007dfb85b35ee"
+    },
+    {
+      "path": "reports/stage10_dataset/coverage_labels.csv",
+      "sha256": "1e77719743258418acac1ea51d673e446fa00838db4751d6fb53eb7adbe662f5"
+    },
+    {
+      "path": "reports/stage10_dataset/duplicate_audit.csv",
+      "sha256": "adf08ff702f3938e63d7131162a3d3474a2bc16c01eb7f6935fd09d2489260b9"
+    },
+    {
+      "path": "reports/stage10_dataset/execution_costs.csv",
+      "sha256": "4c2c4214543416e202a61c0da77100a21079a96866dccd06071f10f556cf6915"
+    },
+    {
+      "path": "reports/stage10_dataset/feature_dictionary.csv",
+      "sha256": "75c02d429f972204e50984d533964983c6533dd0e3b8b0bd2bcbaf67af16640d"
+    },
+    {
+      "path": "reports/stage10_dataset/features.csv",
+      "sha256": "a853afd45eabdc21189a519c2b442a3dfc056e70222b9804d9d99ff792523c81"
+    },
+    {
+      "path": "reports/stage10_dataset/provenance.csv",
+      "sha256": "5afe766a9cdacc957618fa2916fcc222dde17fdf93e6b8ecd9d584168363cee2"
+    },
+    {
+      "path": "reports/stage10_dataset/schema_dictionary.csv",
+      "sha256": "0f92d7c55d0bfeab3f8383ed68d0ef2752bf1e308c505faafbf6f494e13ae9e8"
+    },
+    {
+      "path": "reports/stage10_dataset/split_assignments.csv",
+      "sha256": "be1b66d0154a42e13e77fc1fb1368f568a8785edcdc2633b7dabaf148bfccf6f"
+    },
+    {
+      "path": "reports/stage10_dataset/test_metadata.csv",
+      "sha256": "d85127107502b32fad74359647aa31151f7b26f5ca5c79ec827db82f3b80bd81"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/manifest.json",
+      "sha256": "bd9671b573eb081282bca0d3e2d50d8d37c019bc9d36d31f4a91d035ba97e56d"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/configuration.json",
+      "sha256": "4e30e64ab461e9775258baa91fe51a4dd128091db478fd1b452c2d3991b5a7c0"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/cycle_cost_metrics.csv",
+      "sha256": "950df3e3fab166b585ad71755d107dd1ca2869a2119fe910100e1c62db39250d"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/cycle_predictions.csv",
+      "sha256": "61426f1a696f843136ea5dcdccde0b07b4e5c28665e1abc7855e257016cf1677"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/metrics_aggregate.csv",
+      "sha256": "356cdff6be70e500975a10535e5c8d64cfb69619a9c6ba41e6775d9a7687dc51"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/metrics_per_bin.csv",
+      "sha256": "8516d13471eacb02ecfd8aa1a49b7dd8ecf35ec7e2aff542f28a8624767db9a5"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/models.mat",
+      "sha256": "ca90701b5a4312a0c36e306b171bb331fb4d41e99a8710f27f4c0601a4a5be9a"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/predictions.csv",
+      "sha256": "6871b1d65eba668f261bf3e9c599ea5f6a6b40674c66c4469fe29a3e7a72b549"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/validation_evidence.txt",
+      "sha256": "9677839a1e3eb2f4591e70563d8204310f45a477e72314e50fbb6d6d40d47e80"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/validation_model_comparison.csv",
+      "sha256": "f25d145296b9d860eec7af95bbc0b74089fdffe1828640ae7e764f3e13278b27"
+    },
+    {
+      "path": "scripts/machine_learning/stage11_run.m",
+      "sha256": "5e6ab3d114ac190c3d4b1d5e22705dfdfd57ef8fbab7a28e6a39574acf722051"
+    },
+    {
+      "path": "scripts/machine_learning/run_stage11_matlab.bat",
+      "sha256": "8fdfcb90f10ed1f5275ee1deebf3b2c47256ffd4e8c2a4626df787e1bfa9120d"
+    },
+    {
+      "path": "scripts/machine_learning/validate_stage11_matlab.bat",
+      "sha256": "d8a4fdc33e0d556da090adcd2621601ce6a235780fb0d1b114b158733c829ead"
+    },
+    {
+      "path": "reports/stage11_matlab_ml/metrics_per_bin.csv",
+      "sha256": "8516d13471eacb02ecfd8aa1a49b7dd8ecf35ec7e2aff542f28a8624767db9a5"
+    },
+    {
+      "path": "scripts/machine_learning/stage12_run.m",
+      "sha256": "a3016f6c7acabd77c3b3650085ebe991e0089772eed7644011cea0f3c882cc91"
+    },
+    {
+      "path": "scripts/machine_learning/run_stage12_matlab.bat",
+      "sha256": "532ac70689af87a40c81a9befe2196434e634e773834f2aee18c0bb5349bdfaf"
+    },
+    {
+      "path": "scripts/machine_learning/validate_stage12_matlab.bat",
+      "sha256": "832fa25650a252315ba56b815dfb7ba6148d1b13b1c74bb0b77c9b18d567f404"
+    }
+  ],
+  "output_files": {
+    "candidate_scores_csv": {
+      "path": "candidate_scores.csv",
+      "sha256": "e894fe94f3f3f582bf65849c15b0a0594a0640a98e231d0f151b95387de104a3"
+    },
+    "configuration_json": {
+      "path": "configuration.json",
+      "sha256": "2198d4d65be011ccc1a85e4265a2fba1076b58e96fb97fa01763bc685c0fd7c6"
+    },
+    "evaluation_costs_csv": {
+      "path": "evaluation_costs.csv",
+      "sha256": "cc27939ad9c3c05567a33e3d80227b4616975eac814230bb27c8dd1a935ae78f"
+    },
+    "evaluation_observations_csv": {
+      "path": "evaluation_observations.csv",
+      "sha256": "4b9c957c31ff571bb742885b1924ce4c9ad5acd3fa8a7a4f2062298801842fd1"
+    },
+    "policy_choices_csv": {
+      "path": "policy_choices.csv",
+      "sha256": "1491e6a99950f9cf53462392ea2449e9fce740248d7291220ae0e8363f511e7a"
+    },
+    "random_seed_variability_csv": {
+      "path": "random_seed_variability.csv",
+      "sha256": "3b6211e666820dcfaf693139ba53276a0b384bab060b5d57c3390089e609f727"
+    },
+    "selection_curves_csv": {
+      "path": "selection_curves.csv",
+      "sha256": "4039e49df0e49ec089b05913145da02ae384ea27cffd85040ce72574113b1878"
+    },
+    "selection_order_csv": {
+      "path": "selection_order.csv",
+      "sha256": "8b61e28b3d353b2c567ba04068abe3a56a58bab87e896f2bd3fae374581063a5"
+    },
+    "selection_replay_mat": {
+      "path": "selection_replay.mat",
+      "sha256": "4e889230b6bfdd8938fa641bf4bb3a39814698e778fa4922a6baeea2aa4fb4f5"
+    },
+    "selection_summary_csv": {
+      "path": "selection_summary.csv",
+      "sha256": "6db842abdc36de74ef4f672d027b11f658969db78e4ca98be609265290d2d4ab"
+    },
+    "validation_evidence_txt": {
+      "path": "validation_evidence.txt",
+      "sha256": "17b6baf10568852aa75a0673ed624474de5091f06361fbf5c557d11016a8d7dc"
+    },
+    "validation_policy_grid_csv": {
+      "path": "validation_policy_grid.csv",
+      "sha256": "2ac6584e186c52451652497df6cbd4487046687b70e76592a86127624595c0ea"
+    }
+  },
+  "validation_status": "PASS",
+  "logical_tests": 282,
+  "split_sizes": {
+    "train": 196,
+    "validation": 46,
+    "test": 40
+  },
+  "simulator_rows_pooled": false,
+  "actual_test_cost_used_for_budget": false,
+  "generalization_claim": false,
+  "superiority_claim": false
+}

@@ -1,0 +1,3 @@
+simulator,seed_count,new_covered_bins_mean,new_covered_bins_std,observed_cycles_mean_evaluation_only,observed_cycles_std_evaluation_only,budget_overrun_seed_count,budget_overrun_rate,actual_budget_overrun_cycles_mean,actual_budget_overrun_cycles_max
+xsim,20,0,0,3732.7,368.327528730955,20,1,1650.88012820513,2286.18012820513
+verilator,20,0,0,3732.7,368.327528730955,20,1,1650.88012820513,2286.18012820513

@@ -1,0 +1,8 @@
+STAGE12 MATLAB VALIDATION PASS
+release=2025a
+logical_tests=282
+train_validation_test=196,46,40
+simulators_separate=true
+test_actual_cost_used_for_budget=false
+selection_core_checks=PASS
+serialization_replay=PASS

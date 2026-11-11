@@ -122,6 +122,11 @@ generalization claim is made. Stage 11 is released on `main` at
 `stage11-complete`; MATLAB R2025a Update 1 and the licensed Statistics and
 Machine Learning Toolbox validated the baselines. Results remain exploratory
 for this small corpus, with no generalization or superiority claim.
+Stage 12 offline selection is implemented and validated on MATLAB R2025a
+Update 1. Zero added bins reflects train plus validation already covering all
+277 reachable bins per simulator. The 2,082-cycle predicted budget used 3,451
+observed cycles; predicted budgets are not hard guarantees. These results do
+not demonstrate effective prioritization or savings. Stage 13 has not started.
 
 The MEM contract is one explicit edge transaction: a valid, fault-free A
 instruction in MEM observes the old word before the edge; AMOs and successful

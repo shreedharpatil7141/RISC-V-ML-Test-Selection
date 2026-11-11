@@ -1,0 +1,82 @@
+{
+  "schema_version": "stage12-selection-1.0.0",
+  "base_commit": "b0856cc6f7e954908f266ee0bf31299542aec3c2",
+  "runtime": {
+    "release": "2025a",
+    "version": "25.1.0.2973910 (R2025a) Update 1",
+    "statistics_toolbox_license": true,
+    "statistics_toolbox_name": "Statistics and Machine Learning Toolbox",
+    "statistics_toolbox_version": "25.1"
+  },
+  "logical_split": {
+    "train": 196,
+    "validation": 46,
+    "test": 40
+  },
+  "simulators": [
+    "xsim",
+    "verilator"
+  ],
+  "predictors": [
+    "program_bytes",
+    "unique_byte_values",
+    "configuration indicators"
+  ],
+  "excluded_predictors": [
+    "test_id except stable join/tie-break",
+    "scenario",
+    "seed",
+    "family",
+    "image hash",
+    "actual coverage",
+    "actual cycles",
+    "outcomes",
+    "provenance"
+  ],
+  "gain_rule": "sum p_hit times residual expected-uncovered mass",
+  "overlap_assumption": "independence approximation using marginal Stage 11 probabilities",
+  "static_heuristic": "descending program_bytes plus unique_byte_values; stable ID tie-break",
+  "cost_source": "frozen Stage 11 predicted observed_cycles; test actual cycles evaluation-only",
+  "validation_alpha_grid": [
+    0,
+    0.5,
+    1
+  ],
+  "validation_budget_fraction_grid": [
+    0.25,
+    0.5,
+    0.75,
+    1
+  ],
+  "validation_count_cap_grid": [
+    5,
+    10,
+    20,
+    40
+  ],
+  "random_seeds": [
+    1201,
+    1202,
+    1203,
+    1204,
+    1205,
+    1206,
+    1207,
+    1208,
+    1209,
+    1210,
+    1211,
+    1212,
+    1213,
+    1214,
+    1215,
+    1216,
+    1217,
+    1218,
+    1219,
+    1220
+  ],
+  "oracle_baseline": "actual-label greedy; offline upper bound only",
+  "full_corpus_note": "Train predictions are in-sample; held-out results are reported separately.",
+  "limitations": "Exploratory small corpus; no savings, superiority, or generalization claim."
+}
