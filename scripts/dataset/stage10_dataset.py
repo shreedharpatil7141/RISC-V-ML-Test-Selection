@@ -6,17 +6,22 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "reports" / "stage9_coverage"
-OUT = ROOT / "reports" / "stage10_dataset"
+OUT = Path(os.environ.get("STAGE10_DATASET_OUT", ROOT / "reports" / "stage10_dataset"))
 SIMS = ("xsim", "verilator")
 SCHEMA = "stage10-dataset-1.0.0"
 FORBIDDEN = re.compile(r"coverage|observed|actual|runtime|cycles|outcome|status|hit|retir|fault|evidence|validation|cost", re.I)
-IMAGE_INDEX = None
+PROGRAM_IMAGE_BY_TEST = None
 
 def sha(path):
     h = hashlib.sha256()
     with path.open("rb") as f:
         for b in iter(lambda: f.read(1024 * 1024), b""): h.update(b)
     return h.hexdigest()
+
+def sha_lf(path):
+    """Hash canonical LF text, independent of Git's Windows checkout conversion."""
+    data = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 def read_csv(path):
     with path.open(newline="", encoding="utf-8-sig") as f: return list(csv.DictReader(f))
@@ -36,39 +41,31 @@ def template_family(s):
     return m.group(1).lower() if m else family(s)
 
 def image_for(run):
-    global IMAGE_INDEX
-    suite, scenario = run["suite"], run["scenario"]
-    test_name=run["test_id"].split(":",1)[-1]
-    names=tuple(dict.fromkeys((scenario,test_name)))
-    manifest = ROOT / "tests" / "directed" / suite / "manifest.csv"
-    if manifest.is_file():
-        for row in read_csv(manifest):
-            if row.get("name") in names and row.get("hexpath"):
-                p = ROOT / Path(row["hexpath"])
-                if p.is_file(): return p
-    # Stage 9 closed exports retain the validated test images beside the evidence.
-    matches=[]
-    for root in ROOT.glob("sim_out_stage9_*"):
-        if root.is_dir():
-            for name in names:
-                for folder in ("hex", "a_hex", "c_hex"):
-                    p=root/folder/f"{name}.hex"
-                    if p.is_file(): matches.append(p)
-    # Stage 6/8 inputs can live in nested preparation snapshots. Build one
-    # deterministic filename index instead of rescanning the workspace per row.
-    if not matches:
-        if IMAGE_INDEX is None:
-            IMAGE_INDEX={}
-            for top in ROOT.glob("sim_out_stage*"):
-                if not top.is_dir(): continue
-                for folder,dirs,files in os.walk(top):
-                    dirs[:]=[d for d in dirs if d not in ("producer_snapshot", ".git") and not d.startswith("obj_")]
-                    if Path(folder).name not in ("hex","a_hex","c_hex","m_hex","z_hex","stage8_hex"): continue
-                    for name in files:
-                        if name.lower().endswith(".hex"): IMAGE_INDEX.setdefault(name,[]).append(Path(folder)/name)
-        matches=[p for name in names for p in IMAGE_INDEX.get(f"{name}.hex",[])]
-    matches=sorted(matches,key=lambda p:str(p.relative_to(ROOT)).replace("\\","/"))
-    return matches[0] if matches else None
+    global PROGRAM_IMAGE_BY_TEST
+    if PROGRAM_IMAGE_BY_TEST is None:
+        map_path = ROOT / "reports" / "stage15_evidence" / "program_image_map.csv"
+        if not map_path.is_file(): raise ValueError("Stage 15 program-image map is required for deterministic dataset validation.")
+        rows = read_csv(map_path)
+        PROGRAM_IMAGE_BY_TEST = {}
+        mapped_payload_hashes = {}
+        for row in rows:
+            if row["test_id"] in PROGRAM_IMAGE_BY_TEST: raise ValueError(f"Duplicate mapped program image for {row['test_id']}.")
+            dest = Path(row["destination"])
+            if dest.is_absolute() or ".." in dest.parts: raise ValueError(f"Unsafe mapped program-image destination: {dest}")
+            path = ROOT / dest
+            if not path.is_file(): raise ValueError(f"Missing mapped program image: {dest}")
+            actual = sha(path)
+            if actual != row["sha256"]: raise ValueError(f"Mapped program-image hash mismatch: {dest}")
+            payload = image_bytes(path)
+            mapped_payload_hashes[row["test_id"]] = hashlib.sha256(payload).hexdigest() if payload is not None else ""
+            PROGRAM_IMAGE_BY_TEST[row["test_id"]] = row
+        if len(PROGRAM_IMAGE_BY_TEST) != 282: raise ValueError(f"Expected 282 mapped program images; found {len(PROGRAM_IMAGE_BY_TEST)}.")
+        frozen_features = {row["test_id"]: row["image_sha256"] for row in read_csv(OUT / "features.csv")}
+        if set(frozen_features) != set(mapped_payload_hashes) or any(frozen_features[k] != mapped_payload_hashes[k] for k in frozen_features):
+            raise ValueError("Program-image map/test IDs do not reproduce frozen Stage 10 image hashes.")
+    row = PROGRAM_IMAGE_BY_TEST.get(run["test_id"])
+    if row is None: raise ValueError(f"No mapped program image for {run['test_id']}.")
+    return ROOT / row["destination"]
 
 def image_bytes(path):
     if path is None: return None
@@ -131,7 +128,9 @@ def check_inputs():
     sources["documentation/verification/stage9_bin_dictionary.csv"] = sha(d)
     for r in read_csv(BASE/"verilator"/"runs.csv"):
         ip=image_for(r)
-        if ip is not None: sources["program_images/"+str(ip.relative_to(ROOT)).replace("\\","/")]=sha(ip)
+        if ip is not None:
+            mapping=PROGRAM_IMAGE_BY_TEST[r["test_id"]]
+            sources[mapping["manifest_path"]]=sha(ip)
     return sources, read_csv(d)
 
 def build():
@@ -245,15 +244,15 @@ def build():
 def validate():
     sources,_=check_inputs(); m=json.loads((OUT/"manifest.json").read_text(encoding="utf-8"))
     if sources != m["input_hashes"]: raise ValueError("changed input hashes; rebuild required")
-    prior={fn:sha(OUT/fn) for fn in m["csv_outputs"]}
+    prior={fn:sha_lf(OUT/fn) for fn in m["csv_outputs"]}
     # Regenerate from the same immutable Stage 9 inputs and compare byte hashes.
     build()
     for fn,old_hash in prior.items():
-        if sha(OUT/fn)!=old_hash: raise ValueError(f"deterministic regeneration mismatch: {fn}")
+        if sha_lf(OUT/fn)!=old_hash: raise ValueError(f"deterministic regeneration mismatch: {fn}")
     m=json.loads((OUT/"manifest.json").read_text(encoding="utf-8"))
     for fn,rec in m["csv_outputs"].items():
         p=OUT/fn
-        if sha(p)!=rec["sha256"]: raise ValueError(f"output hash/round-trip check failed: {fn}")
+        if sha_lf(p)!=rec["sha256"]: raise ValueError(f"output hash/round-trip check failed: {fn}")
         rows=read_csv(p)
         if len(rows)!=rec["rows"]: raise ValueError(f"row count mismatch: {fn}")
         if any(None in r for r in rows): raise ValueError(f"malformed CSV round trip: {fn}")

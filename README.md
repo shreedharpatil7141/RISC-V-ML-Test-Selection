@@ -39,6 +39,8 @@ is required for the simulation evidence.
 - `documentation/verification/` - component responsibilities, compile order
 - `documentation/machine_learning/` - dataset schemas, MATLAB ML architecture
 - `documentation/vivado_setup.md` - creating the `.xpr` project
+- `documentation/machine_learning/stage15_final_integration.md` - integrated
+  saved-evidence validation and reproduction limits
 
 ## Integrity rules
 No fabricated simulation or ML results. No post-execution data as model input.
@@ -77,6 +79,9 @@ wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec bash s
 
 # Stage 5 Verilator mutation campaign (separate explicit command)
 wsl.exe --distribution Ubuntu --cd /mnt/c/RISC-V-ML-Test-Selection --exec python3 scripts/simulation/run_stage5_a_mutation.py
+
+# Stage 15 integrated saved-evidence validation (Windows CMD; no simulator rerun)
+scripts\machine_learning\validate_stage15.cmd
 ```
 
 The Stage 4 coverage batch preserves all 209 C-disabled legacy cases and runs

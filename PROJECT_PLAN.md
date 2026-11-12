@@ -24,6 +24,17 @@
 | 14 | Advanced analysis | K-means, cost regression, importance, rare bins, ablations, unseen profiles | Findings documented honestly |
 | 15 | Final validation | Docs, report, paper outline, resume text, interview prep | Everything reproducible from scripts |
 
+### Stage 15 final integration checkpoint
+
+Implementation is on `stage15-final-integration`, created from
+`stage14-complete` at `a24d981a1847516d5393688d1f67b8ca210b79a2`. The integrated
+saved-evidence CMD entry point and delivery material are documented in
+`documentation/machine_learning/stage15_final_integration.md`. The command
+validates the frozen Stage 10–14 artifacts using existing validators; it does
+not rerun simulators or retrain models. Execution status is recorded in
+`IMPLEMENTATION_LOG.md`. This is a review checkpoint only; no merge or release
+tag is created here.
+
 ## Current project status (2026-11-09)
 
 Stages 1 and 2 are the RV32I single-cycle reference and five-stage pipeline.
@@ -156,7 +167,7 @@ result is claimed. Mutation evidence is Verilator-only.
 2. Independent reference model: no reuse of DUT execution logic.
 3. Grouped train/test splits (group by test profile / generator seed family).
 4. Cost: executed-instruction count as proxy, labelled "estimated"; wall-clock recorded separately only if measured.
-5. Greedy oracle is an upper bound; offline replay is not claimed as real simulation savings.
+5. Actual-label greedy is an oracle baseline without an upper-bound guarantee; offline replay is not claimed as real simulation savings.
 
 ## Key risks and mitigations
 | Risk | Mitigation |
