@@ -32,8 +32,9 @@ saved-evidence CMD entry point and delivery material are documented in
 `documentation/machine_learning/stage15_final_integration.md`. The command
 validates the frozen Stage 10–14 artifacts using existing validators; it does
 not rerun simulators or retrain models. Execution status is recorded in
-`IMPLEMENTATION_LOG.md`. This is a review checkpoint only; no merge or release
-tag is created here.
+`IMPLEMENTATION_LOG.md`. Stage 15 is released on `main` under the annotated
+`stage15-complete` tag. The clean-checkout saved-evidence gate passed; no fresh
+simulation or training is claimed.
 
 ## Current project status (2026-11-09)
 
