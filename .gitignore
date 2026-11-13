@@ -1,9 +1,7 @@
 # Vivado / XSim generated
 *.jou
-*.log
 *.str
 *.backup.jou
-*.backup.log
 .Xil/
 xsim.dir/
 *.wdb
@@ -43,3 +41,11 @@ tests/directed/pipeline/*.hex
 # Python generated files
 __pycache__/
 *.pyc
+
+# Simulator build products inside simulator output roots.
+# Keep the rest of each sim_out_* tree visible: logs, traces, images,
+# manifests, and preparation snapshots are evidence or reproducibility inputs.
+sim_out_*/obj_*/
+sim_out_*/obj_dir/
+sim_out_*/**/obj_*/
+sim_out_*/**/obj_dir/
